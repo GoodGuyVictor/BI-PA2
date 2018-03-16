@@ -102,7 +102,5 @@ int main ( void )
     assert ( recodeImage ( "extra_input_11.img", "extra_out_11.img", 1, ENDIAN_BIG )
              && identicalFiles ( "extra_out_11.img", "extra_ref_11.img" ) );
     return 0;
-
-    
 }
 #endif /* __PROGTEST__ */
