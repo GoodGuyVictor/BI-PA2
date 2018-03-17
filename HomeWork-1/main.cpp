@@ -32,26 +32,42 @@ const uint16_t ENDIAN_BIG    = 0x4d4d;
 class CImage
 {
 private:
-    char* m_contents;
+    char **m_contents;
     struct THeader {
-        uint16_t m_endianness;
-        uint16_t m_width;
-        uint16_t m_height;
-        uint16_t m_format;
+        uint16_t endianness;
+        uint16_t width;
+        uint16_t height;
+        uint16_t format;
     } m_header;
 public:
-    CImage(const char*);        //copying image from buffer
-    CImage(const char*, int, uint16_t);   //building new image based on interleave
-    char* decode()const;
-    bool isValid()const;
+    CImage(const char*);                  //copying image from buffer
+    CImage(const char*, int, uint16_t);   //building new image based on interleave and byte order
+    char* decode()const;                  //converting current image contents into content with interleaving 1
+    bool isValid()const;                  //validates if the image
 };
 
 CImage::CImage(const char * data)
 {
+    m_header.endianness = (short int)(data[0]
+}
+
+CImage::CImage(const char *, int, uint16_t)
+{
 
 }
 
-ostream& operator << (ostream& os, const CImage& img) {
+char *CImage::decode() const
+{
+
+}
+
+bool CImage::isValid() const
+{
+
+}
+
+ostream& operator << (ostream& os, const CImage& img)
+{
 
 }
 
@@ -59,38 +75,7 @@ bool recodeImage ( const char  * srcFileName,
                    const char  * dstFileName,
                    int           interleave,
                    uint16_t      byteOrder ) {
-    string tmpPath("/home/victor/githubRepos/BI-PA2/HomeWork-1/");
-    tmpPath = tmpPath + srcFileName;
-
-
-    char *buffer;
-    streampos size;
-    ifstream inputFile(tmpPath, ios::binary | ios::ate);
-
-    //reading .img file and saving its contents into buffer
-    if (inputFile.is_open()) {
-        size = inputFile.tellg();        //gets value of the last position
-        buffer = new char[size];         //allocates the buffer big enough to store all image data
-        inputFile.seekg(0, ios::beg);    //sets the location of get position on the very beginning of the file
-        inputFile.read(buffer, size);    //reads data from the file
-        inputFile.close();
-    } else {
-        return false;
-    }
-
-    CImage inputImage(buffer);
-    delete [] buffer;
-
-    if (!inputImage.isValid())
-        return false;
-
-    char *decoded_contents = inputImage.decode();
-    CImage outputImage(decoded_contents, interleave, byteOrder);
-
-    ofstream outputFile(dstFileName, ios::binary);
-    if(outputFile.is_open()) {
-        outputFile << outputImage;
-    }
+    
 }
 
 #ifndef __PROGTEST__
