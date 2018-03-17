@@ -41,6 +41,7 @@ private:
         char format[1];
     } m_header;
 public:
+
     CImage(char*, char*);
     CImage(const char*, int, uint16_t);   //building new image based on interleave
     char* decode()const;
