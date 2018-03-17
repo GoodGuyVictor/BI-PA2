@@ -40,13 +40,13 @@ private:
         uint16_t m_format;
     } m_header;
 public:
-    CImage(const char*);        //copying image from buffer
+    CImage(const char*, const char*);        //copying image from buffer
     CImage(const char*, int, uint16_t);   //building new image based on interleave
     char* decode()const;
     bool isValid()const;
 };
 
-CImage::CImage(const char * data)
+CImage::CImage(const char * hdr, const char * cont)
 {
 
 }
@@ -63,27 +63,37 @@ bool recodeImage ( const char  * srcFileName,
     tmpPath = tmpPath + srcFileName;
 
 
-    char *buffer;
-    streampos size;
-    ifstream inputFile(tmpPath, ios::binary | ios::ate);
+    const uint8_t HEADER_SIZE = 8;
+    streampos contents_size;
+    char *header;
+    char *contents;
+    ifstream inputFile(tmpPath, ios::binary|ios::ate);
 
     //reading .img file and saving its contents into buffer
-    if (inputFile.is_open()) {
-        size = inputFile.tellg();        //gets value of the last position
-        buffer = new char[size];         //allocates the buffer big enough to store all image data
-        inputFile.seekg(0, ios::beg);    //sets the location of get position on the very beginning of the file
-        inputFile.read(buffer, size);    //reads data from the file
+    if (inputFile.is_open())
+    {
+        contents_size = inputFile.tellg() - HEADER_SIZE;
+        header = new char[HEADER_SIZE];
+        contents = new char[contents_size];
+
+        //reading header
+        inputFile.seekg(0, ios::beg);
+        inputFile.read(header, HEADER_SIZE);
+        //reading contents
+        inputFile.read(contents, contents_size);
         inputFile.close();
     } else {
         return false;
     }
 
-    CImage inputImage(buffer);
-    delete [] buffer;
+    CImage inputImage(header, contents);
+    delete [] header;
 
     if (!inputImage.isValid())
         return false;
 
+    
+    /**************************************/
     char *decoded_contents = inputImage.decode();
     CImage outputImage(decoded_contents, interleave, byteOrder);
 
