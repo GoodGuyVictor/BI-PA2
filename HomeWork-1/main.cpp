@@ -40,8 +40,10 @@ private:
         uint16_t m_format;
     } m_header;
 public:
-    explicit CImage(const char*);        //copying image from buffer
-    CImage(const char*, int);   //building new image based on interleave
+    CImage(const char*);        //copying image from buffer
+    CImage(const char*, int, uint16_t);   //building new image based on interleave
+    char* decode()const;
+    bool isValid()const;
 };
 
 CImage::CImage(const char * data)
@@ -49,42 +51,46 @@ CImage::CImage(const char * data)
 
 }
 
-bool isValid(const CImage & img)
-{
+ostream& operator << (ostream& os, const CImage& img) {
 
 }
-
 
 bool recodeImage ( const char  * srcFileName,
                    const char  * dstFileName,
                    int           interleave,
-                   uint16_t      byteOrder )
-{
+                   uint16_t      byteOrder ) {
     string tmpPath("/home/victor/githubRepos/BI-PA2/HomeWork-1/");
     tmpPath = tmpPath + srcFileName;
 
 
     char *buffer;
     streampos size;
-    ifstream file(tmpPath, ios::binary|ios::ate);
+    ifstream inputFile(tmpPath, ios::binary | ios::ate);
 
     //reading .img file and saving its contents into buffer
-    if(file.is_open()) {
-        size = file.tellg();        //gets value of the last position
-        buffer = new char[size];    //allocates the buffer big enough to store all image data
-        file.seekg(0, ios::beg);    //sets the location of get position on the very beginning of the file
-        file.read(buffer, size);    //reads data from the file
-        file.close();
+    if (inputFile.is_open()) {
+        size = inputFile.tellg();        //gets value of the last position
+        buffer = new char[size];         //allocates the buffer big enough to store all image data
+        inputFile.seekg(0, ios::beg);    //sets the location of get position on the very beginning of the file
+        inputFile.read(buffer, size);    //reads data from the file
+        inputFile.close();
     } else {
         return false;
     }
 
-    CImage image(buffer);
+    CImage inputImage(buffer);
+    delete [] buffer;
 
-    if(!isValid(image))
+    if (!inputImage.isValid())
         return false;
 
+    char *decoded_contents = inputImage.decode();
+    CImage outputImage(decoded_contents, interleave, byteOrder);
 
+    ofstream outputFile(dstFileName, ios::binary);
+    if(outputFile.is_open()) {
+        outputFile << outputImage;
+    }
 }
 
 #ifndef __PROGTEST__
