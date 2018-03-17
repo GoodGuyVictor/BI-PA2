@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <functional>
 #include <memory>
+#include <string>
 using namespace std;
 
 const uint16_t ENDIAN_LITTLE = 0x4949;
@@ -28,12 +29,62 @@ const uint16_t ENDIAN_BIG    = 0x4d4d;
 
 #endif /* __PROGTEST__ */
 
+class CImage
+{
+private:
+    char* m_contents;
+    struct THeader {
+        uint16_t m_endianness;
+        uint16_t m_width;
+        uint16_t m_height;
+        uint16_t m_format;
+    } m_header;
+public:
+    explicit CImage(const char*);        //copying image from buffer
+    CImage(const char*, int);   //building new image based on interleave
+};
+
+CImage::CImage(const char * data)
+{
+
+}
+
+bool isValid(const CImage & img)
+{
+
+}
+
+
 bool recodeImage ( const char  * srcFileName,
                    const char  * dstFileName,
                    int           interleave,
                    uint16_t      byteOrder )
 {
-    // todo
+    string tmpPath("/home/victor/githubRepos/BI-PA2/HomeWork-1/");
+    tmpPath = tmpPath + srcFileName;
+
+
+    char *buffer;
+    streampos size;
+    ifstream file(tmpPath, ios::binary|ios::ate);
+
+    //reading .img file and saving its contents into buffer
+    if(file.is_open()) {
+        size = file.tellg();        //gets value of the last position
+        buffer = new char[size];    //allocates the buffer big enough to store all image data
+        file.seekg(0, ios::beg);    //sets the location of get position on the very beginning of the file
+        file.read(buffer, size);    //reads data from the file
+        file.close();
+    } else {
+        return false;
+    }
+
+    CImage image(buffer);
+
+    if(!isValid(image))
+        return false;
+
+
 }
 
 #ifndef __PROGTEST__
@@ -45,6 +96,23 @@ bool identicalFiles ( const char * fileName1,
 
 int main ( void )
 {
+//    streampos size;
+//    char * memblock;
+//
+//    ifstream file ("/home/victor/githubRepos/BI-PA2/HomeWork-1/input_00.img", ios::in|ios::binary|ios::ate);
+//    if (file.is_open())
+//    {
+//        size = file.tellg();
+//        memblock = new char [size];
+//        file.seekg (0, ios::beg);
+//        file.read (memblock, size);
+//        file.close();
+//        cout << memblock[5];
+//        delete[] memblock;
+//    }
+//    else cout << "Unable to open file";
+
+
     assert ( recodeImage ( "input_00.img", "output_00.img", 1, ENDIAN_LITTLE )
              && identicalFiles ( "output_00.img", "ref_00.img" ) );
 
@@ -101,6 +169,7 @@ int main ( void )
              && identicalFiles ( "extra_out_10.img", "extra_ref_10.img" ) );
     assert ( recodeImage ( "extra_input_11.img", "extra_out_11.img", 1, ENDIAN_BIG )
              && identicalFiles ( "extra_out_11.img", "extra_ref_11.img" ) );
+
     return 0;
 }
 #endif /* __PROGTEST__ */
