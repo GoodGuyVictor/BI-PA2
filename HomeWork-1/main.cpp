@@ -32,15 +32,17 @@ const uint16_t ENDIAN_BIG    = 0x4d4d;
 class CImage
 {
 private:
-    char* m_contents;
+    char *m_contents;
+//    char *m_header;
     struct THeader {
-        uint16_t m_endianness;
-        uint16_t m_width;
-        uint16_t m_height;
-        uint16_t m_format;
+        char endianness[2];
+        char width[2];
+        char height[2];
+        char format[1];
     } m_header;
 public:
-    CImage(char*, char*);        //copying image from buffer
+
+    CImage(char*, char*);
     CImage(const char*, int, uint16_t);   //building new image based on interleave
     char* decode()const;
     bool isValid()const;
@@ -48,7 +50,14 @@ public:
 
 CImage::CImage(char * hdr, char * cont)
 {
-
+    m_header.endianness[0] = hdr[0];
+    m_header.endianness[1] = hdr[1];
+    m_header.width[1] = hdr[2];
+    m_header.width[0] = hdr[3];
+    m_header.height[1] = hdr[4];
+    m_header.height[0] = hdr[5];
+    m_header.format[0] = hdr[6];
+    m_contents = cont;
 }
 
 ostream& operator << (ostream& os, const CImage& img) {
