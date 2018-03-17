@@ -35,11 +35,15 @@ private:
     char *m_contents;
 //    char *m_header;
     struct THeader {
-        uint16_t endianness;
+        char endianness[2];
         uint16_t width;
         uint16_t height;
-        uint16_t format;
+        uint8_t format;
+        uint8_t interleave;
+        uint8_t channels;
+        uint8_t transfer;
     } m_header;
+
     uint16_t toInt(char lw, char hg)
     {
         uint16_t lobyte = (uint16_t )lw;
@@ -60,11 +64,52 @@ public:
 CImage::CImage(char * hdr, char * cont)
 {
 
-    m_header.endianness = toInt(hdr[0], hdr[1]);
+    m_header.endianness[0] = hdr[0];
+    m_header.endianness[1] = hdr[1];
     m_header.width = toInt(hdr[2], hdr[3]);
     m_header.height = toInt(hdr[4], hdr[5]);
-    m_header.format = toInt(hdr[6], hdr[7]);
+    m_header.format = (uint8_t)hdr[6];
+    uint8_t interleave = (uint8_t)(m_header.format & 224);
+    switch (interleave) {
+        case 0: { m_header.interleave = 1; break; }
+        case 1: { m_header.interleave = 2; break; }
+        case 2: { m_header.interleave = 4; break; }
+        case 3: { m_header.interleave = 8; break; }
+        case 4: { m_header.interleave = 16; break; }
+        case 5: { m_header.interleave = 32; break; }
+        case 6: { m_header.interleave = 64; break; }
+        default: m_header.interleave = 0; //for error
+    }
+    uint8_t transfer = (uint8_t)(m_header.format & 28);
+    switch (transfer) {
+        case 0: { m_header.transfer = 1; break; }
+        case 12: { m_header.transfer = 8; break; }
+        case 16: { m_header.transfer = 16; break; }
+        default: m_header.transfer = 0; //for error
+    }
+    uint8_t channels = (uint8_t)(m_header.format & 3);
+    switch (channels) {
+        case 0: { m_header.channels = 1; break; }
+        case 2: { m_header.channels = 3; break; }
+        case 3: { m_header.channels = 4; break; }
+        default: m_header.channels = 0; //for error
+    }
     m_contents = cont;
+}
+
+CImage::CImage(const char *, int, uint16_t)
+{
+
+}
+
+char *CImage::decode() const
+{
+
+}
+
+bool CImage::isValid() const
+{
+
 }
 
 ostream& operator << (ostream& os, const CImage& img) {
