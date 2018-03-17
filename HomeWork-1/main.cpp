@@ -146,32 +146,6 @@ CImage::CImage(const char *, int, uint16_t)
 
 }
 
-void indexToCoordinate(uint64_t idx, uint8_t intrlv)
-{
-
-}
-
-void getCoordinates(vector<)
-
-TCoordinate* getCoordinatesList(CImage img)
-{
-    vector<uint64_t> colsModInterleave;
-    vector<uint64_t> rowsModInterleave;
-    uint8_t curr_interleave = img.m_header.interleave;
-
-    for (uint16_t i = 0; i < m_header.width; i++) {
-        if(i % curr_interleave == 0) {
-            colsModInterleave.push_back(i);
-        }
-    }
-
-    for (uint16_t i = 0; i < m_header.height; i++) {
-        if(i % curr_interleave == 0) {
-            rowsModInterleave.push_back(i);
-        }
-    }
-}
-
 char *CImage::decode() const
 {
     TCoordinate *coordinates = getCoordinatesList(*this);
