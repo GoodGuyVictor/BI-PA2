@@ -109,7 +109,10 @@ char *CImage::decode() const
 
 bool CImage::isValid() const
 {
-
+    int expectedVolume = m_header.width * m_header.height;
+    int actualVolume = sizeof(m_contents);
+    if(expectedVolume != actualVolume)
+        return false;
 }
 
 ostream& operator << (ostream& os, const CImage& img) {
@@ -125,7 +128,7 @@ bool recodeImage ( const char  * srcFileName,
 
 
     const uint8_t HEADER_SIZE = 8;
-    streampos contents_size;
+    uint64_t contents_size;
     char *header;
     char *contents;
     ifstream inputFile(tmpPath, ios::binary|ios::ate);
@@ -133,7 +136,7 @@ bool recodeImage ( const char  * srcFileName,
     //reading .img file and saving its contents into buffer
     if (inputFile.is_open())
     {
-        contents_size = (uint8_t)inputFile.tellg() - HEADER_SIZE;
+        contents_size = (uint64_t)inputFile.tellg() - HEADER_SIZE;
         header = new char[HEADER_SIZE];
         contents = new char[contents_size];
 
@@ -150,8 +153,9 @@ bool recodeImage ( const char  * srcFileName,
     CImage inputImage(header, contents);
     delete [] header;
 
-//    if (!inputImage.isValid())
-//        return false;
+    if (!inputImage.isValid())
+        return false;
+
 //
 //
 //    /**************************************/
@@ -190,7 +194,7 @@ int main ( void )
 //    else cout << "Unable to open file";
 
 
-    bool x = recodeImage ( "input_00.img", "output_00.img", 1, ENDIAN_LITTLE );
+    bool x = recodeImage ( "in_2653009.bin", "output_00.img", 1, ENDIAN_LITTLE );
 
 /*
     assert ( recodeImage ( "input_00.img", "output_00.img", 1, ENDIAN_LITTLE )
