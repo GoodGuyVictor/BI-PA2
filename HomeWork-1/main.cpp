@@ -35,11 +35,20 @@ private:
     char *m_contents;
 //    char *m_header;
     struct THeader {
-        char endianness[2];
-        char width[2];
-        char height[2];
-        char format[1];
+        uint16_t endianness;
+        uint16_t width;
+        uint16_t height;
+        uint16_t format;
     } m_header;
+    uint16_t toInt(char lw, char hg)
+    {
+        uint16_t lobyte = (uint16_t )lw;
+        uint16_t hibyte = (uint16_t )hg;
+        hibyte = hibyte << 8;
+        uint16_t result = (hibyte | lobyte);
+
+        return result;
+    }
 public:
 
     CImage(char*, char*);
@@ -50,13 +59,11 @@ public:
 
 CImage::CImage(char * hdr, char * cont)
 {
-    m_header.endianness[0] = hdr[0];
-    m_header.endianness[1] = hdr[1];
-    m_header.width[1] = hdr[2];
-    m_header.width[0] = hdr[3];
-    m_header.height[1] = hdr[4];
-    m_header.height[0] = hdr[5];
-    m_header.format[0] = hdr[6];
+
+    m_header.endianness = toInt(hdr[0], hdr[1]);
+    m_header.width = toInt(hdr[2], hdr[3]);
+    m_header.height = toInt(hdr[4], hdr[5]);
+    m_header.format = toInt(hdr[6], hdr[7]);
     m_contents = cont;
 }
 
@@ -81,7 +88,7 @@ bool recodeImage ( const char  * srcFileName,
     //reading .img file and saving its contents into buffer
     if (inputFile.is_open())
     {
-        contents_size = inputFile.tellg() - HEADER_SIZE;
+        contents_size = (uint8_t)inputFile.tellg() - HEADER_SIZE;
         header = new char[HEADER_SIZE];
         contents = new char[contents_size];
 
@@ -98,18 +105,18 @@ bool recodeImage ( const char  * srcFileName,
     CImage inputImage(header, contents);
     delete [] header;
 
-    if (!inputImage.isValid())
-        return false;
-
-
-    /**************************************/
-    char *decoded_contents = inputImage.decode();
-    CImage outputImage(decoded_contents, interleave, byteOrder);
-
-    ofstream outputFile(dstFileName, ios::binary);
-    if(outputFile.is_open()) {
-        outputFile << outputImage;
-    }
+//    if (!inputImage.isValid())
+//        return false;
+//
+//
+//    /**************************************/
+//    char *decoded_contents = inputImage.decode();
+//    CImage outputImage(decoded_contents, interleave, byteOrder);
+//
+//    ofstream outputFile(dstFileName, ios::binary);
+//    if(outputFile.is_open()) {
+//        outputFile << outputImage;
+//    }
 }
 
 #ifndef __PROGTEST__
@@ -138,6 +145,9 @@ int main ( void )
 //    else cout << "Unable to open file";
 
 
+    bool x = recodeImage ( "input_00.img", "output_00.img", 1, ENDIAN_LITTLE );
+
+/*
     assert ( recodeImage ( "input_00.img", "output_00.img", 1, ENDIAN_LITTLE )
              && identicalFiles ( "output_00.img", "ref_00.img" ) );
 
@@ -193,7 +203,7 @@ int main ( void )
     assert ( recodeImage ( "extra_input_10.img", "extra_out_10.img", 16, ENDIAN_BIG )
              && identicalFiles ( "extra_out_10.img", "extra_ref_10.img" ) );
     assert ( recodeImage ( "extra_input_11.img", "extra_out_11.img", 1, ENDIAN_BIG )
-             && identicalFiles ( "extra_out_11.img", "extra_ref_11.img" ) );
+             && identicalFiles ( "extra_out_11.img", "extra_ref_11.img" ) );*/
 
     return 0;
 }
