@@ -29,6 +29,49 @@ const uint16_t ENDIAN_BIG    = 0x4d4d;
 
 #endif /* __PROGTEST__ */
 
+struct TCoordinate
+{
+    uint64_t m_col;
+    uint64_t m_row;
+};
+
+class CConverter
+{
+private:
+    uint8_t m_interleave;
+    uint32_t m_width;
+    uint32_t m_height;
+    vector<uint64_t> colsModInterleave;
+    vector<uint64_t> rowsModInterleave;
+    void acumulateColsAndRows()
+    {
+        uint8_t curr_interleave = m_interleave;
+        while(curr_interleave > 0) {
+            for (uint16_t i = 0; i < m_width; i++) {
+                if(i % curr_interleave == 0) {
+                    colsModInterleave.push_back(i);
+                }
+            }
+
+            for (uint16_t i = 0; i < m_height; i++) {
+                if(i % curr_interleave == 0) {
+                    rowsModInterleave.push_back(i);
+                }
+            }
+            curr_interleave /= 2;
+        }
+    }
+public:
+    CConverter(uint8_t, uint32_t, uint32_t);
+    void indexToCoordinate();
+    void coordinateToIndex();
+};
+
+CConverter::CConverter(uint8_t intrlv, uint32_t w, uint32_t h)
+        :m_interleave(intrlv), m_width(w), m_height(h)
+{
+}
+
 class CImage
 {
 private:
@@ -36,8 +79,8 @@ private:
 //    char *m_header;
     struct THeader {
         char endianness[2];
-        uint16_t width;
-        uint16_t height;
+        uint32_t width;
+        uint32_t height;
         uint8_t format;
         uint8_t interleave;
         uint8_t channels;
@@ -59,6 +102,7 @@ public:
     CImage(const char*, int, uint16_t);   //building new image based on interleave
     char* decode()const;
     bool isValid()const;
+    friend TCoordinate* getCoordinatesList(uint8_t);
 };
 
 CImage::CImage(char * hdr, char * cont)
@@ -72,12 +116,12 @@ CImage::CImage(char * hdr, char * cont)
     uint8_t interleave = (uint8_t)(m_header.format & 224);
     switch (interleave) {
         case 0: { m_header.interleave = 1; break; }
-        case 1: { m_header.interleave = 2; break; }
-        case 2: { m_header.interleave = 4; break; }
-        case 3: { m_header.interleave = 8; break; }
-        case 4: { m_header.interleave = 16; break; }
-        case 5: { m_header.interleave = 32; break; }
-        case 6: { m_header.interleave = 64; break; }
+        case 32: { m_header.interleave = 2; break; }
+        case 64: { m_header.interleave = 4; break; }
+        case 96: { m_header.interleave = 8; break; }
+        case 128: { m_header.interleave = 16; break; }
+        case 160: { m_header.interleave = 32; break; }
+        case 192: { m_header.interleave = 64; break; }
         default: m_header.interleave = 0; //for error
     }
     uint8_t transfer = (uint8_t)(m_header.format & 28);
@@ -102,9 +146,35 @@ CImage::CImage(const char *, int, uint16_t)
 
 }
 
-char *CImage::decode() const
+void indexToCoordinate(uint64_t idx, uint8_t intrlv)
 {
 
+}
+
+void getCoordinates(vector<)
+
+TCoordinate* getCoordinatesList(CImage img)
+{
+    vector<uint64_t> colsModInterleave;
+    vector<uint64_t> rowsModInterleave;
+    uint8_t curr_interleave = img.m_header.interleave;
+
+    for (uint16_t i = 0; i < m_header.width; i++) {
+        if(i % curr_interleave == 0) {
+            colsModInterleave.push_back(i);
+        }
+    }
+
+    for (uint16_t i = 0; i < m_header.height; i++) {
+        if(i % curr_interleave == 0) {
+            rowsModInterleave.push_back(i);
+        }
+    }
+}
+
+char *CImage::decode() const
+{
+    TCoordinate *coordinates = getCoordinatesList(*this);
 }
 
 bool CImage::isValid() const
@@ -194,7 +264,7 @@ int main ( void )
 //    else cout << "Unable to open file";
 
 
-    bool x = recodeImage ( "in_2653009.bin", "output_00.img", 1, ENDIAN_LITTLE );
+    bool x = recodeImage ( "ref_06.img", "output_00.img", 1, ENDIAN_LITTLE );
 
 /*
     assert ( recodeImage ( "input_00.img", "output_00.img", 1, ENDIAN_LITTLE )
