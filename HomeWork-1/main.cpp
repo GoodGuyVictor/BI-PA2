@@ -33,44 +33,74 @@ struct TCoordinate
 {
     uint64_t m_col;
     uint64_t m_row;
+    TCoordinate(const uint64_t r, const uint64_t c)
+    : m_col(c), m_row(r)
+    {}
 };
 
 class CConverter
 {
 private:
-    uint8_t m_interleave;
-    uint32_t m_width;
-    uint32_t m_height;
-    vector<uint64_t> colsModInterleave;
-    vector<uint64_t> rowsModInterleave;
-    void acumulateColsAndRows()
+    int m_recievedInterleave;
+    uint32_t m_recievedWidth;
+    uint32_t m_recievedHeight;
+    vector<uint64_t> m_cols;  //list of cols that are multiplied by interleave
+    vector<uint64_t> m_rows;  //list of m_rows that are multiplied by interleave
+    vector<TCoordinate> m_coordinatesList;   //coordinates list is based upon width, height and interleave
+    vector<uint32_t> m_indexList;   //coordinates list converted into indexes of 1d array
+
+    void getColsAndRows()
     {
-        uint8_t curr_interleave = m_interleave;
+        int curr_interleave = m_recievedInterleave;
         while(curr_interleave > 0) {
-            for (uint16_t i = 0; i < m_width; i++) {
-                if(i % curr_interleave == 0) {
-                    colsModInterleave.push_back(i);
+            for (uint16_t i = 0; i < m_recievedWidth; i++) {
+                if(i % curr_interleave == 0
+                   && find(m_cols.begin(), m_cols.end(), i) == m_cols.end()) {
+                    m_cols.push_back(i);
                 }
             }
 
-            for (uint16_t i = 0; i < m_height; i++) {
-                if(i % curr_interleave == 0) {
-                    rowsModInterleave.push_back(i);
+            for (uint16_t i = 0; i < m_recievedHeight; i++) {
+                if(i % curr_interleave == 0
+                   && find(m_rows.begin(), m_rows.end(), i) == m_rows.end()) {
+                    m_rows.push_back(i);
                 }
             }
             curr_interleave /= 2;
         }
     }
+
+    void composeCoordinatesList()
+    {
+        for (uint32_t i = 0; i < m_recievedHeight; ++i) {
+            for (uint32_t j = 0; j < m_recievedWidth; ++j) {
+                m_coordinatesList.emplace_back(TCoordinate(m_rows[i], m_cols[j]));
+            }
+        }
+    }
+
+    void composeIndexList()
+    {
+        //traditional method (without iterator)
+        for (uint64_t i = 0; i < m_coordinatesList.size() ; ++i) {
+            m_indexList.push_back(m_coordinatesList[i].m_row * m_recievedWidth + m_coordinatesList[i].m_col);
+        }
+    }
+
 public:
-    CConverter(uint8_t, uint32_t, uint32_t);
-    void indexToCoordinate();
-    void coordinateToIndex();
+    CConverter(int, uint32_t, uint32_t);
+    vector<uint32_t > getIndexList()
+    {
+        getColsAndRows();
+        composeCoordinatesList();
+        composeIndexList();
+        return m_indexList;
+    }
 };
 
-CConverter::CConverter(uint8_t intrlv, uint32_t w, uint32_t h)
-        :m_interleave(intrlv), m_width(w), m_height(h)
-{
-}
+CConverter::CConverter(int intrlv, uint32_t w, uint32_t h)
+        :m_recievedInterleave(intrlv), m_recievedWidth(w), m_recievedHeight(h)
+{}
 
 class CImage
 {
@@ -78,11 +108,11 @@ private:
     char *m_contents;
 //    char *m_header;
     struct THeader {
-        char endianness[2];
+        uint16_t endianness;
         uint32_t width;
         uint32_t height;
         uint8_t format;
-        uint8_t interleave;
+        int interleave;
         uint8_t channels;
         uint8_t transfer;
     } m_header;
@@ -98,22 +128,19 @@ private:
     }
 public:
 
-    CImage(char*, char*);
-    CImage(const char*, int, uint16_t);   //building new image based on interleave
+    CImage(char* hdr, char* cont);
+    CImage(char*, const char*, int , uint16_t);   //building new image based on interleave
     char* decode()const;
     bool isValid()const;
-    friend TCoordinate* getCoordinatesList(uint8_t);
 };
 
 CImage::CImage(char * hdr, char * cont)
 {
-
-    m_header.endianness[0] = hdr[0];
-    m_header.endianness[1] = hdr[1];
+    m_header.endianness = toInt(hdr[0], hdr[1]);
     m_header.width = toInt(hdr[2], hdr[3]);
     m_header.height = toInt(hdr[4], hdr[5]);
     m_header.format = (uint8_t)hdr[6];
-    uint8_t interleave = (uint8_t)(m_header.format & 224);
+    int interleave = (m_header.format & 224);
     switch (interleave) {
         case 0: { m_header.interleave = 1; break; }
         case 32: { m_header.interleave = 2; break; }
@@ -141,19 +168,51 @@ CImage::CImage(char * hdr, char * cont)
     m_contents = cont;
 }
 
-CImage::CImage(const char *, int, uint16_t)
+CImage::CImage(char * hdr, const char * dc, int intrlv, uint16_t bo)
 {
+    m_header.interleave = intrlv;
+    m_header.endianness = bo;
+    m_header.width = toInt(hdr[2], hdr[3]);
+    m_header.height = toInt(hdr[4], hdr[5]);
+    m_header.format = (uint8_t)hdr[6];
+    m_header.format = (uint8_t)(m_header.format & 31);
+    switch(intrlv) {
+        case 2: { m_header.format = (uint8_t)(m_header.format | 32); break; }
+        case 4: { m_header.format = (uint8_t)(m_header.format | 64); break; }
+        case 8: { m_header.format = (uint8_t)(m_header.format | 96); break; }
+        case 16: { m_header.format = (uint8_t)(m_header.format | 128); break; }
+        case 32: { m_header.format = (uint8_t)(m_header.format | 160); break; }
+        case 64: { m_header.format = (uint8_t)(m_header.format | 192); break; }
+    }
 
+    CConverter converter(m_header.interleave, m_header.width, m_header.height);
+    vector<uint32_t> indexes = converter.getIndexList();
+    uint32_t contents_size = m_header.width * m_header.height;
+
+    for (uint32_t i = 0; i < contents_size; ++i) {
+        uint32_t newPos = indexes[i];
+        m_contents[newPos] = dc[i];
+    }
 }
 
-char *CImage::decode() const
+char* CImage::decode() const
 {
-    TCoordinate *coordinates = getCoordinatesList(*this);
+    CConverter converter(m_header.interleave, m_header.width, m_header.height);
+    vector<uint32_t> indexes = converter.getIndexList();
+    uint32_t contents_size = m_header.width * m_header.height;
+
+    char *decoded_contents = new char[contents_size];
+    for (uint32_t i = 0; i < contents_size; ++i) {
+        uint32_t newPos = indexes[i];
+        decoded_contents[newPos] = m_contents[i];
+    }
+    return decoded_contents;
 }
 
 bool CImage::isValid() const
 {
     int expectedVolume = m_header.width * m_header.height;
+    //todo
     int actualVolume = sizeof(m_contents);
     if(expectedVolume != actualVolume)
         return false;
@@ -195,16 +254,15 @@ bool recodeImage ( const char  * srcFileName,
     }
 
     CImage inputImage(header, contents);
-    delete [] header;
 
-    if (!inputImage.isValid())
-        return false;
+//    if (!inputImage.isValid())
+//        return false;
 
-//
-//
-//    /**************************************/
-//    char *decoded_contents = inputImage.decode();
-//    CImage outputImage(decoded_contents, interleave, byteOrder);
+
+
+    /**************************************/
+    char *decoded_contents = inputImage.decode();
+    CImage outputImage(header, decoded_contents, interleave, byteOrder);
 //
 //    ofstream outputFile(dstFileName, ios::binary);
 //    if(outputFile.is_open()) {
@@ -238,7 +296,7 @@ int main ( void )
 //    else cout << "Unable to open file";
 
 
-    bool x = recodeImage ( "ref_06.img", "output_00.img", 1, ENDIAN_LITTLE );
+    bool x = recodeImage ( "input_07.img", "output_00.img", 1, ENDIAN_LITTLE );
 
 /*
     assert ( recodeImage ( "input_00.img", "output_00.img", 1, ENDIAN_LITTLE )
