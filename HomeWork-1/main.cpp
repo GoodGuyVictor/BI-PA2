@@ -106,7 +106,7 @@ class CImage
 {
 private:
     char *m_contents;
-//    char *m_header;
+    char *m_headerText;
     struct THeader {
         uint16_t endianness;
         uint32_t width;
@@ -126,16 +126,40 @@ private:
 
         return result;
     }
+
+    void buildHeader()
+    {
+        if (m_header.endianness == ENDIAN_BIG) {
+            m_headerText[0] = 0x4d;
+            m_headerText[1] = 0x4d;
+        } else {
+            m_headerText[0] = 0x49;
+            m_headerText[1] = 0x49;
+        }
+        m_headerText[6] = (char)(m_headerText[6] & 31);
+        switch(m_header.interleave) {
+            case 2: { m_headerText[6] = (char)(m_headerText[6] | 32); break; }
+            case 4: { m_headerText[6] = (char)(m_headerText[6] | 64); break; }
+            case 8: { m_headerText[6] = (char)(m_headerText[6] | 96); break; }
+            case 16: { m_headerText[6] = (char)(m_headerText[6] | 128); break; }
+            case 32: { m_headerText[6] = (char)(m_headerText[6] | 160); break; }
+            case 64: { m_headerText[6] = (char)(m_headerText[6] | 192); break; }
+        }
+    }
+
 public:
 
     CImage(char* hdr, char* cont);
     CImage(char*, const char*, int , uint16_t);   //building new image based on interleave
     char* decode()const;
     bool isValid()const;
+    bool saveToFile(const char * dstFile);
+    friend ostream & operator << (ostream & os, const CImage & img);
 };
 
 CImage::CImage(char * hdr, char * cont)
 {
+    m_headerText = hdr;
     m_header.endianness = toInt(hdr[0], hdr[1]);
     m_header.width = toInt(hdr[2], hdr[3]);
     m_header.height = toInt(hdr[4], hdr[5]);
@@ -170,6 +194,7 @@ CImage::CImage(char * hdr, char * cont)
 
 CImage::CImage(char * hdr, const char * dc, int intrlv, uint16_t bo)
 {
+    m_headerText = hdr;
     m_header.interleave = intrlv;
     m_header.endianness = bo;
     m_header.width = toInt(hdr[2], hdr[3]);
@@ -189,6 +214,7 @@ CImage::CImage(char * hdr, const char * dc, int intrlv, uint16_t bo)
     vector<uint32_t> indexes = converter.getIndexList();
     uint32_t contents_size = m_header.width * m_header.height;
 
+    m_contents = new char[contents_size];
     for (uint32_t i = 0; i < contents_size; ++i) {
         uint32_t newPos = indexes[i];
         m_contents[newPos] = dc[i];
@@ -218,8 +244,24 @@ bool CImage::isValid() const
         return false;
 }
 
-ostream& operator << (ostream& os, const CImage& img) {
+//ostream & operator << (ostream & os, const CImage & img)
+//{
+//
+//}
 
+bool CImage::saveToFile(const char *dst)
+{
+    const uint8_t HEADER_SIZE = 8;
+    uint32_t contents_size = m_header.width * m_header.height;
+    buildHeader();
+
+    ofstream outputFile(dst, ios::binary);
+    if(outputFile.is_open()) {
+        outputFile.write(m_headerText, HEADER_SIZE);
+        outputFile.write(m_contents, contents_size);
+        outputFile.close();
+        return true;
+    } else return false;
 }
 
 bool recodeImage ( const char  * srcFileName,
@@ -236,7 +278,7 @@ bool recodeImage ( const char  * srcFileName,
     char *contents;
     ifstream inputFile(tmpPath, ios::binary|ios::ate);
 
-    //reading .img file and saving its contents into buffer
+    //reading .img file and saving its contents into buffers *header and *contents
     if (inputFile.is_open())
     {
         contents_size = (uint64_t)inputFile.tellg() - HEADER_SIZE;
@@ -257,17 +299,9 @@ bool recodeImage ( const char  * srcFileName,
 
 //    if (!inputImage.isValid())
 //        return false;
-
-
-
-    /**************************************/
     char *decoded_contents = inputImage.decode();
     CImage outputImage(header, decoded_contents, interleave, byteOrder);
-//
-//    ofstream outputFile(dstFileName, ios::binary);
-//    if(outputFile.is_open()) {
-//        outputFile << outputImage;
-//    }
+    return outputImage.saveToFile(dstFileName);
 }
 
 #ifndef __PROGTEST__
@@ -296,7 +330,7 @@ int main ( void )
 //    else cout << "Unable to open file";
 
 
-    bool x = recodeImage ( "input_07.img", "output_00.img", 1, ENDIAN_LITTLE );
+    bool x = recodeImage ( "input_07.img", "output_00.img", 4, ENDIAN_LITTLE );
 
 /*
     assert ( recodeImage ( "input_00.img", "output_00.img", 1, ENDIAN_LITTLE )
