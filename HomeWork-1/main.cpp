@@ -218,7 +218,7 @@ char* CImage::decode() const
 {
     CConverter converter(m_header.interleave, m_header.width, m_header.height);
     vector<uint32_t> indexes = converter.getIndexList();
-    uint32_t contents_size = m_header.width * m_header.height;
+    uint32_t contents_size = m_header.width * m_header.height * m_header.channels;
 
     char *decoded_contents = new char[contents_size];
     for (uint32_t i = 0; i < contents_size; ++i) {
@@ -240,13 +240,13 @@ bool CImage::isValid() const
         return false;
 }
 
-bool CImage::saveToFile(const char *dst)
+bool CImage::saveToFile(const char *dstFile)
 {
     const uint8_t HEADER_SIZE = 8;
     uint32_t contents_size = m_header.width * m_header.height;
     buildHeader();
 
-    ofstream outputFile(dst, ios::binary);
+    ofstream outputFile(dstFile, ios::binary);
     if(outputFile.is_open()) {
         outputFile.write(m_headerText, HEADER_SIZE);
         outputFile.write(m_contents, contents_size);
