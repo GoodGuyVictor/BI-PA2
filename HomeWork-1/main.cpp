@@ -100,6 +100,7 @@ class CImage
 private:
     char *m_contents;
     char *m_headerText;
+    int m_number_of_pixels;
     struct THeader {
         uint16_t endianness;
         uint32_t width;
@@ -118,6 +119,20 @@ private:
         uint16_t result = (hibyte | lobyte);
 
         return result;
+    }
+
+    bool validInterleave() const
+    {
+        switch(m_header.interleave) {
+            case 1: return true;
+            case 2: return true;
+            case 4: return true;
+            case 8: return true;
+            case 16: return true;
+            case 32: return true;
+            case 64: return true;
+            default: return false;
+        }
     }
 
     void buildHeader()
@@ -142,14 +157,14 @@ private:
 
 public:
 
-    CImage(char* hdr, char* cont);
-    CImage(char*, char**, int , uint16_t);   //building new image based on interleave
+    CImage(char* hdr, char* cont, int);
+    CImage(char*, char**, int , uint16_t, int);   //building new image based on interleave
     char** decode()const;
     bool isValid()const;
     bool saveToFile(const char * dstFile);
 };
 
-CImage::CImage(char * hdr, char * cont)
+CImage::CImage(char * hdr, char * cont, int bytes)
 {
     m_headerText = hdr;
     m_header.endianness = toInt(hdr[0], hdr[1]);
@@ -181,6 +196,7 @@ CImage::CImage(char * hdr, char * cont)
         case 3: { m_header.channels = 4; break; }
         default: m_header.channels = 0; //for error
     }
+    m_number_of_pixels = bytes / m_header.channels;
     m_contents = cont;
 }
 
@@ -206,18 +222,10 @@ char ** CImage::decode() const
             j = 0;
         }
     }
-
-//    for (uint32_t i = 0; i < contents_size; ++i) {
-//        uint32_t newPos = indexes[i];
-//        decoded_contents[newPos] = m_contents[i];
-//    }
-
-//    ofstream decoded("decoded-contents.img", ios::binary);
-//    decoded.write(decoded_contents, contents_size);
     return decoded_contents;
 }
 
-CImage::CImage(char * hdr, char** dc, int intrlv, uint16_t bo)
+CImage::CImage(char * hdr, char** dc, int intrlv, uint16_t bo, int bytes)
 {
     m_headerText = hdr;
     m_header.interleave = intrlv;
@@ -248,6 +256,7 @@ CImage::CImage(char * hdr, char** dc, int intrlv, uint16_t bo)
         case 3: { m_header.channels = 4; break; }
         default: m_header.channels = 0; //for error
     }
+    m_number_of_pixels = bytes / m_header.channels;
     buildHeader();
 
     CConverter converter(m_header.interleave, m_header.width, m_header.height);
@@ -256,8 +265,6 @@ CImage::CImage(char * hdr, char** dc, int intrlv, uint16_t bo)
     uint32_t contents_size_header = m_header.width * m_header.height;
     m_contents = new char[contents_size_body];
 
-//    vector<char> tmpContents;
-//
     int k = 0;
     for (uint32_t i = 0; i < contents_size_header; ++i) {
         uint32_t pos = indexes[i];
@@ -265,26 +272,17 @@ CImage::CImage(char * hdr, char** dc, int intrlv, uint16_t bo)
             m_contents[k++] = dc[pos][j];
         }
     }
-
-//    m_contents = new char[contents_size];
-//    for (uint32_t i = 0; i < contents_size; ++i) {
-//        uint32_t pos = indexes[i];
-////        m_contents[i] = dc[pos];
-//    }
 }
 
 bool CImage::isValid() const
 {
     int expectedVolume = m_header.width * m_header.height;
-    //todo
-    int actualVolume = 0;
-    int i = 1;
-    while(m_contents[i] != '\0') {
-        actualVolume++;
-        i++;
-    }
+    int actualVolume = m_number_of_pixels;
     if(expectedVolume != actualVolume)
         return false;
+    if(!validInterleave())
+        return false;
+    return true;
 }
 
 bool CImage::saveToFile(const char *dstFile)
@@ -314,6 +312,7 @@ bool recodeImage ( const char  * srcFileName,
     char *header;
     char *contents;
     ifstream inputFile(tmpPath, ios::binary|ios::ate);
+    streamsize bytes;
 
     //reading .img file and saving its contents into buffers *header and *contents
     if (inputFile.is_open())
@@ -327,18 +326,20 @@ bool recodeImage ( const char  * srcFileName,
         inputFile.read(header, HEADER_SIZE);
         //reading contents
         inputFile.read(contents, contents_size);
+        bytes = inputFile.gcount();
         inputFile.close();
     } else {
         return false;
     }
 
-    CImage inputImage(header, contents);
-
+    CImage inputImage(header, contents, (int)bytes);
     if (!inputImage.isValid())
         return false;
-    char** decoded_contents = inputImage.decode();
 
-    CImage outputImage(header, decoded_contents, interleave, byteOrder);
+    char** decoded_contents = inputImage.decode();
+    CImage outputImage(header, decoded_contents, interleave, byteOrder, (int)bytes);
+    if(!outputImage.isValid())
+        return false;
     return outputImage.saveToFile(dstFileName);
 }
 
@@ -351,11 +352,6 @@ bool identicalFiles ( const char * fileName1,
 
 int main ( void )
 {
-
-
-//    bool x = recodeImage ( "input_05.img", "output_00.img", 4, ENDIAN_LITTLE );
-
-
     assert ( recodeImage ( "input_00.img", "output_00.img", 1, ENDIAN_LITTLE )
              && identicalFiles ( "output_00.img", "ref_00.img" ) );
 
