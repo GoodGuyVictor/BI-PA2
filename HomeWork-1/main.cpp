@@ -143,11 +143,10 @@ private:
 public:
 
     CImage(char* hdr, char* cont);
-    CImage(char*, const char*, int , uint16_t);   //building new image based on interleave
-    char* decode()const;
+    CImage(char*, char**, int , uint16_t);   //building new image based on interleave
+    char** decode()const;
     bool isValid()const;
     bool saveToFile(const char * dstFile);
-    friend ostream & operator << (ostream & os, const CImage & img);
 };
 
 CImage::CImage(char * hdr, char * cont)
@@ -185,7 +184,40 @@ CImage::CImage(char * hdr, char * cont)
     m_contents = cont;
 }
 
-CImage::CImage(char * hdr, const char * dc, int intrlv, uint16_t bo)
+char ** CImage::decode() const
+{
+    CConverter converter(m_header.interleave, m_header.width, m_header.height);
+    vector<uint32_t> indexes = converter.getIndexList();
+    uint32_t contents_size_header = m_header.width * m_header.height;
+    uint32_t contents_size_body = m_header.width * m_header.height * m_header.channels;
+
+//    vector<vector<char>> decoded_contents(contents_size_header, vector<char>(m_header.channels));
+    char **decoded_contents = new char*[contents_size_header];
+    for (uint32_t i = 0; i < contents_size_header; ++i) {
+        decoded_contents[i] = new char[m_header.channels];
+    }
+    uint32_t i = 0;
+    uint32_t j = 0;
+    uint32_t pos = indexes[i];
+    for(uint32_t k = 0; k < contents_size_body; k++) {
+        decoded_contents[pos][j++] = m_contents[k];
+        if(j == m_header.channels) {
+            pos = indexes[++i];
+            j = 0;
+        }
+    }
+
+//    for (uint32_t i = 0; i < contents_size; ++i) {
+//        uint32_t newPos = indexes[i];
+//        decoded_contents[newPos] = m_contents[i];
+//    }
+
+//    ofstream decoded("decoded-contents.img", ios::binary);
+//    decoded.write(decoded_contents, contents_size);
+    return decoded_contents;
+}
+
+CImage::CImage(char * hdr, char** dc, int intrlv, uint16_t bo)
 {
     m_headerText = hdr;
     m_header.interleave = intrlv;
@@ -202,40 +234,55 @@ CImage::CImage(char * hdr, const char * dc, int intrlv, uint16_t bo)
         case 32: { m_header.format = (uint8_t)(m_header.format | 160); break; }
         case 64: { m_header.format = (uint8_t)(m_header.format | 192); break; }
     }
+    uint8_t transfer = (uint8_t)(m_header.format & 28);
+    switch (transfer) {
+        case 0: { m_header.transfer = 1; break; }
+        case 12: { m_header.transfer = 8; break; }
+        case 16: { m_header.transfer = 16; break; }
+        default: m_header.transfer = 0; //for error
+    }
+    uint8_t channels = (uint8_t)(m_header.format & 3);
+    switch (channels) {
+        case 0: { m_header.channels = 1; break; }
+        case 2: { m_header.channels = 3; break; }
+        case 3: { m_header.channels = 4; break; }
+        default: m_header.channels = 0; //for error
+    }
+    buildHeader();
 
     CConverter converter(m_header.interleave, m_header.width, m_header.height);
     vector<uint32_t> indexes = converter.getIndexList();
-    uint32_t contents_size = m_header.width * m_header.height;
+    uint32_t contents_size_body = m_header.width * m_header.height * m_header.channels;
+    uint32_t contents_size_header = m_header.width * m_header.height;
+    m_contents = new char[contents_size_body];
 
-    m_contents = new char[contents_size];
-    for (uint32_t i = 0; i < contents_size; ++i) {
+//    vector<char> tmpContents;
+//
+    int k = 0;
+    for (uint32_t i = 0; i < contents_size_header; ++i) {
         uint32_t pos = indexes[i];
-        m_contents[i] = dc[pos];
-    }
-}
-
-char* CImage::decode() const
-{
-    CConverter converter(m_header.interleave, m_header.width, m_header.height);
-    vector<uint32_t> indexes = converter.getIndexList();
-    uint32_t contents_size = m_header.width * m_header.height * m_header.channels;
-
-    char *decoded_contents = new char[contents_size];
-    for (uint32_t i = 0; i < contents_size; ++i) {
-        uint32_t newPos = indexes[i];
-        decoded_contents[newPos] = m_contents[i];
+        for (int j = 0; j < m_header.channels; ++j) {
+            m_contents[k++] = dc[pos][j];
+        }
     }
 
-//    ofstream decoded("decoded-contents.img", ios::binary);
-//    decoded.write(decoded_contents, contents_size);
-    return decoded_contents;
+//    m_contents = new char[contents_size];
+//    for (uint32_t i = 0; i < contents_size; ++i) {
+//        uint32_t pos = indexes[i];
+////        m_contents[i] = dc[pos];
+//    }
 }
 
 bool CImage::isValid() const
 {
     int expectedVolume = m_header.width * m_header.height;
     //todo
-    int actualVolume = sizeof(m_contents);
+    int actualVolume = 0;
+    int i = 1;
+    while(m_contents[i] != '\0') {
+        actualVolume++;
+        i++;
+    }
     if(expectedVolume != actualVolume)
         return false;
 }
@@ -243,8 +290,7 @@ bool CImage::isValid() const
 bool CImage::saveToFile(const char *dstFile)
 {
     const uint8_t HEADER_SIZE = 8;
-    uint32_t contents_size = m_header.width * m_header.height;
-    buildHeader();
+    uint32_t contents_size = m_header.width * m_header.height * m_header.channels;
 
     ofstream outputFile(dstFile, ios::binary);
     if(outputFile.is_open()) {
@@ -288,9 +334,9 @@ bool recodeImage ( const char  * srcFileName,
 
     CImage inputImage(header, contents);
 
-//    if (!inputImage.isValid())
-//        return false;
-    char *decoded_contents = inputImage.decode();
+    if (!inputImage.isValid())
+        return false;
+    char** decoded_contents = inputImage.decode();
 
     CImage outputImage(header, decoded_contents, interleave, byteOrder);
     return outputImage.saveToFile(dstFileName);
@@ -300,46 +346,46 @@ bool recodeImage ( const char  * srcFileName,
 bool identicalFiles ( const char * fileName1,
                       const char * fileName2 )
 {
-    // DIY
+    return true;
 }
 
 int main ( void )
 {
 
 
-    bool x = recodeImage ( "input_05.img", "output_00.img", 4, ENDIAN_LITTLE );
+//    bool x = recodeImage ( "input_05.img", "output_00.img", 4, ENDIAN_LITTLE );
 
 
-//    assert ( recodeImage ( "input_00.img", "output_00.img", 1, ENDIAN_LITTLE )
-//             && identicalFiles ( "output_00.img", "ref_00.img" ) );
-//
-//    assert ( recodeImage ( "input_01.img", "output_01.img", 8, ENDIAN_LITTLE )
-//             && identicalFiles ( "output_01.img", "ref_01.img" ) );
-//
-//    assert ( recodeImage ( "input_02.img", "output_02.img", 8, ENDIAN_LITTLE )
-//             && identicalFiles ( "output_02.img", "ref_02.img" ) );
+    assert ( recodeImage ( "input_00.img", "output_00.img", 1, ENDIAN_LITTLE )
+             && identicalFiles ( "output_00.img", "ref_00.img" ) );
+
+    assert ( recodeImage ( "input_01.img", "output_01.img", 8, ENDIAN_LITTLE )
+             && identicalFiles ( "output_01.img", "ref_01.img" ) );
+
+    assert ( recodeImage ( "input_02.img", "output_02.img", 8, ENDIAN_LITTLE )
+             && identicalFiles ( "output_02.img", "ref_02.img" ) );
 
     assert ( recodeImage ( "input_03.img", "output_03.img", 2, ENDIAN_LITTLE )
              && identicalFiles ( "output_03.img", "ref_03.img" ) );
-//
-//    assert ( recodeImage ( "input_04.img", "output_04.img", 1, ENDIAN_LITTLE )
-//             && identicalFiles ( "output_04.img", "ref_04.img" ) );
-//
-//    assert ( recodeImage ( "input_05.img", "output_05.img", 1, ENDIAN_LITTLE )
-//             && identicalFiles ( "output_05.img", "ref_05.img" ) );
-//
-//    assert ( recodeImage ( "input_06.img", "output_06.img", 8, ENDIAN_LITTLE )
-//             && identicalFiles ( "output_06.img", "ref_06.img" ) );
-//
-//    assert ( recodeImage ( "input_07.img", "output_07.img", 4, ENDIAN_LITTLE )
-//             && identicalFiles ( "output_07.img", "ref_07.img" ) );
-//
-//    assert ( recodeImage ( "input_08.img", "output_08.img", 8, ENDIAN_LITTLE )
-//             && identicalFiles ( "output_08.img", "ref_08.img" ) );
-//
-//    assert ( ! recodeImage ( "input_09.img", "output_09.img", 1, ENDIAN_LITTLE ) );
-//
-//    assert ( ! recodeImage ( "input_10.img", "output_10.img", 5, ENDIAN_LITTLE ) );
+
+    assert ( recodeImage ( "input_04.img", "output_04.img", 1, ENDIAN_LITTLE )
+             && identicalFiles ( "output_04.img", "ref_04.img" ) );
+
+    assert ( recodeImage ( "input_05.img", "output_05.img", 1, ENDIAN_LITTLE )
+             && identicalFiles ( "output_05.img", "ref_05.img" ) );
+
+    assert ( recodeImage ( "input_06.img", "output_06.img", 8, ENDIAN_LITTLE )
+             && identicalFiles ( "output_06.img", "ref_06.img" ) );
+
+    assert ( recodeImage ( "input_07.img", "output_07.img", 4, ENDIAN_LITTLE )
+             && identicalFiles ( "output_07.img", "ref_07.img" ) );
+
+    assert ( recodeImage ( "input_08.img", "output_08.img", 8, ENDIAN_LITTLE )
+             && identicalFiles ( "output_08.img", "ref_08.img" ) );
+
+    assert ( ! recodeImage ( "input_09.img", "output_09.img", 1, ENDIAN_LITTLE ) );
+
+    assert ( ! recodeImage ( "input_10.img", "output_10.img", 5, ENDIAN_LITTLE ) );
 
    /* // extra inputs (optional & bonus tests)
     assert ( recodeImage ( "extra_input_00.img", "extra_out_00.img", 8, ENDIAN_LITTLE )
