@@ -105,7 +105,7 @@ private:
         uint16_t endianness;
         uint16_t width;
         uint16_t height;
-        uint8_t format;
+//        uint8_t format;
         int interleave;
         uint8_t channels;
         uint8_t transfer;
@@ -127,8 +127,9 @@ private:
         return (m_header.interleave && m_header.transfer && m_header.channels);
     }
 
-    void buildHeader()
+    void buildHeaderForOutput()
     {
+        //write endianness into header
         if (m_header.endianness == ENDIAN_BIG) {
             m_headerText[0] = 0x4d;
             m_headerText[1] = 0x4d;
@@ -136,7 +137,8 @@ private:
             m_headerText[0] = 0x49;
             m_headerText[1] = 0x49;
         }
-        m_headerText[6] = (char)(m_headerText[6] & 31);
+        //change interleave in header
+        m_headerText[6] = (char)(m_headerText[6] & 31); //frees space for interleave 3bits
         switch(m_header.interleave) {
             case 2: { m_headerText[6] = (char)(m_headerText[6] | 32); break; }
             case 4: { m_headerText[6] = (char)(m_headerText[6] | 64); break; }
@@ -144,6 +146,24 @@ private:
             case 16: { m_headerText[6] = (char)(m_headerText[6] | 128); break; }
             case 32: { m_headerText[6] = (char)(m_headerText[6] | 160); break; }
             case 64: { m_headerText[6] = (char)(m_headerText[6] | 192); break; }
+        }
+    }
+
+    void buildContentsForOutput(char **dec_cont)
+    {
+        CConverter converter(m_header.interleave, m_header.width, m_header.height);
+        vector<uint32_t> indexes = converter.getIndexList();
+        uint32_t contents_size_body = m_header.width * m_header.height * m_header.channels;
+        uint32_t contents_size_header = m_header.width * m_header.height;
+        m_contents = new char[contents_size_body];
+
+        int k = 0;
+        uint32_t pos;
+        for (uint32_t i = 0; i < contents_size_header; ++i) {
+            pos = indexes[i];
+            for (int j = 0; j < m_header.channels; ++j) {
+                m_contents[k++] = dec_cont[pos][j];
+            }
         }
     }
 
@@ -162,8 +182,8 @@ CImage::CImage(char * header, char * contents, int bytes)
     m_header.endianness = toInt((unsigned char)header[0], header[1]);
     m_header.width = toInt((unsigned char)header[2], header[3]);
     m_header.height = toInt((unsigned char)header[4], header[5]);
-    m_header.format = (uint8_t)header[6];
-    int interleave = (m_header.format & 224);
+    uint8_t format = (uint8_t)header[6];
+    int interleave = (format & 224);
     switch (interleave) {
         case 0: { m_header.interleave = 1; break; }
         case 32: { m_header.interleave = 2; break; }
@@ -174,14 +194,14 @@ CImage::CImage(char * header, char * contents, int bytes)
         case 192: { m_header.interleave = 64; break; }
         default: m_header.interleave = 0; //for error
     }
-    uint8_t transfer = (uint8_t)(m_header.format & 28);
+    uint8_t transfer = (uint8_t)(format & 28);
     switch (transfer) {
         case 0: { m_header.transfer = 1; break; }
         case 12: { m_header.transfer = 8; break; }
         case 16: { m_header.transfer = 16; break; }
         default: m_header.transfer = 0; //for error
     }
-    uint8_t channels = (uint8_t)(m_header.format & 3);
+    uint8_t channels = (uint8_t)(format & 3);
     switch (channels) {
         case 0: { m_header.channels = 1; break; }
         case 2: { m_header.channels = 3; break; }
@@ -190,6 +210,17 @@ CImage::CImage(char * header, char * contents, int bytes)
     }
     m_number_of_pixels = bytes / m_header.channels;
     m_contents = contents;
+}
+
+CImage::CImage(char * header, char** dec_cont, int intrlv, uint16_t bo, int bytes)
+:CImage(header, NULL, bytes)
+{
+
+    m_header.endianness = bo;
+    m_header.interleave = intrlv;
+    buildHeaderForOutput();
+    buildContentsForOutput(dec_cont);
+
 }
 
 char ** CImage::decode() const
@@ -215,57 +246,6 @@ char ** CImage::decode() const
         }
     }
     return decoded_contents;
-}
-
-CImage::CImage(char * header, char** dec_cont, int intrlv, uint16_t bo, int bytes)
-{
-
-
-    m_headerText = header;
-    m_header.interleave = intrlv;
-    m_header.endianness = bo;
-    m_header.width = toInt((unsigned char)header[2], header[3]);
-    m_header.height = toInt((unsigned char)header[4], header[5]);
-    m_header.format = (uint8_t)header[6];
-    m_header.format = (uint8_t)(m_header.format & 31);
-    switch(intrlv) {
-        case 2: { m_header.format = (uint8_t)(m_header.format | 32); break; }
-        case 4: { m_header.format = (uint8_t)(m_header.format | 64); break; }
-        case 8: { m_header.format = (uint8_t)(m_header.format | 96); break; }
-        case 16: { m_header.format = (uint8_t)(m_header.format | 128); break; }
-        case 32: { m_header.format = (uint8_t)(m_header.format | 160); break; }
-        case 64: { m_header.format = (uint8_t)(m_header.format | 192); break; }
-    }
-    uint8_t transfer = (uint8_t)(m_header.format & 28);
-    switch (transfer) {
-        case 0: { m_header.transfer = 1; break; }
-        case 12: { m_header.transfer = 8; break; }
-        case 16: { m_header.transfer = 16; break; }
-        default: m_header.transfer = 0; //for error
-    }
-    uint8_t channels = (uint8_t)(m_header.format & 3);
-    switch (channels) {
-        case 0: { m_header.channels = 1; break; }
-        case 2: { m_header.channels = 3; break; }
-        case 3: { m_header.channels = 4; break; }
-        default: m_header.channels = 0; //for error
-    }
-    m_number_of_pixels = bytes / m_header.channels;
-    buildHeader();
-
-    CConverter converter(m_header.interleave, m_header.width, m_header.height);
-    vector<uint32_t> indexes = converter.getIndexList();
-    uint32_t contents_size_body = m_header.width * m_header.height * m_header.channels;
-    uint32_t contents_size_header = m_header.width * m_header.height;
-    m_contents = new char[contents_size_body];
-
-    int k = 0;
-    for (uint32_t i = 0; i < contents_size_header; ++i) {
-        uint32_t pos = indexes[i];
-        for (int j = 0; j < m_header.channels; ++j) {
-            m_contents[k++] = dec_cont[pos][j];
-        }
-    }
 }
 
 bool CImage::isValid() const
