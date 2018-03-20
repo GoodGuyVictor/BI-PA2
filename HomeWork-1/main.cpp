@@ -303,15 +303,12 @@ bool recodeImage ( const char  * srcFileName,
                    const char  * dstFileName,
                    int           interleave,
                    uint16_t      byteOrder ) {
-    string tmpPath("/home/victor/githubRepos/BI-PA2/HomeWork-1/");
-    tmpPath = tmpPath + srcFileName;
-
 
     const uint8_t HEADER_SIZE = 8;
     uint64_t contents_size;
     char *header;
     char *contents;
-    ifstream inputFile(tmpPath, ios::binary|ios::ate);
+    ifstream inputFile(srcFileName, ios::binary|ios::ate);
     streamsize bytes;
 
     //reading .img file and saving its contents into buffers *header and *contents
