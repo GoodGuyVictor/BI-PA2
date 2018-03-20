@@ -103,15 +103,16 @@ private:
     int m_number_of_pixels;
     struct THeader {
         uint16_t endianness;
-        uint32_t width;
-        uint32_t height;
+        uint16_t width;
+        uint16_t height;
         uint8_t format;
         int interleave;
         uint8_t channels;
         uint8_t transfer;
     } m_header;
 
-    uint16_t toInt(char lw, char hg)
+    //accepts two bytes and translate them into two-byte integer
+    uint16_t toInt(unsigned char lw, char hg)
     {
         uint16_t lobyte = (uint16_t )lw;
         uint16_t hibyte = (uint16_t )hg;
@@ -121,18 +122,9 @@ private:
         return result;
     }
 
-    bool validInterleave() const
+    bool validFormat() const
     {
-        switch(m_header.interleave) {
-            case 1: return true;
-            case 2: return true;
-            case 4: return true;
-            case 8: return true;
-            case 16: return true;
-            case 32: return true;
-            case 64: return true;
-            default: return false;
-        }
+        return (m_header.interleave && m_header.transfer && m_header.channels);
     }
 
     void buildHeader()
@@ -157,20 +149,20 @@ private:
 
 public:
 
-    CImage(char* hdr, char* cont, int);
+    CImage(char* header, char* contents, int);
     CImage(char*, char**, int , uint16_t, int);   //building new image based on interleave
     char** decode()const;
     bool isValid()const;
     bool saveToFile(const char * dstFile);
 };
 
-CImage::CImage(char * hdr, char * cont, int bytes)
+CImage::CImage(char * header, char * contents, int bytes)
 {
-    m_headerText = hdr;
-    m_header.endianness = toInt(hdr[0], hdr[1]);
-    m_header.width = toInt(hdr[2], hdr[3]);
-    m_header.height = toInt(hdr[4], hdr[5]);
-    m_header.format = (uint8_t)hdr[6];
+    m_headerText = header;
+    m_header.endianness = toInt((unsigned char)header[0], header[1]);
+    m_header.width = toInt((unsigned char)header[2], header[3]);
+    m_header.height = toInt((unsigned char)header[4], header[5]);
+    m_header.format = (uint8_t)header[6];
     int interleave = (m_header.format & 224);
     switch (interleave) {
         case 0: { m_header.interleave = 1; break; }
@@ -197,7 +189,7 @@ CImage::CImage(char * hdr, char * cont, int bytes)
         default: m_header.channels = 0; //for error
     }
     m_number_of_pixels = bytes / m_header.channels;
-    m_contents = cont;
+    m_contents = contents;
 }
 
 char ** CImage::decode() const
@@ -225,14 +217,16 @@ char ** CImage::decode() const
     return decoded_contents;
 }
 
-CImage::CImage(char * hdr, char** dc, int intrlv, uint16_t bo, int bytes)
+CImage::CImage(char * header, char** dec_cont, int intrlv, uint16_t bo, int bytes)
 {
-    m_headerText = hdr;
+
+
+    m_headerText = header;
     m_header.interleave = intrlv;
     m_header.endianness = bo;
-    m_header.width = toInt(hdr[2], hdr[3]);
-    m_header.height = toInt(hdr[4], hdr[5]);
-    m_header.format = (uint8_t)hdr[6];
+    m_header.width = toInt((unsigned char)header[2], header[3]);
+    m_header.height = toInt((unsigned char)header[4], header[5]);
+    m_header.format = (uint8_t)header[6];
     m_header.format = (uint8_t)(m_header.format & 31);
     switch(intrlv) {
         case 2: { m_header.format = (uint8_t)(m_header.format | 32); break; }
@@ -269,7 +263,7 @@ CImage::CImage(char * hdr, char** dc, int intrlv, uint16_t bo, int bytes)
     for (uint32_t i = 0; i < contents_size_header; ++i) {
         uint32_t pos = indexes[i];
         for (int j = 0; j < m_header.channels; ++j) {
-            m_contents[k++] = dc[pos][j];
+            m_contents[k++] = dec_cont[pos][j];
         }
     }
 }
@@ -280,7 +274,7 @@ bool CImage::isValid() const
     int actualVolume = m_number_of_pixels;
     if(expectedVolume != actualVolume)
         return false;
-    if(!validInterleave())
+    if(!validFormat())
         return false;
     return true;
 }
@@ -304,11 +298,14 @@ bool recodeImage ( const char  * srcFileName,
                    int           interleave,
                    uint16_t      byteOrder ) {
 
+    string tmpFile = "/home/victor/githubRepos/BI-PA2/HomeWork-1/";
+    tmpFile += srcFileName;
+
     const uint8_t HEADER_SIZE = 8;
     uint64_t contents_size;
     char *header;
     char *contents;
-    ifstream inputFile(srcFileName, ios::binary|ios::ate);
+    ifstream inputFile(tmpFile, ios::binary|ios::ate);
     streamsize bytes;
 
     //reading .img file and saving its contents into buffers *header and *contents
@@ -349,6 +346,9 @@ bool identicalFiles ( const char * fileName1,
 
 int main ( void )
 {
+    assert ( recodeImage ( "in_2653009.bin", "out_2653009.bin", 1, ENDIAN_LITTLE )
+             && identicalFiles ( "output_00.img", "ref_00.img" ) );
+
     assert ( recodeImage ( "input_00.img", "output_00.img", 1, ENDIAN_LITTLE )
              && identicalFiles ( "output_00.img", "ref_00.img" ) );
 
