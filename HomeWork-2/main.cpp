@@ -82,6 +82,35 @@ private:
             return true;
         else return false;
     }
+
+    vector<TEmployee>::iterator findLowestSurname(const TEmployee & emp)
+    {
+        vector<TEmployee>::iterator lowestSurname;
+        lowestSurname = lower_bound(m_staffDb.begin(),
+                                 m_staffDb.end(),
+                                 emp, cmpSurname);
+        return lowestSurname;
+    }
+
+    vector<TEmployee>::iterator findHighestSurname(const TEmployee & emp, vector<TEmployee>::iterator ls)
+    {
+        vector<TEmployee>::iterator highestSurname;
+        highestSurname = upper_bound(ls,
+                                m_staffDb.end(),
+                                emp,
+                                cmpSurname);
+        return highestSurname;
+    }
+
+    vector<TEmployee>::iterator findLowestName(const TEmployee & emp, vector<TEmployee>::iterator ls)
+    {
+        auto highestSurname = findHighestSurname(emp, ls);
+
+        vector<TEmployee>::iterator lowestName;
+        lowestName = lower_bound(ls, highestSurname, emp, cmpName);
+
+        return lowestName;
+    }
 };
 
 CPersonalAgenda::CPersonalAgenda(void)
@@ -100,27 +129,18 @@ bool CPersonalAgenda::Add(const string &name,
         m_staffDb.emplace_back(TEmployee(name, surname, email, salary));
         return true;
     } else {
-        vector<TEmployee>::iterator low;
-        low = lower_bound(m_staffDb.begin(),
-                         m_staffDb.end(),
-                         TEmployee(name, surname, email, salary), cmpSurname);
-        if(low->m_surname == surname) {
-            vector<TEmployee>::iterator up;
-            up = upper_bound(low,
-                             m_staffDb.end(),
-                             TEmployee(name, surname, email, salary),
-                             cmpSurname);
-            vector<TEmployee>::iterator lowName;
-            lowName = lower_bound(low, up, TEmployee(name, surname, email, salary), cmpName);
-            if(lowName->m_name == name)
+        auto lowestMatchedSurname = findLowestSurname(TEmployee(name, surname, email, salary));
+        if(lowestMatchedSurname->m_surname != surname) {
+            m_staffDb.insert(lowestMatchedSurname, TEmployee(name, surname, email, salary));
+            return true;
+        } else {
+            if(lowestMatchedSurname->m_name == name)
                 return false;
             else {
-                m_staffDb.insert(lowName, TEmployee(name, surname, email, salary));
+                auto lowestName = findLowestName(TEmployee(name, surname, email, salary), lowestMatchedSurname);
+                m_staffDb.insert(lowestName, TEmployee(name, surname, email, salary));
                 return true;
             }
-        } else {
-            m_staffDb.insert(low, TEmployee(name, surname, email, salary));
-            return true;
         }
     }
 }
