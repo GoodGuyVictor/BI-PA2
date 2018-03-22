@@ -16,6 +16,17 @@
 using namespace std;
 #endif /* __PROGTEST__ */
 
+struct TPerson
+{
+    string m_name;
+    string m_surname;
+    string m_email;
+    unsigned int m_salary;
+    TPerson(string name, string surname, string email, unsigned int salary)
+    :m_name(name), m_surname(surname), m_email(email), m_salary(salary)
+    {}
+};
+
 class CPersonalAgenda
 {
 public:
@@ -56,8 +67,23 @@ public:
                                      string          & outName,
                                      string          & outSurname ) const;
 private:
-    // todo
+    vector<TPerson> m_personalDb;
 };
+
+CPersonalAgenda::CPersonalAgenda(void)
+{}
+
+CPersonalAgenda::~CPersonalAgenda(void)
+{}
+
+bool CPersonalAgenda::Add(const string &name,
+                          const string &surname,
+                          const string &email,
+                          unsigned int salary)
+{
+    m_personalDb.emplace_back(TPerson(name, surname, email, salary));
+
+}
 
 #ifndef __PROGTEST__
 int main ( void )
