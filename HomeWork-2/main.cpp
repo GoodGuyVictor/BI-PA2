@@ -75,6 +75,13 @@ private:
             return true;
         else return false;
     }
+
+    static bool cmpName(const TEmployee &curr, const TEmployee &val)
+    {
+        if(curr.m_name.compare(val.m_name) < 0)
+            return true;
+        else return false;
+    }
 };
 
 CPersonalAgenda::CPersonalAgenda(void)
@@ -93,14 +100,26 @@ bool CPersonalAgenda::Add(const string &name,
         m_staffDb.emplace_back(TEmployee(name, surname, email, salary));
         return true;
     } else {
-        vector<TEmployee>::iterator it;
-        it = lower_bound(m_staffDb.begin(),
+        vector<TEmployee>::iterator low;
+        low = lower_bound(m_staffDb.begin(),
                          m_staffDb.end(),
                          TEmployee(name, surname, email, salary), cmpSurname);
-        if(it->m_surname == surname) {
-            //upper bound
+        if(low->m_surname == surname) {
+            vector<TEmployee>::iterator up;
+            up = upper_bound(low,
+                             m_staffDb.end(),
+                             TEmployee(name, surname, email, salary),
+                             cmpSurname);
+            vector<TEmployee>::iterator lowName;
+            lowName = lower_bound(low, up, TEmployee(name, surname, email, salary), cmpName);
+            if(lowName->m_name == name)
+                return false;
+            else {
+                m_staffDb.insert(lowName, TEmployee(name, surname, email, salary));
+                return true;
+            }
         } else {
-            m_staffDb.insert(it, TEmployee(name, surname, email, salary));
+            m_staffDb.insert(low, TEmployee(name, surname, email, salary));
             return true;
         }
     }
