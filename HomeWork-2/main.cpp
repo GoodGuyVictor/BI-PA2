@@ -106,9 +106,6 @@ bool CPersonalAgenda::Add(const string &name,
     }
 }
 
-int hello() {
-    cout << "hello world";
-}
 
 #ifndef __PROGTEST__
 int main ( void )
