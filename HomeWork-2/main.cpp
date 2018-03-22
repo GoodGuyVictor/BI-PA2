@@ -16,13 +16,13 @@
 using namespace std;
 #endif /* __PROGTEST__ */
 
-struct TPerson
+struct TEmployee
 {
     string m_name;
     string m_surname;
     string m_email;
     unsigned int m_salary;
-    TPerson(string name, string surname, string email, unsigned int salary)
+    TEmployee(string name, string surname, string email, unsigned int salary)
     :m_name(name), m_surname(surname), m_email(email), m_salary(salary)
     {}
 };
@@ -67,7 +67,14 @@ public:
                                      string          & outName,
                                      string          & outSurname ) const;
 private:
-    vector<TPerson> m_personalDb;
+    vector<TEmployee> m_staffDb;
+
+    static bool cmpSurname(const TEmployee &curr, const TEmployee &val)
+    {
+        if(curr.m_surname.compare(val.m_surname) < 0)
+            return true;
+        else return false;
+    }
 };
 
 CPersonalAgenda::CPersonalAgenda(void)
@@ -81,13 +88,32 @@ bool CPersonalAgenda::Add(const string &name,
                           const string &email,
                           unsigned int salary)
 {
-    m_personalDb.emplace_back(TPerson(name, surname, email, salary));
 
+    if(m_staffDb.empty()) {
+        m_staffDb.emplace_back(TEmployee(name, surname, email, salary));
+        return true;
+    } else {
+        vector<TEmployee>::iterator it;
+        it = lower_bound(m_staffDb.begin(),
+                         m_staffDb.end(),
+                         TEmployee(name, surname, email, salary), cmpSurname);
+        if(it->m_surname == surname) {
+            //upper bound
+        } else {
+            m_staffDb.insert(it, TEmployee(name, surname, email, salary));
+            return true;
+        }
+    }
 }
 
 #ifndef __PROGTEST__
 int main ( void )
 {
+
+
+
+
+
     string outName, outSurname;
     int lo, hi;
 
@@ -95,7 +121,7 @@ int main ( void )
     assert ( b1 . Add ( "John", "Smith", "john", 30000 ) );
     assert ( b1 . Add ( "John", "Miller", "johnm", 35000 ) );
     assert ( b1 . Add ( "Peter", "Smith", "peter", 23000 ) );
-    assert ( b1 . GetFirst ( outName, outSurname )
+    /*assert ( b1 . GetFirst ( outName, outSurname )
              && outName == "John"
              && outSurname == "Miller" );
     assert ( b1 . GetNext ( "John", "Miller", outName, outSurname )
@@ -207,6 +233,9 @@ int main ( void )
     assert ( ! b2 . Del ( "peter" ) );
     assert ( b2 . Add ( "Peter", "Smith", "peter", 40000 ) );
     assert ( b2 . GetSalary ( "peter" ) ==  40000 );
+
+ */
+
 
     return 0;
 }
