@@ -22,7 +22,8 @@ struct TEmployee
     string m_surname;
     string m_email;
     unsigned int m_salary;
-    TEmployee(string name, string surname, string email, unsigned int salary)
+
+    TEmployee(string name, string surname, string email = "", unsigned int salary = 0)
     :m_name(name), m_surname(surname), m_email(email), m_salary(salary)
     {}
 };
@@ -83,7 +84,7 @@ private:
         else return false;
     }
 
-    vector<TEmployee>::iterator findLowerBoundSurname(const TEmployee &emp)
+    vector<TEmployee>::iterator findLowerBoundSurname(const TEmployee &emp) const
     {
         vector<TEmployee>::iterator lowestSurname;
         lowestSurname = lower_bound(m_staffDb.begin(),
@@ -92,7 +93,7 @@ private:
         return lowestSurname;
     }
 
-    vector<TEmployee>::iterator findUpperBoundSurname(const TEmployee &emp, vector<TEmployee>::iterator lbs)
+    vector<TEmployee>::iterator findUpperBoundSurname(const TEmployee &emp, vector<TEmployee>::iterator lbs) const
     {
         vector<TEmployee>::iterator upperBoundSurname;
         upperBoundSurname = upper_bound(lbs,
@@ -102,7 +103,7 @@ private:
         return upperBoundSurname;
     }
 
-    vector<TEmployee>::iterator findLowerBoundName(const TEmployee &emp, vector<TEmployee>::iterator ls)
+    vector<TEmployee>::iterator findLowerBoundName(const TEmployee &emp, vector<TEmployee>::iterator ls) const
     {
         auto highestSurname = findUpperBoundSurname(emp, ls);
 
@@ -110,6 +111,14 @@ private:
         lowerBoundName = lower_bound(ls, highestSurname, emp, cmpName);
 
         return lowerBoundName;
+    }
+
+    vector<TEmployee>::iterator findEmployee(const string &name, const string &surname)
+    {
+        vector<TEmployee>::iterator employee;
+        employee = findLowerBoundName(TEmployee(name, surname),
+                                             findLowerBoundSurname(TEmployee(name, surname)));
+        return employee;
     }
 };
 
@@ -164,6 +173,14 @@ bool CPersonalAgenda::GetFirst(string &outName, string &outSurname) const
         return true;
     }
     return false;
+}
+
+bool CPersonalAgenda::GetNext(const string &name, const string &surname, string &outName, string &outSurname) const
+{
+    vector<TEmployee>::iterator currentEmployee;
+    currentEmployee = findEmployee(name, surname);
+    currentEmployee++;
+    currentEmployee
 }
 
 
