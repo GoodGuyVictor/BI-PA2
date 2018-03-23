@@ -86,15 +86,16 @@ private:
 
     vector<TEmployee>::iterator findLowerBoundSurname(const TEmployee &emp) const
     {
-        vector<TEmployee>::iterator lowestSurname;
-        lowestSurname = lower_bound(m_staffDb.begin(),
+        vector<TEmployee>::iterator lowerBoundSurname;
+        lowerBoundSurname = lower_bound(m_staffDb.begin(),
                                  m_staffDb.end(),
                                  emp, cmpSurname);
-        return lowestSurname;
+        return lowerBoundSurname;
     }
 
     vector<TEmployee>::iterator findUpperBoundSurname(const TEmployee &emp, vector<TEmployee>::iterator lbs) const
     {
+
         vector<TEmployee>::iterator upperBoundSurname;
         upperBoundSurname = upper_bound(lbs,
                                 m_staffDb.end(),
@@ -105,15 +106,15 @@ private:
 
     vector<TEmployee>::iterator findLowerBoundName(const TEmployee &emp, vector<TEmployee>::iterator ls) const
     {
-        auto highestSurname = findUpperBoundSurname(emp, ls);
+        auto upperBoundSurname = findUpperBoundSurname(emp, ls);
 
         vector<TEmployee>::iterator lowerBoundName;
-        lowerBoundName = lower_bound(ls, highestSurname, emp, cmpName);
+        lowerBoundName = lower_bound(ls, upperBoundSurname, emp, cmpName);
 
         return lowerBoundName;
     }
 
-    vector<TEmployee>::iterator findEmployee(const string &name, const string &surname)
+    vector<TEmployee>::iterator findEmployee(const string &name, const string &surname) const
     {
         vector<TEmployee>::iterator employee;
         employee = findLowerBoundName(TEmployee(name, surname),
@@ -177,10 +178,23 @@ bool CPersonalAgenda::GetFirst(string &outName, string &outSurname) const
 
 bool CPersonalAgenda::GetNext(const string &name, const string &surname, string &outName, string &outSurname) const
 {
-    vector<TEmployee>::iterator currentEmployee;
-    currentEmployee = findEmployee(name, surname);
+    auto currentEmployee = findEmployee(name, surname);
+    if(currentEmployee == m_staffDb.end() - 1)
+        return false;
     currentEmployee++;
-    currentEmployee
+    outName = currentEmployee->m_name;
+    outSurname = currentEmployee->m_surname;
+//    currentEmployee
+}
+
+bool CPersonalAgenda::Del(const string &name, const string &surname)
+{
+    auto employee = findEmployee(name, surname);
+    if(employee->m_name == name && employee->m_surname == surname) {
+        m_staffDb.erase(employee);
+        return true;
+    }
+    return false;
 }
 
 
