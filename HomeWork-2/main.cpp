@@ -156,6 +156,16 @@ bool CPersonalAgenda::Add(const string &name,
     }
 }
 
+bool CPersonalAgenda::GetFirst(string &outName, string &outSurname) const
+{
+    if(!m_staffDb.empty()) {
+        outName = m_staffDb.front().m_name;
+        outSurname = m_staffDb.front().m_surname;
+        return true;
+    }
+    return false;
+}
+
 
 #ifndef __PROGTEST__
 int main ( void )
@@ -171,17 +181,17 @@ int main ( void )
     assert ( b1 . Add ( "John", "Smith", "john", 30000 ) );
     assert ( b1 . Add ( "John", "Miller", "johnm", 35000 ) );
     assert ( b1 . Add ( "Peter", "Smith", "peter", 23000 ) );
-    /*assert ( b1 . GetFirst ( outName, outSurname )
+    assert ( b1 . GetFirst ( outName, outSurname )
              && outName == "John"
              && outSurname == "Miller" );
-    assert ( b1 . GetNext ( "John", "Miller", outName, outSurname )
+    /*assert ( b1 . GetNext ( "John", "Miller", outName, outSurname )
              && outName == "John"
              && outSurname == "Smith" );
     assert ( b1 . GetNext ( "John", "Smith", outName, outSurname )
              && outName == "Peter"
              && outSurname == "Smith" );
     assert ( ! b1 . GetNext ( "Peter", "Smith", outName, outSurname ) );
-    assert ( b1 . SetSalary ( "john", 32000 ) );
+    /*assert ( b1 . SetSalary ( "john", 32000 ) );
     assert ( b1 . GetSalary ( "john" ) ==  32000 );
     assert ( b1 . GetSalary ( "John", "Smith" ) ==  32000 );
     assert ( b1 . GetRank ( "John", "Smith", lo, hi )
