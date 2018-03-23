@@ -125,6 +125,13 @@ bool CPersonalAgenda::Add(const string &name,
                           unsigned int salary)
 {
 
+    //linear complexity!!!!!!!!!!!!!!!!!!
+    vector<TEmployee>::iterator it;
+    for (it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
+        if(it->m_email == email)
+            return false;
+    }
+
     if(m_staffDb.empty()) {
         m_staffDb.emplace_back(TEmployee(name, surname, email, salary));
         return true;
