@@ -225,8 +225,14 @@ bool CPersonalAgenda::SetSalary(const string &name, const string &surname, unsig
 
 bool CPersonalAgenda::SetSalary(const string &email, unsigned int salary)
 {
-
-
+    //linear complexity!!!!!!!!!!!!!!!!!!
+    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
+        if(it->m_email == email) {
+            it->m_salary = salary;
+            return true;
+        }
+    }
+    return false;
 }
 
 
