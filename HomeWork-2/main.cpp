@@ -70,6 +70,12 @@ public:
 private:
     vector<TEmployee> m_staffDb;
 
+    template <typename Container, typename ConstIterator>
+    typename Container::iterator remove_constness(Container& c, ConstIterator it)
+    {
+        return c.erase(it, it);
+    }
+
     static bool cmpSurname(const TEmployee &curr, const TEmployee &val)
     {
         if(curr.m_surname.compare(val.m_surname) < 0)
@@ -206,12 +212,25 @@ bool CPersonalAgenda::Del(const string &name, const string &surname)
     return false;
 }
 
-bool CPersonalAgenda::Del(const string &email) {
+bool CPersonalAgenda::Del(const string &email)
+{
     //linear complexity!!!!!!!!!!!!!!!!!!
     for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
         if(it->m_email == email)
             m_staffDb.erase(it);
     }
+}
+
+bool CPersonalAgenda::SetSalary(const string &name, const string &surname, unsigned int salary)
+{
+    auto employee = findEmployee(name, surname);
+//    employee = remove_constness(m_staffDb, employee);
+    if(employee->m_name != name || employee->m_surname != surname)
+        return false;
+    if(employee == m_staffDb.end())
+        return false;
+    employee->m_salary = salary;
+    return true;
 }
 
 
@@ -240,8 +259,8 @@ int main ( void )
              && outSurname == "Smith" );
     assert ( ! b1 . GetNext ( "Peter", "Smith", outName, outSurname ) );
     assert ( ! b1 . GetNext ( "Peterdw", "Smith", outName, outSurname ) );
-    /*assert ( b1 . SetSalary ( "john", 32000 ) );
-    assert ( b1 . GetSalary ( "john" ) ==  32000 );
+    assert ( b1 . SetSalary ( "john", 32000 ) );
+    /*assert ( b1 . GetSalary ( "john" ) ==  32000 );
     assert ( b1 . GetSalary ( "John", "Smith" ) ==  32000 );
     assert ( b1 . GetRank ( "John", "Smith", lo, hi )
              && lo == 1
