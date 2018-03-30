@@ -217,6 +217,8 @@ bool CPersonalAgenda::Del(const string &name, const string &surname)
     size_t position;
     if(findEmployee(name, surname, position)) {
         auto currentEmployee = m_staffDb.begin() + position;
+        auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), currentEmployee->m_salary);
+        m_salaryList.erase(salaryPos);
         m_staffDb.erase(currentEmployee);
         return true;
     }
@@ -228,6 +230,8 @@ bool CPersonalAgenda::Del(const string &email)
     //linear complexity!!!!!!!!!!!!!!!!!!
     for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
         if(it->m_email == email) {
+            auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), it->m_salary);
+            m_salaryList.erase(salaryPos);
             m_staffDb.erase(it);
             return true;
         }
@@ -287,13 +291,13 @@ bool CPersonalAgenda::ChangeName(const string &email, const string &newName, con
     for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
         if(it->m_email == email) {
             size_t position;
+            if(findEmployee(newName, newSurname, position)) {
+                return false;
+            }else {
                 TEmployee tmp = *it;
                 m_staffDb.erase(it);
                 tmp.m_name = newName;
                 tmp.m_surname = newSurname;
-            if(findEmployee(newName, newSurname, position)) {
-               return false;
-            }else {
                 auto dbPosition = m_staffDb.begin() + position;
                 m_staffDb.insert(dbPosition, tmp);
                 return true;
