@@ -206,6 +206,14 @@ bool CPersonalAgenda::Del(const string &name, const string &surname)
     return false;
 }
 
+bool CPersonalAgenda::Del(const string &email) {
+    //linear complexity!!!!!!!!!!!!!!!!!!
+    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
+        if(it->m_email == email)
+            m_staffDb.erase(it);
+    }
+}
+
 
 #ifndef __PROGTEST__
 int main ( void )
