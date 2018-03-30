@@ -189,45 +189,15 @@ bool CPersonalAgenda::Add(const string &name,
             return false;
     }
 
-    size_t position = 0;
+    size_t position;
 
-    if(!findEmployee(name, surname, position)) {
+    if(findEmployee(name, surname, position))
+        return false;
+     else {
         auto dbPosition = m_staffDb.begin() + position;
         m_staffDb.insert(dbPosition, TEmployee(name, surname, email, salary));
         return true;
-    } else {
-        return false;
     }
-
-//    if(m_staffDb.empty()) {
-//        m_staffDb.emplace_back(TEmployee(name, surname, email, salary));
-//        return true;
-//    } else {
-//        auto lowerBoundSurname = lower_bound(m_staffDb.begin(), m_staffDb.end(), TEmployee(name, surname), cmpSurname);
-//        if(lowerBoundSurname->m_surname != surname) {
-//            m_staffDb.insert(lowerBoundSurname, TEmployee(name, surname, email, salary));
-//            return true;
-//        } else {
-//            if(lowerBoundSurname->m_name == name)
-//                return false;
-//            else {
-//                auto upperBoundSurname = upper_bound(lowerBoundSurname,
-//                                                m_staffDb.end(),
-//                                                TEmployee(name, surname),
-//                                                cmpSurname);
-//                auto lowerBoundName = lower_bound(lowerBoundSurname,
-//                                                  upperBoundSurname,
-//                                                  TEmployee(name, surname),
-//                                                  cmpName);
-//                if(lowerBoundName->m_name == name)
-//                    return false;
-//                else {
-//                    m_staffDb.insert(lowerBoundName, TEmployee(name, surname, email, salary));
-//                    return true;
-//                }
-//            }
-//        }
-//    }
 }
 
 bool CPersonalAgenda::GetFirst(string &outName, string &outSurname) const
@@ -239,30 +209,32 @@ bool CPersonalAgenda::GetFirst(string &outName, string &outSurname) const
     }
     return false;
 }
-/*
+
 bool CPersonalAgenda::GetNext(const string &name, const string &surname, string &outName, string &outSurname) const
 {
-
-    auto currentEmployee = findEmployee(name, surname);
-    if(currentEmployee->m_name != name || currentEmployee->m_surname != surname)
-        return false;
-    if(currentEmployee == m_staffDb.end() - 1)
-        return false;
-    currentEmployee++;
-    outName = currentEmployee->m_name;
-    outSurname = currentEmployee->m_surname;
-    return true;
-}
-
-bool CPersonalAgenda::Del(const string &name, const string &surname)
-{
-    auto employee = findEmployee(name, surname);
-    if(employee->m_name == name && employee->m_surname == surname) {
-        m_staffDb.erase(employee);
+    size_t position;
+    if(findEmployee(name, surname, position)) {
+        auto currentEmployee = m_staffDb.begin() + position;
+        //if the last one
+        if(currentEmployee == m_staffDb.end() - 1)
+            return false;
+        currentEmployee++;
+        outName = currentEmployee->m_name;
+        outSurname = currentEmployee->m_surname;
         return true;
     }
     return false;
 }
+
+//bool CPersonalAgenda::Del(const string &name, const string &surname)
+//{
+//    auto employee = findEmployee(name, surname);
+//    if(employee->m_name == name && employee->m_surname == surname) {
+//        m_staffDb.erase(employee);
+//        return true;
+//    }
+//    return false;
+//}
 
 bool CPersonalAgenda::Del(const string &email)
 {
@@ -273,18 +245,18 @@ bool CPersonalAgenda::Del(const string &email)
     }
 }
 
-bool CPersonalAgenda::SetSalary(const string &name, const string &surname, unsigned int salary)
-{
-    auto employee = findEmployee(name, surname);
-//    employee = remove_constness(m_staffDb, employee);
-    if(employee->m_name != name || employee->m_surname != surname)
-        return false;
-    if(employee == m_staffDb.end())
-        return false;
-    employee->m_salary = salary;
-    return true;
-}
-*/
+//bool CPersonalAgenda::SetSalary(const string &name, const string &surname, unsigned int salary)
+//{
+//    auto employee = findEmployee(name, surname);
+////    employee = remove_constness(m_staffDb, employee);
+//    if(employee->m_name != name || employee->m_surname != surname)
+//        return false;
+//    if(employee == m_staffDb.end())
+//        return false;
+//    employee->m_salary = salary;
+//    return true;
+//}
+
 
 #ifndef __PROGTEST__
 int main ( void )
@@ -303,7 +275,7 @@ int main ( void )
     assert ( b1 . GetFirst ( outName, outSurname )
              && outName == "John"
              && outSurname == "Miller" );
-    /*assert ( b1 . GetNext ( "John", "Miller", outName, outSurname )
+    assert ( b1 . GetNext ( "John", "Miller", outName, outSurname )
              && outName == "John"
              && outSurname == "Smith" );
     assert ( b1 . GetNext ( "John", "Smith", outName, outSurname )
