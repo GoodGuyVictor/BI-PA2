@@ -119,12 +119,55 @@ private:
         return lowerBoundName;
     }
 
-    vector<TEmployee>::const_iterator findEmployee(const string &name, const string &surname) const
+
+    /**
+     *
+     * @param name
+     * @param surname
+     * @param pos (output parameter) gets the position of found employee in database
+     *          in case if employee was not found gets the position where to put one
+     * @return true if database already contains an employee with such combination of name and surname
+     *         false otherwise
+     */
+    bool findEmployee(const string &name, const string &surname, size_t &pos) const
     {
-//        vector<TEmployee>::iterator employee;
-        auto employee = findLowerBoundName(TEmployee(name, surname),
-                                             findLowerBoundSurname(TEmployee(name, surname)));
-        return employee;
+        if(m_staffDb.empty()) {
+            pos = 0;
+            return false;
+        }
+        auto lowerBoundSurname = lower_bound(m_staffDb.begin(),
+                                             m_staffDb.end(),
+                                             TEmployee(name, surname),
+                                             cmpSurname);
+        if(lowerBoundSurname == m_staffDb.end()) {
+            pos = (size_t)(lowerBoundSurname - m_staffDb.begin());
+            return false;
+        }
+
+        if(lowerBoundSurname->m_surname != surname) {
+            pos = (size_t)(lowerBoundSurname - m_staffDb.begin());
+            return false;
+        }
+
+        auto upperBoundSurname = upper_bound(lowerBoundSurname,
+                                             m_staffDb.end(),
+                                             TEmployee(name, surname),
+                                             cmpSurname);
+        auto lowerBoundName = lower_bound(lowerBoundSurname,
+                                          upperBoundSurname,
+                                          TEmployee(name, surname),
+                                          cmpName);
+        if(lowerBoundName == upperBoundSurname) {
+            pos = (size_t)(lowerBoundName - m_staffDb.begin());
+            return false;
+        }
+        if(lowerBoundName->m_name == name) {
+            pos = (size_t)(lowerBoundName - m_staffDb.begin());
+            return true;
+        } else {
+            pos = (size_t)(lowerBoundName - m_staffDb.begin());
+            return false;
+        }
     }
 };
 
@@ -141,40 +184,19 @@ bool CPersonalAgenda::Add(const string &name,
 {
 
     //linear complexity!!!!!!!!!!!!!!!!!!
-    vector<TEmployee>::iterator it;
-    for (it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
+    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
         if(it->m_email == email)
             return false;
     }
 
-    if(m_staffDb.empty()) {
-        m_staffDb.emplace_back(TEmployee(name, surname, email, salary));
+    size_t position;
+
+    if(findEmployee(name, surname, position))
+        return false;
+     else {
+        auto dbPosition = m_staffDb.begin() + position;
+        m_staffDb.insert(dbPosition, TEmployee(name, surname, email, salary));
         return true;
-    } else {
-        auto lowerBoundSurname = lower_bound(m_staffDb.begin(), m_staffDb.end(), TEmployee(name, surname), cmpSurname);
-        if(lowerBoundSurname->m_surname != surname) {
-            m_staffDb.insert(lowerBoundSurname, TEmployee(name, surname, email, salary));
-            return true;
-        } else {
-            if(lowerBoundSurname->m_name == name)
-                return false;
-            else {
-                auto upperBoundSurname = upper_bound(lowerBoundSurname,
-                                                m_staffDb.end(),
-                                                TEmployee(name, surname),
-                                                cmpSurname);
-                auto lowerBoundName = lower_bound(lowerBoundSurname,
-                                                  upperBoundSurname,
-                                                  TEmployee(name, surname),
-                                                  cmpName);
-                if(lowerBoundName->m_name == name)
-                    return false;
-                else {
-                    m_staffDb.insert(lowerBoundName, TEmployee(name, surname, email, salary));
-                    return true;
-                }
-            }
-        }
     }
 }
 
@@ -190,27 +212,29 @@ bool CPersonalAgenda::GetFirst(string &outName, string &outSurname) const
 
 bool CPersonalAgenda::GetNext(const string &name, const string &surname, string &outName, string &outSurname) const
 {
-
-    auto currentEmployee = findEmployee(name, surname);
-    if(currentEmployee->m_name != name || currentEmployee->m_surname != surname)
-        return false;
-    if(currentEmployee == m_staffDb.end() - 1)
-        return false;
-    currentEmployee++;
-    outName = currentEmployee->m_name;
-    outSurname = currentEmployee->m_surname;
-    return true;
-}
-
-bool CPersonalAgenda::Del(const string &name, const string &surname)
-{
-    auto employee = findEmployee(name, surname);
-    if(employee->m_name == name && employee->m_surname == surname) {
-        m_staffDb.erase(employee);
+    size_t position;
+    if(findEmployee(name, surname, position)) {
+        auto currentEmployee = m_staffDb.begin() + position;
+        //if the last one
+        if(currentEmployee == m_staffDb.end() - 1)
+            return false;
+        currentEmployee++;
+        outName = currentEmployee->m_name;
+        outSurname = currentEmployee->m_surname;
         return true;
     }
     return false;
 }
+
+//bool CPersonalAgenda::Del(const string &name, const string &surname)
+//{
+//    auto employee = findEmployee(name, surname);
+//    if(employee->m_name == name && employee->m_surname == surname) {
+//        m_staffDb.erase(employee);
+//        return true;
+//    }
+//    return false;
+//}
 
 bool CPersonalAgenda::Del(const string &email)
 {
@@ -221,17 +245,17 @@ bool CPersonalAgenda::Del(const string &email)
     }
 }
 
-bool CPersonalAgenda::SetSalary(const string &name, const string &surname, unsigned int salary)
-{
-    auto employee = findEmployee(name, surname);
-//    employee = remove_constness(m_staffDb, employee);
-    if(employee->m_name != name || employee->m_surname != surname)
-        return false;
-    if(employee == m_staffDb.end())
-        return false;
-    employee->m_salary = salary;
-    return true;
-}
+//bool CPersonalAgenda::SetSalary(const string &name, const string &surname, unsigned int salary)
+//{
+//    auto employee = findEmployee(name, surname);
+////    employee = remove_constness(m_staffDb, employee);
+//    if(employee->m_name != name || employee->m_surname != surname)
+//        return false;
+//    if(employee == m_staffDb.end())
+//        return false;
+//    employee->m_salary = salary;
+//    return true;
+//}
 
 
 #ifndef __PROGTEST__
