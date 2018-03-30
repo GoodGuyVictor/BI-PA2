@@ -70,6 +70,7 @@ public:
 private:
     vector<TEmployee> m_staffDb;
     vector<unsigned int> m_salaryList;
+    vector<string> m_emailList;
 
     static bool cmpSurname(const TEmployee &curr, const TEmployee &val)
     {
@@ -85,7 +86,12 @@ private:
         else return false;
     }
 
-
+    static bool cmpEmail(const string &curr, const string &val)
+    {
+        if(curr.compare(val) < 0)
+            return true;
+        else return false;
+    }
 
     /**
      *
@@ -99,6 +105,8 @@ private:
     bool findEmployee(const string &name, const string &surname, size_t &pos) const;
     void addSalary(unsigned int sal);
     void resetSalary(unsigned int oldSal, unsigned int newSal);
+    bool addEmail(const string &email);
+    bool resetEmail(const string &oldEmail, const string &newEmail);
 };
 
 CPersonalAgenda::CPersonalAgenda(void)
@@ -162,26 +170,45 @@ void CPersonalAgenda::resetSalary(unsigned int oldSal, unsigned int newSal)
     m_salaryList.insert(newS, newSal);
 }
 
+bool CPersonalAgenda::addEmail(const string &email)
+{
+    if(m_emailList.empty()){
+        m_emailList.push_back(email);
+        return true;
+    }
+    auto it = lower_bound(m_emailList.begin(), m_emailList.end(), email, cmpEmail);
+    if(it != m_emailList.end() && *it == email)
+        return false;
+    m_emailList.insert(it, email);
+    return true;
+}
+
+bool CPersonalAgenda::resetEmail(const string &oldEmail, const string &newEmail)
+{
+    auto insertE = lower_bound(m_emailList.begin(), m_emailList.end(), newEmail, cmpEmail);
+    if(*insertE == newEmail && insertE != m_emailList.end())
+        return false;
+    m_emailList.insert(insertE, newEmail);
+    auto deleteE = lower_bound(m_emailList.begin(), m_emailList.end(), oldEmail, cmpEmail);
+    m_emailList.erase(deleteE);
+    return true;
+}
+
 bool CPersonalAgenda::Add(const string &name,
                           const string &surname,
                           const string &email,
                           unsigned int salary)
 {
-
-    //linear complexity!!!!!!!!!!!!!!!!!!
-    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
-        if(it->m_email == email)
-            return false;
-    }
-
     size_t position;
 
     if(findEmployee(name, surname, position))
         return false;
     else {
+        if(!addEmail(email))
+            return false;
+        addSalary(salary);
         auto dbPosition = m_staffDb.begin() + position;
         m_staffDb.insert(dbPosition, TEmployee(name, surname, email, salary));
-        addSalary(salary);
         return true;
     }
 }
@@ -218,7 +245,9 @@ bool CPersonalAgenda::Del(const string &name, const string &surname)
     if(findEmployee(name, surname, position)) {
         auto currentEmployee = m_staffDb.begin() + position;
         auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), currentEmployee->m_salary);
+        auto emailPos = lower_bound(m_emailList.begin(), m_emailList.end(), currentEmployee->m_email, cmpEmail);
         m_salaryList.erase(salaryPos);
+        m_emailList.erase(emailPos);
         m_staffDb.erase(currentEmployee);
         return true;
     }
@@ -231,7 +260,9 @@ bool CPersonalAgenda::Del(const string &email)
     for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
         if(it->m_email == email) {
             auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), it->m_salary);
+            auto emailPos = lower_bound(m_emailList.begin(), m_emailList.end(), it->m_email, cmpEmail);
             m_salaryList.erase(salaryPos);
+            m_emailList.erase(emailPos);
             m_staffDb.erase(it);
             return true;
         }
@@ -312,6 +343,8 @@ bool CPersonalAgenda::ChangeEmail(const string &name, const string &surname, con
     size_t position;
     if(findEmployee(name, surname, position)) {
         auto currentEmployee = m_staffDb.begin() + position;
+        if(!resetEmail(currentEmployee->m_email, newEmail))
+            return false;
         currentEmployee->m_email = newEmail;
         return true;
     }
@@ -351,10 +384,6 @@ bool CPersonalAgenda::GetRank(const string &email, int &rankMin, int &rankMax) c
 #ifndef __PROGTEST__
 int main ( void )
 {
-
-
-
-
     string outName, outSurname;
     int lo, hi;
 
