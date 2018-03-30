@@ -84,40 +84,39 @@ private:
         else return false;
     }
 
-    vector<TEmployee>::iterator findLowerBoundSurname(const TEmployee &emp) const
+    vector<TEmployee>::const_iterator findLowerBoundSurname(const TEmployee &emp) const
     {
-        vector<TEmployee>::iterator lowerBoundSurname;
-        lowerBoundSurname = lower_bound(m_staffDb.begin(),
-                                 m_staffDb.end(),
-                                 emp, cmpSurname);
+//        vector<TEmployee>::iterator lowerBoundSurname;
+        auto lowerBoundSurname = lower_bound(m_staffDb.begin(),
+                                        m_staffDb.end(),
+                                        emp, cmpSurname);
         return lowerBoundSurname;
     }
 
-    vector<TEmployee>::iterator findUpperBoundSurname(const TEmployee &emp, vector<TEmployee>::iterator lbs) const
+    vector<TEmployee>::const_iterator findUpperBoundSurname(const TEmployee &emp, vector<TEmployee>::const_iterator lbs) const
     {
-
-        vector<TEmployee>::iterator upperBoundSurname;
-        upperBoundSurname = upper_bound(lbs,
+//        vector<TEmployee>::iterator upperBoundSurname;
+        auto upperBoundSurname = upper_bound(lbs,
                                 m_staffDb.end(),
                                 emp,
                                 cmpSurname);
         return upperBoundSurname;
     }
 
-    vector<TEmployee>::iterator findLowerBoundName(const TEmployee &emp, vector<TEmployee>::iterator ls) const
+    vector<TEmployee>::const_iterator findLowerBoundName(const TEmployee &emp, vector<TEmployee>::const_iterator ls) const
     {
         auto upperBoundSurname = findUpperBoundSurname(emp, ls);
 
-        vector<TEmployee>::iterator lowerBoundName;
-        lowerBoundName = lower_bound(ls, upperBoundSurname, emp, cmpName);
+//        vector<TEmployee>::iterator lowerBoundName;
+        auto lowerBoundName = lower_bound(ls, upperBoundSurname, emp, cmpName);
 
         return lowerBoundName;
     }
 
-    vector<TEmployee>::iterator findEmployee(const string &name, const string &surname) const
+    vector<TEmployee>::const_iterator findEmployee(const string &name, const string &surname) const
     {
-        vector<TEmployee>::iterator employee;
-        employee = findLowerBoundName(TEmployee(name, surname),
+//        vector<TEmployee>::iterator employee;
+        auto employee = findLowerBoundName(TEmployee(name, surname),
                                              findLowerBoundSurname(TEmployee(name, surname)));
         return employee;
     }
@@ -146,7 +145,7 @@ bool CPersonalAgenda::Add(const string &name,
         m_staffDb.emplace_back(TEmployee(name, surname, email, salary));
         return true;
     } else {
-        auto lowerBoundSurname = findLowerBoundSurname(TEmployee(name, surname, email, salary));
+        auto lowerBoundSurname = lower_bound(m_staffDb.begin(), m_staffDb.end(), TEmployee(name, surname), cmpSurname);
         if(lowerBoundSurname->m_surname != surname) {
             m_staffDb.insert(lowerBoundSurname, TEmployee(name, surname, email, salary));
             return true;
@@ -154,7 +153,14 @@ bool CPersonalAgenda::Add(const string &name,
             if(lowerBoundSurname->m_name == name)
                 return false;
             else {
-                auto lowerBoundName = findLowerBoundName(TEmployee(name, surname, email, salary), lowerBoundSurname);
+                auto upperBoundSurname = upper_bound(lowerBoundSurname,
+                                                m_staffDb.end(),
+                                                TEmployee(name, surname),
+                                                cmpSurname);
+                auto lowerBoundName = lower_bound(lowerBoundSurname,
+                                                  upperBoundSurname,
+                                                  TEmployee(name, surname),
+                                                  cmpName);
                 if(lowerBoundName->m_name == name)
                     return false;
                 else {
@@ -178,13 +184,16 @@ bool CPersonalAgenda::GetFirst(string &outName, string &outSurname) const
 
 bool CPersonalAgenda::GetNext(const string &name, const string &surname, string &outName, string &outSurname) const
 {
+
     auto currentEmployee = findEmployee(name, surname);
+    if(currentEmployee->m_name != name || currentEmployee->m_surname != surname)
+        return false;
     if(currentEmployee == m_staffDb.end() - 1)
         return false;
     currentEmployee++;
     outName = currentEmployee->m_name;
     outSurname = currentEmployee->m_surname;
-//    currentEmployee
+    return true;
 }
 
 bool CPersonalAgenda::Del(const string &name, const string &surname)
@@ -215,13 +224,14 @@ int main ( void )
     assert ( b1 . GetFirst ( outName, outSurname )
              && outName == "John"
              && outSurname == "Miller" );
-    /*assert ( b1 . GetNext ( "John", "Miller", outName, outSurname )
+    assert ( b1 . GetNext ( "John", "Miller", outName, outSurname )
              && outName == "John"
              && outSurname == "Smith" );
     assert ( b1 . GetNext ( "John", "Smith", outName, outSurname )
              && outName == "Peter"
              && outSurname == "Smith" );
     assert ( ! b1 . GetNext ( "Peter", "Smith", outName, outSurname ) );
+    assert ( ! b1 . GetNext ( "Peterdw", "Smith", outName, outSurname ) );
     /*assert ( b1 . SetSalary ( "john", 32000 ) );
     assert ( b1 . GetSalary ( "john" ) ==  32000 );
     assert ( b1 . GetSalary ( "John", "Smith" ) ==  32000 );
