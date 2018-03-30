@@ -287,10 +287,10 @@ bool CPersonalAgenda::ChangeName(const string &email, const string &newName, con
     for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
         if(it->m_email == email) {
             size_t position;
-            TEmployee tmp = *it;
-            m_staffDb.erase(it);
-            tmp.m_name = newName;
-            tmp.m_surname = newSurname;
+                TEmployee tmp = *it;
+                m_staffDb.erase(it);
+                tmp.m_name = newName;
+                tmp.m_surname = newSurname;
             if(findEmployee(newName, newSurname, position)) {
                return false;
             }else {
