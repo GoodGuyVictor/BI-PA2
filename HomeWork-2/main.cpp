@@ -193,7 +193,7 @@ bool CPersonalAgenda::Add(const string &name,
 
     if(findEmployee(name, surname, position))
         return false;
-     else {
+    else {
         auto dbPosition = m_staffDb.begin() + position;
         m_staffDb.insert(dbPosition, TEmployee(name, surname, email, salary));
         return true;
@@ -226,15 +226,22 @@ bool CPersonalAgenda::GetNext(const string &name, const string &surname, string 
     return false;
 }
 
-//bool CPersonalAgenda::Del(const string &name, const string &surname)
-//{
+bool CPersonalAgenda::Del(const string &name, const string &surname)
+{
+    size_t position;
+    if(findEmployee(name, surname, position)) {
+        auto currentEmployee = m_staffDb.begin() + position;
+        m_staffDb.erase(currentEmployee);
+        return true;
+    }
+    return false;
 //    auto employee = findEmployee(name, surname);
 //    if(employee->m_name == name && employee->m_surname == surname) {
 //        m_staffDb.erase(employee);
 //        return true;
 //    }
 //    return false;
-//}
+}
 
 bool CPersonalAgenda::Del(const string &email)
 {
