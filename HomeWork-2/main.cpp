@@ -235,6 +235,40 @@ bool CPersonalAgenda::SetSalary(const string &email, unsigned int salary)
     return false;
 }
 
+unsigned int CPersonalAgenda::GetSalary(const string &name, const string &surname) const
+{
+    size_t position;
+    if(findEmployee(name, surname, position)) {
+        auto currentEmployee = m_staffDb.begin() + position;
+        return currentEmployee->m_salary;
+    }
+    return 0;
+}
+
+unsigned int CPersonalAgenda::GetSalary(const string &email) const
+{
+    //linear complexity!!!!!!!!!!!!!!!!!!
+    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
+        if(it->m_email == email) {
+            return it->m_salary;
+        }
+    }
+    return 0;
+}
+
+bool CPersonalAgenda::ChangeName(const string &email, const string &newName, const string &newSurname)
+{
+    //linear complexity!!!!!!!!!!!!!!!!!!
+    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
+        if(it->m_email == email) {
+            it->m_name = newName;
+            it->m_surname = newSurname;
+            return true;
+        }
+    }
+    return false;
+}
+
 
 #ifndef __PROGTEST__
 int main ( void )
@@ -262,10 +296,10 @@ int main ( void )
     assert ( ! b1 . GetNext ( "Peter", "Smith", outName, outSurname ) );
     assert ( ! b1 . GetNext ( "Peterdw", "Smith", outName, outSurname ) );
     assert ( b1 . SetSalary ( "John", "Smith", 35000 ) );
-//    assert ( b1 . SetSalary ( "john", 32000 ) );
-    /*assert ( b1 . GetSalary ( "john" ) ==  32000 );
+    assert ( b1 . SetSalary ( "john", 32000 ) );
+    assert ( b1 . GetSalary ( "john" ) ==  32000 );
     assert ( b1 . GetSalary ( "John", "Smith" ) ==  32000 );
-    assert ( b1 . GetRank ( "John", "Smith", lo, hi )
+    /*assert ( b1 . GetRank ( "John", "Smith", lo, hi )
              && lo == 1
              && hi == 1 );
     assert ( b1 . GetRank ( "john", lo, hi )
