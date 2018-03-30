@@ -269,6 +269,17 @@ bool CPersonalAgenda::ChangeName(const string &email, const string &newName, con
     return false;
 }
 
+bool CPersonalAgenda::ChangeEmail(const string &name, const string &surname, const string &newEmail)
+{
+    size_t position;
+    if(findEmployee(name, surname, position)) {
+        auto currentEmployee = m_staffDb.begin() + position;
+        currentEmployee->m_email = newEmail;
+        return true;
+    }
+    return false;
+}
+
 
 #ifndef __PROGTEST__
 int main ( void )
