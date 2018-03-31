@@ -70,7 +70,7 @@ public:
 private:
     vector<TEmployee> m_staffDb;
     vector<unsigned int> m_salaryList;
-    vector<string> m_emailList;
+    vector<TEmployee> m_emailList;
 
     static bool cmpSurname(const TEmployee &curr, const TEmployee &val)
     {
@@ -86,9 +86,9 @@ private:
         else return false;
     }
 
-    static bool cmpEmail(const string &curr, const string &val)
+    static bool cmpEmail(const TEmployee &curr, const TEmployee &val)
     {
-        if(curr.compare(val) < 0)
+        if(curr.m_email.compare(val.m_email) < 0)
             return true;
         else return false;
     }
@@ -105,7 +105,7 @@ private:
     bool findEmployee(const string &name, const string &surname, size_t &pos) const;
     void addSalary(unsigned int sal);
     void resetSalary(unsigned int oldSal, unsigned int newSal);
-    bool addEmail(const string &email);
+    bool addEmail(const TEmployee &empl);
     bool resetEmail(const string &oldEmail, const string &newEmail);
 };
 
@@ -170,27 +170,29 @@ void CPersonalAgenda::resetSalary(unsigned int oldSal, unsigned int newSal)
     m_salaryList.insert(newS, newSal);
 }
 
-bool CPersonalAgenda::addEmail(const string &email)
+bool CPersonalAgenda::addEmail(const TEmployee &empl)
 {
     if(m_emailList.empty()){
-        m_emailList.push_back(email);
+        m_emailList.push_back(empl);
         return true;
     }
-    auto it = lower_bound(m_emailList.begin(), m_emailList.end(), email, cmpEmail);
-    if(it != m_emailList.end() && *it == email)
+    auto it = lower_bound(m_emailList.begin(), m_emailList.end(), empl, cmpEmail);
+    if(it != m_emailList.end() && it->m_email == empl.m_email)
         return false;
-    m_emailList.insert(it, email);
+    m_emailList.insert(it, empl);
     return true;
 }
 
 bool CPersonalAgenda::resetEmail(const string &oldEmail, const string &newEmail)
 {
-    auto insertE = lower_bound(m_emailList.begin(), m_emailList.end(), newEmail, cmpEmail);
-    if(*insertE == newEmail && insertE != m_emailList.end())
+    auto insertE = lower_bound(m_emailList.begin(), m_emailList.end(), TEmployee("", "", newEmail), cmpEmail);
+    if(insertE->m_email == newEmail && insertE != m_emailList.end())
         return false;
-    m_emailList.insert(insertE, newEmail);
-    auto deleteE = lower_bound(m_emailList.begin(), m_emailList.end(), oldEmail, cmpEmail);
+    auto deleteE = lower_bound(m_emailList.begin(), m_emailList.end(), TEmployee("", "", oldEmail), cmpEmail);
+    TEmployee copy = *deleteE;
+    copy.m_email = newEmail;
     m_emailList.erase(deleteE);
+    m_emailList.insert(insertE, copy);
     return true;
 }
 
@@ -204,7 +206,7 @@ bool CPersonalAgenda::Add(const string &name,
     if(findEmployee(name, surname, position))
         return false;
     else {
-        if(!addEmail(email))
+        if(!addEmail(TEmployee(name, surname, email, salary)))
             return false;
         addSalary(salary);
         auto dbPosition = m_staffDb.begin() + position;
@@ -239,36 +241,36 @@ bool CPersonalAgenda::GetNext(const string &name, const string &surname, string 
     return false;
 }
 
-bool CPersonalAgenda::Del(const string &name, const string &surname)
-{
-    size_t position;
-    if(findEmployee(name, surname, position)) {
-        auto currentEmployee = m_staffDb.begin() + position;
-        auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), currentEmployee->m_salary);
-        auto emailPos = lower_bound(m_emailList.begin(), m_emailList.end(), currentEmployee->m_email, cmpEmail);
-        m_salaryList.erase(salaryPos);
-        m_emailList.erase(emailPos);
-        m_staffDb.erase(currentEmployee);
-        return true;
-    }
-    return false;
-}
+//bool CPersonalAgenda::Del(const string &name, const string &surname)
+//{
+//    size_t position;
+//    if(findEmployee(name, surname, position)) {
+//        auto currentEmployee = m_staffDb.begin() + position;
+//        auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), currentEmployee->m_salary);
+//        auto emailPos = lower_bound(m_emailList.begin(), m_emailList.end(), currentEmployee->m_email, cmpEmail);
+//        m_salaryList.erase(salaryPos);
+//        m_emailList.erase(emailPos);
+//        m_staffDb.erase(currentEmployee);
+//        return true;
+//    }
+//    return false;
+//}
 
-bool CPersonalAgenda::Del(const string &email)
-{
-    //linear complexity!!!!!!!!!!!!!!!!!!
-    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
-        if(it->m_email == email) {
-            auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), it->m_salary);
-            auto emailPos = lower_bound(m_emailList.begin(), m_emailList.end(), it->m_email, cmpEmail);
-            m_salaryList.erase(salaryPos);
-            m_emailList.erase(emailPos);
-            m_staffDb.erase(it);
-            return true;
-        }
-    }
-    return false;
-}
+//bool CPersonalAgenda::Del(const string &email)
+//{
+//    //linear complexity!!!!!!!!!!!!!!!!!!
+//    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
+//        if(it->m_email == email) {
+//            auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), it->m_salary);
+//            auto emailPos = lower_bound(m_emailList.begin(), m_emailList.end(), it->m_email, cmpEmail);
+//            m_salaryList.erase(salaryPos);
+//            m_emailList.erase(emailPos);
+//            m_staffDb.erase(it);
+//            return true;
+//        }
+//    }
+//    return false;
+//}
 
 bool CPersonalAgenda::SetSalary(const string &name, const string &surname, unsigned int salary)
 {
@@ -402,7 +404,7 @@ int main ( void )
              && outSurname == "Smith" );
     assert ( ! b1 . GetNext ( "Peter", "Smith", outName, outSurname ) );
     assert ( ! b1 . GetNext ( "Peterdw", "Smith", outName, outSurname ) );
-    assert ( b1 . SetSalary ( "John", "Smith", 35000 ) );
+   /* assert ( b1 . SetSalary ( "John", "Smith", 35000 ) );
     assert ( b1 . SetSalary ( "john", 32000 ) );
     assert ( b1 . GetSalary ( "john" ) ==  32000 );
     assert ( b1 . GetSalary ( "John", "Smith" ) ==  32000 );
@@ -506,7 +508,7 @@ int main ( void )
     assert ( b2 . Add ( "Peter", "Smith", "peter", 40000 ) );
     assert ( b2 . GetSalary ( "peter" ) ==  40000 );
 
-
+*/
 
 
     return 0;
