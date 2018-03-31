@@ -386,17 +386,14 @@ bool CPersonalAgenda::GetRank(const string &name, const string &surname, int &ra
 
 bool CPersonalAgenda::GetRank(const string &email, int &rankMin, int &rankMax) const
 {
-    //linear complexity!!!!!!!!!!!!!!!!!!
-    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
-        if(it->m_email == email) {
-            auto lowerBoundSalary = lower_bound(m_salaryList.begin(), m_salaryList.end(), it->m_salary);
-            auto upperBoundSalary = upper_bound(lowerBoundSalary, m_salaryList.end(), it->m_salary);
-            rankMin = (int)(lowerBoundSalary - m_salaryList.begin());
-            rankMax = rankMin + (int)(upperBoundSalary - lowerBoundSalary) - 1;
-            return true;
-        }
-    }
-    return false;
+    auto currentEmployee = lower_bound(m_emailList.begin(), m_emailList.end(), TEmployee("", "", email), cmpEmail);
+    if(currentEmployee == m_emailList.end())
+        return false;
+    auto lowerBoundSalary = lower_bound(m_salaryList.begin(), m_salaryList.end(), currentEmployee->m_salary);
+    auto upperBoundSalary = upper_bound(lowerBoundSalary, m_salaryList.end(), currentEmployee->m_salary);
+    rankMin = (int)(lowerBoundSalary - m_salaryList.begin());
+    rankMax = rankMin + (int)(upperBoundSalary - lowerBoundSalary) - 1;
+    return true;
 }
 
 
@@ -424,7 +421,7 @@ int main ( void )
     assert ( b1 . SetSalary ( "John", "Smith", 35000 ) );
     assert ( b1 . SetSalary ( "john", 32000 ) );
     assert ( b1 . GetSalary ( "john" ) ==  32000 );
-    /*assert ( b1 . GetSalary ( "John", "Smith" ) ==  32000 );
+    assert ( b1 . GetSalary ( "John", "Smith" ) ==  32000 );
     assert ( b1 . GetRank ( "John", "Smith", lo, hi )
              && lo == 1
              && hi == 1 );
@@ -452,7 +449,7 @@ int main ( void )
     assert ( b1 . GetRank ( "johnm", lo, hi )
              && lo == 1
              && hi == 2 );
-    assert ( b1 . ChangeName ( "peter", "James", "Bond" ) );
+    /*assert ( b1 . ChangeName ( "peter", "James", "Bond" ) );
     assert ( b1 . GetSalary ( "peter" ) ==  23000 );
     assert ( b1 . GetSalary ( "James", "Bond" ) ==  23000 );
     assert ( b1 . GetSalary ( "Peter", "Smith" ) ==  0 );
