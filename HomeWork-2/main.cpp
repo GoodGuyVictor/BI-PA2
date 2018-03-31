@@ -326,32 +326,44 @@ unsigned int CPersonalAgenda::GetSalary(const string &email) const
     if(currentEmployee == m_emailList.end())
         return 0;
     return currentEmployee->m_salary;
-//    //linear complexity!!!!!!!!!!!!!!!!!!
-//    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
-//        if(it->m_email == email) {
-//            return it->m_salary;
-//        }
-//    }
-//    return 0;
 }
 
 bool CPersonalAgenda::ChangeName(const string &email, const string &newName, const string &newSurname)
 {
-    //linear complexity!!!!!!!!!!!!!!!!!!
-    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
-        if(it->m_email == email) {
-            size_t position;
-            if(findEmployee(newName, newSurname, position)) {
-                return false;
-            }else {
-                TEmployee tmp = *it;
-                m_staffDb.erase(it);
-                tmp.m_name = newName;
-                tmp.m_surname = newSurname;
-                auto dbPosition = m_staffDb.begin() + position;
-                m_staffDb.insert(dbPosition, tmp);
-                return true;
-            }
+    size_t position;
+
+    //search for employee with given email
+    auto currentEmployeeEmailList = lower_bound(m_emailList.begin(), m_emailList.end(), TEmployee("", "", email), cmpEmail);
+    //not found
+    if(currentEmployeeEmailList == m_emailList.end())
+        return false;
+    //already exists
+    if(currentEmployeeEmailList->m_name == newName && currentEmployeeEmailList->m_surname == newSurname)
+        return false;
+
+    //make a copy with old data: old name and old surname
+    TEmployee copy = *currentEmployeeEmailList;
+
+    //update name and surname in emailList
+    currentEmployeeEmailList->m_name = newName;
+    currentEmployeeEmailList->m_surname = newSurname;
+
+    //search for employee in staffDb with old data
+    if(findEmployee(copy.m_name, copy.m_surname, position)) {
+        //delete employee with old data
+        auto deleteEmployee = m_staffDb.begin() + position;
+        m_staffDb.erase(deleteEmployee);
+
+        //update name and surname in copy
+        copy.m_name = newName;
+        copy.m_surname = newSurname;
+
+        //find position where to insert employee with new data(employee with new name and surname should not exist)
+        if(!findEmployee(copy.m_name, copy.m_surname, position)) {
+            //insert employee with new data
+            auto insertEmployee = m_staffDb.begin() + position;
+            m_staffDb.insert(insertEmployee, copy);
+            return true;
         }
     }
     return false;
@@ -449,7 +461,7 @@ int main ( void )
     assert ( b1 . GetRank ( "johnm", lo, hi )
              && lo == 1
              && hi == 2 );
-    /*assert ( b1 . ChangeName ( "peter", "James", "Bond" ) );
+    assert ( b1 . ChangeName ( "peter", "James", "Bond" ) );
     assert ( b1 . GetSalary ( "peter" ) ==  23000 );
     assert ( b1 . GetSalary ( "James", "Bond" ) ==  23000 );
     assert ( b1 . GetSalary ( "Peter", "Smith" ) ==  0 );
