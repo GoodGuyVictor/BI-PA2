@@ -322,13 +322,17 @@ unsigned int CPersonalAgenda::GetSalary(const string &name, const string &surnam
 
 unsigned int CPersonalAgenda::GetSalary(const string &email) const
 {
-    //linear complexity!!!!!!!!!!!!!!!!!!
-    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
-        if(it->m_email == email) {
-            return it->m_salary;
-        }
-    }
-    return 0;
+    auto currentEmployee = lower_bound(m_emailList.begin(), m_emailList.end(), TEmployee("", "", email), cmpEmail);
+    if(currentEmployee == m_emailList.end())
+        return 0;
+    return currentEmployee->m_salary;
+//    //linear complexity!!!!!!!!!!!!!!!!!!
+//    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
+//        if(it->m_email == email) {
+//            return it->m_salary;
+//        }
+//    }
+//    return 0;
 }
 
 bool CPersonalAgenda::ChangeName(const string &email, const string &newName, const string &newSurname)
