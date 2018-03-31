@@ -313,7 +313,9 @@ bool CPersonalAgenda::SetSalary(const string &email, unsigned int salary)
         //reset salary in salaryList
         resetSalary(currentEmployee->m_salary, salary);
         currentEmployee->m_salary = salary;
+        return true;
     }
+    return false;
 }
 
 unsigned int CPersonalAgenda::GetSalary(const string &name, const string &surname) const
