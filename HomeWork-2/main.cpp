@@ -242,36 +242,39 @@ bool CPersonalAgenda::GetNext(const string &name, const string &surname, string 
     return false;
 }
 
-//bool CPersonalAgenda::Del(const string &name, const string &surname)
-//{
-//    size_t position;
-//    if(findEmployee(name, surname, position)) {
-//        auto currentEmployee = m_staffDb.begin() + position;
-//        auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), currentEmployee->m_salary);
-//        auto emailPos = lower_bound(m_emailList.begin(), m_emailList.end(), currentEmployee->m_email, cmpEmail);
-//        m_salaryList.erase(salaryPos);
-//        m_emailList.erase(emailPos);
-//        m_staffDb.erase(currentEmployee);
-//        return true;
-//    }
-//    return false;
-//}
+bool CPersonalAgenda::Del(const string &name, const string &surname)
+{
+    size_t position;
+    if(findEmployee(name, surname, position)) {
+        auto currentEmployee = m_staffDb.begin() + position;
+        auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), currentEmployee->m_salary);
+        auto emailPos = lower_bound(m_emailList.begin(), m_emailList.end(), currentEmployee->m_email, cmpEmail);
+        m_salaryList.erase(salaryPos);
+        m_emailList.erase(emailPos);
+        m_staffDb.erase(currentEmployee);
+        return true;
+    }
+    return false;
+}
 
-//bool CPersonalAgenda::Del(const string &email)
-//{
-//    //linear complexity!!!!!!!!!!!!!!!!!!
-//    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
-//        if(it->m_email == email) {
-//            auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), it->m_salary);
-//            auto emailPos = lower_bound(m_emailList.begin(), m_emailList.end(), it->m_email, cmpEmail);
-//            m_salaryList.erase(salaryPos);
-//            m_emailList.erase(emailPos);
-//            m_staffDb.erase(it);
-//            return true;
-//        }
-//    }
-//    return false;
-//}
+bool CPersonalAgenda::Del(const string &email)
+{
+    auto emailListEmployee = lower_bound(m_emailList.begin(), m_emailList.end(), TEmployee("", "", email), cmpEmail);
+    if(emailListEmployee == m_emailList.end())
+        return false;
+    TEmployee copy = *emailListEmployee;
+    m_emailList.erase(emailListEmployee);
+    auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), copy.m_salary);
+    m_salaryList.erase(salaryPos);
+
+    size_t position;
+    if(findEmployee(copy.m_name, copy.m_surname, position)) {
+        auto staffDbEmployee = m_staffDb.begin() + position;
+        m_staffDb.erase(staffDbEmployee);
+        return true;
+    }
+    return false;
+}
 
 bool CPersonalAgenda::SetSalary(const string &name, const string &surname, unsigned int salary)
 {
@@ -496,7 +499,7 @@ int main ( void )
     assert ( b1 . GetSalary ( "James", "Bond" ) ==  23000 );
     assert ( b1 . GetSalary ( "james" ) ==  23000 );
     assert ( b1 . GetSalary ( "peter" ) ==  0 );
-/*    assert ( b1 . Del ( "james" ) );
+    assert ( b1 . Del ( "james" ) );
     assert ( b1 . GetRank ( "john", lo, hi )
              && lo == 0
              && hi == 1 );
