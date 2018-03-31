@@ -245,13 +245,14 @@ bool CPersonalAgenda::GetNext(const string &name, const string &surname, string 
 bool CPersonalAgenda::Del(const string &name, const string &surname)
 {
     size_t position;
-    if(findEmployee(name, surname, position)) {
-        auto currentEmployee = m_staffDb.begin() + position;
-        auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), currentEmployee->m_salary);
-        auto emailPos = lower_bound(m_emailList.begin(), m_emailList.end(), currentEmployee->m_email, cmpEmail);
+    if(findEmployee(name,surname, position)) {
+        auto staffDbEmployee = m_staffDb.begin() + position;
+        TEmployee copy = *staffDbEmployee;
+        m_staffDb.erase(staffDbEmployee);
+        auto salaryPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), copy.m_salary);
         m_salaryList.erase(salaryPos);
-        m_emailList.erase(emailPos);
-        m_staffDb.erase(currentEmployee);
+        auto emailListEmployee = lower_bound(m_emailList.begin(), m_emailList.end(), copy, cmpEmail);
+        m_emailList.erase(emailListEmployee);
         return true;
     }
     return false;
@@ -260,7 +261,7 @@ bool CPersonalAgenda::Del(const string &name, const string &surname)
 bool CPersonalAgenda::Del(const string &email)
 {
     auto emailListEmployee = lower_bound(m_emailList.begin(), m_emailList.end(), TEmployee("", "", email), cmpEmail);
-    if(emailListEmployee == m_emailList.end())
+    if(emailListEmployee == m_emailList.end() || emailListEmployee->m_email != email)
         return false;
     TEmployee copy = *emailListEmployee;
     m_emailList.erase(emailListEmployee);
@@ -299,6 +300,8 @@ bool CPersonalAgenda::SetSalary(const string &email, unsigned int salary)
 {
     //reset salary in emailList
     auto emailListPos = lower_bound(m_emailList.begin(), m_emailList.end(), TEmployee("", "", email), cmpEmail);
+    if(emailListPos == m_emailList.end() || emailListPos->m_email != email)
+        return false;
     emailListPos->m_salary = salary;
 
     //resete salary in staffDb
@@ -326,7 +329,7 @@ unsigned int CPersonalAgenda::GetSalary(const string &name, const string &surnam
 unsigned int CPersonalAgenda::GetSalary(const string &email) const
 {
     auto currentEmployee = lower_bound(m_emailList.begin(), m_emailList.end(), TEmployee("", "", email), cmpEmail);
-    if(currentEmployee == m_emailList.end())
+    if(currentEmployee == m_emailList.end() || currentEmployee->m_email != email)
         return 0;
     return currentEmployee->m_salary;
 }
@@ -338,7 +341,7 @@ bool CPersonalAgenda::ChangeName(const string &email, const string &newName, con
     //search for employee with given email
     auto currentEmployeeEmailList = lower_bound(m_emailList.begin(), m_emailList.end(), TEmployee("", "", email), cmpEmail);
     //not found
-    if(currentEmployeeEmailList == m_emailList.end())
+    if(currentEmployeeEmailList == m_emailList.end() || currentEmployeeEmailList->m_email != email)
         return false;
     //already exists
     if(currentEmployeeEmailList->m_name == newName && currentEmployeeEmailList->m_surname == newSurname)
@@ -419,7 +422,7 @@ bool CPersonalAgenda::GetRank(const string &name, const string &surname, int &ra
 bool CPersonalAgenda::GetRank(const string &email, int &rankMin, int &rankMax) const
 {
     auto currentEmployee = lower_bound(m_emailList.begin(), m_emailList.end(), TEmployee("", "", email), cmpEmail);
-    if(currentEmployee == m_emailList.end())
+    if(currentEmployee == m_emailList.end() || currentEmployee->m_email != email)
         return false;
     auto lowerBoundSalary = lower_bound(m_salaryList.begin(), m_salaryList.end(), currentEmployee->m_salary);
     auto upperBoundSalary = upper_bound(lowerBoundSalary, m_salaryList.end(), currentEmployee->m_salary);
@@ -503,7 +506,7 @@ int main ( void )
     assert ( b1 . GetRank ( "john", lo, hi )
              && lo == 0
              && hi == 1 );
-   /* assert ( b1 . Del ( "John", "Miller" ) );
+    assert ( b1 . Del ( "John", "Miller" ) );
     assert ( b1 . GetRank ( "john", lo, hi )
              && lo == 0
              && hi == 0 );
@@ -554,7 +557,7 @@ int main ( void )
     assert ( b2 . Add ( "Peter", "Smith", "peter", 40000 ) );
     assert ( b2 . GetSalary ( "peter" ) ==  40000 );
 
-*/
+
 
 
     return 0;
