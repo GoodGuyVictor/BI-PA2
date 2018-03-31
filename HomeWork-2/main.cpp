@@ -164,10 +164,11 @@ void CPersonalAgenda::addSalary(unsigned int sal)
 
 void CPersonalAgenda::resetSalary(unsigned int oldSal, unsigned int newSal)
 {
-    auto oldS = lower_bound(m_salaryList.begin(), m_salaryList.end(), oldSal);
-    m_salaryList.erase(oldS);
-    auto newS = lower_bound(m_salaryList.begin(), m_salaryList.end(), newSal);
-    m_salaryList.insert(newS, newSal);
+    //reset salary in salaryList
+    auto oldSalPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), oldSal);
+    m_salaryList.erase(oldSalPos);
+    auto newSalPos = lower_bound(m_salaryList.begin(), m_salaryList.end(), newSal);
+    m_salaryList.insert(newSalPos, newSal);
 }
 
 bool CPersonalAgenda::addEmail(const TEmployee &empl)
@@ -277,7 +278,14 @@ bool CPersonalAgenda::SetSalary(const string &name, const string &surname, unsig
     size_t position;
     if(findEmployee(name, surname, position)) {
         auto currentEmployee = m_staffDb.begin() + position;
+
         resetSalary(currentEmployee->m_salary, salary);
+
+        //reset salary in emailList
+        auto emailListPos = lower_bound(m_emailList.begin(), m_emailList.end(), *currentEmployee, cmpEmail);
+        emailListPos->m_salary = salary;
+
+        //reset salary in staffDb
         currentEmployee->m_salary = salary;
         return true;
     }
@@ -286,15 +294,20 @@ bool CPersonalAgenda::SetSalary(const string &name, const string &surname, unsig
 
 bool CPersonalAgenda::SetSalary(const string &email, unsigned int salary)
 {
-    //linear complexity!!!!!!!!!!!!!!!!!!
-    for (auto it = m_staffDb.begin(); it < m_staffDb.end(); it++) {
-        if(it->m_email == email) {
-            resetSalary(it->m_salary, salary);
-            it->m_salary = salary;
-            return true;
-        }
+    //reset salary in emailList
+    auto emailListPos = lower_bound(m_emailList.begin(), m_emailList.end(), TEmployee("", "", email), cmpEmail);
+    emailListPos->m_salary = salary;
+
+    //resete salary in staffDb
+    string name = emailListPos->m_name;
+    string surname = emailListPos->m_surname;
+    size_t position;
+    if(findEmployee(name, surname, position)) {
+        auto currentEmployee = m_staffDb.begin() + position;
+        //reset salary in salaryList
+        resetSalary(currentEmployee->m_salary, salary);
+        currentEmployee->m_salary = salary;
     }
-    return false;
 }
 
 unsigned int CPersonalAgenda::GetSalary(const string &name, const string &surname) const
@@ -404,10 +417,10 @@ int main ( void )
              && outSurname == "Smith" );
     assert ( ! b1 . GetNext ( "Peter", "Smith", outName, outSurname ) );
     assert ( ! b1 . GetNext ( "Peterdw", "Smith", outName, outSurname ) );
-   /* assert ( b1 . SetSalary ( "John", "Smith", 35000 ) );
+    assert ( b1 . SetSalary ( "John", "Smith", 35000 ) );
     assert ( b1 . SetSalary ( "john", 32000 ) );
     assert ( b1 . GetSalary ( "john" ) ==  32000 );
-    assert ( b1 . GetSalary ( "John", "Smith" ) ==  32000 );
+    /*assert ( b1 . GetSalary ( "John", "Smith" ) ==  32000 );
     assert ( b1 . GetRank ( "John", "Smith", lo, hi )
              && lo == 1
              && hi == 1 );
