@@ -27,30 +27,30 @@ class InvalidDateException
 
 struct Year
 {
-    unsigned m_year;
-    unsigned m_month;
-    unsigned m_day;
-    Year(unsigned y, unsigned m = 0, unsigned d = 0)
+    int m_year;
+    int m_month;
+    int m_day;
+    Year(int y, int m = 0, int d = 0)
             : m_year(y), m_month(m), m_day(d)
     {}
 };
 
 struct Month
 {
-    unsigned m_year;
-    unsigned m_month;
-    unsigned m_day;
-    Month(unsigned m, unsigned y = 0, unsigned d = 0)
+    int m_year;
+    int m_month;
+    int m_day;
+    Month(int m, int y = 0, int d = 0)
             : m_year(y), m_month(m), m_day(d)
     {}
 };
 
 struct Day
 {
-    unsigned m_year;
-    unsigned m_month;
-    unsigned m_day;
-    Day(unsigned d, unsigned y = 0, unsigned m = 0)
+    int m_year;
+    int m_month;
+    int m_day;
+    Day(int d, int y = 0, int m = 0)
             : m_year(y), m_month(m), m_day(d)
     {}
 };
@@ -58,96 +58,45 @@ struct Day
 class CDate
 {
 public:
-    CDate(const unsigned year = 0, const unsigned month = 0, const unsigned day = 0)
+    CDate(const int year = 0, const int month = 0, const int day = 0)
             :m_year(year), m_month(month), m_day(day)
     {
         validate();
-
     }
 
-    friend ostream & operator << (ostream & os, const CDate date)
-    {
-        if(date.m_month < 10 && date.m_day < 10) {
-            os << date.m_year << '-' << '0' << date.m_month << '-' << '0' << date.m_day;
-            return os;
-        }
-
-        if(date.m_month > 10 && date.m_day < 10) {
-            os << date.m_year << '-' << date.m_month << '-' << '0' << date.m_day;
-            return os;
-        }
-
-        if(date.m_month < 10 && date.m_day > 10) {
-            os << date.m_year << '-' << '0' << date.m_month << '-' << date.m_day;
-            return os;
-        }
-
-        if(date.m_month > 10 && date.m_day > 10) {
-            os << date.m_year << '-' << date.m_month << '-' << date.m_day;
-            return os;
-        }
-    }
+    friend ostream & operator << (ostream & os, const CDate date);
 
     template <class T>
-    CDate operator+(const T & addingDate)
+    CDate operator+(const T & addingDate);
+
+    template <class T>
+    CDate operator-(const T & subractingDate)
     {
         CDate result = *this;
-        result.m_year += addingDate.m_year;
+        result.m_year -= subractingDate.m_year;
 
-        if(addingDate.m_month / 12) {
-            result.m_year += addingDate.m_month / 12;
-            result.m_month += addingDate.m_month % 12;
+        if(subractingDate.m_month / 12) {
+            result.m_year -= subractingDate.m_month / 12;
+            result.m_month -= subractingDate.m_month % 12;
         } else {
-            result.m_month += addingDate.m_month;
-            if(result.m_month > 12) {
-                result.m_year++;
-                result.m_month -= 12;
-            }
+            result.m_month -= subractingDate.m_month;
+        }
+        if(result.m_month < 0) {
+            result.m_year--;
+            result.m_month = 12 + result.m_month;
         }
 
-        if(addingDate.m_day > 0) {
+        if(subractingDate.m_day > 0) {
             int Jnd = getJnd(m_year, m_month, m_day);
-            Jnd += addingDate.m_day;
+            Jnd -= subractingDate.m_day;
             result.setDateByJnd(Jnd);
         }
         result.validate();
         return result;
     }
 
-//    template <class T>
-//    CDate operator-(const T & subractingDate)
-//    {
-//        CDate result = *this;
-//        result.m_year -= subractingDate.m_year;
-//
-//        if(subractingDate.m_month / 12) {
-//            result.m_year -= subractingDate.m_month / 12;
-//            result.m_month -= subractingDate.m_month % 12;
-//        } else {
-//            result.m_month -= subractingDate.m_month;
-//            if(result.m_month > 12) {
-//                result.m_year--;
-//                result.m_month -= 12;
-//            }
-//        }
-//
-//        if(subractingDate.m_day > 0) {
-//            int Jnd = getJnd(m_year, m_month, m_day);
-//            Jnd -= subractingDate.m_day;
-//            result.setDateByJnd(Jnd);
-//        }
-//        result.validate();
-//        return result;
-//    }
 
-
-    CDate& operator = (const CDate& rightDate)
-    {
-        m_year = rightDate.m_year;
-        m_month = rightDate.m_month;
-        m_day = rightDate.m_day;
-        validate();
-    }
+    CDate& operator = (const CDate& rightDate);
     // constructor
     // operator(s) +
     // operator(s) -
@@ -157,59 +106,121 @@ public:
     // operator(s) +=
     // operator <<
 private:
-    unsigned m_year;
-    unsigned m_month;
-    unsigned m_day;
-//    unsigned short m_Jnd;
+    int m_year;
+    int m_month;
+    int m_day;
+//    int short m_Jnd;
 
-    bool isLeapYear(unsigned year)
+    bool isLeapYear(int year)
     {
         return ((!(year%4) && (year%100) || !(year%400)) && (year%4000));
     }
 
-    bool validDate(unsigned year,unsigned month,unsigned day)
-    {
-        unsigned short monthlen[]={31,28,31,30,31,30,31,31,30,31,30,31};
-
-        if (month>12 || year < 1600)
-            return false;
-        if (isLeapYear(year) && month==2)
-            monthlen[1]++;
-        if (day>monthlen[month-1])
-            return false;
-        return true;
-    }
-
-    void validate()
-    {
-        if(m_year && m_month && m_day)
-            if(!validDate(m_year, m_month, m_day))
-                throw InvalidDateException();
-    }
-
-    int getJnd (unsigned year, unsigned month, unsigned day)
-    {
-        int a = (14 - month) / 12;
-        int y = year + 4800 - a;
-        int m = month + 12 * a - 3;
-
-        return (day + (153 * m + 2) / 5 + 365 * y + y / 4 - y / 100 + y / 400 - 32045);
-    }
-
-    int setDateByJnd ( int Jnd )
-    {
-        int a = Jnd + 32044;
-        int b = (4 * a + 3) / 146097;
-        int c = a - 146097 * b / 4;
-        int d = (4 * c + 3) / 1461;
-        int e = c - 1461 * d / 4;
-        int m = (5 * e + 2) / 153;
-
-        m_day = (unsigned)(e - (153 * m + 2) / 5 + 1);
-        m_month = (unsigned)(m + 3 - 12 * (m / 10));
-        m_year = (unsigned)(100 * b + d - 4800 + m / 10);
-    }
+    bool validDate(int year,int month,int day);
+    void validate();
+    int getJnd(int year, int month, int day);
+    int setDateByJnd ( int Jnd );
 };
+
+template<class T>
+CDate CDate::operator+(const T &addingDate)
+{
+    CDate result = *this;
+    result.m_year += addingDate.m_year;
+
+    if(addingDate.m_month / 12) {
+        result.m_year += addingDate.m_month / 12;
+        result.m_month += addingDate.m_month % 12;
+    } else {
+        result.m_month += addingDate.m_month;
+        if(result.m_month > 12) {
+            result.m_year++;
+            result.m_month -= 12;
+        }
+    }
+
+    if(addingDate.m_day != 0) {
+        int Jnd = getJnd(m_year, m_month, m_day);
+        Jnd += addingDate.m_day;
+        result.setDateByJnd(Jnd);
+    }
+    result.validate();
+    return result;
+}
+
+ostream &operator<<(ostream &os, const CDate date)
+{
+    if(date.m_month < 10 && date.m_day < 10) {
+        os << date.m_year << '-' << '0' << date.m_month << '-' << '0' << date.m_day;
+        return os;
+    }
+
+    if(date.m_month > 10 && date.m_day < 10) {
+        os << date.m_year << '-' << date.m_month << '-' << '0' << date.m_day;
+        return os;
+    }
+
+    if(date.m_month < 10 && date.m_day > 10) {
+        os << date.m_year << '-' << '0' << date.m_month << '-' << date.m_day;
+        return os;
+    }
+
+    if(date.m_month > 10 && date.m_day > 10) {
+        os << date.m_year << '-' << date.m_month << '-' << date.m_day;
+        return os;
+    }
+}
+
+CDate & CDate::operator=(const CDate &rightDate)
+{
+    m_year = rightDate.m_year;
+    m_month = rightDate.m_month;
+    m_day = rightDate.m_day;
+    validate();
+}
+
+bool CDate::validDate(int year, int month, int day)
+{
+    int short monthlen[]={31,28,31,30,31,30,31,31,30,31,30,31};
+
+    if (month>12 || year < 1600)
+        return false;
+    if (isLeapYear(year) && month==2)
+        monthlen[1]++;
+    if (day>monthlen[month-1])
+        return false;
+    return true;
+}
+
+void CDate::validate()
+{
+    if(m_year && m_month && m_day)
+        if(!validDate(m_year, m_month, m_day))
+            throw InvalidDateException();
+}
+
+int CDate::getJnd(int year, int month, int day)
+{
+    int a = (14 - month) / 12;
+    int y = year + 4800 - a;
+    int m = month + 12 * a - 3;
+
+    return (day + (153 * m + 2) / 5 + 365 * y + y / 4 - y / 100 + y / 400 - 32045);
+}
+
+int CDate::setDateByJnd(int Jnd)
+{
+    int a = Jnd + 32044;
+    int b = (4 * a + 3) / 146097;
+    int c = a - 146097 * b / 4;
+    int d = (4 * c + 3) / 1461;
+    int e = c - 1461 * d / 4;
+    int m = (5 * e + 2) / 153;
+
+    m_day = (e - (153 * m + 2) / 5 + 1);
+    m_month = (m + 3 - 12 * (m / 10));
+    m_year = (100 * b + d - 4800 + m / 10);
+}
 
 
 #ifndef __PROGTEST__
@@ -293,7 +304,7 @@ int                main                                    ( void )
     {
     }
     tmp = CDate ( 2000, 1, 1 );
-    /*assert ( toString ( tmp - Year ( 5 ) + Month ( 2 ) )  == "1995-03-01" );
+    assert ( toString ( tmp - Year ( 5 ) + Month ( 2 ) )  == "1995-03-01" );
     assert ( toString ( tmp ) == "2000-01-01" );
     assert ( toString ( CDate ( 2000, 1, 1 ) - Year ( 1 ) - Month ( 3 ) - Day ( 10 ) )  == "1998-09-21" );
     assert ( toString ( CDate ( 2000, 1, 1 ) - Year ( 2 ) - Month ( -3 ) + Day ( -10 ) )  == "1998-03-22" );
