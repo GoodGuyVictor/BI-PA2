@@ -25,6 +25,16 @@ class InvalidDateException
 // uncomment if your code implements the overloaded suffix operators
 // #define TEST_LITERALS
 
+struct TTmpDate
+{
+    int m_year;
+    int m_month;
+    int m_day;
+    TTmpDate(const int year, const int month, const int day)
+            :m_year(year), m_month(month), m_day(day)
+    {}
+};
+
 class CDate
 {
 public:
@@ -32,6 +42,7 @@ public:
             :m_year(year), m_month(month), m_day(day)
     {
         validate();
+        m_buffer.emplace_back(TTmpDate(year, month ,day));
     }
 
     friend ostream & operator << (ostream & os, const CDate date);
@@ -70,7 +81,7 @@ private:
     int m_year;
     int m_month;
     int m_day;
-//    int short m_Jnd;
+    vector<TTmpDate> m_buffer;
 
     bool isLeapYear(int year)
     {
@@ -109,6 +120,7 @@ CDate CDate::operator+(const CDate &addingDate)
     else
         result.m_day += addingDate.m_day;
     result.validate();
+    result.m_buffer.push_back(addingDate.m_buffer[0]);
     return result;
 }
 
@@ -138,6 +150,7 @@ CDate CDate::operator-(const CDate &subractingDate)
     else
         result.m_day -= subractingDate.m_day;
     result.validate();
+    result.m_buffer.push_back(subractingDate.m_buffer[0]);
     return result;
 }
 
