@@ -57,6 +57,34 @@ public:
 
     CDate& operator += (const CDate & addingDate);
 
+    bool operator == (const CDate & rightOperand)
+    {
+        return m_year == rightOperand.m_year
+               && m_month == rightOperand.m_month
+               && m_day == rightOperand.m_day;
+    }
+
+    bool operator != (const CDate & rightOperand)
+    {
+        return m_year != rightOperand.m_year
+               || m_month != rightOperand.m_month
+               || m_day != rightOperand.m_day;
+    }
+
+    bool operator < (const CDate & rightOperand)
+    {
+        if(m_year == rightOperand.m_year)
+            if(m_month == rightOperand.m_month)
+                if(m_day == rightOperand.m_day)
+                    return false;
+                else
+                    return m_day < rightOperand.m_day;
+            else
+                return m_month < rightOperand.m_month;
+        return m_year < rightOperand.m_year;
+
+    }
+
     // constructor
     // operator(s) +
     // operator(s) -
@@ -362,7 +390,7 @@ int                main                                    ( void )
     assert ( CDate ( 2000, 1, 1 ) - CDate ( 2018, 3, 15 ) == -6648 );
     assert ( CDate ( 2018, 3, 15 ) + Year ( 3 ) + Month ( -18 ) - CDate ( 2000, 1, 1 ) == 7197 );
     assert ( CDate ( 5398, 5, 2 ) - CDate ( 2018, 3, 15 ) == 1234567 );
-    */
+
 #ifdef TEST_LITERALS
     assert ( toString ( CDate ( 2000, 1, 1 ) )  == "2000-01-01" );
   assert ( toString ( CDate ( 2500, 12, 21 ) )  == "2500-12-21" );
