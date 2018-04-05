@@ -162,20 +162,13 @@ public:
     friend ostream & operator << (ostream & os, const CDate date);
     CDate operator + (const TTmpDate & rightOperand);
     CDate operator - (const TTmpDate & rightOperand);
+    int operator - (const CDate & rightOperand);
     CDate& operator = (const CDate& rightDate);
     CDate& operator += (const TTmpDate & addingDate);
     bool operator == (const CDate & rightOperand);
     bool operator != (const CDate & rightOperand);
     bool operator < (const CDate & rightOperand);
 
-    // constructor
-    // operator(s) +
-    // operator(s) -
-    // operator ==
-    // operator !=
-    // operator <
-    // operator(s) +=
-    // operator <<
 private:
     int m_year;
     int m_month;
@@ -232,17 +225,6 @@ CDate CDate::operator-(const TTmpDate &rightOperand)
     TTmpDate copy = rightOperand;
     return operator+(copy.operator-());
 }
-
-//TTmpDate &CDate::operator-()
-//{
-//    m_year = m_year * (-1);
-//    m_month = m_month * (-1);
-//    m_day = m_day * (-1);
-//    m_buffer[0].m_year = m_year;
-//    m_buffer[0].m_month = m_month;
-//    m_buffer[0].m_day =  m_day;
-//    return *this;
-//}
 
 ostream &operator<<(ostream &os, const CDate date)
 {
@@ -351,6 +333,13 @@ bool CDate::operator==(const CDate &rightOperand)
     return m_year == rightOperand.m_year
            && m_month == rightOperand.m_month
            && m_day == rightOperand.m_day;
+}
+
+int CDate::operator-(const CDate &rightOperand)
+{
+    int leftJnd = getJnd(m_year, m_month, m_day);
+    int rightJnd = getJnd(rightOperand.m_year, rightOperand.m_month, rightOperand.m_day);
+    return leftJnd - rightJnd;
 }
 
 TTmpDate Year(int y)
@@ -494,7 +483,7 @@ int                main                                    ( void )
     assert ( !( CDate ( 2018, 3, 15 ) + Day ( -1 ) == CDate ( 2018, 3, 15 ) ) );
     assert ( CDate ( 2018, 3, 15 ) + Day ( -1 ) != CDate ( 2018, 3, 15 ) );
     assert ( CDate ( 2018, 3, 15 ) + Day ( -1 ) < CDate ( 2018, 3, 15 ) );
-    /*assert ( CDate ( 2018, 3, 15 ) - CDate ( 2000, 1, 1 ) == 6648 );
+    assert ( CDate ( 2018, 3, 15 ) - CDate ( 2000, 1, 1 ) == 6648 );
     assert ( CDate ( 2000, 1, 1 ) - CDate ( 2018, 3, 15 ) == -6648 );
     assert ( CDate ( 2018, 3, 15 ) + Year ( 3 ) + Month ( -18 ) - CDate ( 2000, 1, 1 ) == 7197 );
     assert ( CDate ( 5398, 5, 2 ) - CDate ( 2018, 3, 15 ) == 1234567 );
