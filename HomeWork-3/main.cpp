@@ -25,36 +25,6 @@ class InvalidDateException
 // uncomment if your code implements the overloaded suffix operators
 // #define TEST_LITERALS
 
-struct Year
-{
-    int m_year;
-    int m_month;
-    int m_day;
-    Year(int y, int m = 0, int d = 0)
-            : m_year(y), m_month(m), m_day(d)
-    {}
-};
-
-struct Month
-{
-    int m_year;
-    int m_month;
-    int m_day;
-    Month(int m, int y = 0, int d = 0)
-            : m_year(y), m_month(m), m_day(d)
-    {}
-};
-
-struct Day
-{
-    int m_year;
-    int m_month;
-    int m_day;
-    Day(int d, int y = 0, int m = 0)
-            : m_year(y), m_month(m), m_day(d)
-    {}
-};
-
 class CDate
 {
 public:
@@ -66,37 +36,28 @@ public:
 
     friend ostream & operator << (ostream & os, const CDate date);
 
-    template <class T>
-    CDate operator+(const T & addingDate);
+    CDate operator+(const CDate & addingDate);
 
-    template <class T>
-    CDate operator-(const T & subractingDate)
-    {
-        CDate result = *this;
-        result.m_year -= subractingDate.m_year;
-
-        if(subractingDate.m_month / 12) {
-            result.m_year -= subractingDate.m_month / 12;
-            result.m_month -= subractingDate.m_month % 12;
-        } else {
-            result.m_month -= subractingDate.m_month;
-        }
-        if(result.m_month < 0) {
-            result.m_year--;
-            result.m_month = 12 + result.m_month;
-        }
-
-        if(subractingDate.m_day > 0) {
-            int Jnd = getJnd(m_year, m_month, m_day);
-            Jnd -= subractingDate.m_day;
-            result.setDateByJnd(Jnd);
-        }
-        result.validate();
-        return result;
-    }
-
+    CDate operator-(const CDate & subractingDate);
 
     CDate& operator = (const CDate& rightDate);
+
+    CDate& operator - ()
+    {
+        m_year = m_year * (-1);
+        m_month = m_month * (-1);
+        m_day = m_day * (-1);
+    }
+
+    CDate& operator += (const CDate & addingDate)
+    {
+//        m_year += addingDate.m_year;
+//        m_month += addingDate.m_month;
+//        m_day += addingDate.m_year;
+//        validate();
+        *this = operator+(addingDate);
+    }
+
     // constructor
     // operator(s) +
     // operator(s) -
@@ -122,8 +83,7 @@ private:
     int setDateByJnd ( int Jnd );
 };
 
-template<class T>
-CDate CDate::operator+(const T &addingDate)
+CDate CDate::operator+(const CDate &addingDate)
 {
     CDate result = *this;
     result.m_year += addingDate.m_year;
@@ -139,11 +99,44 @@ CDate CDate::operator+(const T &addingDate)
         }
     }
 
-    if(addingDate.m_day != 0) {
-        int Jnd = getJnd(m_year, m_month, m_day);
-        Jnd += addingDate.m_day;
-        result.setDateByJnd(Jnd);
+    if(m_year >= 0 && m_month >= 0 && m_day >= 0) {
+        if (addingDate.m_day != 0) {
+            int Jnd = getJnd(result.m_year, result.m_month, result.m_day);
+            Jnd += addingDate.m_day;
+            result.setDateByJnd(Jnd);
+        }
     }
+    else
+        result.m_day += addingDate.m_day;
+    result.validate();
+    return result;
+}
+
+CDate CDate::operator-(const CDate &subractingDate)
+{
+    CDate result = *this;
+    result.m_year -= subractingDate.m_year;
+
+    if(subractingDate.m_month / 12) {
+        result.m_year -= subractingDate.m_month / 12;
+        result.m_month -= subractingDate.m_month % 12;
+    } else {
+        result.m_month -= subractingDate.m_month;
+    }
+    if(result.m_month < 0) {
+        result.m_year--;
+        result.m_month = 12 + result.m_month;
+    }
+
+    if(m_year >= 0 && m_month >= 0 && m_day >= 0) {
+        if (subractingDate.m_day != 0) {
+            int Jnd = getJnd(result.m_year, result.m_month, result.m_day);
+            Jnd -= subractingDate.m_day;
+            result.setDateByJnd(Jnd);
+        }
+    }
+    else
+        result.m_day -= subractingDate.m_day;
     result.validate();
     return result;
 }
@@ -194,7 +187,7 @@ bool CDate::validDate(int year, int month, int day)
 
 void CDate::validate()
 {
-    if(m_year && m_month && m_day)
+    if(m_year > 0 && m_month > 0 && m_day > 0)
         if(!validDate(m_year, m_month, m_day))
             throw InvalidDateException();
 }
@@ -222,6 +215,23 @@ int CDate::setDateByJnd(int Jnd)
     m_year = (100 * b + d - 4800 + m / 10);
 }
 
+CDate Year(int y)
+{
+    CDate date(y, 0, 0);
+    return date;
+}
+
+CDate Month(int m)
+{
+    CDate date(0, m, 0);
+    return date;
+}
+
+CDate Day(int d)
+{
+    CDate date(0, 0, d);
+    return date;
+}
 
 #ifndef __PROGTEST__
 string             toString                                ( const CDate     & x )
@@ -239,24 +249,24 @@ int                main                                    ( void )
     assert ( toString ( CDate ( 2000, 1, 1 ) )  == "2000-01-01" );
     assert ( toString ( CDate ( 2500, 12, 21 ) )  == "2500-12-21" );
     assert ( toString ( CDate ( 1685, 7, 11 ) )  == "1685-07-11" );
-//    try
-//    {
-//        tmp = CDate ( 1900, 2, 29 );
-//        assert ( "Missing exception" == NULL );
-//    }
-//    catch ( const InvalidDateException & e )
-//    {
-//    }
+    try
+    {
+        tmp = CDate ( 1900, 2, 29 );
+        assert ( "Missing exception" == NULL );
+    }
+    catch ( const InvalidDateException & e )
+    {
+    }
     assert ( toString ( CDate ( 2000, 2, 29 ) )  == "2000-02-29" );
     assert ( toString ( CDate ( 2004, 2, 29 ) )  == "2004-02-29" );
-//    try
-//    {
-//        tmp = CDate ( 4000, 2, 29 );
-//        assert ( "Missing exception" == NULL );
-//    }
-//    catch ( const InvalidDateException & e )
-//    {
-//    }
+    try
+    {
+        tmp = CDate ( 4000, 2, 29 );
+        assert ( "Missing exception" == NULL );
+    }
+    catch ( const InvalidDateException & e )
+    {
+    }
     assert ( toString ( CDate ( 2018, 3, 15 ) + Year ( 1 ) )  == "2019-03-15" );
     assert ( toString ( CDate ( 2018, 3, 15 ) + Year ( 7 ) )  == "2025-03-15" );
     assert ( toString ( CDate ( 2018, 3, 15 ) + Year ( 73 ) )  == "2091-03-15" );
@@ -332,7 +342,7 @@ int                main                                    ( void )
     catch ( const InvalidDateException & e )
     {
     }
-    tmp = CDate ( 2018, 3, 15 ) + Day ( -3 );
+    /*tmp = CDate ( 2018, 3, 15 ) + Day ( -3 );
     assert ( toString ( tmp ) == "2018-03-12" );
     assert ( !( CDate ( 2018, 3, 15 ) == CDate ( 2000, 1, 1 ) ) );
     assert ( CDate ( 2018, 3, 15 ) != CDate ( 2000, 1, 1 ) );
@@ -384,7 +394,8 @@ int                main                                    ( void )
   assert ( toString ( CDate ( 2018, 3, 15 ) + 1234567_days )  == "5398-05-02" );
   assert ( toString ( CDate ( 2018, 3, 15 ) + 3_days + 2_years + 3_months + 5_days + 11_months )  == "2021-05-23" );
   try
-  {
+  {998-01-29" );
+    try
     tmp = CDate ( 2000, 2, 29 ) + 300_years;
     assert ( "Missing exception" == NULL );
   }
