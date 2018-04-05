@@ -47,9 +47,9 @@ public:
 
     friend ostream & operator << (ostream & os, const CDate date);
 
-    CDate operator+(const CDate & addingDate);
+    CDate operator+(const CDate & rightOperand);
 
-    CDate operator-(const CDate & subractingDate);
+    CDate operator-(const CDate & rightOperand);
 
     CDate& operator = (const CDate& rightDate);
 
@@ -67,6 +67,9 @@ public:
 //        m_day += addingDate.m_year;
 //        validate();
         *this = operator+(addingDate);
+        for (auto it = addingDate.m_buffer.begin(); it < addingDate.m_buffer.end(); it++) {
+            
+        }
     }
 
     // constructor
@@ -94,64 +97,46 @@ private:
     int setDateByJnd ( int Jnd );
 };
 
-CDate CDate::operator+(const CDate &addingDate)
+CDate CDate::operator+(const CDate &rightOperand)
 {
     CDate result = *this;
-    result.m_year += addingDate.m_year;
+    result.m_year += rightOperand.m_year;
 
-    if(addingDate.m_month / 12) {
-        result.m_year += addingDate.m_month / 12;
-        result.m_month += addingDate.m_month % 12;
+    if(rightOperand.m_month / 12) {
+        result.m_year += rightOperand.m_month / 12;
+        result.m_month += rightOperand.m_month % 12;
     } else {
-        result.m_month += addingDate.m_month;
-        if(result.m_month > 12) {
-            result.m_year++;
-            result.m_month -= 12;
-        }
+        result.m_month += rightOperand.m_month;
+
+    }
+    if(result.m_month > 12) {
+        result.m_year++;
+        result.m_month -= 12;
     }
 
-    if(m_year >= 0 && m_month >= 0 && m_day >= 0) {
-        if (addingDate.m_day != 0) {
-            int Jnd = getJnd(result.m_year, result.m_month, result.m_day);
-            Jnd += addingDate.m_day;
-            result.setDateByJnd(Jnd);
-        }
-    }
-    else
-        result.m_day += addingDate.m_day;
-    result.validate();
-    result.m_buffer.push_back(addingDate.m_buffer[0]);
-    return result;
-}
-
-CDate CDate::operator-(const CDate &subractingDate)
-{
-    CDate result = *this;
-    result.m_year -= subractingDate.m_year;
-
-    if(subractingDate.m_month / 12) {
-        result.m_year -= subractingDate.m_month / 12;
-        result.m_month -= subractingDate.m_month % 12;
-    } else {
-        result.m_month -= subractingDate.m_month;
-    }
     if(result.m_month < 0) {
         result.m_year--;
         result.m_month = 12 + result.m_month;
     }
 
     if(m_year >= 0 && m_month >= 0 && m_day >= 0) {
-        if (subractingDate.m_day != 0) {
+        if (rightOperand.m_day != 0) {
             int Jnd = getJnd(result.m_year, result.m_month, result.m_day);
-            Jnd -= subractingDate.m_day;
+            Jnd += rightOperand.m_day;
             result.setDateByJnd(Jnd);
         }
     }
     else
-        result.m_day -= subractingDate.m_day;
+        result.m_day += rightOperand.m_day;
     result.validate();
-    result.m_buffer.push_back(subractingDate.m_buffer[0]);
+    result.m_buffer.push_back(rightOperand.m_buffer[0]);
     return result;
+}
+
+CDate CDate::operator-(const CDate &rightOperand)
+{
+    CDate copy = rightOperand;
+    return operator+(copy.operator-());
 }
 
 ostream &operator<<(ostream &os, const CDate date)
