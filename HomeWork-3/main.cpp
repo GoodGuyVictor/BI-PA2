@@ -41,12 +41,12 @@ struct TTmpDate
 
     bool isLeapYear(int year)
     {
-        return ((!(year%4) && (year%100) || !(year%400)) && (year%4000));
+        return (((!(year%4) && (year%100)) || !(year%400)) && (year%4000));
     }
     bool validDate(int year,int month,int day);
     void validate();
     int getJnd(int year, int month, int day);
-    int setDateByJnd ( int Jnd );
+    void setDateByJnd ( int Jnd );
 
     TTmpDate operator + (const TTmpDate &);
     TTmpDate operator - (const TTmpDate &);
@@ -83,7 +83,7 @@ int TTmpDate::getJnd(int year, int month, int day)
     return (day + (153 * m + 2) / 5 + 365 * y + y / 4 - y / 100 + y / 400 - 32045);
 }
 
-int TTmpDate::setDateByJnd(int Jnd)
+void TTmpDate::setDateByJnd(int Jnd)
 {
     int a = Jnd + 32044;
     int b = (4 * a + 3) / 146097;
@@ -159,7 +159,7 @@ public:
         validate();
     }
 
-    friend ostream & operator << (ostream & os, const CDate date);
+    friend ostream & operator << (ostream & os, const CDate & date);
     CDate operator + (const TTmpDate & rightOperand);
     CDate operator - (const TTmpDate & rightOperand);
     int operator - (const CDate & rightOperand);
@@ -176,13 +176,13 @@ private:
 
     bool isLeapYear(int year)
     {
-        return ((!(year%4) && (year%100) || !(year%400)) && (year%4000));
+        return (((!(year%4) && (year%100)) || !(year%400)) && (year%4000));
     }
 
     bool validDate(int year,int month,int day);
     void validate();
     int getJnd(int year, int month, int day);
-    int setDateByJnd ( int Jnd );
+    void setDateByJnd ( int Jnd );
 };
 
 CDate CDate::operator+(const TTmpDate &rightOperand)
@@ -202,7 +202,7 @@ CDate CDate::operator+(const TTmpDate &rightOperand)
         result.m_month -= 12;
     }
 
-    if(result.m_month < 0) {
+    if(result.m_month <= 0) {
         result.m_year--;
         result.m_month = 12 + result.m_month;
     }
@@ -217,6 +217,8 @@ CDate CDate::operator+(const TTmpDate &rightOperand)
     else
         result.m_day += rightOperand.m_day;
     result.validate();
+    if(result.m_year > 4000)
+        result.m_day++;
     return result;
 }
 
@@ -226,27 +228,28 @@ CDate CDate::operator-(const TTmpDate &rightOperand)
     return operator+(copy.operator-());
 }
 
-ostream &operator<<(ostream &os, const CDate date)
+ostream & operator<<(ostream &os, const CDate & date)
 {
     if(date.m_month < 10 && date.m_day < 10) {
         os << date.m_year << '-' << '0' << date.m_month << '-' << '0' << date.m_day;
         return os;
     }
 
-    if(date.m_month > 10 && date.m_day < 10) {
+    if(date.m_month >= 10 && date.m_day < 10) {
         os << date.m_year << '-' << date.m_month << '-' << '0' << date.m_day;
         return os;
     }
 
-    if(date.m_month < 10 && date.m_day > 10) {
+    if(date.m_month < 10 && date.m_day >= 10) {
         os << date.m_year << '-' << '0' << date.m_month << '-' << date.m_day;
         return os;
     }
 
-    if(date.m_month > 10 && date.m_day > 10) {
+    if(date.m_month >= 10 && date.m_day >= 10) {
         os << date.m_year << '-' << date.m_month << '-' << date.m_day;
         return os;
     }
+    return os;
 }
 
 CDate & CDate::operator=(const CDate &rightDate)
@@ -255,13 +258,14 @@ CDate & CDate::operator=(const CDate &rightDate)
     m_month = rightDate.m_month;
     m_day = rightDate.m_day;
     validate();
+    return *this;
 }
 
 bool CDate::validDate(int year, int month, int day)
 {
     int short monthlen[]={31,28,31,30,31,30,31,31,30,31,30,31};
 
-    if (month>12 || year < 1600)
+    if (month > 12 || year < 1600)
         return false;
     if (isLeapYear(year) && month==2)
         monthlen[1]++;
@@ -279,6 +283,7 @@ void CDate::validate()
 
 int CDate::getJnd(int year, int month, int day)
 {
+    if(year > 4000) day--;
     int a = (14 - month) / 12;
     int y = year + 4800 - a;
     int m = month + 12 * a - 3;
@@ -286,7 +291,7 @@ int CDate::getJnd(int year, int month, int day)
     return (day + (153 * m + 2) / 5 + 365 * y + y / 4 - y / 100 + y / 400 - 32045);
 }
 
-int CDate::setDateByJnd(int Jnd)
+void CDate::setDateByJnd(int Jnd)
 {
     int a = Jnd + 32044;
     int b = (4 * a + 3) / 146097;
@@ -300,12 +305,13 @@ int CDate::setDateByJnd(int Jnd)
     m_year = (100 * b + d - 4800 + m / 10);
 }
 
-CDate &CDate::operator+=(const TTmpDate &addingDate)
+CDate & CDate::operator+=(const TTmpDate &addingDate)
 {
     for (auto it = addingDate.m_buffer.begin(); it < addingDate.m_buffer.end(); it++) {
         *this = operator+(*it);
         validate();
     }
+    return *this;
 }
 
 bool CDate::operator<(const CDate &rightOperand)
@@ -318,7 +324,8 @@ bool CDate::operator<(const CDate &rightOperand)
                 return m_day < rightOperand.m_day;
         else
             return m_month < rightOperand.m_month;
-    return m_year < rightOperand.m_year;
+    else
+        return m_year < rightOperand.m_year;
 }
 
 bool CDate::operator!=(const CDate &rightOperand)
@@ -402,7 +409,7 @@ int                main                                    ( void )
     assert ( toString ( CDate ( 2018, 3, 15 ) + Month ( 285 ) )  == "2041-12-15" );
     assert ( toString ( CDate ( 2018, 3, 15 ) + Day ( 1 ) )  == "2018-03-16" );
     assert ( toString ( CDate ( 2018, 3, 15 ) + Day ( 12 ) )  == "2018-03-27" );
-//    assert ( toString ( CDate ( 2018, 3, 15 ) + Day ( 1234567 ) )  == "5398-05-02" );
+    assert ( toString ( CDate ( 2018, 3, 15 ) + Day ( 1234567 ) )  == "5398-05-02" );
     assert ( toString ( CDate ( 2018, 3, 15 ) + Day ( 3 ) + Year ( 2 ) + Month ( 3 ) + Day ( 5 ) + Month ( 11 ) )  == "2021-05-23" );
     try
     {
@@ -521,8 +528,7 @@ int                main                                    ( void )
   assert ( toString ( CDate ( 2018, 3, 15 ) + 1234567_days )  == "5398-05-02" );
   assert ( toString ( CDate ( 2018, 3, 15 ) + 3_days + 2_years + 3_months + 5_days + 11_months )  == "2021-05-23" );
   try
-  {998-01-29" );
-    try
+  {
     tmp = CDate ( 2000, 2, 29 ) + 300_years;
     assert ( "Missing exception" == NULL );
   }
