@@ -39,12 +39,6 @@ struct TTmpDate
         m_buffer.push_back(*this);
     }
 
-    bool isLeapYear(int year)
-    {
-        return (((!(year%4) && (year%100)) || !(year%400)) && (year%4000));
-    }
-    bool validDate(int year,int month,int day);
-    void validate();
     int getJnd(int year, int month, int day);
     void setDateByJnd ( int Jnd );
 
@@ -53,26 +47,6 @@ struct TTmpDate
     TTmpDate & operator - ();
 
 };
-
-bool TTmpDate::validDate(int year, int month, int day)
-{
-    int short monthlen[]={31,28,31,30,31,30,31,31,30,31,30,31};
-
-    if (month>12 || year < 1600)
-        return false;
-    if (isLeapYear(year) && month==2)
-        monthlen[1]++;
-    if (day>monthlen[month-1])
-        return false;
-    return true;
-}
-
-void TTmpDate::validate()
-{
-    if(m_year > 0 && m_month > 0 && m_day > 0)
-        if(!validDate(m_year, m_month, m_day))
-            throw InvalidDateException();
-}
 
 int TTmpDate::getJnd(int year, int month, int day)
 {
@@ -128,7 +102,6 @@ TTmpDate TTmpDate::operator+(const TTmpDate &rightOperand)
     }
     else
         result.m_day += rightOperand.m_day;
-    result.validate();
     result.m_buffer.push_back(rightOperand);
     return result;
 }
@@ -139,7 +112,7 @@ TTmpDate TTmpDate::operator-(const TTmpDate &rightOperand)
     return operator+(copy.operator-());
 }
 
-TTmpDate &TTmpDate::operator-()
+TTmpDate & TTmpDate::operator-()
 {
     m_year = m_year * (-1);
     m_month = m_month * (-1);
@@ -207,15 +180,12 @@ CDate CDate::operator+(const TTmpDate &rightOperand)
         result.m_month = 12 + result.m_month;
     }
 
-    if(m_year >= 0 && m_month >= 0 && m_day >= 0) {
-        if (rightOperand.m_day != 0) {
-            int Jnd = getJnd(result.m_year, result.m_month, result.m_day);
-            Jnd += rightOperand.m_day;
-            result.setDateByJnd(Jnd);
-        }
+    if (rightOperand.m_day != 0) {
+        int Jnd = getJnd(result.m_year, result.m_month, result.m_day);
+        Jnd += rightOperand.m_day;
+        result.setDateByJnd(Jnd);
     }
-    else
-        result.m_day += rightOperand.m_day;
+    
     result.validate();
     if(result.m_year > 4000)
         result.m_day++;
@@ -276,9 +246,11 @@ bool CDate::validDate(int year, int month, int day)
 
 void CDate::validate()
 {
-    if(m_year > 0 && m_month > 0 && m_day > 0)
-        if(!validDate(m_year, m_month, m_day))
+    if(m_year > 0 && m_month > 0 && m_day > 0) {
+        if (!validDate(m_year, m_month, m_day))
             throw InvalidDateException();
+    } else
+        throw InvalidDateException();
 }
 
 int CDate::getJnd(int year, int month, int day)
@@ -494,6 +466,14 @@ int                main                                    ( void )
     assert ( CDate ( 2000, 1, 1 ) - CDate ( 2018, 3, 15 ) == -6648 );
     assert ( CDate ( 2018, 3, 15 ) + Year ( 3 ) + Month ( -18 ) - CDate ( 2000, 1, 1 ) == 7197 );
     assert ( CDate ( 5398, 5, 2 ) - CDate ( 2018, 3, 15 ) == 1234567 );
+    assert(toString(CDate(1964, 8, 10) - Year(300)) == "1664-08-10");
+    try {
+        CDate tmp1 = CDate(0, 12, 3);
+        assert("Missing" == NULL);
+    }catch (const InvalidDateException & e) {
+
+    }
+
 
 #ifdef TEST_LITERALS
     assert ( toString ( CDate ( 2000, 1, 1 ) )  == "2000-01-01" );
