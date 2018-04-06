@@ -23,7 +23,7 @@ class InvalidDateException
 #endif /* __PROGTEST__ */
 
 // uncomment if your code implements the overloaded suffix operators
-// #define TEST_LITERALS
+ #define TEST_LITERALS
 
 struct TTmpDate
 {
@@ -32,13 +32,11 @@ struct TTmpDate
     int m_day;
     vector<TTmpDate> m_buffer;
 
-
     TTmpDate(const int year, const int month, const int day)
             :m_year(year), m_month(month), m_day(day)
     {
         m_buffer.push_back(*this);
     }
-
 
     TTmpDate operator + (const TTmpDate &);
     TTmpDate operator - (const TTmpDate &);
@@ -73,6 +71,7 @@ TTmpDate & TTmpDate::operator-()
     m_buffer[0].m_day =  m_day;
     return *this;
 }
+
 
 class CDate
 {
@@ -151,25 +150,25 @@ CDate CDate::operator-(const TTmpDate &rightOperand)
 
 ostream & operator<<(ostream &os, const CDate & date)
 {
+    ios_base::fmtflags ff;
+    ff = os.flags();
+
     if(date.m_month < 10 && date.m_day < 10) {
-        os << date.m_year << '-' << '0' << date.m_month << '-' << '0' << date.m_day;
-        return os;
+        os << dec << date.m_year << '-' << '0' << date.m_month << '-' << '0' << date.m_day;
     }
 
     if(date.m_month >= 10 && date.m_day < 10) {
-        os << date.m_year << '-' << date.m_month << '-' << '0' << date.m_day;
-        return os;
+        os << dec << date.m_year << '-' << date.m_month << '-' << '0' << date.m_day;
     }
 
     if(date.m_month < 10 && date.m_day >= 10) {
-        os << date.m_year << '-' << '0' << date.m_month << '-' << date.m_day;
-        return os;
+        os << dec  << date.m_year << '-' << '0' << date.m_month << '-' << date.m_day;
     }
 
     if(date.m_month >= 10 && date.m_day >= 10) {
-        os << date.m_year << '-' << date.m_month << '-' << date.m_day;
-        return os;
+        os << dec  << date.m_year << '-' << date.m_month << '-' << date.m_day;
     }
+    os.flags(ff);
     return os;
 }
 
@@ -274,21 +273,49 @@ int CDate::operator-(const CDate &rightOperand)
 
 TTmpDate Year(int y)
 {
-    TTmpDate date(y, 0, 0);
-    return date;
+    return TTmpDate(y, 0, 0);
 }
 
 TTmpDate Month(int m)
 {
-    TTmpDate date(0, m, 0);
-    return date;
+    return TTmpDate(0, m, 0);
 }
 
 TTmpDate Day(int d)
 {
-    TTmpDate date(0, 0, d);
-    return date;
+    return TTmpDate(0, 0, d);
 }
+
+TTmpDate operator"" _day(unsigned long long int d)
+{
+    return TTmpDate(0, 0, d);
+}
+
+TTmpDate operator"" _days(unsigned long long int d)
+{
+    return TTmpDate(0, 0, d);
+}
+
+TTmpDate operator"" _year(unsigned long long int y)
+{
+    return TTmpDate(y, 0, 0);
+}
+
+TTmpDate operator"" _years(unsigned long long int y)
+{
+    return TTmpDate(y, 0, 0);
+}
+
+TTmpDate operator"" _month(unsigned long long int m)
+{
+    return TTmpDate(0, m, 0);
+}
+
+TTmpDate operator"" _months(unsigned long long int m)
+{
+    return TTmpDate(0, m, 0);
+}
+
 
 #ifndef __PROGTEST__
 string             toString                                ( const CDate     & x )
@@ -418,13 +445,7 @@ int                main                                    ( void )
     assert ( CDate ( 2018, 3, 15 ) + Year ( 3 ) + Month ( -18 ) - CDate ( 2000, 1, 1 ) == 7197 );
     assert ( CDate ( 5398, 5, 2 ) - CDate ( 2018, 3, 15 ) == 1234567 );
     assert(toString(CDate(1964, 8, 10) - Year(300)) == "1664-08-10");
-//    try {
-//        CDate tmp1 = CDate(0, 12, 3);
-//        assert("Missing" == NULL);
-//    }catch (const InvalidDateException & e) {
-//
-//    }
-
+    assert(toString(CDate(1964, 8, 10) - Year(364)) == "1600-08-10");
 
 #ifdef TEST_LITERALS
     assert ( toString ( CDate ( 2000, 1, 1 ) )  == "2000-01-01" );
