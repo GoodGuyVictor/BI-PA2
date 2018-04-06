@@ -1,0 +1,3 @@
+/home/victor/githubRepos/BI-PA2/HomeWork-4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/victor/githubRepos/BI-PA2/HomeWork-4/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/victor/githubRepos/BI-PA2/HomeWork-4/cmake-build-debug/CMakeFiles/HomeWork_4.dir
