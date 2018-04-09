@@ -19,8 +19,34 @@ class CMail
                                                              const char      * body );
     bool                     operator ==                   ( const CMail     & x ) const;
   private:
-    // todo
+    char * m_from;
+    char * m_to;
+    char * m_body;
 };
+
+CMail::CMail(const char *from, const char *to, const char *body)
+{
+    size_t from_size = strlen(from);
+    size_t to_size = strlen(to);
+    size_t body_size = strlen(body);
+
+    m_from = new char[from_size + 1];
+    m_to = new char[to_size + 1];
+    m_body = new char[body_size + 1];
+
+    strncpy(m_from, from, from_size);
+    strncpy(m_to, to, to_size);
+    strncpy(m_body, body, body_size);
+}
+
+bool CMail::operator==(const CMail &x) const
+{
+    if(strcmp(m_from, x.m_from) == 0
+       && strcmp(m_to, x.m_to) == 0
+       && strcmp(m_body, x.m_body) == 0)
+        return true;
+    return false;
+}
 
 class CMailIterator 
 {
@@ -60,7 +86,7 @@ int main ( void )
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "peter", "progtest deadline", "john" ) ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "progtest deadline", "john", "peter" ) ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "progtest deadline", "peter", "john" ) ) );
-  CMailServer s0;
+  /*CMailServer s0;
   s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
   strncpy ( from, "john", sizeof ( from ) );
   strncpy ( to, "thomas", sizeof ( to ) );
@@ -154,7 +180,7 @@ int main ( void )
   assert ( ++i13 && *i13 == CMail ( "joe", "alice", "delivery details" ) );
   assert ( ++i13 && *i13 == CMail ( "paul", "alice", "invalid invoice" ) );
   assert ( ! ++i13 );
-
+*/
   return 0;
 }
 #endif /* __PROGTEST__ */
