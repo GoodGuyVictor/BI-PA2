@@ -17,6 +17,7 @@ class CMail
                              CMail                         ( const char      * from,
                                                              const char      * to,
                                                              const char      * body );
+                            ~CMail();
     bool                     operator ==                   ( const CMail     & x ) const;
   private:
     char * m_from;
@@ -37,6 +38,13 @@ CMail::CMail(const char *from, const char *to, const char *body)
     strncpy(m_from, from, from_size);
     strncpy(m_to, to, to_size);
     strncpy(m_body, body, body_size);
+}
+
+CMail::~CMail()
+{
+    delete [] m_from;
+    delete [] m_to;
+    delete [] m_body;
 }
 
 bool CMail::operator==(const CMail &x) const
@@ -60,7 +68,7 @@ class CMailIterator
 };
 
 
-class CMailServer 
+class CMailServer
 {
   public:
                              CMailServer                   ( void );
@@ -74,6 +82,10 @@ class CMailServer
   private:
     // todo
 };
+
+CMailServer::CMailServer(void)
+{
+}
 
 #ifndef __PROGTEST__
 int main ( void )
