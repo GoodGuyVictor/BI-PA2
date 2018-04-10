@@ -67,7 +67,6 @@ class CMailIterator
     // todo
 };
 
-
 class CMailServer
 {
   public:
@@ -80,11 +79,93 @@ class CMailServer
     CMailIterator            Inbox                         ( const char      * email ) const;
   
   private:
-    // todo
+    struct TInboxList
+    {
+        CMail ** m_emails;
+        size_t m_size;
+        size_t m_top;
+        void realloc();
+    } m_inbox;
+
+    struct TOutboxList
+    {
+        CMail ** m_emails;
+        size_t m_size;
+        size_t m_top;
+        void realloc();
+    } m_outbox;
+
+    struct TEmailsList
+    {
+        CMail ** m_emails;
+        size_t m_size;
+        size_t m_top;
+        void realloc();
+    } m_allEmails;
+//    CMail **m_allEmails;
+//    CMail **m_inboxOrder;
+//    CMail **m_outboxOrder;
+
+    void addInbox(const CMail &);
+    void addOutbox(const CMail &);
+    void appendEmail(const CMail &);
+    CMail* deepCopy(const CMail &);
 };
+
+void CMailServer::TInboxList::realloc()
+{
+
+}
+
+void CMailServer::TOutboxList::realloc()
+{
+
+}
+
+void CMailServer::TEmailsList::realloc()
+{
+
+}
 
 CMailServer::CMailServer(void)
 {
+    m_allEmails.m_size = 500;
+    m_allEmails.m_top = 0;
+    m_allEmails.m_emails = new CMail*[500];
+
+    m_inbox.m_size = 500;
+    m_inbox.m_top = 0;
+    m_inbox.m_emails = new CMail*[500];
+
+    m_outbox.m_size = 500;
+    m_outbox.m_top = 0;
+    m_outbox.m_emails = new CMail*[500];
+}
+
+void CMailServer::SendMail(const CMail &m)
+{
+    appendEmail(m);
+    addInbox(m);
+    addOutbox(m);
+}
+
+void CMailServer::appendEmail(const CMail &m)
+{
+    CMail *email = deepCopy(m);
+    if(m_allEmails.m_top == m_allEmails.m_size + 1)
+        m_allEmails.realloc();
+    size_t top = m_allEmails.m_top;
+    m_allEmails.m_emails[top] = email;
+}
+
+void CMailServer::addInbox(const CMail &m)
+{
+
+}
+
+void CMailServer::addOutbox(const CMail &m)
+{
+
 }
 
 #ifndef __PROGTEST__
@@ -98,7 +179,7 @@ int main ( void )
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "peter", "progtest deadline", "john" ) ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "progtest deadline", "john", "peter" ) ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "progtest deadline", "peter", "john" ) ) );
-  /*CMailServer s0;
+  CMailServer s0;
   s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
   strncpy ( from, "john", sizeof ( from ) );
   strncpy ( to, "thomas", sizeof ( to ) );
