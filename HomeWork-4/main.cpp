@@ -19,6 +19,10 @@ class CMail
                                                              const char      * body );
                             ~CMail();
     bool                     operator ==                   ( const CMail     & x ) const;
+    char * getFrom() const { return m_from; }
+    char * getTo() const { return m_to; }
+    char * getBody() const { return m_body; }
+
   private:
     char * m_from;
     char * m_to;
@@ -166,6 +170,15 @@ void CMailServer::addInbox(const CMail &m)
 void CMailServer::addOutbox(const CMail &m)
 {
 
+}
+
+CMail * CMailServer::deepCopy(const CMail &m)
+{
+    char * from = m.getFrom();
+    char * to = m.getTo();
+    char * body = m.getBody();
+    CMail * tmp = new CMail(from, to, body);
+    return tmp;
 }
 
 #ifndef __PROGTEST__
