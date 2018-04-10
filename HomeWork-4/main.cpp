@@ -99,7 +99,7 @@ class CMailServer
         void realloc();
     } m_outbox;
 
-    struct TEmailsList
+    struct TGeneralList
     {
         CMail ** m_emails;
         size_t m_size;
@@ -126,9 +126,15 @@ void CMailServer::TOutboxList::realloc()
 
 }
 
-void CMailServer::TEmailsList::realloc()
+void CMailServer::TGeneralList::realloc()
 {
-
+    m_size += m_size / 2;
+    CMail ** tmp = new CMail*[m_size];
+    for(size_t i = 0; i < m_top; i++) {
+        tmp[i] = m_emails[i];
+    }
+    delete [] m_emails;
+    m_emails = tmp;
 }
 
 CMailServer::CMailServer(void)
@@ -149,8 +155,8 @@ CMailServer::CMailServer(void)
 void CMailServer::SendMail(const CMail &m)
 {
     appendEmail(m);
-    addInbox(m);
-    addOutbox(m);
+//    addInbox(m);
+//    addOutbox(m);
 }
 
 void CMailServer::appendEmail(const CMail &m)
@@ -160,6 +166,7 @@ void CMailServer::appendEmail(const CMail &m)
         m_allEmails.realloc();
     size_t top = m_allEmails.m_top;
     m_allEmails.m_emails[top] = email;
+    m_allEmails.m_top++;
 }
 
 void CMailServer::addInbox(const CMail &m)
@@ -179,6 +186,34 @@ CMail * CMailServer::deepCopy(const CMail &m)
     char * body = m.getBody();
     CMail * tmp = new CMail(from, to, body);
     return tmp;
+}
+
+CMailServer::~CMailServer(void)
+{
+    for(size_t i = 0; i < m_allEmails.m_top; i++) {
+        delete [] m_allEmails.m_emails[i]->getFrom();
+        delete [] m_allEmails.m_emails[i]->getTo();
+        delete [] m_allEmails.m_emails[i]->getBody();
+        delete m_allEmails.m_emails[i];
+    }
+
+    for(size_t i = 0; i < m_inbox.m_top; i++) {
+        delete [] m_inbox.m_emails[i]->getFrom();
+        delete [] m_inbox.m_emails[i]->getTo();
+        delete [] m_inbox.m_emails[i]->getBody();
+        delete m_inbox.m_emails[i];
+    }
+
+    for(size_t i = 0; i < m_outbox.m_top; i++) {
+        delete [] m_outbox.m_emails[i]->getFrom();
+        delete [] m_outbox.m_emails[i]->getTo();
+        delete [] m_outbox.m_emails[i]->getBody();
+        delete m_outbox.m_emails[i];
+    }
+
+    delete [] m_allEmails.m_emails;
+    delete [] m_inbox.m_emails;
+    delete [] m_outbox.m_emails;
 }
 
 #ifndef __PROGTEST__
@@ -204,7 +239,7 @@ int main ( void )
   s0 . SendMail ( CMail ( from, to, body ) );
   s0 . SendMail ( CMail ( "alice", "john", "deadline confirmation" ) );
   s0 . SendMail ( CMail ( "peter", "alice", "PR bullshit" ) );
-  CMailIterator i0 = s0 . Inbox ( "alice" );
+  /*CMailIterator i0 = s0 . Inbox ( "alice" );
   assert ( i0 && *i0 == CMail ( "john", "alice", "deadline notice" ) );
   assert ( ++i0 && *i0 == CMail ( "peter", "alice", "PR bullshit" ) );
   assert ( ! ++i0 );
