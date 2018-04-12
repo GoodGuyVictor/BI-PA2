@@ -138,14 +138,14 @@ CUser::CUser(const char *email)
     m_outboxTop = 0;
     m_inboxTop = 0;
 
-    m_inbox = new CMail*[m_inboxSize];
-    m_outbox = new CMail*[m_outboxSize];
+    m_inbox = new CMail**[m_inboxSize];
+    m_outbox = new CMail**[m_outboxSize];
 }
 
 void CUser::reallocOutbox()
 {
     m_outboxSize += m_outboxSize / 2;
-    CMail ** tmp = new CMail * [m_outboxSize];
+    CMail *** tmp = new CMail ** [m_outboxSize];
     for(size_t i = 0; i < m_outboxTop; i++) {
         tmp[i] = m_outbox[i];
     }
@@ -156,7 +156,7 @@ void CUser::reallocOutbox()
 void CUser::reallocInbox()
 {
     m_inboxSize += m_inboxSize / 2;
-    CMail ** tmp = new CMail * [m_inboxSize];
+    CMail *** tmp = new CMail ** [m_inboxSize];
     for(size_t i = 0; i < m_inboxTop; i++) {
         tmp[i] = m_inbox[i];
     }
