@@ -11,6 +11,7 @@
 using namespace std;
 #endif /* __PROGTEST__ */
 
+/******************************************************************/
 class CMail
 {
   public:
@@ -64,7 +65,10 @@ void CMail::free()
     delete [] m_to;
     delete [] m_body;
 }
+/******************************************************************/
 
+
+/******************************************************************/
 class CUser
 {
 public:
@@ -150,7 +154,10 @@ void CUser::free()
     delete [] m_inbox;
     delete [] m_outbox;
 }
+/******************************************************************/
 
+
+/******************************************************************/
 class CMailIterator
 {
   public:
@@ -158,10 +165,36 @@ class CMailIterator
     bool                     operator !                    ( void ) const;
     const CMail            & operator *                    ( void ) const;
     CMailIterator          & operator ++                   ( void );
+    CMailIterator(CMail *** ptr, size_t l);
   private:
-    // todo
+    CMail *** m_begin;
+    CMail *** m_current;
+    size_t m_len;
 };
 
+CMailIterator::CMailIterator(CMail *** ptr, size_t l)
+: m_begin(ptr), m_current(ptr), m_len(l)
+{
+}
+
+const CMail & CMailIterator::operator*(void) const
+{
+    return (*(*(*m_current)));
+}
+
+CMailIterator::operator bool(void) const
+{
+    return m_current - m_begin < m_len;
+//    size_t x = m_current - m_begin;
+//    if(x < m_len)
+//        return true;
+//    else
+//        return false;
+}
+/******************************************************************/
+
+
+/******************************************************************/
 class CMailServer
 {
   public:
@@ -191,19 +224,11 @@ class CMailServer
         size_t m_top;
         CUser ** m_list;
 
-        size_t findUser(char * usr) const;
+        size_t findUser(const char * usr) const;
         void addOutbox(CMail ** m, size_t pos);
         void addInbox(CMail ** m, size_t pos);
         void addNewUser(char * email, size_t pos);
         void shiftRight(size_t pos);
-//        void print() {
-//            cout << "users list:\n";
-//            for (size_t i = 0; i < m_top; i++) {
-//                printf("%s ", m_list[i]->m_email);
-//                cout << endl;
-//            }
-//            cout << endl;
-//        }
     } m_users;
 
     void appendEmail(const CMail &);
@@ -284,7 +309,7 @@ void CMailServer::TEmails::realloc()
 }
 
 //binary search
-size_t CMailServer::TUsers::findUser(char * usr) const
+size_t CMailServer::TUsers::findUser(const char * usr) const
 {
     size_t first = 0;
     size_t last = m_top;
@@ -339,6 +364,13 @@ void CMailServer::appendEmail(const CMail &m)
     m_emails.m_top++;
 }
 
+CMailIterator CMailServer::Inbox(const char *email) const
+{
+    size_t userPos = m_users.findUser(email);
+    return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_top);
+}
+/******************************************************************/
+
 #ifndef __PROGTEST__
 int main ( void )
 {
@@ -363,9 +395,9 @@ int main ( void )
   s0 . SendMail ( CMail ( from, to, body ) );
   s0 . SendMail ( CMail ( "alice", "john", "deadline confirmation" ) );
   s0 . SendMail ( CMail ( "peter", "alice", "PR bullshit" ) );
-  /*CMailIterator i0 = s0 . Inbox ( "alice" );
+  CMailIterator i0 = s0 . Inbox ( "alice" );
   assert ( i0 && *i0 == CMail ( "john", "alice", "deadline notice" ) );
-  assert ( ++i0 && *i0 == CMail ( "peter", "alice", "PR bullshit" ) );
+  /*assert ( ++i0 && *i0 == CMail ( "peter", "alice", "PR bullshit" ) );
   assert ( ! ++i0 );
 
   CMailIterator i1 = s0 . Inbox ( "john" );
