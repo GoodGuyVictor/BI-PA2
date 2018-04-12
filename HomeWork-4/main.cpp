@@ -184,12 +184,23 @@ const CMail & CMailIterator::operator*(void) const
 
 CMailIterator::operator bool(void) const
 {
-    return m_current - m_begin < m_len;
-//    size_t x = m_current - m_begin;
-//    if(x < m_len)
-//        return true;
-//    else
-//        return false;
+//    return m_current - m_begin < m_len;
+    size_t x = m_current - m_begin;
+    if(x < m_len)
+        return true;
+    else
+        return false;
+}
+
+CMailIterator & CMailIterator::operator++(void)
+{
+    ++m_current;
+    return *this;
+}
+
+bool CMailIterator::operator!(void) const
+{
+    return !(operator bool());
 }
 /******************************************************************/
 
@@ -367,7 +378,7 @@ void CMailServer::appendEmail(const CMail &m)
 CMailIterator CMailServer::Inbox(const char *email) const
 {
     size_t userPos = m_users.findUser(email);
-    return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_top);
+    return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_list[userPos]->m_inboxTop);
 }
 /******************************************************************/
 
@@ -397,10 +408,10 @@ int main ( void )
   s0 . SendMail ( CMail ( "peter", "alice", "PR bullshit" ) );
   CMailIterator i0 = s0 . Inbox ( "alice" );
   assert ( i0 && *i0 == CMail ( "john", "alice", "deadline notice" ) );
-  /*assert ( ++i0 && *i0 == CMail ( "peter", "alice", "PR bullshit" ) );
+  assert ( ++i0 && *i0 == CMail ( "peter", "alice", "PR bullshit" ) );
   assert ( ! ++i0 );
 
-  CMailIterator i1 = s0 . Inbox ( "john" );
+  /*CMailIterator i1 = s0 . Inbox ( "john" );
   assert ( i1 && *i1 == CMail ( "alice", "john", "deadline confirmation" ) );
   assert ( ! ++i1 );
 
