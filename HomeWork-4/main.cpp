@@ -272,7 +272,7 @@ void CMailServer::SendMail(const CMail &m)
 void CMailServer::TEmails::realloc()
 {
     m_size += m_size / 2;
-    CMail * tmp = new CMail[m_size];
+    CMail ** tmp = new CMail*[m_size];
     for(size_t i = 0; i < m_top; i++) {
         tmp[i] = m_list[i];
     }
@@ -289,8 +289,8 @@ size_t CMailServer::TUsers::findUser(char * usr) const
     while (first < last) {
         size_t mid = first + (last - first) / 2;
 
-        if (strcmp(usr, m_list[mid].m_email) < 0
-            || strcmp(usr, m_list[mid].m_email) == 0)
+        if (strcmp(usr, m_list[mid]->m_email) < 0
+            || strcmp(usr, m_list[mid]->m_email) == 0)
             last = mid;
         else
             first = mid + 1;
