@@ -14,36 +14,30 @@ using namespace std;
 class CMail
 {
   public:
-                             CMail                         ( const char      * from,
-                                                             const char      * to,
-                                                             const char      * body );
-                            ~CMail();
-    bool                     operator ==                   ( const CMail     & x ) const;
+    CMail( const char * from, const char * to, const char * body );
+    ~CMail();
+
+    bool operator == ( const CMail     & x ) const;
     char * getFrom() const { return m_from; }
     char * getTo() const { return m_to; }
     char * getBody() const { return m_body; }
-    friend ostream & operator << (ostream & os, const CMail mail) {
-        os << "From: " << mail.m_from << endl
-           << "To: " << mail.m_to << endl
-           << "Body: " << mail.m_body << endl;
-        return os;
-    }
+    void free();
 
   private:
-    char * m_from = NULL;
-    char * m_to = NULL;
-    char * m_body = NULL;
+    char * m_from;
+    char * m_to;
+    char * m_body;
 };
 
 CMail::CMail(const char *from, const char *to, const char *body)
 {
-    size_t from_size = strlen(from);
-    size_t to_size = strlen(to);
-    size_t body_size = strlen(body);
+    size_t from_size = strlen(from) + 1;
+    size_t to_size = strlen(to) + 1;
+    size_t body_size = strlen(body) + 1;
 
-    m_from = new char[from_size + 1];
-    m_to = new char[to_size + 1];
-    m_body = new char[body_size + 1];
+    m_from = new char[from_size];
+    m_to = new char[to_size];
+    m_body = new char[body_size];
 
     strncpy(m_from, from, from_size);
     strncpy(m_to, to, to_size);
@@ -52,9 +46,7 @@ CMail::CMail(const char *from, const char *to, const char *body)
 
 CMail::~CMail()
 {
-    delete [] m_from;
-    delete [] m_to;
-    delete [] m_body;
+    free();
 }
 
 bool CMail::operator==(const CMail &x) const
@@ -66,7 +58,100 @@ bool CMail::operator==(const CMail &x) const
     return false;
 }
 
-class CMailIterator 
+void CMail::free()
+{
+    delete [] m_from;
+    delete [] m_to;
+    delete [] m_body;
+}
+
+class CUser
+{
+public:
+    explicit CUser(const char * email);
+    ~CUser();
+
+    char * m_email;
+    CMail *** m_inbox;
+    CMail *** m_outbox;
+    size_t m_inboxTop;
+    size_t m_outboxTop;
+    size_t m_inboxSize;
+    size_t m_outboxSize;
+
+    void insertOutbox(CMail ** m);
+    void insertInbox(CMail ** m);
+    void reallocOutbox();
+    void reallocInbox();
+    void free();
+};
+
+void CUser::insertOutbox(CMail ** m)
+{
+    if(m_outboxTop > m_outboxSize)
+        reallocOutbox();
+    m_outbox[m_outboxTop] = m;
+    m_outboxTop++;
+}
+
+void CUser::insertInbox(CMail ** m)
+{
+    if(m_inboxTop > m_inboxSize)
+        reallocInbox();
+    m_inbox[m_inboxTop] = m;
+    m_inboxTop++;
+}
+
+CUser::CUser(const char *email)
+{
+    size_t email_len = strlen(email);
+    m_email = new char[email_len + 1];
+    strcpy(m_email, email);
+
+    m_inboxSize = 500;
+    m_outboxSize = 500;
+    m_outboxTop = 0;
+    m_inboxTop = 0;
+
+    m_inbox = new CMail**[m_inboxSize];
+    m_outbox = new CMail**[m_outboxSize];
+}
+
+void CUser::reallocOutbox()
+{
+    m_outboxSize += m_outboxSize / 2;
+    CMail *** tmp = new CMail ** [m_outboxSize];
+    for(size_t i = 0; i < m_outboxTop; i++) {
+        tmp[i] = m_outbox[i];
+    }
+    delete [] m_outbox;
+    m_outbox = tmp;
+}
+
+void CUser::reallocInbox()
+{
+    m_inboxSize += m_inboxSize / 2;
+    CMail *** tmp = new CMail ** [m_inboxSize];
+    for(size_t i = 0; i < m_inboxTop; i++) {
+        tmp[i] = m_inbox[i];
+    }
+    delete [] m_inbox;
+    m_inbox = tmp;
+}
+
+void CUser::free()
+{
+    delete [] m_email;
+    delete [] m_inbox;
+    delete [] m_outbox;
+}
+
+CUser::~CUser()
+{
+    free();
+}
+
+class CMailIterator
 {
   public:
                              operator bool                 ( void ) const;
@@ -87,69 +172,119 @@ class CMailServer
     void                     SendMail                      ( const CMail     & m );
     CMailIterator            Outbox                        ( const char      * email ) const;
     CMailIterator            Inbox                         ( const char      * email ) const;
-    void printInbox() const {
-        for(size_t i = 0; i < m_inbox.m_top; i++) {
-            cout << '[' << i << ']' << endl << *(*m_inbox.m_emails[i]);
-        }
-    }
+
   
   private:
-    struct TInboxList
+
+    struct TEmails
     {
-        CMail *** m_emails;
         size_t m_size;
         size_t m_top;
-        void realloc();
-        void insert(size_t pos, CMail ** );
-        size_t binarySearch(CMail **);
-    } m_inbox;
+        CMail ** m_list;
 
-    struct TOutboxList
+        void realloc();
+    } m_emails;
+
+    struct TUsers
     {
-        CMail *** m_emails;
         size_t m_size;
         size_t m_top;
-        void realloc();
-        void insert(CMail ** );
-        size_t binarySearch(CMail **);
-    } m_outbox;
+        CUser ** m_list;
 
-    struct TGeneralList
-    {
-        CMail ** m_emails;
-        size_t m_size;
-        size_t m_top;
-        void realloc();
-    } m_allEmails;
-//    CMail **m_allEmails;
-//    CMail **m_inboxOrder;
-//    CMail **m_outboxOrder;
+        size_t findUser(char * usr) const;
+        void addOutbox(CMail ** m, size_t pos);
+        void addInbox(CMail ** m, size_t pos);
+        void addNewUser(char * email, size_t pos);
+        void shiftRight(size_t pos);
+//        void print() {
+//            cout << "users list:\n";
+//            for (size_t i = 0; i < m_top; i++) {
+//                printf("%s ", m_list[i]->m_email);
+//                cout << endl;
+//            }
+//            cout << endl;
+//        }
+    } m_users;
 
-    void addInbox(CMail **);
-    void addOutbox(CMail **);
     void appendEmail(const CMail &);
-    CMail* deepCopy(const CMail &);
-
 };
 
-void CMailServer::TInboxList::realloc()
+CMailServer::CMailServer(void)
 {
+    m_emails.m_size = 500;
+    m_emails.m_top = 0;
+    m_emails.m_list = new CMail*[500];
 
+    m_users.m_size = 500;
+    m_users.m_top = 0;
+    m_users.m_list = new CUser*[500];
 }
 
-void CMailServer::TInboxList::insert(size_t pos, CMail ** m)
+CMailServer::~CMailServer(void)
 {
-    if(pos == m_top) {
-        m_emails[m_top] = m;
-        m_top++;
-    } else {
-        memmove(m_emails + pos + 1, m_emails + pos, m_top - pos);
-        m_emails[pos] = m;
-        m_top++;
+    //deleting emails
+    for (size_t i = 0; i < m_emails.m_top; i++) {
+        delete m_emails.m_list[i];
+    }
+    delete [] m_emails.m_list;
+
+    //deleting users
+    for (size_t i = 0; i < m_users.m_top; i++) {
+        delete m_users.m_list[i];
+    }
+    delete [] m_users.m_list;
+}
+
+void CMailServer::SendMail(const CMail &m)
+{
+    appendEmail(m);
+
+    size_t last = m_emails.m_top - 1;
+    char * sender = m_emails.m_list[last]->getFrom();
+
+    size_t userPos = m_users.findUser(sender);
+    if(userPos != m_users.m_top) {
+        if(strcmp(m_users.m_list[userPos]->m_email, sender) == 0)
+            m_users.addOutbox(m_emails.m_list + last, userPos);
+        else {
+            m_users.addNewUser(sender, userPos);
+            m_users.addOutbox(m_emails.m_list + last, userPos);
+        }
+    }
+    else {
+        m_users.addNewUser(sender, userPos);
+        m_users.addOutbox(m_emails.m_list + last, userPos);
+    }
+
+    char * receiver = m_emails.m_list[last]->getTo();
+    userPos = m_users.findUser(receiver);
+    if(userPos != m_users.m_top) {
+        if(strcmp(m_users.m_list[userPos]->m_email, receiver) == 0)
+            m_users.addInbox(m_emails.m_list + last, userPos);
+        else {
+            m_users.addNewUser(receiver, userPos);
+            m_users.addInbox(m_emails.m_list + last, userPos);
+        }
+    }
+    else {
+        m_users.addNewUser(receiver, userPos);
+        m_users.addInbox(m_emails.m_list + last, userPos);
     }
 }
 
-size_t CMailServer::TInboxList::binarySearch(CMail ** m)
+void CMailServer::TEmails::realloc()
+{
+    m_size += m_size / 2;
+    CMail ** tmp = new CMail*[m_size];
+    for(size_t i = 0; i < m_top; i++) {
+        tmp[i] = m_list[i];
+    }
+    delete [] m_list;
+    m_list = tmp;
+}
+
+//binary search
+size_t CMailServer::TUsers::findUser(char * usr) const
 {
     size_t first = 0;
     size_t last = m_top;
@@ -157,8 +292,8 @@ size_t CMailServer::TInboxList::binarySearch(CMail ** m)
     while (first < last) {
         size_t mid = first + (last - first) / 2;
 
-        if ( strcmp((*m)->getTo(), (*m_emails[mid])->getTo()) < 0
-             || strcmp((*m)->getTo(), (*m_emails[mid])->getTo()) == 0)
+        if (strcmp(usr, m_list[mid]->m_email) < 0
+            || strcmp(usr, m_list[mid]->m_email) == 0)
             last = mid;
         else
             first = mid + 1;
@@ -167,124 +302,48 @@ size_t CMailServer::TInboxList::binarySearch(CMail ** m)
     return last;
 }
 
-void CMailServer::TOutboxList::realloc()
+void CMailServer::TUsers::addOutbox(CMail ** m, size_t pos)
 {
-
+    m_list[pos]->insertOutbox(m);
 }
 
-void CMailServer::TGeneralList::realloc()
+void CMailServer::TUsers::addInbox(CMail ** m, size_t pos)
 {
-    m_size += m_size / 2;
-    CMail ** tmp = new CMail*[m_size];
-    for(size_t i = 0; i < m_top; i++) {
-        tmp[i] = m_emails[i];
+    m_list[pos]->insertInbox(m);
+}
+
+void CMailServer::TUsers::addNewUser(char * email, size_t pos)
+{
+    if(pos == m_top)
+        m_list[pos] = new CUser(email);
+    else {
+        shiftRight(pos);
+        m_list[pos] = new CUser(email);
     }
-    delete [] m_emails;
-    m_emails = tmp;
+    m_top++;
 }
 
-CMailServer::CMailServer(void)
+void CMailServer::TUsers::shiftRight(size_t pos)
 {
-    m_allEmails.m_size = 500;
-    m_allEmails.m_top = 0;
-    m_allEmails.m_emails = new CMail*[500];
-
-    m_inbox.m_size = 500;
-    m_inbox.m_top = 0;
-    m_inbox.m_emails = new CMail**[500];
-
-    m_outbox.m_size = 500;
-    m_outbox.m_top = 0;
-    m_outbox.m_emails = new CMail**[500];
-}
-
-void CMailServer::SendMail(const CMail &m)
-{
-    appendEmail(m);
+    for (size_t i = m_top; i > pos; i--)
+        m_list[i] = m_list[i - 1];
 }
 
 void CMailServer::appendEmail(const CMail &m)
 {
-    CMail *email = deepCopy(m);
-    if(m_allEmails.m_top == m_allEmails.m_size + 1)
-        m_allEmails.realloc();
-    size_t top = m_allEmails.m_top;
-    m_allEmails.m_emails[top] = email;
-    m_allEmails.m_top++;
-
-    addInbox(m_allEmails.m_emails + top);
-    addOutbox(m_allEmails.m_emails + top);
+    CMail * copy = new CMail(m.getFrom(), m.getTo(), m.getBody());
+    if(m_emails.m_top > m_emails.m_size)
+        m_emails.realloc();
+    size_t top = m_emails.m_top;
+    m_emails.m_list[top] = copy;
+    m_emails.m_top++;
 }
-
-void CMailServer::addInbox(CMail ** m)
-{
-//    size_t len = m_inbox.m_top;
-//    CMail ** array = m_inbox.m_emails;
-//    size_t pos = binarySearchInbox(len, array, m);
-    size_t pos = m_inbox.binarySearch(m);
-    m_inbox.insert(pos, m);
-}
-
-void CMailServer::addOutbox(CMail **m)
-{
-
-}
-
-CMail * CMailServer::deepCopy(const CMail &m)
-{
-    char * from = m.getFrom();
-    char * to = m.getTo();
-    char * body = m.getBody();
-    CMail * tmp = new CMail(from, to, body);
-    return tmp;
-}
-
-CMailServer::~CMailServer(void)
-{
-    for(size_t i = 0; i < m_allEmails.m_top; i++) {
-        delete [] m_allEmails.m_emails[i]->getFrom();
-        delete [] m_allEmails.m_emails[i]->getTo();
-        delete [] m_allEmails.m_emails[i]->getBody();
-        delete m_allEmails.m_emails[i];
-    }
-
-//    for(size_t i = 0; i < m_inbox.m_top; i++) {
-//        delete [] (*m_inbox.m_emails[i])->getFrom();
-//        delete [] (*m_inbox.m_emails[i])->getTo();
-//        delete [] (*m_inbox.m_emails[i])->getBody();
-//        delete m_inbox.m_emails[i];
-//    }
-
-//    for(size_t i = 0; i < m_outbox.m_top; i++) {
-//        delete [] m_outbox.m_emails[i]->getFrom();
-//        delete [] m_outbox.m_emails[i]->getTo();
-//        delete [] m_outbox.m_emails[i]->getBody();
-//        delete m_outbox.m_emails[i];
-//    }
-
-    delete [] m_allEmails.m_emails;
-    delete [] m_inbox.m_emails;
-    delete [] m_outbox.m_emails;
-}
-
-//CMail inbox[100];
 
 #ifndef __PROGTEST__
 int main ( void )
 {
-    char abc[10];
-    abc[0] = 'a';
-    abc[1] = 'b';
-    abc[2] = 'c';
-    abc[3] = 'd';
 
-    memmove(abc + 2, abc + 1, 3);
-    *(abc + 1) = 'e';
-    for(int i = 0; i < strlen(abc); i++) {
-        cout << abc[i];
-    }
-
-  /*char from[100], to[100], body[1024];
+  char from[100], to[100], body[1024];
 
   assert ( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "peter", "progtest deadline" ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "progtest deadline", "peter" ) ) );
@@ -294,20 +353,16 @@ int main ( void )
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "progtest deadline", "peter", "john" ) ) );
   CMailServer s0;
   s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
-//    s0.printInbox();
   strncpy ( from, "john", sizeof ( from ) );
   strncpy ( to, "thomas", sizeof ( to ) );
   strncpy ( body, "another important mail", sizeof ( body ) );
   s0 . SendMail ( CMail ( from, to, body ) );
-//    s0.printInbox();
   strncpy ( from, "john", sizeof ( from ) );
   strncpy ( to, "alice", sizeof ( to ) );
   strncpy ( body, "deadline notice", sizeof ( body ) );
   s0 . SendMail ( CMail ( from, to, body ) );
-    s0.printInbox();
   s0 . SendMail ( CMail ( "alice", "john", "deadline confirmation" ) );
-//    s0.printInbox();
-    s0 . SendMail ( CMail ( "peter", "alice", "PR bullshit" ) );
+  s0 . SendMail ( CMail ( "peter", "alice", "PR bullshit" ) );
   /*CMailIterator i0 = s0 . Inbox ( "alice" );
   assert ( i0 && *i0 == CMail ( "john", "alice", "deadline notice" ) );
   assert ( ++i0 && *i0 == CMail ( "peter", "alice", "PR bullshit" ) );
