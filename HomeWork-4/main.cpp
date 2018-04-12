@@ -121,10 +121,10 @@ void CUser::insertOutbox(CMail ** m)
 
 void CUser::insertInbox(CMail ** m)
 {
-    m_inbox[m_inboxTop] = m;
-    m_inboxTop++;
     if(m_inboxTop > m_inboxSize)
         reallocInbox();
+    m_inbox[m_inboxTop] = m;
+    m_inboxTop++;
 }
 
 CUser::CUser(const char *email)
@@ -252,8 +252,15 @@ void CMailServer::SendMail(const CMail &m)
     char * sender = m_emails.m_list[last]->getFrom();
 
     size_t userPos = m_users.findUser(sender);
-    if(userPos != m_users.m_top)
-        m_users.addOutbox(m_emails.m_list + last, userPos);
+    if(userPos != m_users.m_top) {
+//        cout << m_users.m_list[userPos]->m_email << endl;
+        if(strcmp(m_users.m_list[userPos]->m_email, sender) == 0)
+            m_users.addOutbox(m_emails.m_list + last, userPos);
+        else {
+            m_users.addNewUser(sender, userPos);
+            m_users.addOutbox(m_emails.m_list + last, userPos);
+        }
+    }
     else {
         m_users.addNewUser(sender, userPos);
         m_users.addOutbox(m_emails.m_list + last, userPos);
@@ -261,8 +268,14 @@ void CMailServer::SendMail(const CMail &m)
 
     char * receiver = m_emails.m_list[last]->getTo();
     userPos = m_users.findUser(receiver);
-    if(userPos != m_users.m_top)
-        m_users.addInbox(m_emails.m_list + last, userPos);
+    if(userPos != m_users.m_top) {
+        if(strcmp(m_users.m_list[userPos]->m_email, receiver) == 0)
+            m_users.addInbox(m_emails.m_list + last, userPos);
+        else {
+            m_users.addNewUser(receiver, userPos);
+            m_users.addInbox(m_emails.m_list + last, userPos);
+        }
+    }
     else {
         m_users.addNewUser(receiver, userPos);
         m_users.addInbox(m_emails.m_list + last, userPos);
@@ -311,15 +324,19 @@ void CMailServer::TUsers::addInbox(CMail ** m, size_t pos)
 
 void CMailServer::TUsers::addNewUser(char * email, size_t pos)
 {
-    memmove(m_list + pos + 1, m_list + pos, m_top - pos);
-    m_list[pos] = new CUser(email);
+    if(pos == m_top)
+        m_list[pos] = new CUser(email);
+    else {
+        memmove(m_list + pos + 1, m_list + pos, m_top - pos);
+        m_list[pos] = new CUser(email);
+    }
     m_top++;
 }
 
 void CMailServer::appendEmail(const CMail &m)
 {
     CMail * copy = new CMail(m.getFrom(), m.getTo(), m.getBody());
-    if(m_emails.m_top == m_emails.m_size + 1)
+    if(m_emails.m_top > m_emails.m_size)
         m_emails.realloc();
     size_t top = m_emails.m_top;
     m_emails.m_list[top] = copy;
