@@ -224,23 +224,23 @@ CMailServer::CMailServer(void)
 {
     m_emails.m_size = 500;
     m_emails.m_top = 0;
-    m_emails.m_list = new CMail[500];
+    m_emails.m_list = new CMail*[500];
 
     m_users.m_size = 500;
     m_users.m_top = 0;
-    m_users.m_list = new CUser[500];
+    m_users.m_list = new CUser*[500];
 }
 
 CMailServer::~CMailServer(void)
 {
     //deleting emails
-//    for (size_t i = 0; i < m_emails.m_top; i++)
-//        m_emails.m_list[i].free();
+    for (size_t i = 0; i < m_emails.m_top; i++)
+        m_emails.m_list[i]->free();
     delete [] m_emails.m_list;
 
     //deleting users
     for (size_t i = 0; i < m_users.m_top; i++)
-        m_users.m_list[i].free();
+        m_users.m_list[i]->free();
     delete [] m_users.m_list;
 }
 
