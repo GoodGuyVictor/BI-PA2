@@ -15,11 +15,8 @@ class CMail
 {
   public:
     CMail( const char * from, const char * to, const char * body );
-    CMail() = default;
-    CMail(const CMail & m);
     ~CMail();
 
-    CMail & operator = (const CMail & m);
     bool operator == ( const CMail     & x ) const;
     char * getFrom() const { return m_from; }
     char * getTo() const { return m_to; }
@@ -49,9 +46,7 @@ CMail::CMail(const char *from, const char *to, const char *body)
 
 CMail::~CMail()
 {
-    delete [] m_from;
-    delete [] m_to;
-    delete [] m_body;
+    free();
 }
 
 bool CMail::operator==(const CMail &x) const
@@ -61,26 +56,6 @@ bool CMail::operator==(const CMail &x) const
        && strcmp(m_body, x.m_body) == 0)
         return true;
     return false;
-}
-
-CMail::CMail(const CMail &m)
-: CMail(m.getFrom(), m.getTo(), m.getBody())
-{}
-
-CMail & CMail::operator = (const CMail &m)
-{
-    size_t from_size = strlen(m.getFrom()) + 1;
-    size_t to_size = strlen(m.getTo()) + 1;
-    size_t body_size = strlen(m.getBody()) + 1;
-
-    m_from = new char[from_size];
-    m_to = new char[to_size];
-    m_body = new char[body_size];
-
-    strncpy(m_from, m.getFrom(), from_size);
-    strncpy(m_to, m.getTo(), to_size);
-    strncpy(m_body, m.getBody(), body_size);
-    return *this;
 }
 
 void CMail::free()
@@ -94,7 +69,7 @@ class CUser
 {
 public:
     explicit CUser(const char * email);
-    CUser() = default;
+    ~CUser();
 
     char * m_email;
     CMail *** m_inbox;
@@ -171,6 +146,11 @@ void CUser::free()
     delete [] m_outbox;
 }
 
+CUser::~CUser()
+{
+    free();
+}
+
 class CMailIterator
 {
   public:
@@ -243,13 +223,15 @@ CMailServer::CMailServer(void)
 CMailServer::~CMailServer(void)
 {
     //deleting emails
-    for (size_t i = 0; i < m_emails.m_top; i++)
-        m_emails.m_list[i]->free();
+    for (size_t i = 0; i < m_emails.m_top; i++) {
+        delete m_emails.m_list[i];
+    }
     delete [] m_emails.m_list;
 
     //deleting users
-    for (size_t i = 0; i < m_users.m_top; i++)
-        m_users.m_list[i]->free();
+    for (size_t i = 0; i < m_users.m_top; i++) {
+        delete m_users.m_list[i];
+    }
     delete [] m_users.m_list;
 }
 
