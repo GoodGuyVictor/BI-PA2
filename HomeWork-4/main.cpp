@@ -86,6 +86,26 @@ public:
     void free();
 };
 
+CUser::CUser(const char *email)
+{
+    size_t email_len = strlen(email);
+    m_email = new char[email_len + 1];
+    strcpy(m_email, email);
+
+    m_inboxSize = 500;
+    m_outboxSize = 500;
+    m_outboxTop = 0;
+    m_inboxTop = 0;
+
+    m_inbox = new CMail**[m_inboxSize];
+    m_outbox = new CMail**[m_outboxSize];
+}
+
+CUser::~CUser()
+{
+    free();
+}
+
 void CUser::insertOutbox(CMail ** m)
 {
     if(m_outboxTop > m_outboxSize)
@@ -100,21 +120,6 @@ void CUser::insertInbox(CMail ** m)
         reallocInbox();
     m_inbox[m_inboxTop] = m;
     m_inboxTop++;
-}
-
-CUser::CUser(const char *email)
-{
-    size_t email_len = strlen(email);
-    m_email = new char[email_len + 1];
-    strcpy(m_email, email);
-
-    m_inboxSize = 500;
-    m_outboxSize = 500;
-    m_outboxTop = 0;
-    m_inboxTop = 0;
-
-    m_inbox = new CMail**[m_inboxSize];
-    m_outbox = new CMail**[m_outboxSize];
 }
 
 void CUser::reallocOutbox()
@@ -144,11 +149,6 @@ void CUser::free()
     delete [] m_email;
     delete [] m_inbox;
     delete [] m_outbox;
-}
-
-CUser::~CUser()
-{
-    free();
 }
 
 class CMailIterator
