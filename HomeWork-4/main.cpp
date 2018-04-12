@@ -249,7 +249,7 @@ void CMailServer::SendMail(const CMail &m)
     appendEmail(m);
 
     size_t last = m_emails.m_top - 1;
-    char * sender = m_emails.m_list[last].getFrom();
+    char * sender = m_emails.m_list[last]->getFrom();
 
     size_t userPos = m_users.findUser(sender);
     if(userPos != m_users.m_top)
@@ -259,7 +259,7 @@ void CMailServer::SendMail(const CMail &m)
         m_users.addOutbox(m_emails.m_list + last, userPos);
     }
 
-    char * receiver = m_emails.m_list[last].getTo();
+    char * receiver = m_emails.m_list[last]->getTo();
     userPos = m_users.findUser(receiver);
     if(userPos != m_users.m_top)
         m_users.addInbox(m_emails.m_list + last, userPos);
