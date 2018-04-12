@@ -97,21 +97,21 @@ public:
     CUser() = default;
 
     char * m_email;
-    CMail ** m_inbox;
-    CMail ** m_outbox;
+    CMail *** m_inbox;
+    CMail *** m_outbox;
     size_t m_inboxTop;
     size_t m_outboxTop;
     size_t m_inboxSize;
     size_t m_outboxSize;
 
-    void insertOutbox(CMail * m);
-    void insertInbox(CMail * m);
+    void insertOutbox(CMail ** m);
+    void insertInbox(CMail ** m);
     void reallocOutbox();
     void reallocInbox();
     void free();
 };
 
-void CUser::insertOutbox(CMail * m)
+void CUser::insertOutbox(CMail ** m)
 {
     if(m_outboxTop > m_outboxSize)
         reallocOutbox();
@@ -119,7 +119,7 @@ void CUser::insertOutbox(CMail * m)
     m_outboxTop++;
 }
 
-void CUser::insertInbox(CMail * m)
+void CUser::insertInbox(CMail ** m)
 {
     m_inbox[m_inboxTop] = m;
     m_inboxTop++;
@@ -212,8 +212,8 @@ class CMailServer
         CUser ** m_list;
 
         size_t findUser(char * usr) const;
-        void addOutbox(CMail * m, size_t pos);
-        void addInbox(CMail * m, size_t pos);
+        void addOutbox(CMail ** m, size_t pos);
+        void addInbox(CMail ** m, size_t pos);
         void addNewUser(char * email, size_t pos);
     } m_users;
 
@@ -299,14 +299,14 @@ size_t CMailServer::TUsers::findUser(char * usr) const
     return last;
 }
 
-void CMailServer::TUsers::addOutbox(CMail * m, size_t pos)
+void CMailServer::TUsers::addOutbox(CMail ** m, size_t pos)
 {
-    m_list[pos].insertOutbox(m);
+    m_list[pos]->insertOutbox(m);
 }
 
-void CMailServer::TUsers::addInbox(CMail *m, size_t pos)
+void CMailServer::TUsers::addInbox(CMail ** m, size_t pos)
 {
-    m_list[pos].insertInbox(m);
+    m_list[pos]->insertInbox(m);
 }
 
 void CMailServer::TUsers::addNewUser(char * email, size_t pos)
