@@ -215,6 +215,15 @@ class CMailServer
         void addOutbox(CMail ** m, size_t pos);
         void addInbox(CMail ** m, size_t pos);
         void addNewUser(char * email, size_t pos);
+        void shiftRight(size_t pos);
+//        void print() {
+//            cout << "users list:\n";
+//            for (size_t i = 0; i < m_top; i++) {
+//                printf("%s ", m_list[i]->m_email);
+//                cout << endl;
+//            }
+//            cout << endl;
+//        }
     } m_users;
 
     void appendEmail(const CMail &);
@@ -253,7 +262,6 @@ void CMailServer::SendMail(const CMail &m)
 
     size_t userPos = m_users.findUser(sender);
     if(userPos != m_users.m_top) {
-//        cout << m_users.m_list[userPos]->m_email << endl;
         if(strcmp(m_users.m_list[userPos]->m_email, sender) == 0)
             m_users.addOutbox(m_emails.m_list + last, userPos);
         else {
@@ -327,10 +335,16 @@ void CMailServer::TUsers::addNewUser(char * email, size_t pos)
     if(pos == m_top)
         m_list[pos] = new CUser(email);
     else {
-        memmove(m_list + pos + 1, m_list + pos, m_top - pos);
+        shiftRight(pos);
         m_list[pos] = new CUser(email);
     }
     m_top++;
+}
+
+void CMailServer::TUsers::shiftRight(size_t pos)
+{
+    for (size_t i = m_top; i > pos; i--)
+        m_list[i] = m_list[i - 1];
 }
 
 void CMailServer::appendEmail(const CMail &m)

@@ -41,13 +41,12 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="308" column="17" lean-forward="false" selection-start-line="308" selection-start-column="17" selection-end-line="308" selection-end-column="17" />
+            <state relative-caret-position="299">
+              <caret line="334" column="0" lean-forward="false" selection-start-line="334" selection-start-column="0" selection-end-line="334" selection-end-column="0" />
               <folding>
                 <element signature="e#21#39#0" expanded="true" />
                 <element signature="e#1193#1394#0" expanded="false" />
-                <element signature="e#6292#6509#0" expanded="false" />
-                <element signature="e#6511#6903#0" expanded="false" />
+                <element signature="e#7643#7740#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -71,6 +70,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-1316" />
     <option name="y" value="-11" />
@@ -155,12 +155,12 @@
       <workItem from="1523369753725" duration="8785000" />
       <workItem from="1523443875718" duration="15994000" />
       <workItem from="1523470841596" duration="4146000" />
-      <workItem from="1523517104891" duration="7387000" />
+      <workItem from="1523517104891" duration="12392000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43702000" />
+    <option name="totallyTimeSpent" value="48707000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -203,7 +203,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="15" />
+      <option name="time" value="27" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
@@ -227,8 +227,7 @@
           <folding>
             <element signature="e#21#39#0" expanded="true" />
             <element signature="e#1193#1394#0" expanded="false" />
-            <element signature="e#6292#6509#0" expanded="false" />
-            <element signature="e#6511#6903#0" expanded="false" />
+            <element signature="e#7643#7740#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -248,8 +247,7 @@
           <folding>
             <element signature="e#21#39#0" expanded="true" />
             <element signature="e#1193#1394#0" expanded="false" />
-            <element signature="e#6292#6509#0" expanded="false" />
-            <element signature="e#6511#6903#0" expanded="false" />
+            <element signature="e#7643#7740#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -269,8 +267,7 @@
           <folding>
             <element signature="e#21#39#0" expanded="true" />
             <element signature="e#1193#1394#0" expanded="false" />
-            <element signature="e#6292#6509#0" expanded="false" />
-            <element signature="e#6511#6903#0" expanded="false" />
+            <element signature="e#7643#7740#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -290,8 +287,7 @@
           <folding>
             <element signature="e#21#39#0" expanded="true" />
             <element signature="e#1193#1394#0" expanded="false" />
-            <element signature="e#6292#6509#0" expanded="false" />
-            <element signature="e#6511#6903#0" expanded="false" />
+            <element signature="e#7643#7740#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -311,8 +307,7 @@
           <folding>
             <element signature="e#21#39#0" expanded="true" />
             <element signature="e#1193#1394#0" expanded="false" />
-            <element signature="e#6292#6509#0" expanded="false" />
-            <element signature="e#6511#6903#0" expanded="false" />
+            <element signature="e#7643#7740#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -332,8 +327,7 @@
           <folding>
             <element signature="e#21#39#0" expanded="true" />
             <element signature="e#1193#1394#0" expanded="false" />
-            <element signature="e#6292#6509#0" expanded="false" />
-            <element signature="e#6511#6903#0" expanded="false" />
+            <element signature="e#7643#7740#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -353,8 +347,7 @@
           <folding>
             <element signature="e#21#39#0" expanded="true" />
             <element signature="e#1193#1394#0" expanded="false" />
-            <element signature="e#6292#6509#0" expanded="false" />
-            <element signature="e#6511#6903#0" expanded="false" />
+            <element signature="e#7643#7740#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -369,13 +362,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="308" column="17" lean-forward="false" selection-start-line="308" selection-start-column="17" selection-end-line="308" selection-end-column="17" />
+        <state relative-caret-position="299">
+          <caret line="334" column="0" lean-forward="false" selection-start-line="334" selection-start-column="0" selection-end-line="334" selection-end-column="0" />
           <folding>
             <element signature="e#21#39#0" expanded="true" />
             <element signature="e#1193#1394#0" expanded="false" />
-            <element signature="e#6292#6509#0" expanded="false" />
-            <element signature="e#6511#6903#0" expanded="false" />
+            <element signature="e#7643#7740#0" expanded="false" />
           </folding>
         </state>
       </provider>
