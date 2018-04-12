@@ -380,6 +380,12 @@ CMailIterator CMailServer::Inbox(const char *email) const
     size_t userPos = m_users.findUser(email);
     return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_list[userPos]->m_inboxTop);
 }
+
+CMailIterator CMailServer::Outbox(const char *email) const
+{
+    size_t userPos = m_users.findUser(email);
+    return CMailIterator(m_users.m_list[userPos]->m_outbox, m_users.m_list[userPos]->m_outboxTop);
+}
 /******************************************************************/
 
 #ifndef __PROGTEST__
@@ -411,7 +417,7 @@ int main ( void )
   assert ( ++i0 && *i0 == CMail ( "peter", "alice", "PR bullshit" ) );
   assert ( ! ++i0 );
 
-  /*CMailIterator i1 = s0 . Inbox ( "john" );
+  CMailIterator i1 = s0 . Inbox ( "john" );
   assert ( i1 && *i1 == CMail ( "alice", "john", "deadline confirmation" ) );
   assert ( ! ++i1 );
 
@@ -421,7 +427,7 @@ int main ( void )
   assert ( ++i2 && *i2 == CMail ( "john", "alice", "deadline notice" ) );
   assert ( ! ++i2 );
 
-  CMailIterator i3 = s0 . Outbox ( "thomas" );
+  /*CMailIterator i3 = s0 . Outbox ( "thomas" );
   assert ( ! i3 );
 
   CMailIterator i4 = s0 . Outbox ( "steve" );
