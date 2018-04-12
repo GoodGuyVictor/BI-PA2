@@ -200,7 +200,7 @@ class CMailServer
     {
         size_t m_size;
         size_t m_top;
-        CMail * m_list;
+        CMail ** m_list;
 
         void realloc();
     } m_emails;
@@ -209,7 +209,7 @@ class CMailServer
     {
         size_t m_size;
         size_t m_top;
-        CUser * m_list;
+        CUser ** m_list;
 
         size_t findUser(char * usr) const;
         void addOutbox(CMail * m, size_t pos);
@@ -219,6 +219,66 @@ class CMailServer
 
     void appendEmail(const CMail &);
 };
+
+CMailServer::CMailServer(void)
+{
+    m_emails.m_size = 500;
+    m_emails.m_top = 0;
+    m_emails.m_list = new CMail[500];
+
+    m_users.m_size = 500;
+    m_users.m_top = 0;
+    m_users.m_list = new CUser[500];
+}
+
+CMailServer::~CMailServer(void)
+{
+    //deleting emails
+//    for (size_t i = 0; i < m_emails.m_top; i++)
+//        m_emails.m_list[i].free();
+    delete [] m_emails.m_list;
+
+    //deleting users
+    for (size_t i = 0; i < m_users.m_top; i++)
+        m_users.m_list[i].free();
+    delete [] m_users.m_list;
+}
+
+void CMailServer::SendMail(const CMail &m)
+{
+    appendEmail(m);
+
+    size_t last = m_emails.m_top - 1;
+    char * sender = m_emails.m_list[last].getFrom();
+
+    size_t userPos = m_users.findUser(sender);
+    if(userPos != m_users.m_top)
+        m_users.addOutbox(m_emails.m_list + last, userPos);
+    else {
+        m_users.addNewUser(sender, userPos);
+        m_users.addOutbox(m_emails.m_list + last, userPos);
+    }
+
+    char * receiver = m_emails.m_list[last].getTo();
+    userPos = m_users.findUser(receiver);
+    if(userPos != m_users.m_top)
+        m_users.addInbox(m_emails.m_list + last, userPos);
+    else {
+        m_users.addNewUser(receiver, userPos);
+        m_users.addInbox(m_emails.m_list + last, userPos);
+    }
+}
+
+void CMailServer::TEmails::realloc()
+{
+    m_size += m_size / 2;
+    CMail * tmp = new CMail[m_size];
+    for(size_t i = 0; i < m_top; i++) {
+        tmp[i] = m_list[i];
+    }
+    delete [] m_list;
+    m_list = tmp;
+}
 
 //binary search
 size_t CMailServer::TUsers::findUser(char * usr) const
@@ -252,78 +312,18 @@ void CMailServer::TUsers::addInbox(CMail *m, size_t pos)
 void CMailServer::TUsers::addNewUser(char * email, size_t pos)
 {
     memmove(m_list + pos + 1, m_list + pos, m_top - pos);
-    m_list[pos] = CUser(email);
+    m_list[pos] = new CUser(email);
     m_top++;
-}
-
-void CMailServer::TEmails::realloc()
-{
-    m_size += m_size / 2;
-    CMail * tmp = new CMail[m_size];
-    for(size_t i = 0; i < m_top; i++) {
-        tmp[i] = m_list[i];
-    }
-    delete [] m_list;
-    m_list = tmp;
-}
-
-CMailServer::CMailServer(void)
-{
-    m_emails.m_size = 500;
-    m_emails.m_top = 0;
-    m_emails.m_list = new CMail[500];
-
-    m_users.m_size = 500;
-    m_users.m_top = 0;
-    m_users.m_list = new CUser[500];
-}
-
-void CMailServer::SendMail(const CMail &m)
-{
-    appendEmail(m);
-
-    size_t last = m_emails.m_top - 1;
-    char * sender = m_emails.m_list[last].getFrom();
-
-    size_t userPos = m_users.findUser(sender);
-    if(userPos != m_users.m_top)
-        m_users.addOutbox(m_emails.m_list + last, userPos);
-    else {
-        m_users.addNewUser(sender, userPos);
-        m_users.addOutbox(m_emails.m_list + last, userPos);
-    }
-
-    char * receiver = m_emails.m_list[last].getTo();
-    userPos = m_users.findUser(receiver);
-    if(userPos != m_users.m_top)
-        m_users.addInbox(m_emails.m_list + last, userPos);
-    else {
-        m_users.addNewUser(receiver, userPos);
-        m_users.addInbox(m_emails.m_list + last, userPos);
-    }
 }
 
 void CMailServer::appendEmail(const CMail &m)
 {
-    CMail copy(m.getFrom(), m.getTo(), m.getBody());
+    CMail * copy = new CMail(m.getFrom(), m.getTo(), m.getBody());
     if(m_emails.m_top == m_emails.m_size + 1)
         m_emails.realloc();
     size_t top = m_emails.m_top;
     m_emails.m_list[top] = copy;
     m_emails.m_top++;
-}
-
-CMailServer::~CMailServer(void)
-{
-    //deleting emails
-//    for (size_t i = 0; i < m_emails.m_top; i++)
-//        m_emails.m_list[i].free();
-    delete [] m_emails.m_list;
-
-    //deleting users
-    for (size_t i = 0; i < m_users.m_top; i++)
-        m_users.m_list[i].free();
-    delete [] m_users.m_list;
 }
 
 #ifndef __PROGTEST__
