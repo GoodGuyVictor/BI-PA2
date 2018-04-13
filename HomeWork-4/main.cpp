@@ -427,7 +427,7 @@ int main ( void )
   assert ( ++i2 && *i2 == CMail ( "john", "alice", "deadline notice" ) );
   assert ( ! ++i2 );
 
-  /*CMailIterator i3 = s0 . Outbox ( "thomas" );
+  CMailIterator i3 = s0 . Outbox ( "thomas" );
   assert ( ! i3 );
 
   CMailIterator i4 = s0 . Outbox ( "steve" );
@@ -453,7 +453,7 @@ int main ( void )
   assert ( ++i8 && *i8 == CMail ( "thomas", "alice", "meeting details" ) );
   assert ( ! ++i8 );
 
-  CMailServer s1 ( s0 );
+  /*CMailServer s1 ( s0 );
   s0 . SendMail ( CMail ( "joe", "alice", "delivery details" ) );
   s1 . SendMail ( CMail ( "sam", "alice", "order confirmation" ) );
   CMailIterator i9 = s0 . Inbox ( "alice" );
