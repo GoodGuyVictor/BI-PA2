@@ -258,14 +258,16 @@ class CMailServer
   
   private:
 
-    struct TEmails
-    {
-        size_t m_size;
-        size_t m_top;
-        CMail ** m_list;
+//    struct TEmails
+//    {
+//        size_t m_size;
+//        size_t m_top;
+//        CMail ** m_list;
+//
+//        void realloc();
+//    } m_emails;
 
-        void realloc();
-    } m_emails;
+    CEmailsStorage * m_allEmails;
 
     struct TUsers
     {
@@ -285,9 +287,7 @@ class CMailServer
 
 CMailServer::CMailServer(void)
 {
-    m_emails.m_size = 500;
-    m_emails.m_top = 0;
-    m_emails.m_list = new CMail*[500];
+    m_allEmails = new CEmailsStorage();
 
     m_users.m_size = 500;
     m_users.m_top = 0;
