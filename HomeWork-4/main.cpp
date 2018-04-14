@@ -343,6 +343,9 @@ CMailServer::CMailServer(const CMailServer &src)
 
 CMailServer & CMailServer::operator=(const CMailServer &src)
 {
+    if(this == &src)
+        return *this;
+
     m_isCopy = true;
 
     delete m_allEmails;
@@ -490,11 +493,25 @@ int main ( void )
 
     CMailServer s0;
 
-    for (int i = 0; i < 10000000; ++i) {
+    for (int i = 0; i < 2000; ++i) {
         s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
     }
+//
+//    CMailServer s1(s0);
 
-    s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
+//    for (int i = 0; i < 2000; ++i) {
+//        s1 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
+//    }
+//
+//    CMailServer s2;
+//
+//    for (int i = 0; i < 2000; ++i) {
+//        s2 . SendMail ( CMail ( "peter", "thomas", "some  mail" ) );
+//    }
+
+//    s2 = s2;
+
+//    s1 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
 
   /*assert ( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "peter", "progtest deadline" ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "progtest deadline", "peter" ) ) );
@@ -596,8 +613,7 @@ int main ( void )
   assert ( ++i13 && *i13 == CMail ( "joe", "alice", "delivery details" ) );
   assert ( ++i13 && *i13 == CMail ( "paul", "alice", "invalid invoice" ) );
   assert ( ! ++i13 );
-   */
-
+*/
   return 0;
 }
 #endif /* __PROGTEST__ */
