@@ -348,6 +348,7 @@ CMailServer & CMailServer::operator=(const CMailServer &src)
     for (size_t i = 0; i < m_users.m_top; ++i) {
         m_users.m_list[i] = new CUser(*(src.m_users.m_list[i]));
     }
+    return *this;
 }
 
 CMailServer::~CMailServer(void)
