@@ -390,11 +390,14 @@ void CMailServer::SendMail(const CMail &m)
 
     size_t last = m_allEmails->m_top - 1;
     char * sender = m_allEmails->m_storage[last]->getFrom();
+    char * receiver = m_allEmails->m_storage[last]->getTo();
+    size_t userPos;
 
-    size_t userPos = m_users.findUser(sender);
+    userPos = m_users.findUser(sender);
     if(userPos != m_users.m_top) {
-        if(strcmp(m_users.m_list[userPos]->m_email, sender) == 0)
+        if(strcmp(m_users.m_list[userPos]->m_email, sender) == 0) {
             m_users.addOutbox(m_allEmails->m_storage + last, userPos);
+        }
         else {
             m_users.addNewUser(sender, userPos);
             m_users.addOutbox(m_allEmails->m_storage + last, userPos);
@@ -405,7 +408,6 @@ void CMailServer::SendMail(const CMail &m)
         m_users.addOutbox(m_allEmails->m_storage + last, userPos);
     }
 
-    char * receiver = m_allEmails->m_storage[last]->getTo();
     userPos = m_users.findUser(receiver);
     if(userPos != m_users.m_top) {
         if(strcmp(m_users.m_list[userPos]->m_email, receiver) == 0)
@@ -475,6 +477,8 @@ void CMailServer::TUsers::addNewUser(char * email, size_t pos)
 
 void CMailServer::TUsers::shiftRight(size_t pos)
 {
+    if(m_top > m_size - 1)
+        realloc();
     for (size_t i = m_top; i > pos; i--)
         m_list[i] = m_list[i - 1];
 }
