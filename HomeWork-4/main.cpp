@@ -313,6 +313,7 @@ class CMailServer
         void addInbox(CMail ** m, size_t pos);
         void addNewUser(char * email, size_t pos);
         void shiftRight(size_t pos);
+        void realloc();
     } m_users;
 
     void appendEmail(const CMail &);
@@ -476,6 +477,21 @@ void CMailServer::TUsers::shiftRight(size_t pos)
 {
     for (size_t i = m_top; i > pos; i--)
         m_list[i] = m_list[i - 1];
+}
+
+void CMailServer::TUsers::realloc()
+{
+    if(m_size > 10000)
+        m_size += m_size / 2;
+    else
+        m_size += m_size;
+
+    CUser ** tmp = new CUser*[m_size];
+    for (size_t i = 0; i < m_top; ++i) {
+        tmp[i] = m_list[i];
+    }
+    delete [] m_list;
+    m_list = tmp;
 }
 
 void CMailServer::appendEmail(const CMail &m)
