@@ -265,9 +265,6 @@ bool CMailIterator::operator!(void) const
     return !(operator bool());
 }
 /******************************************************************/
-
-
-/******************************************************************/
 class CMailServer
 {
   public:
@@ -279,17 +276,8 @@ class CMailServer
     CMailIterator            Outbox                        ( const char      * email ) const;
     CMailIterator            Inbox                         ( const char      * email ) const;
 
-  
-  private:
 
-//    struct TEmails
-//    {
-//        size_t m_size;
-//        size_t m_top;
-//        CMail ** m_list;
-//
-//        void realloc();
-//    } m_emails;
+  private:
 
     bool m_isCopy;
     CEmailsStorage * m_allEmails;
@@ -318,6 +306,41 @@ CMailServer::CMailServer(void)
     m_users.m_size = 500;
     m_users.m_top = 0;
     m_users.m_list = new CUser*[500];
+}
+
+CMailServer::CMailServer(const CMailServer &src)
+{
+    m_isCopy = true;
+    m_allEmails = src.m_allEmails;
+
+    m_users.m_size = src.m_users.m_size;
+    m_users.m_top = src.m_users.m_top;
+    m_users.m_list = new CUser*[m_users.m_size];
+
+    for (size_t i = 0; i < m_users.m_top; ++i) {
+        m_users.m_list[i] = new CUser(*(src.m_users.m_list[i]));
+    }
+}
+
+CMailServer & CMailServer::operator=(const CMailServer &src)
+{
+    m_isCopy = true;
+
+    delete m_allEmails;
+    m_allEmails = src.m_allEmails;
+
+    for (size_t i = 0; i < m_users.m_top; i++) {
+        delete m_users.m_list[i];
+    }
+    delete [] m_users.m_list;
+
+    m_users.m_size = src.m_users.m_size;
+    m_users.m_top = src.m_users.m_top;
+    m_users.m_list = new CUser*[m_users.m_size];
+
+    for (size_t i = 0; i < m_users.m_top; ++i) {
+        m_users.m_list[i] = new CUser(*(src.m_users.m_list[i]));
+    }
 }
 
 CMailServer::~CMailServer(void)
@@ -370,16 +393,17 @@ void CMailServer::SendMail(const CMail &m)
     }
 }
 
-//void CMailServer::TEmails::realloc()
-//{
-//    m_size += m_size / 2;
-//    CMail ** tmp = new CMail*[m_size];
-//    for(size_t i = 0; i < m_top; i++) {
-//        tmp[i] = m_list[i];
-//    }
-//    delete [] m_list;
-//    m_list = tmp;
-//}
+CMailIterator CMailServer::Inbox(const char *email) const
+{
+    size_t userPos = m_users.findUser(email);
+    return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_list[userPos]->m_inboxTop);
+}
+
+CMailIterator CMailServer::Outbox(const char *email) const
+{
+    size_t userPos = m_users.findUser(email);
+    return CMailIterator(m_users.m_list[userPos]->m_outbox, m_users.m_list[userPos]->m_outboxTop);
+}
 
 //binary search
 size_t CMailServer::TUsers::findUser(const char * usr) const
@@ -435,32 +459,6 @@ void CMailServer::appendEmail(const CMail &m)
     size_t top = m_allEmails->m_top;
     m_allEmails->m_storage[top] = copy;
     m_allEmails->m_top++;
-}
-
-CMailIterator CMailServer::Inbox(const char *email) const
-{
-    size_t userPos = m_users.findUser(email);
-    return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_list[userPos]->m_inboxTop);
-}
-
-CMailIterator CMailServer::Outbox(const char *email) const
-{
-    size_t userPos = m_users.findUser(email);
-    return CMailIterator(m_users.m_list[userPos]->m_outbox, m_users.m_list[userPos]->m_outboxTop);
-}
-
-CMailServer::CMailServer(const CMailServer &src)
-{
-    m_isCopy = true;
-    m_allEmails = src.m_allEmails;
-
-    m_users.m_size = src.m_users.m_size;
-    m_users.m_top = src.m_users.m_top;
-    m_users.m_list = new CUser*[m_users.m_size];
-
-    for (size_t i = 0; i < m_users.m_top; ++i) {
-        m_users.m_list[i] = new CUser(*(src.m_users.m_list[i]));
-    }
 }
 /******************************************************************/
 
@@ -546,7 +544,7 @@ int main ( void )
   assert ( ++i10 && *i10 == CMail ( "sam", "alice", "order confirmation" ) );
   assert ( ! ++i10 );
 
-  /*CMailServer s2;
+  CMailServer s2;
   s2 . SendMail ( CMail ( "alice", "alice", "mailbox test" ) );
   CMailIterator i11 = s2 . Inbox ( "alice" );
   assert ( i11 && *i11 == CMail ( "alice", "alice", "mailbox test" ) );
@@ -570,7 +568,7 @@ int main ( void )
   assert ( ++i13 && *i13 == CMail ( "joe", "alice", "delivery details" ) );
   assert ( ++i13 && *i13 == CMail ( "paul", "alice", "invalid invoice" ) );
   assert ( ! ++i13 );
-*/
+
   return 0;
 }
 #endif /* __PROGTEST__ */
