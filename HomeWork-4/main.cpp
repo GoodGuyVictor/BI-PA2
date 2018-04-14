@@ -156,6 +156,44 @@ void CUser::free()
 }
 /******************************************************************/
 
+/******************************************************************/
+class CEmailsStorage
+{
+public:
+
+    CMail ** m_storage;
+    size_t m_size;
+    size_t m_top;
+
+    CEmailsStorage()
+    {
+        m_size = 500;
+        m_top = 500;
+        m_storage = new CMail*[500];
+    }
+
+    ~CEmailsStorage()
+    {
+        for (size_t i = 0; i < m_top; ++i) {
+            delete m_storage[i];
+        }
+        delete [] m_storage;
+        m_size = 0;
+        m_top = 0;
+    }
+
+    void reallocStorage()
+    {
+        m_size += m_size / 2;
+        CMail ** tmp = new CMail*[m_size];
+        for (size_t i = 0; i < m_top; ++i) {
+            tmp[i] = m_storage[i];
+        }
+        delete [] m_storage;
+        m_storage = tmp;
+    }
+};
+/******************************************************************/
 
 /******************************************************************/
 class CMailIterator
