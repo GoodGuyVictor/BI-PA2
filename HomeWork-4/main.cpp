@@ -195,6 +195,7 @@ public:
     CMail ** m_storage;
     size_t m_size;
     size_t m_top;
+    size_t refCounter;
 
     CEmailsStorage();
 
@@ -208,6 +209,7 @@ CEmailsStorage::CEmailsStorage()
     m_size = 1000;
     m_top = 0;
     m_storage = new CMail*[1000];
+    refCounter = 1;
 }
 
 CEmailsStorage::~CEmailsStorage()
@@ -298,7 +300,6 @@ class CMailServer
 
   private:
 
-    bool m_isCopy;
     CEmailsStorage * m_allEmails;
 
     struct TUsers
@@ -319,7 +320,6 @@ class CMailServer
 
 CMailServer::CMailServer(void)
 {
-    m_isCopy = false;
     m_allEmails = new CEmailsStorage();
 
     m_users.m_size = 1000;
@@ -329,8 +329,8 @@ CMailServer::CMailServer(void)
 
 CMailServer::CMailServer(const CMailServer &src)
 {
-    m_isCopy = true;
     m_allEmails = src.m_allEmails;
+    m_allEmails->refCounter++;
 
     m_users.m_size = src.m_users.m_size;
     m_users.m_top = src.m_users.m_top;
@@ -347,11 +347,12 @@ CMailServer & CMailServer::operator=(const CMailServer &src)
         return *this;
 
 
-    if(m_allEmails->m_storage != src.m_allEmails->m_storage){
+    m_allEmails->refCounter--;
+    if(m_allEmails->refCounter == 0)
         delete m_allEmails;
-        m_allEmails = src.m_allEmails;
-        m_isCopy = true;
-    }
+    m_allEmails = src.m_allEmails;
+    m_allEmails->refCounter++;
+
 
     for (size_t i = 0; i < m_users.m_top; i++) {
         delete m_users.m_list[i];
@@ -370,8 +371,9 @@ CMailServer & CMailServer::operator=(const CMailServer &src)
 
 CMailServer::~CMailServer(void)
 {
-    //emails are deleted only by server they were created
-    if(!m_isCopy)
+    //handling emails
+    m_allEmails->refCounter--;
+    if(m_allEmails->refCounter == 0)
         delete m_allEmails;
 
     //deleting users
@@ -493,143 +495,143 @@ int main ( void )
 
   char from[100], to[100], body[1024];
 
-    CMailServer s0;
+    CMailServer s10;
 
     for (int i = 0; i < 3000; ++i) {
-        s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
+        s10 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
     }
-    s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
+    s10 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
 
-    CMailServer s1(s0);
+    CMailServer s11(s10);
 
     for (int i = 0; i < 2000; ++i) {
-        s1 . SendMail ( CMail ( "alice", "peter", "some important mail" ) );
+        s11 . SendMail ( CMail ( "alice", "peter", "some important mail" ) );
     }
 
-    CMailServer s2;
+    CMailServer s20;
 
     for (int i = 0; i < 2000; ++i) {
-        s2 . SendMail ( CMail ( "peter", "thomas", "some  mail" ) );
+        s20 . SendMail ( CMail ( "peter", "thomas", "some  mail" ) );
     }
 
-    s2 = s1;
+    s20 = s11;
 
-    s0 = s1;
+    s10 = s11;
 
     for (int i = 0; i < 2000; ++i) {
-        s2 . SendMail ( CMail ( "peter", "thomas", "some  mail" ) );
+        s20 . SendMail ( CMail ( "peter", "thomas", "some  mail" ) );
     }
 
-    CMailServer s3;
+    CMailServer s30;
 
     for (int i = 0; i < 2000; ++i) {
-        s3 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
+        s30 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
     }
 
-    s0 = s3;
+    s10 = s30;
 
-    s1 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
+    s11 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
 
-//  assert ( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "peter", "progtest deadline" ) );
-//  assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "progtest deadline", "peter" ) ) );
-//  assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "peter", "john", "progtest deadline" ) ) );
-//  assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "peter", "progtest deadline", "john" ) ) );
-//  assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "progtest deadline", "john", "peter" ) ) );
-//  assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "progtest deadline", "peter", "john" ) ) );
-//  CMailServer s0;
-//  s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
-//  strncpy ( from, "john", sizeof ( from ) );
-//  strncpy ( to, "thomas", sizeof ( to ) );
-//  strncpy ( body, "another important mail", sizeof ( body ) );
-//  s0 . SendMail ( CMail ( from, to, body ) );
-//  strncpy ( from, "john", sizeof ( from ) );
-//  strncpy ( to, "alice", sizeof ( to ) );
-//  strncpy ( body, "deadline notice", sizeof ( body ) );
-//  s0 . SendMail ( CMail ( from, to, body ) );
-//  s0 . SendMail ( CMail ( "alice", "john", "deadline confirmation" ) );
-//  s0 . SendMail ( CMail ( "peter", "alice", "PR bullshit" ) );
-//  CMailIterator i0 = s0 . Inbox ( "alice" );
-//  assert ( i0 && *i0 == CMail ( "john", "alice", "deadline notice" ) );
-//  assert ( ++i0 && *i0 == CMail ( "peter", "alice", "PR bullshit" ) );
-//  assert ( ! ++i0 );
-//
-//  CMailIterator i1 = s0 . Inbox ( "john" );
-//  assert ( i1 && *i1 == CMail ( "alice", "john", "deadline confirmation" ) );
-//  assert ( ! ++i1 );
-//
-//  CMailIterator i2 = s0 . Outbox ( "john" );
-//  assert ( i2 && *i2 == CMail ( "john", "peter", "some important mail" ) );
-//  assert ( ++i2 && *i2 == CMail ( "john", "thomas", "another important mail" ) );
-//  assert ( ++i2 && *i2 == CMail ( "john", "alice", "deadline notice" ) );
-//  assert ( ! ++i2 );
-//
-//  CMailIterator i3 = s0 . Outbox ( "thomas" );
-//  assert ( ! i3 );
-//
-//  CMailIterator i4 = s0 . Outbox ( "steve" );
-//  assert ( ! i4 );
-//
-//  CMailIterator i5 = s0 . Outbox ( "thomas" );
-//  s0 . SendMail ( CMail ( "thomas", "boss", "daily report" ) );
-//  assert ( ! i5 );
-//
-//  CMailIterator i6 = s0 . Outbox ( "thomas" );
-//  assert ( i6 && *i6 == CMail ( "thomas", "boss", "daily report" ) );
-//  assert ( ! ++i6 );
-//
-//  CMailIterator i7 = s0 . Inbox ( "alice" );
-//  s0 . SendMail ( CMail ( "thomas", "alice", "meeting details" ) );
-//  assert ( i7 && *i7 == CMail ( "john", "alice", "deadline notice" ) );
-//  assert ( ++i7 && *i7 == CMail ( "peter", "alice", "PR bullshit" ) );
-//  assert ( ! ++i7 );
-//
-//  CMailIterator i8 = s0 . Inbox ( "alice" );
-//  assert ( i8 && *i8 == CMail ( "john", "alice", "deadline notice" ) );
-//  assert ( ++i8 && *i8 == CMail ( "peter", "alice", "PR bullshit" ) );
-//  assert ( ++i8 && *i8 == CMail ( "thomas", "alice", "meeting details" ) );
-//  assert ( ! ++i8 );
-//
-//  CMailServer s1 ( s0 );
-//  s0 . SendMail ( CMail ( "joe", "alice", "delivery details" ) );
-//  s1 . SendMail ( CMail ( "sam", "alice", "order confirmation" ) );
-//  CMailIterator i9 = s0 . Inbox ( "alice" );
-//  assert ( i9 && *i9 == CMail ( "john", "alice", "deadline notice" ) );
-//  assert ( ++i9 && *i9 == CMail ( "peter", "alice", "PR bullshit" ) );
-//  assert ( ++i9 && *i9 == CMail ( "thomas", "alice", "meeting details" ) );
-//  assert ( ++i9 && *i9 == CMail ( "joe", "alice", "delivery details" ) );
-//  assert ( ! ++i9 );
-//
-//  CMailIterator i10 = s1 . Inbox ( "alice" );
-//  assert ( i10 && *i10 == CMail ( "john", "alice", "deadline notice" ) );
-//  assert ( ++i10 && *i10 == CMail ( "peter", "alice", "PR bullshit" ) );
-//  assert ( ++i10 && *i10 == CMail ( "thomas", "alice", "meeting details" ) );
-//  assert ( ++i10 && *i10 == CMail ( "sam", "alice", "order confirmation" ) );
-//  assert ( ! ++i10 );
-//
-//  CMailServer s2;
-//  s2 . SendMail ( CMail ( "alice", "alice", "mailbox test" ) );
-//  CMailIterator i11 = s2 . Inbox ( "alice" );
-//  assert ( i11 && *i11 == CMail ( "alice", "alice", "mailbox test" ) );
-//  assert ( ! ++i11 );
-//
-//  s2 = s0;
-//  s0 . SendMail ( CMail ( "steve", "alice", "newsletter" ) );
-//  s2 . SendMail ( CMail ( "paul", "alice", "invalid invoice" ) );
-//  CMailIterator i12 = s0 . Inbox ( "alice" );
-//  assert ( i12 && *i12 == CMail ( "john", "alice", "deadline notice" ) );
-//  assert ( ++i12 && *i12 == CMail ( "peter", "alice", "PR bullshit" ) );
-//  assert ( ++i12 && *i12 == CMail ( "thomas", "alice", "meeting details" ) );
-//  assert ( ++i12 && *i12 == CMail ( "joe", "alice", "delivery details" ) );
-//  assert ( ++i12 && *i12 == CMail ( "steve", "alice", "newsletter" ) );
-//  assert ( ! ++i12 );
-//
-//  CMailIterator i13 = s2 . Inbox ( "alice" );
-//  assert ( i13 && *i13 == CMail ( "john", "alice", "deadline notice" ) );
-//  assert ( ++i13 && *i13 == CMail ( "peter", "alice", "PR bullshit" ) );
-//  assert ( ++i13 && *i13 == CMail ( "thomas", "alice", "meeting details" ) );
-//  assert ( ++i13 && *i13 == CMail ( "joe", "alice", "delivery details" ) );
-//  assert ( ++i13 && *i13 == CMail ( "paul", "alice", "invalid invoice" ) );
-//  assert ( ! ++i13 );
+  assert ( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "peter", "progtest deadline" ) );
+  assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "progtest deadline", "peter" ) ) );
+  assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "peter", "john", "progtest deadline" ) ) );
+  assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "peter", "progtest deadline", "john" ) ) );
+  assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "progtest deadline", "john", "peter" ) ) );
+  assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "progtest deadline", "peter", "john" ) ) );
+  CMailServer s0;
+  s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
+  strncpy ( from, "john", sizeof ( from ) );
+  strncpy ( to, "thomas", sizeof ( to ) );
+  strncpy ( body, "another important mail", sizeof ( body ) );
+  s0 . SendMail ( CMail ( from, to, body ) );
+  strncpy ( from, "john", sizeof ( from ) );
+  strncpy ( to, "alice", sizeof ( to ) );
+  strncpy ( body, "deadline notice", sizeof ( body ) );
+  s0 . SendMail ( CMail ( from, to, body ) );
+  s0 . SendMail ( CMail ( "alice", "john", "deadline confirmation" ) );
+  s0 . SendMail ( CMail ( "peter", "alice", "PR bullshit" ) );
+  CMailIterator i0 = s0 . Inbox ( "alice" );
+  assert ( i0 && *i0 == CMail ( "john", "alice", "deadline notice" ) );
+  assert ( ++i0 && *i0 == CMail ( "peter", "alice", "PR bullshit" ) );
+  assert ( ! ++i0 );
+
+  CMailIterator i1 = s0 . Inbox ( "john" );
+  assert ( i1 && *i1 == CMail ( "alice", "john", "deadline confirmation" ) );
+  assert ( ! ++i1 );
+
+  CMailIterator i2 = s0 . Outbox ( "john" );
+  assert ( i2 && *i2 == CMail ( "john", "peter", "some important mail" ) );
+  assert ( ++i2 && *i2 == CMail ( "john", "thomas", "another important mail" ) );
+  assert ( ++i2 && *i2 == CMail ( "john", "alice", "deadline notice" ) );
+  assert ( ! ++i2 );
+
+  CMailIterator i3 = s0 . Outbox ( "thomas" );
+  assert ( ! i3 );
+
+  CMailIterator i4 = s0 . Outbox ( "steve" );
+  assert ( ! i4 );
+
+  CMailIterator i5 = s0 . Outbox ( "thomas" );
+  s0 . SendMail ( CMail ( "thomas", "boss", "daily report" ) );
+  assert ( ! i5 );
+
+  CMailIterator i6 = s0 . Outbox ( "thomas" );
+  assert ( i6 && *i6 == CMail ( "thomas", "boss", "daily report" ) );
+  assert ( ! ++i6 );
+
+  CMailIterator i7 = s0 . Inbox ( "alice" );
+  s0 . SendMail ( CMail ( "thomas", "alice", "meeting details" ) );
+  assert ( i7 && *i7 == CMail ( "john", "alice", "deadline notice" ) );
+  assert ( ++i7 && *i7 == CMail ( "peter", "alice", "PR bullshit" ) );
+  assert ( ! ++i7 );
+
+  CMailIterator i8 = s0 . Inbox ( "alice" );
+  assert ( i8 && *i8 == CMail ( "john", "alice", "deadline notice" ) );
+  assert ( ++i8 && *i8 == CMail ( "peter", "alice", "PR bullshit" ) );
+  assert ( ++i8 && *i8 == CMail ( "thomas", "alice", "meeting details" ) );
+  assert ( ! ++i8 );
+
+  CMailServer s1 ( s0 );
+  s0 . SendMail ( CMail ( "joe", "alice", "delivery details" ) );
+  s1 . SendMail ( CMail ( "sam", "alice", "order confirmation" ) );
+  CMailIterator i9 = s0 . Inbox ( "alice" );
+  assert ( i9 && *i9 == CMail ( "john", "alice", "deadline notice" ) );
+  assert ( ++i9 && *i9 == CMail ( "peter", "alice", "PR bullshit" ) );
+  assert ( ++i9 && *i9 == CMail ( "thomas", "alice", "meeting details" ) );
+  assert ( ++i9 && *i9 == CMail ( "joe", "alice", "delivery details" ) );
+  assert ( ! ++i9 );
+
+  CMailIterator i10 = s1 . Inbox ( "alice" );
+  assert ( i10 && *i10 == CMail ( "john", "alice", "deadline notice" ) );
+  assert ( ++i10 && *i10 == CMail ( "peter", "alice", "PR bullshit" ) );
+  assert ( ++i10 && *i10 == CMail ( "thomas", "alice", "meeting details" ) );
+  assert ( ++i10 && *i10 == CMail ( "sam", "alice", "order confirmation" ) );
+  assert ( ! ++i10 );
+
+  CMailServer s2;
+  s2 . SendMail ( CMail ( "alice", "alice", "mailbox test" ) );
+  CMailIterator i11 = s2 . Inbox ( "alice" );
+  assert ( i11 && *i11 == CMail ( "alice", "alice", "mailbox test" ) );
+  assert ( ! ++i11 );
+
+  s2 = s0;
+  s0 . SendMail ( CMail ( "steve", "alice", "newsletter" ) );
+  s2 . SendMail ( CMail ( "paul", "alice", "invalid invoice" ) );
+  CMailIterator i12 = s0 . Inbox ( "alice" );
+  assert ( i12 && *i12 == CMail ( "john", "alice", "deadline notice" ) );
+  assert ( ++i12 && *i12 == CMail ( "peter", "alice", "PR bullshit" ) );
+  assert ( ++i12 && *i12 == CMail ( "thomas", "alice", "meeting details" ) );
+  assert ( ++i12 && *i12 == CMail ( "joe", "alice", "delivery details" ) );
+  assert ( ++i12 && *i12 == CMail ( "steve", "alice", "newsletter" ) );
+  assert ( ! ++i12 );
+
+  CMailIterator i13 = s2 . Inbox ( "alice" );
+  assert ( i13 && *i13 == CMail ( "john", "alice", "deadline notice" ) );
+  assert ( ++i13 && *i13 == CMail ( "peter", "alice", "PR bullshit" ) );
+  assert ( ++i13 && *i13 == CMail ( "thomas", "alice", "meeting details" ) );
+  assert ( ++i13 && *i13 == CMail ( "joe", "alice", "delivery details" ) );
+  assert ( ++i13 && *i13 == CMail ( "paul", "alice", "invalid invoice" ) );
+  assert ( ! ++i13 );
 
   return 0;
 }
