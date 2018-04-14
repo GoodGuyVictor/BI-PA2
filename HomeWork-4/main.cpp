@@ -297,10 +297,7 @@ CMailServer::CMailServer(void)
 CMailServer::~CMailServer(void)
 {
     //deleting emails
-    for (size_t i = 0; i < m_emails.m_top; i++) {
-        delete m_emails.m_list[i];
-    }
-    delete [] m_emails.m_list;
+    delete m_allEmails;
 
     //deleting users
     for (size_t i = 0; i < m_users.m_top; i++) {
