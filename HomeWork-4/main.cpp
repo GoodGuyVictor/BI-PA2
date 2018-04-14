@@ -96,8 +96,8 @@ CUser::CUser(const char *email)
     m_email = new char[email_len];
     strcpy(m_email, email);
 
-    m_inboxSize = 500;
-    m_outboxSize = 500;
+    m_inboxSize = 1000;
+    m_outboxSize = 1000;
     m_outboxTop = 0;
     m_inboxTop = 0;
 
@@ -135,7 +135,7 @@ CUser::~CUser()
 
 void CUser::insertOutbox(CMail ** m)
 {
-    if(m_outboxTop > m_outboxSize)
+    if(m_outboxTop > m_outboxSize - 1)
         reallocOutbox();
     m_outbox[m_outboxTop] = m;
     m_outboxTop++;
@@ -143,7 +143,7 @@ void CUser::insertOutbox(CMail ** m)
 
 void CUser::insertInbox(CMail ** m)
 {
-    if(m_inboxTop > m_inboxSize)
+    if(m_inboxTop > m_inboxSize - 1)
         reallocInbox();
     m_inbox[m_inboxTop] = m;
     m_inboxTop++;
@@ -205,9 +205,9 @@ public:
 
 CEmailsStorage::CEmailsStorage()
 {
-    m_size = 500;
+    m_size = 1000;
     m_top = 0;
-    m_storage = new CMail*[500];
+    m_storage = new CMail*[1000];
 }
 
 CEmailsStorage::~CEmailsStorage()
@@ -322,9 +322,9 @@ CMailServer::CMailServer(void)
     m_isCopy = false;
     m_allEmails = new CEmailsStorage();
 
-    m_users.m_size = 500;
+    m_users.m_size = 1000;
     m_users.m_top = 0;
-    m_users.m_list = new CUser*[500];
+    m_users.m_list = new CUser*[1000];
 }
 
 CMailServer::CMailServer(const CMailServer &src)
@@ -477,7 +477,7 @@ void CMailServer::TUsers::shiftRight(size_t pos)
 void CMailServer::appendEmail(const CMail &m)
 {
     CMail * copy = new CMail(m.getFrom(), m.getTo(), m.getBody());
-    if(m_allEmails->m_top > m_allEmails->m_size)
+    if(m_allEmails->m_top > m_allEmails->m_size - 1)
         m_allEmails->reallocStorage();
     size_t top = m_allEmails->m_top;
     m_allEmails->m_storage[top] = copy;
@@ -491,11 +491,12 @@ int main ( void )
 
   char from[100], to[100], body[1024];
 
-    CMailServer s0;
-
-    for (int i = 0; i < 2000; ++i) {
-        s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
-    }
+//    CMailServer s0;
+//
+//    for (int i = 0; i < 3000; ++i) {
+//        s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
+//    }
+//    s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
 //
 //    CMailServer s1(s0);
 
@@ -513,7 +514,7 @@ int main ( void )
 
 //    s1 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
 
-  /*assert ( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "peter", "progtest deadline" ) );
+  assert ( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "peter", "progtest deadline" ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "progtest deadline", "peter" ) ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "peter", "john", "progtest deadline" ) ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "peter", "progtest deadline", "john" ) ) );
@@ -613,7 +614,7 @@ int main ( void )
   assert ( ++i13 && *i13 == CMail ( "joe", "alice", "delivery details" ) );
   assert ( ++i13 && *i13 == CMail ( "paul", "alice", "invalid invoice" ) );
   assert ( ! ++i13 );
-*/
+
   return 0;
 }
 #endif /* __PROGTEST__ */
