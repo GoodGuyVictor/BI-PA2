@@ -151,7 +151,11 @@ void CUser::insertInbox(CMail ** m)
 
 void CUser::reallocOutbox()
 {
-    m_outboxSize += m_outboxSize / 2;
+    if(m_outboxSize > 10000)
+        m_outboxSize += m_outboxSize / 2;
+    else
+        m_outboxSize += m_outboxSize;
+
     CMail *** tmp = new CMail ** [m_outboxSize];
     for(size_t i = 0; i < m_outboxTop; i++) {
         tmp[i] = m_outbox[i];
@@ -162,7 +166,11 @@ void CUser::reallocOutbox()
 
 void CUser::reallocInbox()
 {
-    m_inboxSize += m_inboxSize / 2;
+    if(m_inboxSize > 10000)
+        m_inboxSize += m_inboxSize / 2;
+    else
+        m_inboxSize += m_inboxSize;
+
     CMail *** tmp = new CMail ** [m_inboxSize];
     for(size_t i = 0; i < m_inboxTop; i++) {
         tmp[i] = m_inbox[i];
@@ -214,7 +222,11 @@ CEmailsStorage::~CEmailsStorage()
 
 void CEmailsStorage::reallocStorage()
 {
-    m_size += m_size / 2;
+    if(m_size > 10000)
+        m_size += m_size / 2;
+    else
+        m_size += m_size;
+
     CMail ** tmp = new CMail*[m_size];
     for (size_t i = 0; i < m_top; ++i) {
         tmp[i] = m_storage[i];
@@ -476,7 +488,15 @@ int main ( void )
 
   char from[100], to[100], body[1024];
 
-  assert ( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "peter", "progtest deadline" ) );
+    CMailServer s0;
+
+    for (int i = 0; i < 10000000; ++i) {
+        s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
+    }
+
+    s0 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
+
+  /*assert ( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "peter", "progtest deadline" ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "progtest deadline", "peter" ) ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "peter", "john", "progtest deadline" ) ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "peter", "progtest deadline", "john" ) ) );
@@ -576,6 +596,7 @@ int main ( void )
   assert ( ++i13 && *i13 == CMail ( "joe", "alice", "delivery details" ) );
   assert ( ++i13 && *i13 == CMail ( "paul", "alice", "invalid invoice" ) );
   assert ( ! ++i13 );
+   */
 
   return 0;
 }
