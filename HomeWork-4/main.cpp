@@ -73,6 +73,7 @@ class CUser
 {
 public:
     explicit CUser(const char * email);
+    CUser(const CUser & usr);
     ~CUser();
 
     char * m_email;
@@ -92,14 +93,29 @@ public:
 
 CUser::CUser(const char *email)
 {
-    size_t email_len = strlen(email);
-    m_email = new char[email_len + 1];
+    size_t email_len = strlen(email) + 1;
+    m_email = new char[email_len];
     strcpy(m_email, email);
 
     m_inboxSize = 500;
     m_outboxSize = 500;
     m_outboxTop = 0;
     m_inboxTop = 0;
+
+    m_inbox = new CMail**[m_inboxSize];
+    m_outbox = new CMail**[m_outboxSize];
+}
+
+CUser::CUser(const CUser &usr)
+{
+    size_t email_len = strlen(usr.m_email) + 1;
+    m_email = new char[email_len];
+    strcpy(m_email, usr.m_email);
+
+    m_inboxSize = usr.m_inboxSize;
+    m_outboxSize = usr.m_outboxSize;
+    m_outboxTop = usr.m_outboxTop;
+    m_inboxTop = usr.m_inboxTop;
 
     m_inbox = new CMail**[m_inboxSize];
     m_outbox = new CMail**[m_outboxSize];
@@ -421,6 +437,21 @@ CMailIterator CMailServer::Outbox(const char *email) const
     size_t userPos = m_users.findUser(email);
     return CMailIterator(m_users.m_list[userPos]->m_outbox, m_users.m_list[userPos]->m_outboxTop);
 }
+
+CMailServer::CMailServer(const CMailServer &src)
+{
+    m_allEmails = src.m_allEmails;
+
+    m_users.m_size = src.m_users.m_size;
+    m_users.m_top = src.m_users.m_top;
+    m_users.m_list = new CUser*[m_users.m_size];
+
+    for (size_t i = 0; i < src.m_users.m_top; ++i) {
+        m_users.m_list[i] = new CUser(src.m_users.m_list[i]->m_email);
+        m_users.m_list[i]->m_inboxSize = src.m_users.m_list[i]->m_inboxSize;
+        m_users.m_list[i]->m_outboxSize = src.m_users.m_list[i]->m_outboxSize;
+    }
+}
 /******************************************************************/
 
 #ifndef __PROGTEST__
@@ -488,7 +519,7 @@ int main ( void )
   assert ( ++i8 && *i8 == CMail ( "thomas", "alice", "meeting details" ) );
   assert ( ! ++i8 );
 
-  /*CMailServer s1 ( s0 );
+  CMailServer s1 ( s0 );
   s0 . SendMail ( CMail ( "joe", "alice", "delivery details" ) );
   s1 . SendMail ( CMail ( "sam", "alice", "order confirmation" ) );
   CMailIterator i9 = s0 . Inbox ( "alice" );
