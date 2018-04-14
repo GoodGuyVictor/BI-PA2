@@ -291,6 +291,7 @@ class CMailServer
 //        void realloc();
 //    } m_emails;
 
+    bool m_isCopy;
     CEmailsStorage * m_allEmails;
 
     struct TUsers
@@ -311,6 +312,7 @@ class CMailServer
 
 CMailServer::CMailServer(void)
 {
+    m_isCopy = false;
     m_allEmails = new CEmailsStorage();
 
     m_users.m_size = 500;
@@ -320,8 +322,9 @@ CMailServer::CMailServer(void)
 
 CMailServer::~CMailServer(void)
 {
-    //deleting emails
-    delete m_allEmails;
+    //emails are deleted only by server they were created
+    if(!m_isCopy)
+        delete m_allEmails;
 
     //deleting users
     for (size_t i = 0; i < m_users.m_top; i++) {
@@ -448,6 +451,7 @@ CMailIterator CMailServer::Outbox(const char *email) const
 
 CMailServer::CMailServer(const CMailServer &src)
 {
+    m_isCopy = true;
     m_allEmails = src.m_allEmails;
 
     m_users.m_size = src.m_users.m_size;
@@ -542,7 +546,7 @@ int main ( void )
   assert ( ++i10 && *i10 == CMail ( "sam", "alice", "order confirmation" ) );
   assert ( ! ++i10 );
 
-  CMailServer s2;
+  /*CMailServer s2;
   s2 . SendMail ( CMail ( "alice", "alice", "mailbox test" ) );
   CMailIterator i11 = s2 . Inbox ( "alice" );
   assert ( i11 && *i11 == CMail ( "alice", "alice", "mailbox test" ) );
