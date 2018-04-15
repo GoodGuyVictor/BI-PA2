@@ -52,11 +52,9 @@ CMail::~CMail()
 
 bool CMail::operator==(const CMail &x) const
 {
-    if(strcmp(m_from, x.m_from) == 0
-       && strcmp(m_to, x.m_to) == 0
-       && strcmp(m_body, x.m_body) == 0)
-        return true;
-    return false;
+    return strcmp(m_from, x.m_from) == 0
+           && strcmp(m_to, x.m_to) == 0
+           && strcmp(m_body, x.m_body) == 0;
 }
 
 void CMail::free()
@@ -247,6 +245,7 @@ class CMailIterator
     const CMail            & operator *                    ( void ) const;
     CMailIterator          & operator ++                   ( void );
     CMailIterator(CMail *** ptr, size_t l);
+    ~CMailIterator();
   private:
     CMail *** m_begin;
     CMail *** m_current;
@@ -282,6 +281,13 @@ CMailIterator & CMailIterator::operator++(void)
 bool CMailIterator::operator!(void) const
 {
     return !(operator bool());
+}
+
+CMailIterator::~CMailIterator()
+{
+    m_begin = NULL;
+    m_current = NULL;
+    m_len = 0;
 }
 /******************************************************************/
 
@@ -382,6 +388,8 @@ CMailServer::~CMailServer(void)
         delete m_users.m_list[i];
     }
     delete [] m_users.m_list;
+    m_users.m_size = 0;
+    m_users.m_top = 0;
 }
 
 void CMailServer::SendMail(const CMail &m)
@@ -425,14 +433,26 @@ void CMailServer::SendMail(const CMail &m)
 
 CMailIterator CMailServer::Inbox(const char *email) const
 {
+    if(strcmp(email, "") == 0)
+        return CMailIterator(NULL, 0);
+
     size_t userPos = m_users.findUser(email);
-    return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_list[userPos]->m_inboxTop);
+    if(strcmp(m_users.m_list[userPos]->m_email, email) == 0)
+        return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_list[userPos]->m_inboxTop);
+    else
+        return CMailIterator(NULL, 0);
 }
 
 CMailIterator CMailServer::Outbox(const char *email) const
 {
+    if(strcmp(email, "") == 0)
+        return CMailIterator(NULL, 0);
+
     size_t userPos = m_users.findUser(email);
-    return CMailIterator(m_users.m_list[userPos]->m_outbox, m_users.m_list[userPos]->m_outboxTop);
+    if(strcmp(m_users.m_list[userPos]->m_email, email) == 0)
+        return CMailIterator(m_users.m_list[userPos]->m_outbox, m_users.m_list[userPos]->m_outboxTop);
+    else
+        return CMailIterator(NULL, 0);
 }
 
 //binary search
@@ -520,7 +540,6 @@ int main ( void )
     for (int i = 0; i < 3000; ++i) {
         s10 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
     }
-    s10 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
 
     CMailServer s11(s10);
 
@@ -534,6 +553,24 @@ int main ( void )
         s20 . SendMail ( CMail ( "peter", "thomas", "some  mail" ) );
     }
 
+
+    CMailServer s30(s20);
+
+    for (int i = 0; i < 2000; ++i) {
+        s30 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
+    }
+
+    CMailServer s40(s11);
+
+    for (int i = 0; i < 2000; ++i) {
+        s30 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
+    }
+
+    s10 = s20;
+    s11 = s20;
+    s40 = s30;
+
+
     s20 = s11;
 
     s10 = s11;
@@ -542,18 +579,41 @@ int main ( void )
         s20 . SendMail ( CMail ( "peter", "thomas", "some  mail" ) );
     }
 
-    CMailServer s30;
-
-    for (int i = 0; i < 2000; ++i) {
-        s30 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
-    }
 
     s10 = s30;
 
     s11 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
 
+    CMailServer ss;
+    CMailIterator si1 = ss.Inbox("");
+
+    for (int i = 0; i < 100; ++i) {
+        ss . SendMail ( CMail ( "john", "alex" , "some important mail" ) );
+    }
+    for (int i = 0; i < 100; ++i) {
+        ss . SendMail ( CMail ( "alex", "john" , "some important mail" ) );
+    }
+    for (int i = 0; i < 100; ++i) {
+        ss . SendMail ( CMail ( "zed", "john" , "some important mail" ) );
+    }
+    for (int i = 0; i < 100; ++i) {
+        ss . SendMail ( CMail ( "peter", "zed" , "some important mail" ) );
+    }
+    for (int i = 0; i < 99; ++i) {
+        ss . SendMail ( CMail ( "zed", "peter" , "some important mail" ) );
+    }
+
+    ss . SendMail ( CMail ( "john", "alex" , "some important mail" ) );
+
+
+    CMailServer ss1 (ss);
+    for (int i = 0; i < 200; ++i) {
+        ss1 . SendMail ( CMail ( "kalr", "karl" , "some important mail" ) );
+    }
+    ss = ss;
+
   assert ( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "peter", "progtest deadline" ) );
-  assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "progtest deadline", "peter" ) ) );
+  assert ( !( CMail ( "john", "", "progtest deadline" ) == CMail ( "john", "progtest deadline", "peter" ) ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "peter", "john", "progtest deadline" ) ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "peter", "progtest deadline", "john" ) ) );
   assert ( !( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "progtest deadline", "john", "peter" ) ) );
@@ -652,6 +712,9 @@ int main ( void )
   assert ( ++i13 && *i13 == CMail ( "joe", "alice", "delivery details" ) );
   assert ( ++i13 && *i13 == CMail ( "paul", "alice", "invalid invoice" ) );
   assert ( ! ++i13 );
+
+    CMailIterator i99 = s0.Inbox("alksjfalsdjf430ug34hgjfjlfs");
+    assert(!i99);
 
   return 0;
 }
