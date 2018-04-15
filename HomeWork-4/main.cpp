@@ -116,8 +116,8 @@ CUser::CUser(const CUser &src)
     m_outboxTop = src.m_outboxTop;
     m_inboxTop = src.m_inboxTop;
 
-    m_inbox = new CMail**[m_inboxSize];
-    m_outbox = new CMail**[m_outboxSize];
+    m_inbox = new size_t[m_inboxSize];
+    m_outbox = new size_t[m_outboxSize];
 
     for (size_t i = 0; i < m_inboxTop; ++i) {
         m_inbox[i] = src.m_inbox[i];
