@@ -245,6 +245,8 @@ class CMailIterator
     const CMail            & operator *                    ( void ) const;
     CMailIterator          & operator ++                   ( void );
     CMailIterator(CMail *** ptr, size_t l);
+    CMailIterator(const CMailIterator &src);
+    CMailIterator & operator=(const CMailIterator & src);
     ~CMailIterator();
   private:
 //    CMail *** m_begin;
@@ -312,6 +314,37 @@ CMailIterator::~CMailIterator()
         m_index = 0;
     }
 }
+
+CMailIterator::CMailIterator(const CMailIterator &src)
+{
+    if(src.m_container) {
+        m_len = src.m_len;
+        m_index = src.m_index;
+        m_container = new CMail ** [m_len];
+
+        for (size_t i = 0; i < m_len; ++i) {
+            m_container[i] = src.m_container[i];
+        }
+    } else {
+        m_container = NULL;
+        m_len = 0;
+        m_index = 0;
+    }
+}
+
+CMailIterator &CMailIterator::operator=(const CMailIterator &src)
+{
+    if(m_container)
+        delete [] m_container;
+
+    m_len = src.m_len;
+    m_index = 0;
+    m_container = new CMail ** [m_len];
+    for (size_t i = 0; i < m_len; ++i) {
+        m_container[i] = src.m_container[i];
+    }
+}
+
 /******************************************************************/
 
 /******************************************************************/
