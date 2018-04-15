@@ -40,9 +40,9 @@ CMail::CMail(const char *from, const char *to, const char *body)
     m_to = new char[to_size];
     m_body = new char[body_size];
 
-    strncpy(m_from, from, from_size);
-    strncpy(m_to, to, to_size);
-    strncpy(m_body, body, body_size);
+    strcpy(m_from, from);
+    strcpy(m_to, to);
+    strcpy(m_body, body);
 }
 
 CMail::~CMail()
@@ -74,8 +74,6 @@ public:
     ~CUser();
 
     char * m_email;
-//    CMail *** m_inbox;
-//    CMail *** m_outbox;
     size_t * m_inbox;
     size_t * m_outbox;
     size_t m_inboxTop;
@@ -246,23 +244,21 @@ class CMailIterator
     bool                     operator !                    ( void ) const;
     const CMail            & operator *                    ( void ) const;
     CMailIterator          & operator ++                   ( void );
-    CMailIterator(size_t * ptr, size_t l, CEmailsStorage * emails);
+    CMailIterator(const size_t * ptr, const size_t l, CEmailsStorage * emails);
     CMailIterator(const CMailIterator &src);
     CMailIterator & operator=(const CMailIterator & src);
     ~CMailIterator();
   private:
-//    CMail *** m_begin;
-//    CMail *** m_current;
     size_t * m_container;
     size_t m_len;
     size_t m_index;
     CEmailsStorage * m_allEmails;
 };
 
-CMailIterator::CMailIterator(size_t * ptr, size_t l, CEmailsStorage * emails)
+CMailIterator::CMailIterator(const size_t * ptr, const size_t l, CEmailsStorage * emails)
 {
-    m_allEmails = emails;
     if(l > 0) {
+        m_allEmails = emails;
         m_len = l;
         m_index = 0;
 
@@ -271,6 +267,7 @@ CMailIterator::CMailIterator(size_t * ptr, size_t l, CEmailsStorage * emails)
             m_container[i] = ptr[i];
         }
     }else {
+        m_allEmails = NULL;
         m_container = NULL;
         m_len = 0;
         m_index = 0;
@@ -280,13 +277,12 @@ CMailIterator::CMailIterator(size_t * ptr, size_t l, CEmailsStorage * emails)
 const CMail & CMailIterator::operator*(void) const
 {
     size_t i = m_container[m_index];
-//    return (*(*(m_container[m_index])));
     return *(m_allEmails->m_storage[i]);
 }
 
 CMailIterator::operator bool(void) const
 {
-    if(m_container == NULL)
+    if(m_len == 0)
         return false;
 
     return m_index < m_len;
@@ -305,6 +301,7 @@ bool CMailIterator::operator!(void) const
 
 CMailIterator::~CMailIterator()
 {
+    m_allEmails = NULL;
     if(m_container) {
         delete [] m_container;
         m_len = 0;
@@ -315,7 +312,7 @@ CMailIterator::~CMailIterator()
 CMailIterator::CMailIterator(const CMailIterator &src)
 {
     m_allEmails = src.m_allEmails;
-    if(src.m_container) {
+    if(src.m_len > 0) {
         m_len = src.m_len;
         m_index = src.m_index;
         m_container = new size_t[m_len];
@@ -486,7 +483,7 @@ void CMailServer::SendMail(const CMail &m)
     }
     else {
         m_users.addNewUser(receiver, userPos);
-        m_users.addInbox(userPos, userPos);
+        m_users.addInbox(userPos, last);
     }
 }
 
@@ -531,8 +528,7 @@ size_t CMailServer::TUsers::findUser(const char * usr) const
     while (first < last) {
         size_t mid = first + (last - first) / 2;
 
-        if (strcmp(usr, m_list[mid]->m_email) < 0
-            || strcmp(usr, m_list[mid]->m_email) == 0)
+        if (strcmp(usr, m_list[mid]->m_email) <= 0)
             last = mid;
         else
             first = mid + 1;
