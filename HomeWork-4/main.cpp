@@ -246,25 +246,26 @@ class CMailIterator
     bool                     operator !                    ( void ) const;
     const CMail            & operator *                    ( void ) const;
     CMailIterator          & operator ++                   ( void );
-    CMailIterator(CMail *** ptr, size_t l);
+    CMailIterator(size_t * ptr, size_t l);
     CMailIterator(const CMailIterator &src);
     CMailIterator & operator=(const CMailIterator & src);
     ~CMailIterator();
   private:
 //    CMail *** m_begin;
 //    CMail *** m_current;
-    CMail *** m_container;
+    size_t * m_container;
     size_t m_len;
     size_t m_index;
+    CEmailsStorage * m_allEmails;
 };
 
-CMailIterator::CMailIterator(CMail *** ptr, size_t l)
+CMailIterator::CMailIterator(size_t * ptr, size_t l)
 {
     if(ptr) {
         m_len = l;
         m_index = 0;
 
-        m_container = new CMail**[m_len];
+        m_container = new size_t[m_len];
         for (size_t i = 0; i < m_len; ++i) {
             m_container[i] = ptr[i];
         }
@@ -277,7 +278,9 @@ CMailIterator::CMailIterator(CMail *** ptr, size_t l)
 
 const CMail & CMailIterator::operator*(void) const
 {
-    return (*(*(m_container[m_index])));
+    size_t i = m_container[m_index];
+//    return (*(*(m_container[m_index])));
+    return *(m_allEmails->m_storage[i]);
 }
 
 CMailIterator::operator bool(void) const
@@ -310,10 +313,11 @@ CMailIterator::~CMailIterator()
 
 CMailIterator::CMailIterator(const CMailIterator &src)
 {
+    m_allEmails = src.m_allEmails;
     if(src.m_container) {
         m_len = src.m_len;
         m_index = src.m_index;
-        m_container = new CMail ** [m_len];
+        m_container = new size_t[m_len];
 
         for (size_t i = 0; i < m_len; ++i) {
             m_container[i] = src.m_container[i];
@@ -330,12 +334,13 @@ CMailIterator &CMailIterator::operator=(const CMailIterator &src)
     if(this == &src)
         return *this;
 
+    m_allEmails = src.m_allEmails;
     if(m_len > 0)
         delete [] m_container;
 
     m_len = src.m_len;
     m_index = src.m_index;
-    m_container = new CMail ** [m_len];
+    m_container = new size_t[m_len];
     for (size_t i = 0; i < m_len; ++i) {
         m_container[i] = src.m_container[i];
     }
