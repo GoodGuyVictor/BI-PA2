@@ -334,6 +334,9 @@ CMailIterator::CMailIterator(const CMailIterator &src)
 
 CMailIterator &CMailIterator::operator=(const CMailIterator &src)
 {
+    if(this == &src)
+        return *this;
+
     if(m_container)
         delete [] m_container;
 
