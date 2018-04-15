@@ -74,8 +74,10 @@ public:
     ~CUser();
 
     char * m_email;
-    CMail *** m_inbox;
-    CMail *** m_outbox;
+//    CMail *** m_inbox;
+//    CMail *** m_outbox;
+    size_t * m_inbox;
+    size_t * m_outbox;
     size_t m_inboxTop;
     size_t m_outboxTop;
     size_t m_inboxSize;
@@ -99,8 +101,8 @@ CUser::CUser(const char *email)
     m_outboxTop = 0;
     m_inboxTop = 0;
 
-    m_inbox = new CMail**[m_inboxSize];
-    m_outbox = new CMail**[m_outboxSize];
+    m_inbox = new size_t[m_inboxSize];
+    m_outbox = new size_t[m_outboxSize];
 }
 
 CUser::CUser(const CUser &src)
