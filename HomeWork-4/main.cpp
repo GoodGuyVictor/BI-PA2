@@ -265,6 +265,9 @@ const CMail & CMailIterator::operator*(void) const
 CMailIterator::operator bool(void) const
 {
 //    return m_current - m_begin < m_len;
+    if(m_begin == NULL)
+        return false;
+
     size_t x = m_current - m_begin;
     if(x < m_len)
         return true;
