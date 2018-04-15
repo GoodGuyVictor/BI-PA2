@@ -262,7 +262,7 @@ class CMailIterator
 CMailIterator::CMailIterator(size_t * ptr, size_t l, CEmailsStorage * emails)
 {
     m_allEmails = emails;
-    if(ptr) {
+    if(l > 0) {
         m_len = l;
         m_index = 0;
 
@@ -463,25 +463,25 @@ void CMailServer::SendMail(const CMail &m)
     userPos = m_users.findUser(sender);
     if(userPos != m_users.m_top) {
         if(strcmp(m_users.m_list[userPos]->m_email, sender) == 0) {
-            m_users.addOutbox(userPos);
+            m_users.addOutbox(last);
         }
         else {
             m_users.addNewUser(sender, userPos);
-            m_users.addOutbox(userPos);
+            m_users.addOutbox(last);
         }
     }
     else {
         m_users.addNewUser(sender, userPos);
-        m_users.addOutbox(userPos);
+        m_users.addOutbox(last);
     }
 
     userPos = m_users.findUser(receiver);
     if(userPos != m_users.m_top) {
         if(strcmp(m_users.m_list[userPos]->m_email, receiver) == 0)
-            m_users.addInbox(userPos);
+            m_users.addInbox(last);
         else {
             m_users.addNewUser(receiver, userPos);
-            m_users.addInbox(userPos);
+            m_users.addInbox(last);
         }
     }
     else {
