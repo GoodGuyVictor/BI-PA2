@@ -338,7 +338,7 @@ CMailIterator &CMailIterator::operator=(const CMailIterator &src)
         delete [] m_container;
 
     m_len = src.m_len;
-    m_index = 0;
+    m_index = src.m_index;
     m_container = new CMail ** [m_len];
     for (size_t i = 0; i < m_len; ++i) {
         m_container[i] = src.m_container[i];
@@ -767,6 +767,7 @@ int main ( void )
   assert ( ++i12 && *i12 == CMail ( "thomas", "alice", "meeting details" ) );
   assert ( ++i12 && *i12 == CMail ( "joe", "alice", "delivery details" ) );
   assert ( ++i12 && *i12 == CMail ( "steve", "alice", "newsletter" ) );
+
   assert ( ! ++i12 );
 
   CMailIterator i13 = s2 . Inbox ( "alice" );
