@@ -247,37 +247,55 @@ class CMailIterator
     CMailIterator(CMail *** ptr, size_t l);
     ~CMailIterator();
   private:
-    CMail *** m_begin;
-    CMail *** m_current;
+//    CMail *** m_begin;
+//    CMail *** m_current;
+    CMail *** m_container;
     size_t m_len;
+    size_t m_index;
 };
 
 CMailIterator::CMailIterator(CMail *** ptr, size_t l)
-: m_begin(ptr), m_current(ptr), m_len(l)
 {
+    if(ptr) {
+        m_len = l;
+        m_index = 0;
+
+        m_container = new CMail**[m_len];
+        for (size_t i = 0; i < m_len; ++i) {
+            m_container[i] = ptr[i];
+        }
+    }else {
+        m_container = NULL;
+        m_len = 0;
+        m_index = 0;
+    }
 }
 
 const CMail & CMailIterator::operator*(void) const
 {
-    return (*(*(*m_current)));
+    return (*(*(m_container[m_index])));
 }
 
 CMailIterator::operator bool(void) const
 {
 //    return m_current - m_begin < m_len;
-    if(m_begin == NULL)
+//    if(m_begin == NULL)
+//        return false;
+//
+//    size_t x = m_current - m_begin;
+//    if(x < m_len)
+//        return true;
+//    else
+//        return false;
+    if(m_container == NULL)
         return false;
 
-    size_t x = m_current - m_begin;
-    if(x < m_len)
-        return true;
-    else
-        return false;
+    return m_index < m_len;
 }
 
 CMailIterator & CMailIterator::operator++(void)
 {
-    ++m_current;
+    ++m_index;
     return *this;
 }
 
@@ -288,9 +306,11 @@ bool CMailIterator::operator!(void) const
 
 CMailIterator::~CMailIterator()
 {
-    m_begin = NULL;
-    m_current = NULL;
-    m_len = 0;
+    if(m_container) {
+        delete [] m_container;
+        m_len = 0;
+        m_index = 0;
+    }
 }
 /******************************************************************/
 
@@ -728,6 +748,8 @@ int main ( void )
     assert(!i99);
     i99 = s0.Outbox("zzzzzzzsajdf99j34fgngj358jg54jgo3l4j");
     assert(!i99);
+
+    i13 = s0.Inbox("alice");
 
   return 0;
 }
