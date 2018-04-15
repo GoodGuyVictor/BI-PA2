@@ -74,15 +74,17 @@ public:
     ~CUser();
 
     char * m_email;
-    CMail *** m_inbox;
-    CMail *** m_outbox;
+//    CMail *** m_inbox;
+//    CMail *** m_outbox;
+    size_t * m_inbox;
+    size_t * m_outbox;
     size_t m_inboxTop;
     size_t m_outboxTop;
     size_t m_inboxSize;
     size_t m_outboxSize;
 
-    void insertOutbox(CMail ** m);
-    void insertInbox(CMail ** m);
+    void insertOutbox(size_t p);
+    void insertInbox(size_t p);
     void reallocOutbox();
     void reallocInbox();
     void free();
@@ -99,8 +101,8 @@ CUser::CUser(const char *email)
     m_outboxTop = 0;
     m_inboxTop = 0;
 
-    m_inbox = new CMail**[m_inboxSize];
-    m_outbox = new CMail**[m_outboxSize];
+    m_inbox = new size_t[m_inboxSize];
+    m_outbox = new size_t[m_outboxSize];
 }
 
 CUser::CUser(const CUser &src)
@@ -114,8 +116,8 @@ CUser::CUser(const CUser &src)
     m_outboxTop = src.m_outboxTop;
     m_inboxTop = src.m_inboxTop;
 
-    m_inbox = new CMail**[m_inboxSize];
-    m_outbox = new CMail**[m_outboxSize];
+    m_inbox = new size_t[m_inboxSize];
+    m_outbox = new size_t[m_outboxSize];
 
     for (size_t i = 0; i < m_inboxTop; ++i) {
         m_inbox[i] = src.m_inbox[i];
@@ -131,19 +133,19 @@ CUser::~CUser()
     free();
 }
 
-void CUser::insertOutbox(CMail ** m)
+void CUser::insertOutbox(size_t p)
 {
     if(m_outboxTop > m_outboxSize - 1)
         reallocOutbox();
-    m_outbox[m_outboxTop] = m;
+    m_outbox[m_outboxTop] = p;
     m_outboxTop++;
 }
 
-void CUser::insertInbox(CMail ** m)
+void CUser::insertInbox(size_t p)
 {
     if(m_inboxTop > m_inboxSize - 1)
         reallocInbox();
-    m_inbox[m_inboxTop] = m;
+    m_inbox[m_inboxTop] = p;
     m_inboxTop++;
 }
 
@@ -154,7 +156,7 @@ void CUser::reallocOutbox()
     else
         m_outboxSize += m_outboxSize;
 
-    CMail *** tmp = new CMail ** [m_outboxSize];
+    size_t * tmp = new size_t[m_outboxSize];
     for(size_t i = 0; i < m_outboxTop; i++) {
         tmp[i] = m_outbox[i];
     }
@@ -169,7 +171,7 @@ void CUser::reallocInbox()
     else
         m_inboxSize += m_inboxSize;
 
-    CMail *** tmp = new CMail ** [m_inboxSize];
+    size_t * tmp = new size_t[m_inboxSize];
     for(size_t i = 0; i < m_inboxTop; i++) {
         tmp[i] = m_inbox[i];
     }
@@ -244,25 +246,27 @@ class CMailIterator
     bool                     operator !                    ( void ) const;
     const CMail            & operator *                    ( void ) const;
     CMailIterator          & operator ++                   ( void );
-    CMailIterator(CMail *** ptr, size_t l);
+    CMailIterator(size_t * ptr, size_t l, CEmailsStorage * emails);
     CMailIterator(const CMailIterator &src);
     CMailIterator & operator=(const CMailIterator & src);
     ~CMailIterator();
   private:
 //    CMail *** m_begin;
 //    CMail *** m_current;
-    CMail *** m_container;
+    size_t * m_container;
     size_t m_len;
     size_t m_index;
+    CEmailsStorage * m_allEmails;
 };
 
-CMailIterator::CMailIterator(CMail *** ptr, size_t l)
+CMailIterator::CMailIterator(size_t * ptr, size_t l, CEmailsStorage * emails)
 {
-    if(ptr) {
+    m_allEmails = emails;
+    if(l > 0) {
         m_len = l;
         m_index = 0;
 
-        m_container = new CMail**[m_len];
+        m_container = new size_t[m_len];
         for (size_t i = 0; i < m_len; ++i) {
             m_container[i] = ptr[i];
         }
@@ -275,7 +279,9 @@ CMailIterator::CMailIterator(CMail *** ptr, size_t l)
 
 const CMail & CMailIterator::operator*(void) const
 {
-    return (*(*(m_container[m_index])));
+    size_t i = m_container[m_index];
+//    return (*(*(m_container[m_index])));
+    return *(m_allEmails->m_storage[i]);
 }
 
 CMailIterator::operator bool(void) const
@@ -308,10 +314,11 @@ CMailIterator::~CMailIterator()
 
 CMailIterator::CMailIterator(const CMailIterator &src)
 {
+    m_allEmails = src.m_allEmails;
     if(src.m_container) {
         m_len = src.m_len;
         m_index = src.m_index;
-        m_container = new CMail ** [m_len];
+        m_container = new size_t[m_len];
 
         for (size_t i = 0; i < m_len; ++i) {
             m_container[i] = src.m_container[i];
@@ -328,12 +335,13 @@ CMailIterator &CMailIterator::operator=(const CMailIterator &src)
     if(this == &src)
         return *this;
 
+    m_allEmails = src.m_allEmails;
     if(m_len > 0)
         delete [] m_container;
 
     m_len = src.m_len;
     m_index = src.m_index;
-    m_container = new CMail ** [m_len];
+    m_container = new size_t[m_len];
     for (size_t i = 0; i < m_len; ++i) {
         m_container[i] = src.m_container[i];
     }
@@ -366,8 +374,8 @@ class CMailServer
         CUser ** m_list;
 
         size_t findUser(const char * usr) const;
-        void addOutbox(CMail ** m, size_t pos);
-        void addInbox(CMail ** m, size_t pos);
+        void addOutbox(size_t usr, size_t mail);
+        void addInbox(size_t usr, size_t mail);
         void addNewUser(char * email, size_t pos);
         void shiftRight(size_t pos);
         void realloc();
@@ -455,63 +463,63 @@ void CMailServer::SendMail(const CMail &m)
     userPos = m_users.findUser(sender);
     if(userPos != m_users.m_top) {
         if(strcmp(m_users.m_list[userPos]->m_email, sender) == 0) {
-            m_users.addOutbox(m_allEmails->m_storage + last, userPos);
+            m_users.addOutbox(userPos, last);
         }
         else {
             m_users.addNewUser(sender, userPos);
-            m_users.addOutbox(m_allEmails->m_storage + last, userPos);
+            m_users.addOutbox(userPos, last);
         }
     }
     else {
         m_users.addNewUser(sender, userPos);
-        m_users.addOutbox(m_allEmails->m_storage + last, userPos);
+        m_users.addOutbox(userPos, last);
     }
 
     userPos = m_users.findUser(receiver);
     if(userPos != m_users.m_top) {
         if(strcmp(m_users.m_list[userPos]->m_email, receiver) == 0)
-            m_users.addInbox(m_allEmails->m_storage + last, userPos);
+            m_users.addInbox(userPos, last);
         else {
             m_users.addNewUser(receiver, userPos);
-            m_users.addInbox(m_allEmails->m_storage + last, userPos);
+            m_users.addInbox(userPos, last);
         }
     }
     else {
         m_users.addNewUser(receiver, userPos);
-        m_users.addInbox(m_allEmails->m_storage + last, userPos);
+        m_users.addInbox(userPos, userPos);
     }
 }
 
 CMailIterator CMailServer::Inbox(const char *email) const
 {
     if(strcmp(email, "") == 0)
-        return CMailIterator(NULL, 0);
+        return CMailIterator(NULL, 0, NULL);
 
     size_t userPos = m_users.findUser(email);
 
     if(userPos == m_users.m_top)
-        return CMailIterator(NULL, 0);
+        return CMailIterator(NULL, 0, NULL);
 
     if(strcmp(m_users.m_list[userPos]->m_email, email) == 0)
-        return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_list[userPos]->m_inboxTop);
+        return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_list[userPos]->m_inboxTop, m_allEmails);
 
-    return CMailIterator(NULL, 0);
+    return CMailIterator(NULL, 0, NULL);
 }
 
 CMailIterator CMailServer::Outbox(const char *email) const
 {
     if(strcmp(email, "") == 0)
-        return CMailIterator(NULL, 0);
+        return CMailIterator(NULL, 0, NULL);
 
     size_t userPos = m_users.findUser(email);
 
     if(userPos == m_users.m_top)
-        return CMailIterator(NULL, 0);
+        return CMailIterator(NULL, 0, NULL);
 
     if(strcmp(m_users.m_list[userPos]->m_email, email) == 0)
-        return CMailIterator(m_users.m_list[userPos]->m_outbox, m_users.m_list[userPos]->m_outboxTop);
+        return CMailIterator(m_users.m_list[userPos]->m_outbox, m_users.m_list[userPos]->m_outboxTop, m_allEmails);
 
-    return CMailIterator(NULL, 0);
+    return CMailIterator(NULL, 0, NULL);
 }
 
 //binary search
@@ -533,14 +541,14 @@ size_t CMailServer::TUsers::findUser(const char * usr) const
     return last;
 }
 
-void CMailServer::TUsers::addOutbox(CMail ** m, size_t pos)
+void CMailServer::TUsers::addOutbox(size_t usr, size_t mail)
 {
-    m_list[pos]->insertOutbox(m);
+    m_list[usr]->insertOutbox(mail);
 }
 
-void CMailServer::TUsers::addInbox(CMail ** m, size_t pos)
+void CMailServer::TUsers::addInbox(size_t usr, size_t mail)
 {
-    m_list[pos]->insertInbox(m);
+    m_list[usr]->insertInbox(mail);
 }
 
 void CMailServer::TUsers::addNewUser(char * email, size_t pos)
@@ -594,82 +602,82 @@ int main ( void )
 
   char from[100], to[100], body[1024];
 
-    CMailServer s10;
-
-    for (int i = 0; i < 3000; ++i) {
-        s10 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
-    }
-
-    CMailServer s11(s10);
-
-    for (int i = 0; i < 2000; ++i) {
-        s11 . SendMail ( CMail ( "alice", "peter", "some important mail" ) );
-    }
-
-    CMailServer s20;
-
-    for (int i = 0; i < 2000; ++i) {
-        s20 . SendMail ( CMail ( "peter", "thomas", "some  mail" ) );
-    }
-
-
-    CMailServer s30(s20);
-
-    for (int i = 0; i < 2000; ++i) {
-        s30 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
-    }
-
-    CMailServer s40(s11);
-
-    for (int i = 0; i < 2000; ++i) {
-        s30 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
-    }
-
-    s10 = s20;
-    s11 = s20;
-    s40 = s30;
-
-
-    s20 = s11;
-
-    s10 = s11;
-
-    for (int i = 0; i < 2000; ++i) {
-        s20 . SendMail ( CMail ( "peter", "thomas", "some  mail" ) );
-    }
-
-
-    s10 = s30;
-
-    s11 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
-
-    CMailServer ss;
-    CMailIterator si1 = ss.Inbox("");
-
-    for (int i = 0; i < 100; ++i) {
-        ss . SendMail ( CMail ( "john", "alex" , "some important mail" ) );
-    }
-    for (int i = 0; i < 100; ++i) {
-        ss . SendMail ( CMail ( "alex", "john" , "some important mail" ) );
-    }
-    for (int i = 0; i < 100; ++i) {
-        ss . SendMail ( CMail ( "zed", "john" , "some important mail" ) );
-    }
-    for (int i = 0; i < 100; ++i) {
-        ss . SendMail ( CMail ( "peter", "zed" , "some important mail" ) );
-    }
-    for (int i = 0; i < 99; ++i) {
-        ss . SendMail ( CMail ( "zed", "peter" , "some important mail" ) );
-    }
-
-    ss . SendMail ( CMail ( "john", "alex" , "some important mail" ) );
-
-
-    CMailServer ss1 (ss);
-    for (int i = 0; i < 200; ++i) {
-        ss1 . SendMail ( CMail ( "kalr", "karl" , "some important mail" ) );
-    }
-    ss = ss;
+//    CMailServer s10;
+//
+//    for (int i = 0; i < 3000; ++i) {
+//        s10 . SendMail ( CMail ( "john", "peter", "some important mail" ) );
+//    }
+//
+//    CMailServer s11(s10);
+//
+//    for (int i = 0; i < 2000; ++i) {
+//        s11 . SendMail ( CMail ( "alice", "peter", "some important mail" ) );
+//    }
+//
+//    CMailServer s20;
+//
+//    for (int i = 0; i < 2000; ++i) {
+//        s20 . SendMail ( CMail ( "peter", "thomas", "some  mail" ) );
+//    }
+//
+//
+//    CMailServer s30(s20);
+//
+//    for (int i = 0; i < 2000; ++i) {
+//        s30 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
+//    }
+//
+//    CMailServer s40(s11);
+//
+//    for (int i = 0; i < 2000; ++i) {
+//        s30 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
+//    }
+//
+//    s10 = s20;
+//    s11 = s20;
+//    s40 = s30;
+//
+//
+//    s20 = s11;
+//
+//    s10 = s11;
+//
+//    for (int i = 0; i < 2000; ++i) {
+//        s20 . SendMail ( CMail ( "peter", "thomas", "some  mail" ) );
+//    }
+//
+//
+//    s10 = s30;
+//
+//    s11 . SendMail ( CMail ( "jan", "victor", "some  mail" ) );
+//
+//    CMailServer ss;
+//    CMailIterator si1 = ss.Inbox("");
+//
+//    for (int i = 0; i < 100; ++i) {
+//        ss . SendMail ( CMail ( "john", "alex" , "some important mail" ) );
+//    }
+//    for (int i = 0; i < 100; ++i) {
+//        ss . SendMail ( CMail ( "alex", "john" , "some important mail" ) );
+//    }
+//    for (int i = 0; i < 100; ++i) {
+//        ss . SendMail ( CMail ( "zed", "john" , "some important mail" ) );
+//    }
+//    for (int i = 0; i < 100; ++i) {
+//        ss . SendMail ( CMail ( "peter", "zed" , "some important mail" ) );
+//    }
+//    for (int i = 0; i < 99; ++i) {
+//        ss . SendMail ( CMail ( "zed", "peter" , "some important mail" ) );
+//    }
+//
+//    ss . SendMail ( CMail ( "john", "alex" , "some important mail" ) );
+//
+//
+//    CMailServer ss1 (ss);
+//    for (int i = 0; i < 200; ++i) {
+//        ss1 . SendMail ( CMail ( "kalr", "karl" , "some important mail" ) );
+//    }
+//    ss = ss;
 
   assert ( CMail ( "john", "peter", "progtest deadline" ) == CMail ( "john", "peter", "progtest deadline" ) );
   assert ( !( CMail ( "john", "", "progtest deadline" ) == CMail ( "john", "progtest deadline", "peter" ) ) );
