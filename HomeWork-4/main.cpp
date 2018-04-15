@@ -368,8 +368,8 @@ class CMailServer
         CUser ** m_list;
 
         size_t findUser(const char * usr) const;
-        void addOutbox(CMail ** m, size_t pos);
-        void addInbox(CMail ** m, size_t pos);
+        void addOutbox(size_t pos);
+        void addInbox(size_t pos);
         void addNewUser(char * email, size_t pos);
         void shiftRight(size_t pos);
         void realloc();
@@ -457,30 +457,30 @@ void CMailServer::SendMail(const CMail &m)
     userPos = m_users.findUser(sender);
     if(userPos != m_users.m_top) {
         if(strcmp(m_users.m_list[userPos]->m_email, sender) == 0) {
-            m_users.addOutbox(m_allEmails->m_storage + last, userPos);
+            m_users.addOutbox(userPos);
         }
         else {
             m_users.addNewUser(sender, userPos);
-            m_users.addOutbox(m_allEmails->m_storage + last, userPos);
+            m_users.addOutbox(userPos);
         }
     }
     else {
         m_users.addNewUser(sender, userPos);
-        m_users.addOutbox(m_allEmails->m_storage + last, userPos);
+        m_users.addOutbox(userPos);
     }
 
     userPos = m_users.findUser(receiver);
     if(userPos != m_users.m_top) {
         if(strcmp(m_users.m_list[userPos]->m_email, receiver) == 0)
-            m_users.addInbox(m_allEmails->m_storage + last, userPos);
+            m_users.addInbox(userPos);
         else {
             m_users.addNewUser(receiver, userPos);
-            m_users.addInbox(m_allEmails->m_storage + last, userPos);
+            m_users.addInbox(userPos);
         }
     }
     else {
         m_users.addNewUser(receiver, userPos);
-        m_users.addInbox(m_allEmails->m_storage + last, userPos);
+        m_users.addInbox(userPos);
     }
 }
 
@@ -535,12 +535,12 @@ size_t CMailServer::TUsers::findUser(const char * usr) const
     return last;
 }
 
-void CMailServer::TUsers::addOutbox(CMail ** m, size_t pos)
+void CMailServer::TUsers::addOutbox(size_t pos)
 {
     m_list[pos]->insertOutbox(pos);
 }
 
-void CMailServer::TUsers::addInbox(CMail ** m, size_t pos)
+void CMailServer::TUsers::addInbox(size_t pos)
 {
     m_list[pos]->insertInbox(pos);
 }
