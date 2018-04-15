@@ -343,6 +343,7 @@ CMailIterator &CMailIterator::operator=(const CMailIterator &src)
     for (size_t i = 0; i < m_len; ++i) {
         m_container[i] = src.m_container[i];
     }
+    return *this;
 }
 
 /******************************************************************/
