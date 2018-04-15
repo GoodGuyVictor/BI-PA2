@@ -440,10 +440,14 @@ CMailIterator CMailServer::Inbox(const char *email) const
         return CMailIterator(NULL, 0);
 
     size_t userPos = m_users.findUser(email);
+
+    if(userPos == m_users.m_top)
+        return CMailIterator(NULL, 0);
+
     if(strcmp(m_users.m_list[userPos]->m_email, email) == 0)
         return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_list[userPos]->m_inboxTop);
-    else
-        return CMailIterator(NULL, 0);
+
+    return CMailIterator(NULL, 0);
 }
 
 CMailIterator CMailServer::Outbox(const char *email) const
@@ -452,10 +456,14 @@ CMailIterator CMailServer::Outbox(const char *email) const
         return CMailIterator(NULL, 0);
 
     size_t userPos = m_users.findUser(email);
+
+    if(userPos == m_users.m_top)
+        return CMailIterator(NULL, 0);
+
     if(strcmp(m_users.m_list[userPos]->m_email, email) == 0)
         return CMailIterator(m_users.m_list[userPos]->m_outbox, m_users.m_list[userPos]->m_outboxTop);
-    else
-        return CMailIterator(NULL, 0);
+
+    return CMailIterator(NULL, 0);
 }
 
 //binary search
@@ -716,7 +724,9 @@ int main ( void )
   assert ( ++i13 && *i13 == CMail ( "paul", "alice", "invalid invoice" ) );
   assert ( ! ++i13 );
 
-    CMailIterator i99 = s0.Inbox("alksjfalsdjf430ug34hgjfjlfs");
+    CMailIterator i99 = s0.Inbox("zzzzzzalksjfalsdjf430ug34hgjfjlfs");
+    assert(!i99);
+    i99 = s0.Outbox("zzzzzzzsajdf99j34fgngj358jg54jgo3l4j");
     assert(!i99);
 
   return 0;
