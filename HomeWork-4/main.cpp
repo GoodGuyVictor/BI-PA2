@@ -246,7 +246,7 @@ class CMailIterator
     bool                     operator !                    ( void ) const;
     const CMail            & operator *                    ( void ) const;
     CMailIterator          & operator ++                   ( void );
-    CMailIterator(size_t * ptr, size_t l);
+    CMailIterator(size_t * ptr, size_t l, CEmailsStorage * emails);
     CMailIterator(const CMailIterator &src);
     CMailIterator & operator=(const CMailIterator & src);
     ~CMailIterator();
@@ -259,8 +259,9 @@ class CMailIterator
     CEmailsStorage * m_allEmails;
 };
 
-CMailIterator::CMailIterator(size_t * ptr, size_t l)
+CMailIterator::CMailIterator(size_t * ptr, size_t l, CEmailsStorage * emails)
 {
+    m_allEmails = emails;
     if(ptr) {
         m_len = l;
         m_index = 0;
@@ -492,33 +493,33 @@ void CMailServer::SendMail(const CMail &m)
 CMailIterator CMailServer::Inbox(const char *email) const
 {
     if(strcmp(email, "") == 0)
-        return CMailIterator(NULL, 0);
+        return CMailIterator(NULL, 0, NULL);
 
     size_t userPos = m_users.findUser(email);
 
     if(userPos == m_users.m_top)
-        return CMailIterator(NULL, 0);
+        return CMailIterator(NULL, 0, NULL);
 
     if(strcmp(m_users.m_list[userPos]->m_email, email) == 0)
-        return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_list[userPos]->m_inboxTop);
+        return CMailIterator(m_users.m_list[userPos]->m_inbox, m_users.m_list[userPos]->m_inboxTop, m_allEmails);
 
-    return CMailIterator(NULL, 0);
+    return CMailIterator(NULL, 0, NULL);
 }
 
 CMailIterator CMailServer::Outbox(const char *email) const
 {
     if(strcmp(email, "") == 0)
-        return CMailIterator(NULL, 0);
+        return CMailIterator(NULL, 0, NULL);
 
     size_t userPos = m_users.findUser(email);
 
     if(userPos == m_users.m_top)
-        return CMailIterator(NULL, 0);
+        return CMailIterator(NULL, 0, NULL);
 
     if(strcmp(m_users.m_list[userPos]->m_email, email) == 0)
-        return CMailIterator(m_users.m_list[userPos]->m_outbox, m_users.m_list[userPos]->m_outboxTop);
+        return CMailIterator(m_users.m_list[userPos]->m_outbox, m_users.m_list[userPos]->m_outboxTop, m_allEmails);
 
-    return CMailIterator(NULL, 0);
+    return CMailIterator(NULL, 0, NULL);
 }
 
 //binary search
