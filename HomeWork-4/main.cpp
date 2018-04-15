@@ -156,7 +156,7 @@ void CUser::reallocOutbox()
     else
         m_outboxSize += m_outboxSize;
 
-    CMail *** tmp = new CMail ** [m_outboxSize];
+    size_t * tmp = new size_t[m_outboxSize];
     for(size_t i = 0; i < m_outboxTop; i++) {
         tmp[i] = m_outbox[i];
     }
@@ -171,7 +171,7 @@ void CUser::reallocInbox()
     else
         m_inboxSize += m_inboxSize;
 
-    CMail *** tmp = new CMail ** [m_inboxSize];
+    size_t * tmp = new size_t[m_inboxSize];
     for(size_t i = 0; i < m_inboxTop; i++) {
         tmp[i] = m_inbox[i];
     }
