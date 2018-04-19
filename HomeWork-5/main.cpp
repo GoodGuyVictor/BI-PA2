@@ -70,8 +70,29 @@ class CStudent
     bool                     operator ==                   ( const CStudent  & other ) const;
     bool                     operator !=                   ( const CStudent  & other ) const;
   private:
-    // todo
+    string m_name;
+    CDate m_birthday;
+    int m_enrolled;
 };
+
+CStudent::CStudent(const string &name, const CDate &born, int enrolled)
+: m_name(name), m_birthday(CDate(born)), m_enrolled(enrolled)
+{
+}
+
+bool CStudent::operator==(const CStudent &other) const
+{
+    if(m_name == other.m_name
+       && m_birthday.CompareTo(other.m_birthday) == 0
+       && m_enrolled == other.m_enrolled)
+        return true;
+    return false;
+}
+
+bool CStudent::operator!=(const CStudent &other) const
+{
+    return !(operator==(other));
+}
 
 class CFilter 
 {
@@ -112,7 +133,26 @@ class CStudyDept
 #ifndef __PROGTEST__
 int main ( void )
 {
-  CStudyDept x0;
+
+//    string str1 = "Jan Jakub Ryba";
+//    string str2 = "RYBA jan JaKuB";
+//    string str3 = "Jan Jakub Ryba";
+//    cout << boolalpha << (str1 == str3) << endl;
+//
+//    size_t h1 = hash<string>()(str1);
+//
+//    transform(str1.begin(), str1.end(), str1.begin(), ::tolower);
+//    transform(str2.begin(), str2.end(), str2.begin(), ::tolower);
+//    cout << str1 << endl;
+//    cout << str2 << endl;
+//    cout << endl;
+//
+//    size_t h2 = hash<string>()(str1);
+//    cout << h1 << endl;
+//    cout << h2 << endl;
+
+
+//  CStudyDept x0;
   assert ( CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) == CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) );
   assert ( ! ( CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) != CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) ) );
   assert ( CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) != CStudent ( "Peter Peterson", CDate ( 1980, 4, 11), 2010 ) );
@@ -129,7 +169,7 @@ int main ( void )
   assert ( ! ( CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) == CStudent ( "James Bond", CDate ( 1997, 6, 17), 2016 ) ) );
   assert ( CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) != CStudent ( "Peter Peterson", CDate ( 1997, 6, 17), 2016 ) );
   assert ( ! ( CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) == CStudent ( "Peter Peterson", CDate ( 1997, 6, 17), 2016 ) ) );
-  assert ( x0 . AddStudent ( CStudent ( "John Peter Taylor", CDate ( 1983, 7, 13), 2014 ) ) );
+  /*assert ( x0 . AddStudent ( CStudent ( "John Peter Taylor", CDate ( 1983, 7, 13), 2014 ) ) );
   assert ( x0 . AddStudent ( CStudent ( "John Taylor", CDate ( 1981, 6, 30), 2012 ) ) );
   assert ( x0 . AddStudent ( CStudent ( "Peter Taylor", CDate ( 1982, 2, 23), 2011 ) ) );
   assert ( x0 . AddStudent ( CStudent ( "Peter John Taylor", CDate ( 1984, 1, 17), 2017 ) ) );
@@ -252,6 +292,7 @@ int main ( void )
     CStudent ( "John Taylor", CDate ( 1981, 6, 30), 2012 )
   }) );
   assert ( ! x0 . DelStudent ( CStudent ( "James Bond", CDate ( 1981, 7, 16), 2013 ) ) );
+   */
   return 0;
 }
 #endif /* __PROGTEST__ */
