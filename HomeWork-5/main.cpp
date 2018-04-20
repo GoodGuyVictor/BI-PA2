@@ -21,7 +21,7 @@
 #include <iterator>
 using namespace std;
 
-class CDate 
+class CDate
 {
   public:
                              CDate                         ( int               y,
@@ -32,22 +32,22 @@ class CDate
                                m_D ( d )
     {
     }
-    
+
     int                      CompareTo                     ( const CDate     & other ) const
     {
       if ( m_Y != other . m_Y )
         return ( other . m_Y < m_Y ) - ( m_Y < other . m_Y );
       if ( m_M != other . m_M )
         return ( other . m_M < m_M ) - ( m_M < other . m_M );
-      return ( other . m_D < m_D ) - ( m_D < other . m_D );  
+      return ( other . m_D < m_D ) - ( m_D < other . m_D );
     }
-    
+
     friend ostream         & operator <<                   ( ostream         & os,
                                                              const CDate     & d )
     {
       return os << d . m_Y << '-' << d . m_M << '-' << d . m_D;
     }
-    
+
   private:
     int                      m_Y;
     int                      m_M;
@@ -60,6 +60,9 @@ enum class ESortKey
   ENROLL_YEAR
 };
 #endif /* __PROGTEST__ */
+
+int g_idCounter = 1;
+
 class CStudent
 {
   public:
@@ -69,14 +72,18 @@ class CStudent
 
     bool                     operator ==                   ( const CStudent  & other ) const;
     bool                     operator !=                   ( const CStudent  & other ) const;
+    string getName() const { return m_name; }
+    int getEnrolled() const { return m_enrolled; }
+    int getId() { return m_id; }
   private:
     string m_name;
     CDate m_birthday;
     int m_enrolled;
+    int m_id;
 };
 
 CStudent::CStudent(const string &name, const CDate &born, int enrolled)
-: m_name(name), m_birthday(CDate(born)), m_enrolled(enrolled)
+: m_name(name), m_birthday(CDate(born)), m_enrolled(enrolled), m_id(g_idCounter++)
 {
 }
 
@@ -94,7 +101,33 @@ bool CStudent::operator!=(const CStudent &other) const
     return !(operator==(other));
 }
 
-class CFilter 
+//string toString( ostream& str )
+//{
+//    istreambuf_iterator<char> eos;
+//    string s(istreambuf_iterator<char>(str), eos);
+//    ostringstream ss;
+//    ss << str.rdbuf();
+//    return ss.str();
+//}
+
+
+//template <class Key>
+struct KeyHasher
+{
+    std::size_t operator()(const CStudent& k) const
+    {
+
+        // Modify 'seed' by XORing and bit-shifting in
+        // one member of 'Key' after the other:
+        size_t res = 17;
+        res = res * 31 + hash<string>()( k.getName() );
+        res = res * 31 +  k.getBirthday() ;
+        res = res * 31 + hash<int>()( k.getEnrolled() );
+        return res;
+    }
+};
+
+class CFilter
 {
   public:
                              CFilter                       ( void );
@@ -113,12 +146,12 @@ class CSort
                              CSort                         ( void );
     CSort                  & AddKey                        ( ESortKey          key,
                                                              bool              ascending );
-    
+
   private:
     // todo
 };
 
-class CStudyDept 
+class CStudyDept
 {
   public:
                              CStudyDept                    ( void );
@@ -128,8 +161,21 @@ class CStudyDept
                                                              const CSort     & sortOpt ) const;
     set<string>              Suggest                       ( const string    & name ) const;
   private:
-    // todo
+    unordered_map<CStudent, int, KeyHasher> m_students;
+    map<CDate, pair<CStudent, int>* > m_birthdays;
 };
+
+CStudyDept::CStudyDept(void)
+{
+}
+
+bool CStudyDept::AddStudent(const CStudent &x)
+{
+    auto p = m_students.emplace(make_pair(x, 0));
+    return p.second;
+}
+
+
 #ifndef __PROGTEST__
 int main ( void )
 {
@@ -152,7 +198,7 @@ int main ( void )
 //    cout << h2 << endl;
 
 
-//  CStudyDept x0;
+  CStudyDept x0;
   assert ( CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) == CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) );
   assert ( ! ( CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) != CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) ) );
   assert ( CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) != CStudent ( "Peter Peterson", CDate ( 1980, 4, 11), 2010 ) );
@@ -169,7 +215,7 @@ int main ( void )
   assert ( ! ( CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) == CStudent ( "James Bond", CDate ( 1997, 6, 17), 2016 ) ) );
   assert ( CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) != CStudent ( "Peter Peterson", CDate ( 1997, 6, 17), 2016 ) );
   assert ( ! ( CStudent ( "James Bond", CDate ( 1980, 4, 11), 2010 ) == CStudent ( "Peter Peterson", CDate ( 1997, 6, 17), 2016 ) ) );
-  /*assert ( x0 . AddStudent ( CStudent ( "John Peter Taylor", CDate ( 1983, 7, 13), 2014 ) ) );
+  assert ( x0 . AddStudent ( CStudent ( "John Peter Taylor", CDate ( 1983, 7, 13), 2014 ) ) );
   assert ( x0 . AddStudent ( CStudent ( "John Taylor", CDate ( 1981, 6, 30), 2012 ) ) );
   assert ( x0 . AddStudent ( CStudent ( "Peter Taylor", CDate ( 1982, 2, 23), 2011 ) ) );
   assert ( x0 . AddStudent ( CStudent ( "Peter John Taylor", CDate ( 1984, 1, 17), 2017 ) ) );
@@ -179,7 +225,7 @@ int main ( void )
   assert ( x0 . AddStudent ( CStudent ( "James Bond", CDate ( 1981, 7, 17), 2013 ) ) );
   assert ( x0 . AddStudent ( CStudent ( "James Bond", CDate ( 1981, 7, 16), 2012 ) ) );
   assert ( x0 . AddStudent ( CStudent ( "Bond James", CDate ( 1981, 7, 16), 2013 ) ) );
-  assert ( x0 . Search ( CFilter (), CSort () ) == (list<CStudent>
+  /*assert ( x0 . Search ( CFilter (), CSort () ) == (list<CStudent>
   {
     CStudent ( "John Peter Taylor", CDate ( 1983, 7, 13), 2014 ),
     CStudent ( "John Taylor", CDate ( 1981, 6, 30), 2012 ),
