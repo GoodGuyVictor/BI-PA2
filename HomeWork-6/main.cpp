@@ -25,15 +25,70 @@ using namespace std;
 // enable only if your implementation supports Add ( ) with more than three parameters
 // #define MULTIPLE_STOPS
 
+
+template <typename _T, typename _E>
+struct TVertex
+{
+    typedef pair<_E, TVertex*> ve;
+    vector<ve> adj;
+    _T m_name;
+    TVertex(_T name) : m_name(name) {}
+};
+
 template <typename _T, typename _E>
 class CAccess
 {
 public:
+    CAccess() = default;
+    CAccess<_T, _E> & Add(const _E & e, const _T & u1, const _T & u2);
     // default constructor
     // destructor
     // Add
     // Find (with optional max and filter)
+private:
+    map<_T, TVertex<_T, _E>*> m_theMap;
+    void addVertex(const _T &name);
+    void addEdge(const _T &from, const _T &to, _E cost);
 };
+
+template<typename _T, typename _E>
+void CAccess<_T, _E>::addVertex(const _T &name)
+{
+    auto it = m_theMap.find(name);
+    if (it == m_theMap.end())
+    {
+        TVertex<_T, _E> *v;
+        v = new TVertex<_T, _E>(name);
+        m_theMap[name] = v;
+        return;
+    }
+    cout << "\nVertex already exists!";
+}
+
+template<typename _T, typename _E>
+void CAccess<_T, _E>::addEdge(const _T &from, const _T &to, _E cost)
+{
+    TVertex<_T, _E> *f = (m_theMap.find(from)->second);
+    TVertex<_T, _E> *t = (m_theMap.find(to)->second);
+    pair<_E, TVertex<_T, _E> *> edge = make_pair(cost, t);
+    f->adj.push_back(edge);
+}
+
+template<typename _T, typename _E>
+CAccess<_T, _E> & CAccess<_T, _E>::Add(const _E &e, const _T &u1, const _T &u2)
+{
+    auto it = m_theMap.find(u1);
+    if(it == m_theMap.end())
+        addVertex(u1);
+    it = m_theMap.find(u2);
+    if(it == m_theMap.end())
+        addVertex(u2);
+
+    addEdge(u1, u2, e);
+    addEdge(u2, u1, e);
+
+    return *this;
+}
 
 #ifndef __PROGTEST__
 //=================================================================================================
