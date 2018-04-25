@@ -105,10 +105,10 @@ CAccess<_T, _E> & CAccess<_T, _E>::Add(const _E &e, const _T &u1, const _T &u2)
 }
 
 template<typename _T, typename _E>
-void CAccess<_T, _E>::BFS(const _T &vrtx, map<_T, int> & distanceContainer) const
+void CAccess<_T, _E>::BFS(const _T &u, map<_T, int> & distanceContainer) const
 {
     map<_T, bool> visited;
-    _T vertex = vrtx;
+    _T vertex = u;
 
     // Mark all the vertices as not visited
     for(auto & it: m_theMap)
@@ -117,31 +117,33 @@ void CAccess<_T, _E>::BFS(const _T &vrtx, map<_T, int> & distanceContainer) cons
     // Create a queue for BFS
     list<_T> queue;
 
+    //Set distanceTo property of the current node to zero
+    int distanceTo = 0;
+    m_theMap.find(vertex)->second->m_distanceTo = 0;
+    distanceContainer[vertex] = 0;
+
     // Mark the current node as visited and enqueue it
     visited[vertex] = true;
     queue.push_back(vertex);
-    int distanceTo = 0;
-    m_theMap.find(vertex)->second->m_distanceTo = distanceTo;
-    distanceContainer[vertex] = distanceTo;
 
-    // 'i' will be used to get all adjacent
-    // vertices of a vertex
-//    list<_T>::iterator i;
     while(!queue.empty())
     {
 
-        // Dequeue a vertex from queue and print it
+        // Dequeue a vertex from queue
         vertex = queue.front();
 //        cout << vertex << " ";
         queue.pop_front();
 
-        auto it = m_theMap.find(vertex);
-        distanceTo = it->second->m_distanceTo + 1;
+        //Get vertex in m_theMap
+        auto vtx = m_theMap.find(vertex);
+
+        //Increment distanceTo for its adjacents
+        distanceTo = vtx->second->m_distanceTo + 1;
 
         // Get all adjacent vertices of the dequeued
         // vertex. If a adjacent has not been visited,
         // then mark it visited and enqueue it
-        for(auto & adj : it->second->m_adj )
+        for(auto & adj : vtx->second->m_adj )
         {
 //            cout << adj.second->m_name << endl;
             if (!visited[adj.second->m_name])
@@ -153,7 +155,6 @@ void CAccess<_T, _E>::BFS(const _T &vrtx, map<_T, int> & distanceContainer) cons
             }
         }
     }
-
 }
 
 template<typename _T, typename _E>
