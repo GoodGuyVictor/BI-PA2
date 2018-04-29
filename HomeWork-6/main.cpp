@@ -25,7 +25,21 @@ using namespace std;
 // enable only if your implementation supports Add ( ) with more than three parameters
 // #define MULTIPLE_STOPS
 
-
+/**
+ *
+ * The structure represents a single node in graph
+ *
+ *
+ * @tparam _T name data type
+ * @tparam _E connection data type
+ *
+ *
+ * @property m_adj list of node's adjacents
+ * each individual element is a pair of pointer to the adjacent's vertex
+ * and the connection with that vertex
+ * @property m_name name of the node
+ *
+ */
 template <typename _T, typename _E>
 struct TVertex
 {
@@ -36,14 +50,23 @@ struct TVertex
     explicit TVertex(_T name) : m_name(name), m_distanceTo(0) {}
 };
 
+/**
+ * CAccess creates and maintains a graph
+ *
+ * @tparam _T the data type of the name of each vertex
+ * @tparam _E the data type of connections between the vertecies
+ *
+ * @property m_theMap represents the graph,
+ * map of pairs of node's name and a pointer to the vertex structure with that name
+ */
 template <typename _T, typename _E>
 class CAccess
 {
 public:
     CAccess() = default;
     ~CAccess();
-    CAccess<_T, _E> & Add(const _E & e, const _T & u1, const _T & u2);
 
+    CAccess<_T, _E> & Add(const _E & e, const _T & u1, const _T & u2);
     template <typename _F>
     map<_T, int> Find(const _T & u, int max, _F func) const;
     map<_T, int> Find(const _T & u, int max = 0) const;
@@ -66,6 +89,13 @@ CAccess<_T, _E>::~CAccess()
         delete it.second;
 }
 
+/**
+ * Creates new node in the graph
+ *
+ * @tparam _T vertex name data type
+ * @tparam _E connection data type
+ * @param name name of the new node that is about to be created
+ */
 template<typename _T, typename _E>
 void CAccess<_T, _E>::addVertex(const _T &name)
 {
@@ -79,6 +109,16 @@ void CAccess<_T, _E>::addVertex(const _T &name)
     }
 }
 
+
+/**
+ * Created a new edge with specified weight between two existing nodes
+ *
+ * @tparam _T vertex name data type
+ * @tparam _E connection data type
+ * @param from name of the existing node in the graph from where the next node will be connected
+ * @param to name of the existing node in the graph that will be connected with the previous node
+ * @param cost weight of the edge
+ */
 template<typename _T, typename _E>
 void CAccess<_T, _E>::addEdge(const _T &from, const _T &to, const _E & cost)
 {
@@ -88,6 +128,17 @@ void CAccess<_T, _E>::addEdge(const _T &from, const _T &to, const _E & cost)
     f->m_adj.push_back(edge);
 }
 
+/**
+ * Method adds a new connection between two nodes
+ * in case one or both do not exist creates them
+ *
+ * @tparam _T node name data type
+ * @tparam _E connection data type
+ * @param e the connection
+ * @param u1 node name
+ * @param u2 node name
+ * @return graph object reference
+ */
 template<typename _T, typename _E>
 CAccess<_T, _E> & CAccess<_T, _E>::Add(const _E &e, const _T &u1, const _T &u2)
 {
@@ -104,6 +155,17 @@ CAccess<_T, _E> & CAccess<_T, _E>::Add(const _E &e, const _T &u1, const _T &u2)
     return *this;
 }
 
+/**
+ * Finds all adjacents of the specified node with maximum distance of max to them
+ *
+ * @tparam _T node name data type
+ * @tparam _E connection data type
+ * @tparam _F funciton pointer
+ * @param u name of the node adjacent list of wich will be found
+ * @param max the highest allowed distance to the possible node from the specified node
+ * @param func function that filters the connection properties
+ * @return map of node names and the distances to each individual node from the specified one
+ */
 template<typename _T, typename _E>
 template<typename _F>
 map<_T, int> CAccess<_T, _E>::Find(const _T &u, int max, _F func) const
@@ -168,6 +230,17 @@ map<_T, int> CAccess<_T, _E>::Find(const _T &u, int max, _F func) const
     return distanceContainer;
 }
 
+/**
+ * Finds all adjacents of the specified node with maximum distance of max to them (without filter)
+ *
+ * @tparam _T node name data type
+ * @tparam _E connection data type
+ * @tparam _F funciton pointer
+ * @param u name of the node adjacent list of wich will be found
+ * @param max the highest allowed distance to the possible node from the specified node
+ * @param func function that filters the connection properties
+ * @return map of node names and the distances to each individual node from the specified one
+ */
 template<typename _T, typename _E>
 map<_T, int> CAccess<_T, _E>::Find(const _T &u, int max) const
 {
