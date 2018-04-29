@@ -33,7 +33,7 @@ struct TVertex
     vector<ve> m_adj;
     _T m_name;
     int m_distanceTo;
-    TVertex(_T name) : m_name(name), m_distanceTo(0) {}
+    explicit TVertex(_T name) : m_name(name), m_distanceTo(0) {}
 };
 
 template <typename _T, typename _E>
@@ -41,19 +41,14 @@ class CAccess
 {
 public:
     CAccess() = default;
+    ~CAccess();
     CAccess<_T, _E> & Add(const _E & e, const _T & u1, const _T & u2);
+
+    template <typename _F>
+    map<_T, int> Find(const _T & u, int max, _F func) const;
     map<_T, int> Find(const _T & u, int max = 0) const;
-    void BFS(const _T & vrtx, map<_T, int> & result) const;
 
 
-    void print() {
-//        for (auto i = m_theMap.begin(); i < m_theMap.end(); ++i) {
-//            cout << i->first << " ";
-//        }
-        for(auto & i: m_theMap)
-            cout << i.first << ' ';
-        cout << endl;
-    }
     // default constructor
     // destructor
     // Add
@@ -62,8 +57,14 @@ private:
     map<_T, TVertex<_T, _E>*> m_theMap;
     void addVertex(const _T &name);
     void addEdge(const _T &from, const _T &to, const _E & cost);
-
 };
+
+template<typename _T, typename _E>
+CAccess<_T, _E>::~CAccess()
+{
+    for(auto & it : m_theMap)
+        delete it.second;
+}
 
 template<typename _T, typename _E>
 void CAccess<_T, _E>::addVertex(const _T &name)
@@ -76,7 +77,6 @@ void CAccess<_T, _E>::addVertex(const _T &name)
         m_theMap[name] = v;
         return;
     }
-    cout << "\nVertex already exists!";
 }
 
 template<typename _T, typename _E>
@@ -105,10 +105,18 @@ CAccess<_T, _E> & CAccess<_T, _E>::Add(const _E &e, const _T &u1, const _T &u2)
 }
 
 template<typename _T, typename _E>
-void CAccess<_T, _E>::BFS(const _T &u, map<_T, int> & distanceContainer) const
+template<typename _F>
+map<_T, int> CAccess<_T, _E>::Find(const _T &u, int max, _F func) const
 {
+    map<_T, int> distanceContainer;
     map<_T, bool> visited;
     _T vertex = u;
+
+    if(m_theMap.find(u) == m_theMap.end()) {
+        ostringstream os;
+        os << "unknown " << u;
+        throw invalid_argument ( os.str() );
+    }
 
     // Mark all the vertices as not visited
     for(auto & it: m_theMap)
@@ -117,7 +125,7 @@ void CAccess<_T, _E>::BFS(const _T &u, map<_T, int> & distanceContainer) const
     // Create a queue for BFS
     list<_T> queue;
 
-    //Set distanceTo property of the current node to zero
+    //Set distanceTo of the current node to zero
     int distanceTo = 0;
     m_theMap.find(vertex)->second->m_distanceTo = 0;
     distanceContainer[vertex] = 0;
@@ -131,7 +139,6 @@ void CAccess<_T, _E>::BFS(const _T &u, map<_T, int> & distanceContainer) const
 
         // Dequeue a vertex from queue
         vertex = queue.front();
-//        cout << vertex << " ";
         queue.pop_front();
 
         //Get vertex in m_theMap
@@ -140,12 +147,77 @@ void CAccess<_T, _E>::BFS(const _T &u, map<_T, int> & distanceContainer) const
         //Increment distanceTo for its adjacents
         distanceTo = vtx->second->m_distanceTo + 1;
 
+        if(distanceTo > max && max != 0)
+            continue;
+
         // Get all adjacent vertices of the dequeued
         // vertex. If a adjacent has not been visited,
         // then mark it visited and enqueue it
         for(auto & adj : vtx->second->m_adj )
         {
-//            cout << adj.second->m_name << endl;
+            if(func(adj.first))
+                if (!visited[adj.second->m_name])
+                {
+                    adj.second->m_distanceTo = distanceTo;
+                    queue.push_back(adj.second->m_name);
+                    visited[adj.second->m_name] = true;
+                    distanceContainer[adj.second->m_name] = distanceTo;
+                }
+        }
+    }
+    return distanceContainer;
+}
+
+template<typename _T, typename _E>
+map<_T, int> CAccess<_T, _E>::Find(const _T &u, int max) const
+{
+    map<_T, int> distanceContainer;
+    map<_T, bool> visited;
+    _T vertex = u;
+
+    if(m_theMap.find(u) == m_theMap.end()) {
+        ostringstream os;
+        os << "unknown " << u;
+        throw invalid_argument ( os.str() );
+    }
+
+    // Mark all the vertices as not visited
+    for(auto & it: m_theMap)
+        visited[it.first] = false;
+
+    // Create a queue for BFS
+    list<_T> queue;
+
+    //Set distanceTo of the current node to zero
+    int distanceTo = 0;
+    m_theMap.find(vertex)->second->m_distanceTo = 0;
+    distanceContainer[vertex] = 0;
+
+    // Mark the current node as visited and enqueue it
+    visited[vertex] = true;
+    queue.push_back(vertex);
+
+    while(!queue.empty())
+    {
+
+        // Dequeue a vertex from queue
+        vertex = queue.front();
+        queue.pop_front();
+
+        //Get vertex in m_theMap
+        auto vtx = m_theMap.find(vertex);
+
+        //Increment distanceTo for its adjacents
+        distanceTo = vtx->second->m_distanceTo + 1;
+
+        if(distanceTo > max && max != 0)
+            continue;
+
+        // Get all adjacent vertices of the dequeued
+        // vertex. If a adjacent has not been visited,
+        // then mark it visited and enqueue it
+        for(auto & adj : vtx->second->m_adj )
+        {
             if (!visited[adj.second->m_name])
             {
                 adj.second->m_distanceTo = distanceTo;
@@ -155,16 +227,7 @@ void CAccess<_T, _E>::BFS(const _T &u, map<_T, int> & distanceContainer) const
             }
         }
     }
-}
-
-template<typename _T, typename _E>
-map<_T, int> CAccess<_T, _E>::Find(const _T &u, int max) const
-{
-    map<_T, int> result;
-    BFS(u, result);
-//    for(auto & i : result)
-//        cout << i.first << " " << i.second << endl;
-    return result;
+    return distanceContainer;
 }
 
 #ifndef __PROGTEST__
@@ -241,8 +304,6 @@ int                          main                          ( void )
             . Add ( CTrain ( "SNCF", 300 ), "Paris", "Marseille" )
             . Add ( CTrain ( "SNCF", 250 ), "Paris", "Dresden"   )
             . Add ( CTrain ( "SNCF", 200 ), "London", "Calais"   );
-//    lines.print();
-//    lines.BFS("Berlin");
 
    assert ( lines . Find ( "Berlin" ) == (map<string,int>
             {
@@ -271,7 +332,7 @@ int                          main                          ( void )
                     make_pair ( "Prague", 1 ),
                     make_pair ( "Wien", 0 )
             }) );
-    /*assert ( lines . Find ( "Wien", 3 ) == (map<string,int>
+    assert ( lines . Find ( "Wien", 3 ) == (map<string,int>
             {
                     make_pair ( "Berlin", 2 ),
                     make_pair ( "Dresden", 3 ),
@@ -280,7 +341,7 @@ int                          main                          ( void )
                     make_pair ( "Prague", 1 ),
                     make_pair ( "Wien", 0 )
             }) );
-    /*assert ( lines . Find ( "Wien", 5, NurSchnellzug ) == (map<string,int>
+    assert ( lines . Find ( "Wien", 5, NurSchnellzug ) == (map<string,int>
             {
                     make_pair ( "Berlin", 4 ),
                     make_pair ( "Dresden", 3 ),
@@ -327,7 +388,7 @@ int                          main                          ( void )
     catch ( const invalid_argument & e )
     {
         assert ( string ( e . what () ) == "unknown Salzburg" );
-    }*/
+    }
 #ifdef MULTIPLE_STOPS
     lines . Add ( CTrain ( "RZD",  80 ), "Prague", "Kiev", "Moscow", "Omsk", "Irkutsk", "Vladivostok" );
   lines . Add ( CTrain ( "LAV", 160 ), "Malaga", "Cordoba", "Toledo", "Madrid", "Zaragoza", "Tarragona", "Barcelona", "Montpellier", "Marseille" );
