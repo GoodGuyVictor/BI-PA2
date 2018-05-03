@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/HomeWork_7.dir/main.cpp.o  -o HomeWork_7 
