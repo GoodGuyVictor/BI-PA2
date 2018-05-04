@@ -193,6 +193,7 @@ public:
                                     const CRect     & relPos );
     void Print(ostream &) const override;
     CComboBox & Add(const string &);
+    int m_selected;
     // Add
     // SetSelected
     // GetSelected
@@ -201,7 +202,7 @@ private:
 };
 
 CComboBox::CComboBox(int id, const CRect &relPos)
-: CUnit(id, relPos)
+: CUnit(id, relPos), m_selected(0)
 {
 }
 
