@@ -59,7 +59,7 @@ public:
     CItem() = default;
     CItem(const CRect & pos);
     CItem(int id, const CRect & pos);
-    virtual void Print() const = 0;
+    virtual ostream & Print(ostream &) const = 0;
 };
 
 CItem::CItem(const CRect &pos)
@@ -77,6 +77,7 @@ class CWindow : public CItem
 public:
     CWindow                       ( const string    & title,
                                     const CRect     & absPos );
+    virtual ostream & Print(ostream &) const;
     // Add
     // Search
     // SetPosition
@@ -88,6 +89,11 @@ private:
 CWindow::CWindow(const string &title, const CRect &absPos)
 : CItem(absPos), m_title(title)
 {
+}
+
+ostream & CWindow::Print(ostream & os) const
+{
+    os << m_title;
 }
 
 class CButton
@@ -138,12 +144,12 @@ string toString ( const _T & x )
 
 int main ( void )
 {
-    assert ( sizeof ( CButton ) - sizeof ( string ) < sizeof ( CComboBox ) - sizeof ( vector<string> ) );
-    assert ( sizeof ( CInput ) - sizeof ( string ) < sizeof ( CComboBox ) - sizeof ( vector<string> ) );
-    assert ( sizeof ( CLabel ) - sizeof ( string ) < sizeof ( CComboBox ) - sizeof ( vector<string> ) );
+//    assert ( sizeof ( CButton ) - sizeof ( string ) < sizeof ( CComboBox ) - sizeof ( vector<string> ) );
+//    assert ( sizeof ( CInput ) - sizeof ( string ) < sizeof ( CComboBox ) - sizeof ( vector<string> ) );
+//    assert ( sizeof ( CLabel ) - sizeof ( string ) < sizeof ( CComboBox ) - sizeof ( vector<string> ) );
 
     CWindow a ( "Sample window", CRect ( 10, 10, 600, 480 ) );
-    a . Add ( CButton ( 1, CRect ( 0.1, 0.8, 0.3, 0.1 ), "Ok" ) ) . Add ( CButton ( 2, CRect ( 0.6, 0.8, 0.3, 0.1 ), "Cancel" ) );
+    /*a . Add ( CButton ( 1, CRect ( 0.1, 0.8, 0.3, 0.1 ), "Ok" ) ) . Add ( CButton ( 2, CRect ( 0.6, 0.8, 0.3, 0.1 ), "Cancel" ) );
     a . Add ( CLabel ( 10, CRect ( 0.1, 0.1, 0.2, 0.1 ), "Username:" ) );
     a . Add ( CInput ( 11, CRect ( 0.4, 0.1, 0.5, 0.1 ), "chucknorris" ) );
     a . Add ( CComboBox ( 20, CRect ( 0.1, 0.3, 0.8, 0.1 ) ) . Add ( "Karate" ) . Add ( "Judo" ) . Add ( "Box" ) . Add ( "Progtest" ) );
@@ -211,7 +217,7 @@ int main ( void )
                      "+- [21] ComboBox (84,290,512,52)\n"
                      "   +->PA2<\n"
                      "   +- OSY\n"
-                     "   +- Both\n" );
+                     "   +- Both\n" );*/
     return 0;
 }
 #endif /* __PROGTEST__ */
