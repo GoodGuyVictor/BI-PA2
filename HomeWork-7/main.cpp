@@ -105,7 +105,8 @@ public:
     // SetPosition
 private:
     string m_title;
-    vector<CUnit *> m_units;
+    typedef shared_ptr<CUnit> _Unit;
+    vector<_Unit> m_units;
     void SetRelativePosition(CUnit & unit);
 };
 
@@ -149,7 +150,7 @@ void CWindow::SetRelativePosition(CUnit &unit)
 
 CWindow &CWindow::Add(const CButton &button)
 {
-    CButton * btn = new CButton(button);
+    shared_ptr<CButton> btn = new CButton(button);
     SetRelativePosition(*btn);
     m_units.push_back(btn);
     return *this;
@@ -260,6 +261,7 @@ class CComboBox : public CUnit
 public:
     CComboBox                     ( int               id,
                                     const CRect     & relPos );
+    CComboBox(const CComboBox & src);
     void Print(ostream &) const override;
     CComboBox & Add(const string &);
     int GetSelected() const;
@@ -302,6 +304,12 @@ int CComboBox::GetSelected() const
 void CComboBox::SetSelected(int selected)
 {
     m_selected = selected;
+}
+
+CComboBox::CComboBox(const CComboBox &src)
+:CUnit(src.m_id, src.m_position), m_selected(src.m_selected)
+{
+
 }
 
 // output operators
