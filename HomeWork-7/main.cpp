@@ -260,6 +260,7 @@ class CComboBox : public CUnit
 public:
     CComboBox                     ( int               id,
                                     const CRect     & relPos );
+    CComboBox(const CComboBox & src);
     void Print(ostream &) const override;
     CComboBox & Add(const string &);
     int GetSelected() const;
@@ -302,6 +303,13 @@ int CComboBox::GetSelected() const
 void CComboBox::SetSelected(int selected)
 {
     m_selected = selected;
+}
+
+CComboBox::CComboBox(const CComboBox &src)
+: CUnit(src.m_id, src.m_position), m_selected(src.m_selected)
+{
+    for(const auto & it : src.m_items)
+        m_items.push_back(it);
 }
 
 // output operators
