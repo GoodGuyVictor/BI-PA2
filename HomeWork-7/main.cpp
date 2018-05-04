@@ -103,7 +103,7 @@ void CWindow::Print(ostream & os) const
     os << "Window \"" << m_title << "\" " << m_position << "\n";
     if(!m_units.empty())
         for (const auto & it : m_units) {
-            cout << "+- ";
+            os << "+- ";
             it->Print(os);
         }
 }
@@ -137,7 +137,7 @@ CButton::CButton(int id, const CRect &relPos, const string &name)
 
 void CButton::Print(ostream & os) const
 {
-    os << m_name;
+    os << "[" << m_id << "] Button \"" << m_name << "\" " << m_position << "\n";
 }
 
 class CInput : public CUnit
@@ -238,7 +238,7 @@ int main ( void )
     a . Add ( CLabel ( 10, CRect ( 0.1, 0.1, 0.2, 0.1 ), "Username:" ) );
     a . Add ( CInput ( 11, CRect ( 0.4, 0.1, 0.5, 0.1 ), "chucknorris" ) );
     a . Add ( CComboBox ( 20, CRect ( 0.1, 0.3, 0.8, 0.1 ) ) . Add ( "Karate" ) . Add ( "Judo" ) . Add ( "Box" ) . Add ( "Progtest" ) );
-//    cout << toString(a);
+    cout << toString(a);
     /*assert ( toString ( a ) ==
              "Window \"Sample window\" (10,10,600,480)\n"
                      "+- [1] Button \"Ok\" (70,394,180,48)\n"
