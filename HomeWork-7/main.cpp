@@ -51,10 +51,8 @@ public:
 
 class CUnit
 {
-protected:
-    int m_id;
-
 public:
+    int m_id;
     CRect m_position;
     CUnit() = default;
     CUnit(const CRect & pos);
@@ -102,7 +100,10 @@ CWindow::CWindow(const string &title, const CRect &absPos)
 
 void CWindow::Print(ostream & os) const
 {
-    os << m_title;
+    os << "Window \"" << m_title << "\" " << m_position << "\n";
+    if(!m_units.empty())
+        for (const auto & it : m_units)
+            it->Print(os);
 }
 
 CWindow &CWindow::Add(const CUnit & unit)
