@@ -49,6 +49,16 @@ public:
 };
 #endif /* __PROGTEST__ */
 
+class CItem
+{
+protected:
+    int m_id;
+    CRect m_position;
+
+public:
+    virtual void Print() const = 0;
+};
+
 class CWindow
 {
 public:
@@ -57,6 +67,8 @@ public:
     // Add
     // Search
     // SetPosition
+private:
+    vector<CItem *> m_items;
 };
 
 class CButton
