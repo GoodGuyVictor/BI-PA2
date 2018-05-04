@@ -193,11 +193,13 @@ public:
                                     const CRect     & relPos );
     void Print(ostream &) const override;
     CComboBox & Add(const string &);
-    int m_selected;
-    // Add
-    // SetSelected
+    int GetSelected() const;
+    void SetSelected(int selected);
     // GetSelected
+    // SetSelected
+    // Add
 private:
+    int m_selected;
     vector<string> m_items;
 };
 
@@ -221,6 +223,16 @@ CComboBox &CComboBox::Add(const string & item)
 {
     m_items.push_back(item);
     return *this;
+}
+
+int CComboBox::GetSelected() const
+{
+    return m_selected;
+}
+
+void CComboBox::SetSelected(int selected)
+{
+    m_selected = selected;
 }
 
 // output operators
