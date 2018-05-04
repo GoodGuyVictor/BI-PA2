@@ -49,54 +49,54 @@ public:
 };
 #endif /* __PROGTEST__ */
 
-class CItem
+class CUnit
 {
 protected:
     int m_id;
 
 public:
     CRect m_position;
-    CItem() = default;
-    CItem(const CRect & pos);
-    CItem(int id, const CRect & pos);
+    CUnit() = default;
+    CUnit(const CRect & pos);
+    CUnit(int id, const CRect & pos);
     virtual void Print(ostream &) const = 0;
-    friend ostream & operator << (ostream & os, const CItem & item);
+    friend ostream & operator << (ostream & os, const CUnit & item);
 };
 
-CItem::CItem(const CRect &pos)
+CUnit::CUnit(const CRect &pos)
 : m_position(pos)
 {
 }
 
-CItem::CItem(int id, const CRect &pos)
+CUnit::CUnit(int id, const CRect &pos)
 : m_id(id), m_position(pos)
 {
 }
 
-ostream &operator << (ostream &os, const CItem &item)
+ostream &operator << (ostream &os, const CUnit &item)
 {
     item.Print(os);
     return os;
 }
 
-class CWindow : public CItem
+class CWindow : public CUnit
 {
 public:
     CWindow                       ( const string    & title,
                                     const CRect     & absPos );
 
     void Print(ostream &) const override;
-    CWindow & Add (const CItem & item);
+    CWindow & Add (const CUnit & item);
     // Add
     // Search
     // SetPosition
 private:
     string m_title;
-    vector<CItem *> m_items;
+    vector<CUnit *> m_items;
 };
 
 CWindow::CWindow(const string &title, const CRect &absPos)
-: CItem(absPos), m_title(title)
+: CUnit(absPos), m_title(title)
 {
 }
 
@@ -105,9 +105,9 @@ void CWindow::Print(ostream & os) const
     os << m_title;
 }
 
-CWindow &CWindow::Add(const CItem & item)
+CWindow &CWindow::Add(const CUnit & item)
 {
-    CItem * tmp = const_cast<CItem*> (&item);
+    CUnit * tmp = const_cast<CUnit*> (&item);
     tmp->m_position.m_X = tmp->m_position.m_X * m_position.m_W + m_position.m_X;
     tmp->m_position.m_Y = tmp->m_position.m_Y * m_position.m_H + m_position.m_Y;
     tmp->m_position.m_H = tmp->m_position.m_H * m_position.m_H;
@@ -116,7 +116,7 @@ CWindow &CWindow::Add(const CItem & item)
     return *this;
 }
 
-class CButton : public CItem
+class CButton : public CUnit
 {
 public:
     CButton                       ( int               id,
@@ -128,7 +128,7 @@ private:
 };
 
 CButton::CButton(int id, const CRect &relPos, const string &name)
-: CItem(id, relPos), m_name(name)
+: CUnit(id, relPos), m_name(name)
 {
 }
 
@@ -137,7 +137,7 @@ void CButton::Print(ostream & os) const
     os << m_name;
 }
 
-class CInput : public CItem
+class CInput : public CUnit
 {
 public:
     CInput                        ( int               id,
@@ -151,7 +151,7 @@ private:
 };
 
 CInput::CInput(int id, const CRect &relPos, const string &value)
-: CItem(id, relPos), m_value(value)
+: CUnit(id, relPos), m_value(value)
 {
 }
 
@@ -160,7 +160,7 @@ void CInput::Print(ostream & os) const
     os << m_value;
 }
 
-class CLabel : public CItem
+class CLabel : public CUnit
 {
 public:
     CLabel                        ( int               id,
@@ -174,7 +174,7 @@ private:
 };
 
 CLabel::CLabel(int id, const CRect &relPos, const string &label)
-: CItem(id, relPos), m_label(label)
+: CUnit(id, relPos), m_label(label)
 {
 }
 
@@ -183,21 +183,22 @@ void CLabel::Print(ostream & os) const
     os << m_label;
 }
 
-class CComboBox : public CItem
+class CComboBox : public CUnit
 {
 public:
     CComboBox                     ( int               id,
                                     const CRect     & relPos );
     void Print(ostream &) const override;
-
+    CComboBox & Add(const string )
     // Add
     // SetSelected
     // GetSelected
-
+private:
+    vector<string> m_list;
 };
 
 CComboBox::CComboBox(int id, const CRect &relPos)
-: CItem(id, relPos)
+: CUnit(id, relPos)
 {
 }
 
