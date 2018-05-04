@@ -56,10 +56,11 @@ protected:
     CRect m_position;
 
 public:
+    CItem() = default;
     virtual void Print() const = 0;
 };
 
-class CWindow
+class CWindow : public CItem
 {
 public:
     CWindow                       ( const string    & title,
@@ -79,7 +80,7 @@ public:
                                     const string    & name );
 };
 
-class CInput
+class CInput : public CItem
 {
 public:
     CInput                        ( int               id,
@@ -88,7 +89,7 @@ public:
     // SetValue
     // GetValue
 };
-class CLabel
+class CLabel : public CItem
 {
 public:
     CLabel                        ( int               id,
@@ -96,7 +97,7 @@ public:
                                     const string    & label );
 };
 
-class CComboBox
+class CComboBox : public CItem
 {
 public:
     CComboBox                     ( int               id,
