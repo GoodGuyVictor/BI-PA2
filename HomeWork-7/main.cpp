@@ -87,6 +87,9 @@ class CInput;
 class CLabel;
 class CComboBox;
 
+typedef shared_ptr<CUnit> _Unit;
+
+
 class CWindow : public CUnit
 {
 public:
@@ -98,14 +101,13 @@ public:
     CWindow & Add (const CInput & input);
     CWindow & Add (const CLabel & label);
     CWindow & Add (const CComboBox & comboBox);
-    CUnit * Search(int id) const;
+    _Unit Search(int id) const;
     void SetPosition(const CRect &);
     // Add
     // Search
     // SetPosition
 private:
     string m_title;
-    typedef shared_ptr<CUnit> _Unit;
     vector<_Unit> m_units;
     void SetRelativePosition(CUnit & unit);
 };
@@ -125,7 +127,7 @@ void CWindow::Print(ostream & os) const
         }
 }
 
-CUnit *CWindow::Search(int id) const
+_Unit CWindow::Search(int id) const
 {
     for(auto & it: m_units)
         if(it->m_id == id)
@@ -136,7 +138,7 @@ CUnit *CWindow::Search(int id) const
 void CWindow::SetPosition(const CRect &pos)
 {
     m_position = pos;
-    for(auto it: m_units)
+    for(const auto it: m_units)
         SetRelativePosition(*it);
 }
 
