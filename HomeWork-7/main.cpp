@@ -208,7 +208,13 @@ CComboBox::CComboBox(int id, const CRect &relPos)
 
 void CComboBox::Print(ostream &os) const
 {
-    os << "hello" << endl;
+    os << "[" << m_id << "] ComboBox \"" << "\" " << m_position << "\n";
+    for(int i = 0; i < m_items.size(); i++) {
+        if(i == m_selected)
+            os << "+->" << m_items[i] << "<\n";
+        else
+            os << "+- " << m_items[i] << "\n";
+    }
 }
 
 CComboBox &CComboBox::Add(const string & item)
