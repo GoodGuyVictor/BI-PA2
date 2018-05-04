@@ -161,6 +161,7 @@ public:
     CButton                       ( int               id,
                                     const CRect     & relPos,
                                     const string    & name );
+    CButton (const CButton & src);
     void Print(ostream &) const override;
 private:
     string m_name;
@@ -176,12 +177,19 @@ void CButton::Print(ostream & os) const
     os << "[" << m_id << "] Button \"" << m_name << "\" " << m_position << "\n";
 }
 
+CButton::CButton(const CButton &src)
+:CUnit(src)
+{
+    m_name = src.m_name;
+}
+
 class CInput : public CUnit
 {
 public:
     CInput                        ( int               id,
                                     const CRect     & relPos,
                                     const string    & value );
+    CInput(const CInput & src);
     void Print(ostream &) const override;
     string GetValue() const;
     void SetValue(const string &);
@@ -211,12 +219,19 @@ void CInput::SetValue(const string & value)
     m_value = value;
 }
 
+CInput::CInput(const CInput &src)
+:CUnit(src)
+{
+    m_value = src.m_value;
+}
+
 class CLabel : public CUnit
 {
 public:
     CLabel                        ( int               id,
                                     const CRect     & relPos,
                                     const string    & label );
+    CLabel(const CLabel & src);
     void Print(ostream &) const override;
 
 private:
@@ -232,6 +247,12 @@ CLabel::CLabel(int id, const CRect &relPos, const string &label)
 void CLabel::Print(ostream & os) const
 {
     os << "[" << m_id << "] Label \"" << m_label << "\" " << m_position << "\n";
+}
+
+CLabel::CLabel(const CLabel &src)
+:CUnit(src)
+{
+    m_label = src.m_label;
 }
 
 class CComboBox : public CUnit
