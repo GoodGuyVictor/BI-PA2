@@ -102,7 +102,16 @@ public:
     CButton                       ( int               id,
                                     const CRect     & relPos,
                                     const string    & name );
+
+private:
+    string m_name;
 };
+
+CButton::CButton(int id, const CRect &relPos, const string &name)
+: CItem(id, relPos), m_name(name)
+{
+
+}
 
 class CInput : public CItem
 {
