@@ -54,9 +54,9 @@ class CUnit
 public:
     int m_id;
     CRect m_position;
-    CUnit() = default;
     CUnit(const CRect & pos);
     CUnit(int id, const CRect & pos);
+    CUnit(const CUnit & src);
     virtual void Print(ostream &) const = 0;
     friend ostream & operator << (ostream & os, const CUnit & item);
 };
@@ -75,6 +75,11 @@ ostream &operator << (ostream &os, const CUnit &item)
 {
     item.Print(os);
     return os;
+}
+
+CUnit::CUnit(const CUnit &src)
+: CUnit(src.m_id, src.m_position)
+{
 }
 
 class CButton;
