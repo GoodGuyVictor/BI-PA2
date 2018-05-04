@@ -84,13 +84,15 @@ class CWindow : public CItem
 public:
     CWindow                       ( const string    & title,
                                     const CRect     & absPos );
-    virtual void Print(ostream &) const;
+
+    void Print(ostream &) const override;
+    CWindow & Add (const CItem & item);
     // Add
     // Search
     // SetPosition
 private:
     string m_title;
-    vector<CItem *> m_items;
+    vector<CItem &> m_items;
 };
 
 CWindow::CWindow(const string &title, const CRect &absPos)
@@ -103,7 +105,14 @@ void CWindow::Print(ostream & os) const
     os << m_title;
 }
 
-class CButton
+CWindow &CWindow::Add(const CItem &item)
+{
+//    CItem tmp = item;
+    m_items.emplace_back(item);
+    return *this;
+}
+
+class CButton : public CItem
 {
 public:
     CButton                       ( int               id,
@@ -166,9 +175,9 @@ int main ( void )
 
     CWindow a ( "Sample window", CRect ( 10, 10, 600, 480 ) );
     a . Add ( CButton ( 1, CRect ( 0.1, 0.8, 0.3, 0.1 ), "Ok" ) ) . Add ( CButton ( 2, CRect ( 0.6, 0.8, 0.3, 0.1 ), "Cancel" ) );
-    a . Add ( CLabel ( 10, CRect ( 0.1, 0.1, 0.2, 0.1 ), "Username:" ) );
+    /*a . Add ( CLabel ( 10, CRect ( 0.1, 0.1, 0.2, 0.1 ), "Username:" ) );
     a . Add ( CInput ( 11, CRect ( 0.4, 0.1, 0.5, 0.1 ), "chucknorris" ) );
-    a . Add ( CComboBox ( 20, CRect ( 0.1, 0.3, 0.8, 0.1 ) ) . Add ( "Karate" ) . Add ( "Judo" ) . Add ( "Box" ) . Add ( "Progtest" ) );
+    /*a . Add ( CComboBox ( 20, CRect ( 0.1, 0.3, 0.8, 0.1 ) ) . Add ( "Karate" ) . Add ( "Judo" ) . Add ( "Box" ) . Add ( "Progtest" ) );
     assert ( toString ( a ) ==
              "Window \"Sample window\" (10,10,600,480)\n"
                      "+- [1] Button \"Ok\" (70,394,180,48)\n"
