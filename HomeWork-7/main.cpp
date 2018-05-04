@@ -160,7 +160,7 @@ CInput::CInput(int id, const CRect &relPos, const string &value)
 
 void CInput::Print(ostream & os) const
 {
-    os << m_value;
+    os << "[" << m_id << "] Input \"" << m_value << "\" " << m_position << "\n";
 }
 
 class CLabel : public CUnit
@@ -183,7 +183,7 @@ CLabel::CLabel(int id, const CRect &relPos, const string &label)
 
 void CLabel::Print(ostream & os) const
 {
-    os << m_label;
+    os << "[" << m_id << "] Label \"" << m_label << "\" " << m_position << "\n";
 }
 
 class CComboBox : public CUnit
