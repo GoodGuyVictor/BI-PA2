@@ -143,26 +143,68 @@ public:
     CInput                        ( int               id,
                                     const CRect     & relPos,
                                     const string    & value );
+    void Print(ostream &) const override;
     // SetValue
     // GetValue
+private:
+    string m_value;
 };
+
+CInput::CInput(int id, const CRect &relPos, const string &value)
+: CItem(id, relPos), m_value(value)
+{
+}
+
+void CInput::Print(ostream & os) const
+{
+    os << m_value;
+}
+
 class CLabel : public CItem
 {
 public:
     CLabel                        ( int               id,
                                     const CRect     & relPos,
                                     const string    & label );
+    void Print(ostream &) const override;
+
+private:
+    string m_label;
+
 };
+
+CLabel::CLabel(int id, const CRect &relPos, const string &label)
+: CItem(id, relPos), m_label(label)
+{
+}
+
+void CLabel::Print(ostream & os) const
+{
+    os << m_label;
+}
 
 class CComboBox : public CItem
 {
 public:
     CComboBox                     ( int               id,
                                     const CRect     & relPos );
+    void Print(ostream &) const override;
+
     // Add
     // SetSelected
     // GetSelected
+
 };
+
+CComboBox::CComboBox(int id, const CRect &relPos)
+: CItem(id, relPos)
+{
+}
+
+void CComboBox::Print(ostream &os) const
+{
+    os << "hello" << endl;
+}
 
 // output operators
 
@@ -183,9 +225,9 @@ int main ( void )
 
     CWindow a ( "Sample window", CRect ( 10, 10, 600, 480 ) );
     a . Add ( CButton ( 1, CRect ( 0.1, 0.8, 0.3, 0.1 ), "Ok" ) ) . Add ( CButton ( 2, CRect ( 0.6, 0.8, 0.3, 0.1 ), "Cancel" ) );
-    /*a . Add ( CLabel ( 10, CRect ( 0.1, 0.1, 0.2, 0.1 ), "Username:" ) );
+    a . Add ( CLabel ( 10, CRect ( 0.1, 0.1, 0.2, 0.1 ), "Username:" ) );
     a . Add ( CInput ( 11, CRect ( 0.4, 0.1, 0.5, 0.1 ), "chucknorris" ) );
-    /*a . Add ( CComboBox ( 20, CRect ( 0.1, 0.3, 0.8, 0.1 ) ) . Add ( "Karate" ) . Add ( "Judo" ) . Add ( "Box" ) . Add ( "Progtest" ) );
+    a . Add ( CComboBox ( 20, CRect ( 0.1, 0.3, 0.8, 0.1 ) ) . Add ( "Karate" ) . Add ( "Judo" ) . Add ( "Box" ) . Add ( "Progtest" ) );
     assert ( toString ( a ) ==
              "Window \"Sample window\" (10,10,600,480)\n"
                      "+- [1] Button \"Ok\" (70,394,180,48)\n"
