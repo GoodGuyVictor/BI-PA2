@@ -65,13 +65,11 @@ public:
 CItem::CItem(const CRect &pos)
 : m_position(pos)
 {
-
 }
 
 CItem::CItem(int id, const CRect &pos)
 : m_id(id), m_position(pos)
 {
-
 }
 
 class CWindow : public CItem
@@ -83,8 +81,14 @@ public:
     // Search
     // SetPosition
 private:
+    string m_title;
     vector<CItem *> m_items;
 };
+
+CWindow::CWindow(const string &title, const CRect &absPos)
+: CItem(absPos), m_title(title)
+{
+}
 
 class CButton
 {
