@@ -94,10 +94,8 @@ public:
                                     const CRect     & absPos );
 
     void Print(ostream &) const override;
-    CWindow & Add (const CButton & button);
-    CWindow & Add (const CInput & input);
-    CWindow & Add (const CLabel & label);
-    CWindow & Add (const CComboBox & comboBox);
+    template <typename T>
+    CWindow & Add (const T & unit);
     CUnit * Search(int id) const;
     void SetPosition(const CRect &);
     // Add
@@ -147,11 +145,12 @@ void CWindow::SetRelativePosition(CUnit &unit)
     unit.m_position.m_W = unit.m_position.m_W * m_position.m_W;
 }
 
-CWindow &CWindow::Add(const CButton &button)
+template<typename T>
+CWindow &CWindow::Add(const T &unit)
 {
-    CButton * btn = new CButton(button);
-    SetRelativePosition(*btn);
-    m_units.push_back(btn);
+    T * u = new T(unit);
+    SetRelativePosition(*u);
+    m_units.push_back(u);
     return *this;
 }
 
@@ -172,15 +171,15 @@ CButton::CButton(int id, const CRect &relPos, const string &name)
 {
 }
 
+CButton::CButton(const CButton &src)
+        :CUnit(src)
+{
+    m_name = src.m_name;
+}
+
 void CButton::Print(ostream & os) const
 {
     os << "[" << m_id << "] Button \"" << m_name << "\" " << m_position << "\n";
-}
-
-CButton::CButton(const CButton &src)
-:CUnit(src)
-{
-    m_name = src.m_name;
 }
 
 class CInput : public CUnit
@@ -204,6 +203,12 @@ CInput::CInput(int id, const CRect &relPos, const string &value)
 {
 }
 
+CInput::CInput(const CInput &src)
+:CUnit(src)
+{
+    m_value = src.m_value;
+}
+
 void CInput::Print(ostream & os) const
 {
     os << "[" << m_id << "] Input \"" << m_value << "\" " << m_position << "\n";
@@ -217,12 +222,6 @@ string CInput::GetValue() const
 void CInput::SetValue(const string & value)
 {
     m_value = value;
-}
-
-CInput::CInput(const CInput &src)
-:CUnit(src)
-{
-    m_value = src.m_value;
 }
 
 class CLabel : public CUnit
@@ -244,15 +243,15 @@ CLabel::CLabel(int id, const CRect &relPos, const string &label)
 {
 }
 
+CLabel::CLabel(const CLabel &src)
+        :CUnit(src)
+{
+    m_label = src.m_label;
+}
+
 void CLabel::Print(ostream & os) const
 {
     os << "[" << m_id << "] Label \"" << m_label << "\" " << m_position << "\n";
-}
-
-CLabel::CLabel(const CLabel &src)
-:CUnit(src)
-{
-    m_label = src.m_label;
 }
 
 class CComboBox : public CUnit
@@ -276,6 +275,13 @@ private:
 CComboBox::CComboBox(int id, const CRect &relPos)
 : CUnit(id, relPos), m_selected(0)
 {
+}
+
+CComboBox::CComboBox(const CComboBox &src)
+        : CUnit(src), m_selected(src.m_selected)
+{
+    for(const auto & it : src.m_items)
+        m_items.push_back(it);
 }
 
 void CComboBox::Print(ostream &os) const
@@ -303,13 +309,6 @@ int CComboBox::GetSelected() const
 void CComboBox::SetSelected(int selected)
 {
     m_selected = selected;
-}
-
-CComboBox::CComboBox(const CComboBox &src)
-: CUnit(src.m_id, src.m_position), m_selected(src.m_selected)
-{
-    for(const auto & it : src.m_items)
-        m_items.push_back(it);
 }
 
 // output operators
