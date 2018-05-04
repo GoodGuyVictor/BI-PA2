@@ -155,9 +155,9 @@ CWindow &CWindow::Add(const T &unit)
 }
 
 CWindow::CWindow(const CWindow & src)
-:CUnit(src), m_title(src.m_title)
+        :CUnit(src), m_title(src.m_title)
 {
-    for(const auto & it : m_units)
+    for( auto &it : m_units)
         Add(it);
 }
 
