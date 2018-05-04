@@ -57,8 +57,22 @@ protected:
 
 public:
     CItem() = default;
+    CItem(const CRect & pos);
+    CItem(int id, const CRect & pos);
     virtual void Print() const = 0;
 };
+
+CItem::CItem(const CRect &pos)
+: m_position(pos)
+{
+
+}
+
+CItem::CItem(int id, const CRect &pos)
+: m_id(id), m_position(pos)
+{
+
+}
 
 class CWindow : public CItem
 {
