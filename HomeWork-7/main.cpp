@@ -85,6 +85,7 @@ public:
 
     void Print(ostream &) const override;
     CWindow & Add (const CUnit & unit);
+    CUnit * Search(int id) const;
     // Add
     // Search
     // SetPosition
@@ -117,6 +118,14 @@ CWindow &CWindow::Add(const CUnit & unit)
     tmp->m_position.m_W = tmp->m_position.m_W * m_position.m_W;
     m_units.push_back(tmp);
     return *this;
+}
+
+CUnit *CWindow::Search(int id) const
+{
+    for(auto & it: m_units)
+        if(it->m_id == id)
+            return it;
+    return NULL;
 }
 
 class CButton : public CUnit
