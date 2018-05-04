@@ -86,13 +86,13 @@ public:
                                     const CRect     & absPos );
 
     void Print(ostream &) const override;
-    CWindow & Add (const CUnit & item);
+    CWindow & Add (const CUnit & unit);
     // Add
     // Search
     // SetPosition
 private:
     string m_title;
-    vector<CUnit *> m_items;
+    vector<CUnit *> m_units;
 };
 
 CWindow::CWindow(const string &title, const CRect &absPos)
@@ -105,14 +105,14 @@ void CWindow::Print(ostream & os) const
     os << m_title;
 }
 
-CWindow &CWindow::Add(const CUnit & item)
+CWindow &CWindow::Add(const CUnit & unit)
 {
-    CUnit * tmp = const_cast<CUnit*> (&item);
+    CUnit * tmp = const_cast<CUnit*> (&unit);
     tmp->m_position.m_X = tmp->m_position.m_X * m_position.m_W + m_position.m_X;
     tmp->m_position.m_Y = tmp->m_position.m_Y * m_position.m_H + m_position.m_Y;
     tmp->m_position.m_H = tmp->m_position.m_H * m_position.m_H;
     tmp->m_position.m_W = tmp->m_position.m_W * m_position.m_W;
-    m_items.push_back(tmp);
+    m_units.push_back(tmp);
     return *this;
 }
 
@@ -189,12 +189,12 @@ public:
     CComboBox                     ( int               id,
                                     const CRect     & relPos );
     void Print(ostream &) const override;
-    CComboBox & Add(const string )
+    CComboBox & Add(const string &);
     // Add
     // SetSelected
     // GetSelected
 private:
-    vector<string> m_list;
+    vector<string> m_items;
 };
 
 CComboBox::CComboBox(int id, const CRect &relPos)
@@ -205,6 +205,12 @@ CComboBox::CComboBox(int id, const CRect &relPos)
 void CComboBox::Print(ostream &os) const
 {
     os << "hello" << endl;
+}
+
+CComboBox &CComboBox::Add(const string & item)
+{
+    m_items.push_back(item);
+    return *this;
 }
 
 // output operators
@@ -229,7 +235,7 @@ int main ( void )
     a . Add ( CLabel ( 10, CRect ( 0.1, 0.1, 0.2, 0.1 ), "Username:" ) );
     a . Add ( CInput ( 11, CRect ( 0.4, 0.1, 0.5, 0.1 ), "chucknorris" ) );
     a . Add ( CComboBox ( 20, CRect ( 0.1, 0.3, 0.8, 0.1 ) ) . Add ( "Karate" ) . Add ( "Judo" ) . Add ( "Box" ) . Add ( "Progtest" ) );
-    assert ( toString ( a ) ==
+    /*assert ( toString ( a ) ==
              "Window \"Sample window\" (10,10,600,480)\n"
                      "+- [1] Button \"Ok\" (70,394,180,48)\n"
                      "+- [2] Button \"Cancel\" (370,394,180,48)\n"
