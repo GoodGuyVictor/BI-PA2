@@ -147,6 +147,8 @@ public:
                                     const CRect     & relPos,
                                     const string    & value );
     void Print(ostream &) const override;
+    string GetValue() const;
+    void SetValue(const string &);
     // SetValue
     // GetValue
 private:
@@ -161,6 +163,16 @@ CInput::CInput(int id, const CRect &relPos, const string &value)
 void CInput::Print(ostream & os) const
 {
     os << "[" << m_id << "] Input \"" << m_value << "\" " << m_position << "\n";
+}
+
+string CInput::GetValue() const
+{
+    return m_value;
+}
+
+void CInput::SetValue(const string & value)
+{
+    m_value = value;
 }
 
 class CLabel : public CUnit
@@ -194,7 +206,7 @@ public:
     void Print(ostream &) const override;
     CComboBox & Add(const string &);
     int GetSelected() const;
-    void SetSelected(int selected);
+    void SetSelected(int);
     // GetSelected
     // SetSelected
     // Add
