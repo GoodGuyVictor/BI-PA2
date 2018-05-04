@@ -77,6 +77,11 @@ ostream &operator << (ostream &os, const CUnit &item)
     return os;
 }
 
+class CButton;
+class CInput;
+class CLabel;
+class CComboBox;
+
 class CWindow : public CUnit
 {
 public:
@@ -84,9 +89,12 @@ public:
                                     const CRect     & absPos );
 
     void Print(ostream &) const override;
-    CWindow & Add (const CUnit & unit);
+    CWindow & Add (const CButton & button);
+    CWindow & Add (const CInput & input);
+    CWindow & Add (const CLabel & label);
+    CWindow & Add (const CComboBox & comboBox);
     CUnit * Search(int id) const;
-    void SetPosition(const CRect & position);
+    void SetPosition(const CRect &);
     // Add
     // Search
     // SetPosition
@@ -111,17 +119,6 @@ void CWindow::Print(ostream & os) const
         }
 }
 
-CWindow &CWindow::Add(const CUnit & unit)
-{
-    CUnit * tmp = const_cast<CUnit*> (&unit);
-    tmp->m_position.m_X = tmp->m_position.m_X * m_position.m_W + m_position.m_X;
-    tmp->m_position.m_Y = tmp->m_position.m_Y * m_position.m_H + m_position.m_Y;
-    tmp->m_position.m_H = tmp->m_position.m_H * m_position.m_H;
-    tmp->m_position.m_W = tmp->m_position.m_W * m_position.m_W;
-    m_units.push_back(tmp);
-    return *this;
-}
-
 CUnit *CWindow::Search(int id) const
 {
     for(auto & it: m_units)
@@ -143,6 +140,14 @@ void CWindow::SetRelativePosition(CUnit &unit)
     unit.m_position.m_Y = unit.m_position.m_Y * m_position.m_H + m_position.m_Y;
     unit.m_position.m_H = unit.m_position.m_H * m_position.m_H;
     unit.m_position.m_W = unit.m_position.m_W * m_position.m_W;
+}
+
+CWindow &CWindow::Add(const CButton &button)
+{
+    CButton * btn = new CButton(button);
+    SetRelativePosition(*btn);
+    m_units.push_back(btn);
+    return *this;
 }
 
 class CButton : public CUnit
