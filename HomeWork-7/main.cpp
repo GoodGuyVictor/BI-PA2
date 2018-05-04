@@ -53,9 +53,9 @@ class CItem
 {
 protected:
     int m_id;
-    CRect m_position;
 
 public:
+    CRect m_position;
     CItem() = default;
     CItem(const CRect & pos);
     CItem(int id, const CRect & pos);
@@ -108,6 +108,10 @@ void CWindow::Print(ostream & os) const
 CWindow &CWindow::Add(const CItem & item)
 {
     CItem * tmp = const_cast<CItem*> (&item);
+    tmp->m_position.m_X = tmp->m_position.m_X * m_position.m_W + m_position.m_X;
+    tmp->m_position.m_Y = tmp->m_position.m_Y * m_position.m_H + m_position.m_Y;
+    tmp->m_position.m_H = tmp->m_position.m_H * m_position.m_H;
+    tmp->m_position.m_W = tmp->m_position.m_W * m_position.m_W;
     m_items.push_back(tmp);
     return *this;
 }
@@ -179,7 +183,7 @@ int main ( void )
 
     CWindow a ( "Sample window", CRect ( 10, 10, 600, 480 ) );
     a . Add ( CButton ( 1, CRect ( 0.1, 0.8, 0.3, 0.1 ), "Ok" ) ) . Add ( CButton ( 2, CRect ( 0.6, 0.8, 0.3, 0.1 ), "Cancel" ) );
-    a . Add ( CLabel ( 10, CRect ( 0.1, 0.1, 0.2, 0.1 ), "Username:" ) );
+    /*a . Add ( CLabel ( 10, CRect ( 0.1, 0.1, 0.2, 0.1 ), "Username:" ) );
     a . Add ( CInput ( 11, CRect ( 0.4, 0.1, 0.5, 0.1 ), "chucknorris" ) );
     /*a . Add ( CComboBox ( 20, CRect ( 0.1, 0.3, 0.8, 0.1 ) ) . Add ( "Karate" ) . Add ( "Judo" ) . Add ( "Box" ) . Add ( "Progtest" ) );
     assert ( toString ( a ) ==
