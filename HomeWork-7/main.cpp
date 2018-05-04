@@ -86,12 +86,14 @@ public:
     void Print(ostream &) const override;
     CWindow & Add (const CUnit & unit);
     CUnit * Search(int id) const;
+    void SetPosition(const CRect & position);
     // Add
     // Search
     // SetPosition
 private:
     string m_title;
     vector<CUnit *> m_units;
+    void SetRelativePosition(CUnit & unit);
 };
 
 CWindow::CWindow(const string &title, const CRect &absPos)
@@ -126,6 +128,21 @@ CUnit *CWindow::Search(int id) const
         if(it->m_id == id)
             return it;
     return NULL;
+}
+
+void CWindow::SetPosition(const CRect &pos)
+{
+    m_position = pos;
+    for(auto it: m_units)
+        SetRelativePosition(*it);
+}
+
+void CWindow::SetRelativePosition(CUnit &unit)
+{
+    unit.m_position.m_X = unit.m_position.m_X * m_position.m_W + m_position.m_X;
+    unit.m_position.m_Y = unit.m_position.m_Y * m_position.m_H + m_position.m_Y;
+    unit.m_position.m_H = unit.m_position.m_H * m_position.m_H;
+    unit.m_position.m_W = unit.m_position.m_W * m_position.m_W;
 }
 
 class CButton : public CUnit
