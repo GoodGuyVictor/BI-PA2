@@ -92,7 +92,7 @@ class CWindow : public CUnit
 public:
     CWindow                       ( const string    & title,
                                     const CRect     & absPos );
-
+    CWindow(const CWindow & src);
     void Print(ostream &) const override;
     template <typename T>
     CWindow & Add (const T & unit);
@@ -152,6 +152,13 @@ CWindow &CWindow::Add(const T &unit)
     SetRelativePosition(*u);
     m_units.push_back(u);
     return *this;
+}
+
+CWindow::CWindow(const CWindow & src)
+:CUnit(src), m_title(src.m_title)
+{
+    for(const auto & it : m_units)
+        Add(it);
 }
 
 class CButton : public CUnit
