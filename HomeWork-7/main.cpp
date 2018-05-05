@@ -59,6 +59,7 @@ public:
     CUnit(const CUnit & src);
     virtual void Print(ostream &, int = 0) const = 0;
     friend ostream & operator << (ostream & os, const CUnit & item);
+    virtual CUnit * Clone() = 0;
 };
 
 CUnit::CUnit(const CRect &pos)
@@ -98,6 +99,7 @@ public:
     CWindow & Add (const T & unit);
     CUnit * Search(int id) const;
     void SetPosition(const CRect &);
+    CUnit * Clone() override {};
     // Add
     // Search
     // SetPosition
@@ -112,12 +114,12 @@ CWindow::CWindow(const string &title, const CRect &absPos)
 {
 }
 
-//CWindow::CWindow(const CWindow & src)
-//        :CUnit(src), m_title(src.m_title)
-//{
-//    for( auto &it : src.m_units)
-//        Add(*it);
-//}
+CWindow::CWindow(const CWindow & src)
+        :CUnit(src), m_title(src.m_title)
+{
+    for( auto &it : src.m_units)
+        m_units.push_back(it->Clone());
+}
 
 void CWindow::Print(ostream & os, int offset) const
 {
@@ -169,6 +171,7 @@ public:
                                     const string    & name );
     CButton (const CButton & src);
     void Print(ostream &, int = 0) const override;
+    CUnit * Clone() override;
 private:
     string m_name;
 };
@@ -189,6 +192,11 @@ void CButton::Print(ostream & os, int offset) const
     os << "[" << m_id << "] Button \"" << m_name << "\" " << m_position << "\n";
 }
 
+CUnit *CButton::Clone()
+{
+    return new CButton(*this);
+}
+
 class CInput : public CUnit
 {
 public:
@@ -199,7 +207,8 @@ public:
     void Print(ostream &, int = 0) const override;
     string GetValue() const;
     void SetValue(const string &);
-    // SetValue
+    CUnit * Clone() override;
+// SetValue
     // GetValue
 private:
     string m_value;
@@ -231,6 +240,11 @@ void CInput::SetValue(const string & value)
     m_value = value;
 }
 
+CUnit *CInput::Clone()
+{
+    return new CInput(*this);
+}
+
 class CLabel : public CUnit
 {
 public:
@@ -239,6 +253,7 @@ public:
                                     const string    & label );
     CLabel(const CLabel & src);
     void Print(ostream &, int = 0) const override;
+    CUnit * Clone() override;
 
 private:
     string m_label;
@@ -261,6 +276,11 @@ void CLabel::Print(ostream & os, int offset) const
     os << "[" << m_id << "] Label \"" << m_label << "\" " << m_position << "\n";
 }
 
+CUnit *CLabel::Clone()
+{
+    return new CLabel(*this);
+}
+
 class CComboBox : public CUnit
 {
 public:
@@ -271,7 +291,8 @@ public:
     CComboBox & Add(const string &);
     int GetSelected() const;
     void SetSelected(int);
-    // GetSelected
+    CUnit * Clone() override;
+// GetSelected
     // SetSelected
     // Add
 private:
@@ -318,6 +339,11 @@ void CComboBox::SetSelected(int selected)
     m_selected = selected;
 }
 
+CUnit *CComboBox::Clone()
+{
+    return new CComboBox(*this);
+}
+
 // output operators
 
 #ifndef __PROGTEST__
@@ -340,7 +366,6 @@ int main ( void )
     a . Add ( CLabel ( 10, CRect ( 0.1, 0.1, 0.2, 0.1 ), "Username:" ) );
     a . Add ( CInput ( 11, CRect ( 0.4, 0.1, 0.5, 0.1 ), "chucknorris" ) );
     a . Add ( CComboBox ( 20, CRect ( 0.1, 0.3, 0.8, 0.1 ) ) . Add ( "Karate" ) . Add ( "Judo" ) . Add ( "Box" ) . Add ( "Progtest" ) );
-    cout << toString(a);
     assert ( toString ( a ) ==
              "Window \"Sample window\" (10,10,600,480)\n"
                      "+- [1] Button \"Ok\" (70,394,180,48)\n"
@@ -352,14 +377,14 @@ int main ( void )
                      "   +- Judo\n"
                      "   +- Box\n"
                      "   +- Progtest\n" );
-//    CWindow b = a;
-    assert ( toString ( *a . Search ( 20 ) ) ==
+    CWindow b = a;
+    assert ( toString ( *b . Search ( 20 ) ) ==
              "[20] ComboBox (70,154,480,48)\n"
                      "+->Karate<\n"
                      "+- Judo\n"
                      "+- Box\n"
                      "+- Progtest\n" );
-    /*assert ( dynamic_cast<CComboBox &> ( *b . Search ( 20 ) ) . GetSelected () == 0 );
+    assert ( dynamic_cast<CComboBox &> ( *b . Search ( 20 ) ) . GetSelected () == 0 );
     dynamic_cast<CComboBox &> ( *b . Search ( 20 ) ) . SetSelected ( 3 );
     assert ( dynamic_cast<CInput &> ( *b . Search ( 11 ) ) . GetValue () == "chucknorris" );
     dynamic_cast<CInput &> ( *b . Search ( 11 ) ) . SetValue ( "chucknorris@fit.cvut.cz" );
@@ -390,7 +415,7 @@ int main ( void )
                      "   +- Judo\n"
                      "   +- Box\n"
                      "   +- Progtest\n" );
-    b . SetPosition ( CRect ( 20, 30, 640, 520 ) );
+    /*b . SetPosition ( CRect ( 20, 30, 640, 520 ) );
     assert ( toString ( b ) ==
              "Window \"Sample window\" (20,30,640,520)\n"
                      "+- [1] Button \"Ok\" (84,446,192,52)\n"
