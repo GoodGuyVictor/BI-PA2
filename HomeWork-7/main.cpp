@@ -59,6 +59,7 @@ public:
     CUnit(int id, const CRect & pos);
     CUnit(int id, const CRect & pos, const CRect & relPos);
     CUnit(const CUnit & src);
+    virtual ~CUnit(){};
     virtual void Print(ostream &, int = 0, bool isClosed = false) const = 0;
     friend ostream & operator << (ostream & os, const CUnit & item);
     virtual CUnit * Clone() = 0;
@@ -104,12 +105,13 @@ public:
     CWindow                       ( const string    & title,
                                     const CRect     & absPos );
     CWindow(const CWindow & src);
+    ~CWindow();
     void Print(ostream &, int = 0, bool isClosed = false) const override;
     template <typename T>
     CWindow & Add (const T & unit);
     CUnit * Search(int id) const;
     void SetPosition(const CRect &);
-    CUnit * Clone() override {};
+    CUnit * Clone() override {return NULL;};
     // Add
     // Search
     // SetPosition
@@ -135,7 +137,7 @@ void CWindow::Print(ostream & os, int offset, bool isClosed) const
 {
     os << "Window \"" << m_title << "\" " << m_position << "\n";
     if(!m_units.empty())
-        for (int i = 0; i < m_units.size(); i++) {
+        for (size_t i = 0; i < m_units.size(); i++) {
             os << "+- ";
             if(i == m_units.size() - 1)
                 m_units[i]->Print(os, 6);
@@ -174,6 +176,12 @@ CWindow &CWindow::Add(const T &unit)
     SetRelativePosition(*u);
     m_units.push_back(u);
     return *this;
+}
+
+CWindow::~CWindow()
+{
+    for(auto & it : m_units)
+        delete it;
 }
 
 class CButton : public CUnit
@@ -309,7 +317,7 @@ public:
     // SetSelected
     // Add
 private:
-    int m_selected;
+    size_t m_selected;
     vector<string> m_items;
 };
 
@@ -328,7 +336,7 @@ CComboBox::CComboBox(const CComboBox &src)
 void CComboBox::Print(ostream &os, int  offset, bool isClosed) const
 {
     os << "[" << m_id << "] ComboBox " << m_position << "\n";
-    for(int i = 0; i < m_items.size(); i++)
+    for(size_t i = 0; i < m_items.size(); i++)
         if(isClosed)
             if(i == m_selected)
                 os << "|" << setw(offset) << "+->" << m_items[i] << "<\n";
@@ -434,7 +442,6 @@ int main ( void )
                      "   +- Box\n"
                      "   +- Progtest\n" );
     b . SetPosition ( CRect ( 20, 30, 640, 520 ) );
-    cout << toString(b);
     assert ( toString ( b ) ==
              "Window \"Sample window\" (20,30,640,520)\n"
                      "+- [1] Button \"Ok\" (84,446,192,52)\n"
