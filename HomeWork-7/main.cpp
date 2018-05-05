@@ -112,6 +112,7 @@ public:
     CUnit * Search(int id) const;
     void SetPosition(const CRect &);
     CUnit * Clone() override {return NULL;};
+    CWindow &operator = (const CWindow & src);
     // Add
     // Search
     // SetPosition
@@ -182,6 +183,29 @@ CWindow::~CWindow()
 {
     for(auto & it : m_units)
         delete it;
+    m_units.clear();
+}
+
+CWindow &CWindow::operator=(const CWindow &src)
+{
+    if(this == &src)
+        return *this;
+
+    if(!m_units.empty()) {
+        for(auto & it : m_units)
+            delete it;
+        m_units.clear();
+    }
+
+    m_id = src.m_id;
+    m_title = src.m_title;
+    m_position = src.m_position;
+    m_relPosition = src.m_relPosition;
+
+    for( auto &it : src.m_units)
+        m_units.push_back(it->Clone());
+
+    return *this;
 }
 
 class CButton : public CUnit
@@ -457,6 +481,8 @@ int main ( void )
                      "   +->PA2<\n"
                      "   +- OSY\n"
                      "   +- Both\n" );
+
+    a = b;
     return 0;
 }
 #endif /* __PROGTEST__ */
