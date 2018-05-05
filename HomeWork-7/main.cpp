@@ -54,21 +54,36 @@ class CUnit
 public:
     int m_id;
     CRect m_position;
+    CRect m_relPosition;
     CUnit(const CRect & pos);
     CUnit(int id, const CRect & pos);
+    CUnit(int id, const CRect & pos, const CRect & relPos);
     CUnit(const CUnit & src);
     virtual void Print(ostream &, int = 0, bool isClosed = false) const = 0;
     friend ostream & operator << (ostream & os, const CUnit & item);
     virtual CUnit * Clone() = 0;
 };
 
+//constructor for CWindow
 CUnit::CUnit(const CRect &pos)
-: m_position(pos)
+        : m_position(pos), m_relPosition(pos)
 {
 }
 
+//constructor for CButton, CLabel, CInput, CComboBox
 CUnit::CUnit(int id, const CRect &pos)
-: m_id(id), m_position(pos)
+        : m_id(id), m_position(pos), m_relPosition(pos)
+{
+}
+
+//constructor to copy a unit
+CUnit::CUnit(int id, const CRect &pos, const CRect &relPos)
+        : m_id(id), m_position(pos), m_relPosition(relPos)
+{
+}
+
+CUnit::CUnit(const CUnit &src)
+        : CUnit(src.m_id, src.m_position, src.m_relPosition)
 {
 }
 
@@ -76,11 +91,6 @@ ostream &operator << (ostream &os, const CUnit &item)
 {
     item.Print(os);
     return os;
-}
-
-CUnit::CUnit(const CUnit &src)
-: CUnit(src.m_id, src.m_position)
-{
 }
 
 class CButton;
@@ -151,10 +161,10 @@ void CWindow::SetPosition(const CRect &pos)
 
 void CWindow::SetRelativePosition(CUnit &unit)
 {
-    unit.m_position.m_X = unit.m_position.m_X * m_position.m_W + m_position.m_X;
-    unit.m_position.m_Y = unit.m_position.m_Y * m_position.m_H + m_position.m_Y;
-    unit.m_position.m_H = unit.m_position.m_H * m_position.m_H;
-    unit.m_position.m_W = unit.m_position.m_W * m_position.m_W;
+    unit.m_position.m_X = unit.m_relPosition.m_X * m_position.m_W + m_position.m_X;
+    unit.m_position.m_Y = unit.m_relPosition.m_Y * m_position.m_H + m_position.m_Y;
+    unit.m_position.m_H = unit.m_relPosition.m_H * m_position.m_H;
+    unit.m_position.m_W = unit.m_relPosition.m_W * m_position.m_W;
 }
 
 template<typename T>
