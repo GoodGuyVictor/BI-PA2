@@ -57,7 +57,7 @@ public:
     CUnit(const CRect & pos);
     CUnit(int id, const CRect & pos);
     CUnit(const CUnit & src);
-    virtual void Print(ostream &) const = 0;
+    virtual void Print(ostream &, int = 0) const = 0;
     friend ostream & operator << (ostream & os, const CUnit & item);
 };
 
@@ -93,7 +93,7 @@ public:
     CWindow                       ( const string    & title,
                                     const CRect     & absPos );
     CWindow(const CWindow & src);
-    void Print(ostream &) const override;
+    void Print(ostream &, int = 0) const override;
     template <typename T>
     CWindow & Add (const T & unit);
     CUnit * Search(int id) const;
@@ -119,13 +119,13 @@ CWindow::CWindow(const string &title, const CRect &absPos)
 //        Add(*it);
 //}
 
-void CWindow::Print(ostream & os) const
+void CWindow::Print(ostream & os, int offset) const
 {
     os << "Window \"" << m_title << "\" " << m_position << "\n";
     if(!m_units.empty())
         for (const auto & it : m_units) {
             os << "+- ";
-            it->Print(os);
+            it->Print(os, 6);
         }
 }
 
@@ -168,7 +168,7 @@ public:
                                     const CRect     & relPos,
                                     const string    & name );
     CButton (const CButton & src);
-    void Print(ostream &) const override;
+    void Print(ostream &, int = 0) const override;
 private:
     string m_name;
 };
@@ -184,7 +184,7 @@ CButton::CButton(const CButton &src)
     m_name = src.m_name;
 }
 
-void CButton::Print(ostream & os) const
+void CButton::Print(ostream & os, int offset) const
 {
     os << "[" << m_id << "] Button \"" << m_name << "\" " << m_position << "\n";
 }
@@ -196,7 +196,7 @@ public:
                                     const CRect     & relPos,
                                     const string    & value );
     CInput(const CInput & src);
-    void Print(ostream &) const override;
+    void Print(ostream &, int = 0) const override;
     string GetValue() const;
     void SetValue(const string &);
     // SetValue
@@ -216,7 +216,7 @@ CInput::CInput(const CInput &src)
     m_value = src.m_value;
 }
 
-void CInput::Print(ostream & os) const
+void CInput::Print(ostream & os, int offset) const
 {
     os << "[" << m_id << "] Input \"" << m_value << "\" " << m_position << "\n";
 }
@@ -238,7 +238,7 @@ public:
                                     const CRect     & relPos,
                                     const string    & label );
     CLabel(const CLabel & src);
-    void Print(ostream &) const override;
+    void Print(ostream &, int = 0) const override;
 
 private:
     string m_label;
@@ -256,7 +256,7 @@ CLabel::CLabel(const CLabel &src)
     m_label = src.m_label;
 }
 
-void CLabel::Print(ostream & os) const
+void CLabel::Print(ostream & os, int offset) const
 {
     os << "[" << m_id << "] Label \"" << m_label << "\" " << m_position << "\n";
 }
@@ -267,7 +267,7 @@ public:
     CComboBox                     ( int               id,
                                     const CRect     & relPos );
     CComboBox(const CComboBox & src);
-    void Print(ostream &) const override;
+    void Print(ostream &, int = 0) const override;
     CComboBox & Add(const string &);
     int GetSelected() const;
     void SetSelected(int);
@@ -291,14 +291,14 @@ CComboBox::CComboBox(const CComboBox &src)
         m_items.push_back(it);
 }
 
-void CComboBox::Print(ostream &os) const
+void CComboBox::Print(ostream &os, int  offset) const
 {
     os << "[" << m_id << "] ComboBox " << m_position << "\n";
     for(int i = 0; i < m_items.size(); i++) {
         if(i == m_selected)
-            os << "   +->" << m_items[i] << "<\n";
+            os << setw(offset) << "+->" << m_items[i] << "<\n";
         else
-            os << "   +- " << m_items[i] << "\n";
+            os << setw(offset) << "+- " << m_items[i] << "\n";
     }
 }
 
@@ -340,6 +340,7 @@ int main ( void )
     a . Add ( CLabel ( 10, CRect ( 0.1, 0.1, 0.2, 0.1 ), "Username:" ) );
     a . Add ( CInput ( 11, CRect ( 0.4, 0.1, 0.5, 0.1 ), "chucknorris" ) );
     a . Add ( CComboBox ( 20, CRect ( 0.1, 0.3, 0.8, 0.1 ) ) . Add ( "Karate" ) . Add ( "Judo" ) . Add ( "Box" ) . Add ( "Progtest" ) );
+    cout << toString(a);
     assert ( toString ( a ) ==
              "Window \"Sample window\" (10,10,600,480)\n"
                      "+- [1] Button \"Ok\" (70,394,180,48)\n"
@@ -354,10 +355,10 @@ int main ( void )
 //    CWindow b = a;
     assert ( toString ( *a . Search ( 20 ) ) ==
              "[20] ComboBox (70,154,480,48)\n"
-                     "   +->Karate<\n"
-                     "   +- Judo\n"
-                     "   +- Box\n"
-                     "   +- Progtest\n" );
+                     "+->Karate<\n"
+                     "+- Judo\n"
+                     "+- Box\n"
+                     "+- Progtest\n" );
     /*assert ( dynamic_cast<CComboBox &> ( *b . Search ( 20 ) ) . GetSelected () == 0 );
     dynamic_cast<CComboBox &> ( *b . Search ( 20 ) ) . SetSelected ( 3 );
     assert ( dynamic_cast<CInput &> ( *b . Search ( 11 ) ) . GetValue () == "chucknorris" );
