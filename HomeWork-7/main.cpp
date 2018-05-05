@@ -57,7 +57,7 @@ public:
     CUnit(const CRect & pos);
     CUnit(int id, const CRect & pos);
     CUnit(const CUnit & src);
-    virtual void Print(ostream &, int = 0) const = 0;
+    virtual void Print(ostream &, int = 0, bool isClosed = false) const = 0;
     friend ostream & operator << (ostream & os, const CUnit & item);
     virtual CUnit * Clone() = 0;
 };
@@ -94,7 +94,7 @@ public:
     CWindow                       ( const string    & title,
                                     const CRect     & absPos );
     CWindow(const CWindow & src);
-    void Print(ostream &, int = 0) const override;
+    void Print(ostream &, int = 0, bool isClosed = false) const override;
     template <typename T>
     CWindow & Add (const T & unit);
     CUnit * Search(int id) const;
@@ -121,13 +121,16 @@ CWindow::CWindow(const CWindow & src)
         m_units.push_back(it->Clone());
 }
 
-void CWindow::Print(ostream & os, int offset) const
+void CWindow::Print(ostream & os, int offset, bool isClosed) const
 {
     os << "Window \"" << m_title << "\" " << m_position << "\n";
     if(!m_units.empty())
-        for (const auto & it : m_units) {
+        for (int i = 0; i < m_units.size(); i++) {
             os << "+- ";
-            it->Print(os, 6);
+            if(i == m_units.size() - 1)
+                m_units[i]->Print(os, 6);
+            else
+                m_units[i]->Print(os, 5, true);
         }
 }
 
@@ -170,7 +173,7 @@ public:
                                     const CRect     & relPos,
                                     const string    & name );
     CButton (const CButton & src);
-    void Print(ostream &, int = 0) const override;
+    void Print(ostream &, int = 0, bool isClosed = false) const override;
     CUnit * Clone() override;
 private:
     string m_name;
@@ -187,7 +190,7 @@ CButton::CButton(const CButton &src)
     m_name = src.m_name;
 }
 
-void CButton::Print(ostream & os, int offset) const
+void CButton::Print(ostream & os, int offset, bool isClosed) const
 {
     os << "[" << m_id << "] Button \"" << m_name << "\" " << m_position << "\n";
 }
@@ -204,7 +207,7 @@ public:
                                     const CRect     & relPos,
                                     const string    & value );
     CInput(const CInput & src);
-    void Print(ostream &, int = 0) const override;
+    void Print(ostream &, int = 0, bool isClosed = false) const override;
     string GetValue() const;
     void SetValue(const string &);
     CUnit * Clone() override;
@@ -225,7 +228,7 @@ CInput::CInput(const CInput &src)
     m_value = src.m_value;
 }
 
-void CInput::Print(ostream & os, int offset) const
+void CInput::Print(ostream & os, int offset, bool isClosed) const
 {
     os << "[" << m_id << "] Input \"" << m_value << "\" " << m_position << "\n";
 }
@@ -252,7 +255,7 @@ public:
                                     const CRect     & relPos,
                                     const string    & label );
     CLabel(const CLabel & src);
-    void Print(ostream &, int = 0) const override;
+    void Print(ostream &, int = 0, bool isClosed = false) const override;
     CUnit * Clone() override;
 
 private:
@@ -271,7 +274,7 @@ CLabel::CLabel(const CLabel &src)
     m_label = src.m_label;
 }
 
-void CLabel::Print(ostream & os, int offset) const
+void CLabel::Print(ostream & os, int offset, bool isClosed) const
 {
     os << "[" << m_id << "] Label \"" << m_label << "\" " << m_position << "\n";
 }
@@ -287,7 +290,7 @@ public:
     CComboBox                     ( int               id,
                                     const CRect     & relPos );
     CComboBox(const CComboBox & src);
-    void Print(ostream &, int = 0) const override;
+    void Print(ostream &, int = 0, bool isClosed = false) const override;
     CComboBox & Add(const string &);
     int GetSelected() const;
     void SetSelected(int);
@@ -312,15 +315,20 @@ CComboBox::CComboBox(const CComboBox &src)
         m_items.push_back(it);
 }
 
-void CComboBox::Print(ostream &os, int  offset) const
+void CComboBox::Print(ostream &os, int  offset, bool isClosed) const
 {
     os << "[" << m_id << "] ComboBox " << m_position << "\n";
-    for(int i = 0; i < m_items.size(); i++) {
-        if(i == m_selected)
-            os << setw(offset) << "+->" << m_items[i] << "<\n";
+    for(int i = 0; i < m_items.size(); i++)
+        if(isClosed)
+            if(i == m_selected)
+                os << "|" << setw(offset) << "+->" << m_items[i] << "<\n";
+            else
+                os << "|" << setw(offset) << "+- " << m_items[i] << "\n";
         else
-            os << setw(offset) << "+- " << m_items[i] << "\n";
-    }
+            if(i == m_selected)
+                os << setw(offset) << "+->" << m_items[i] << "<\n";
+            else
+                os << setw(offset) << "+- " << m_items[i] << "\n";
 }
 
 CComboBox &CComboBox::Add(const string & item)
@@ -415,7 +423,8 @@ int main ( void )
                      "   +- Judo\n"
                      "   +- Box\n"
                      "   +- Progtest\n" );
-    /*b . SetPosition ( CRect ( 20, 30, 640, 520 ) );
+    b . SetPosition ( CRect ( 20, 30, 640, 520 ) );
+    cout << toString(b);
     assert ( toString ( b ) ==
              "Window \"Sample window\" (20,30,640,520)\n"
                      "+- [1] Button \"Ok\" (84,446,192,52)\n"
@@ -430,7 +439,7 @@ int main ( void )
                      "+- [21] ComboBox (84,290,512,52)\n"
                      "   +->PA2<\n"
                      "   +- OSY\n"
-                     "   +- Both\n" );*/
+                     "   +- Both\n" );
     return 0;
 }
 #endif /* __PROGTEST__ */
