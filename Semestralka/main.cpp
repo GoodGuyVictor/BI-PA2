@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <cstring>
 #include <stack>
+#include <typeinfo>
+#include <unordered_map>
 
 using namespace std;
 
@@ -52,9 +54,16 @@ class CParser
 {
 private:
     vector<string> m_output;
+    unordered_map<char, int> m_operatorPrecedence = {
+            {'+', 10},
+            {'-', 10},
+            {'/', 20},
+            {'%', 20},
+            {'(', 30},
+    };
 
     void shuntingYard(const string & input);
-
+    bool isOperator(const char) const;
 public:
     CParser() = default;
     ~CParser() = default;
@@ -64,7 +73,35 @@ public:
 
 void CParser::shuntingYard(const string &input)
 {
+    string operand;
+    stack<char> operatorStack;
 
+    for (auto it = input.begin(); it < input.end(); it++)
+    {
+        if(isdigit(*it))
+            operand += *it;
+        else if(isOperator(*it))
+        {
+            if(*it == '-' && it == input.begin())
+                operand += *it;
+            else if(*it == '-' && *(it-1) == '(')
+                operand += *it;
+            else
+            {
+                m_output.push_back(operand);
+                operand = "";
+                operatorStack.push(*it);
+            }
+        }
+    }
+}
+
+vector<string> CParser::parse(const string &) {
+    return vector<string>();
+}
+
+bool CParser::isOperator(const char) const {
+    return false;
 }
 
 class CCalculator
@@ -139,7 +176,10 @@ void extractInt(const string & str);
 int main()
 {
 
-
+//    COperand * p = new CVariable("sdfk", "349");
+//    COperand * p1 = new CDecimal("349");
+//
+//    cout << typeid(*p1).name();
 
 //    string sinput("53.345747");
 //    string::size_type sz;
