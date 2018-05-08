@@ -1,3 +1,10 @@
+/************************************************************
+ *              ENDLESS PRECISION CALCULATOR                *
+ *                                                          *
+ *            Author: Victor Kataev                         *
+ *            Mentors: Josef Vogel, Klara Schovankova       *
+ ************************************************************/
+
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -9,7 +16,6 @@
 #include <stack>
 #include <typeinfo>
 #include <unordered_map>
-
 using namespace std;
 
 
