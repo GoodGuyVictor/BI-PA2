@@ -6,6 +6,7 @@
 #include <vector>
 #include <typeinfo>
 #include <algorithm>
+#include <cstring>
 
 using namespace std;
 
@@ -49,7 +50,7 @@ class CVariable : public COperand
 private:
     string m_name;
 public:
-    explicit CVariable(const string & val) : COperand(val) {}
+    explicit CVariable(const string & name, const string & val) : COperand(val), m_name(name) {}
 };
 
 
@@ -116,9 +117,15 @@ void CCalculator::readInput()
 
     cout << "Read input: " << input;
 
+    //adding new variable
     if(input.find('=') != string::npos)
     {
-
+        char * p;
+        p = strtok((char*)input.c_str(), "=");
+        string name(p);
+        p = strtok(NULL, "=");
+        string val(p);
+        m_variables.emplace_back(CVariable(name, val));
     }
 }
 
