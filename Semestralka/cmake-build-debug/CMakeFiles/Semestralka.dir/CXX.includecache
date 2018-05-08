@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/victor/githubRepos/BI-PA2/Semestralka/main.cpp
+iostream
+-
+iomanip
+-
+sstream
+-
+list
+-
+string
+-
+vector
+-
+typeinfo
+-
+algorithm
+-
+
