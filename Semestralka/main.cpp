@@ -4,16 +4,11 @@
 #include <list>
 #include <string>
 #include <vector>
-#include <typeinfo>
 #include <algorithm>
 #include <cstring>
+#include <stack>
 
 using namespace std;
-
-class COperatorStack
-{
-
-};
 
 
 class COperand
@@ -26,8 +21,6 @@ public:
     explicit COperand(const string & val) : m_value(val) {};
     virtual ~COperand() = default;
     COperand & operator+(const COperand & other);
-//    template <typename T>
-//    virtual T getValue() const;
 };
 
 
@@ -40,6 +33,7 @@ public:
 
 class CDecimal : public COperand
 {
+public:
     explicit CDecimal(const string & val) : COperand(val) {}
 
 };
@@ -64,23 +58,14 @@ private:
 public:
     CParser() = default;
     ~CParser() = default;
-    void readInput();
+    vector<string> parse(const string &);
 };
 
-void CParser::readInput()
-{
-    string input;
-
-    cout << ">";
-    getline(cin, input, '\n');
-    shuntingYard(input);
-}
 
 void CParser::shuntingYard(const string &input)
 {
 
 }
-
 
 class CCalculator
 {
@@ -88,26 +73,33 @@ private:
     vector<CVariable> m_variables;
     vector<string> m_history;
 
-    void removeWhiteSpaces(string &str);
+    void removeWhiteSpaces(string &);
+    void makeNewVariable(const string&);
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator! Have fun! =)" << endl; }
     void run();
-    void readInput();
+    string readInput();
 };
 
 void CCalculator::run()
 {
     CParser parser;
+    string input;
+    vector<string> parsedOutput;
 
-    readInput();
-//    while(true)
-//    {
-//        parser.readInput();
-//    }
+    while(true)
+    {
+        input = readInput();
+        if(!input.empty())
+        {
+            parsedOutput.clear();
+            parsedOutput = parser.parse(input) ;
+        }
+    }
 }
 
-void CCalculator::readInput()
+string CCalculator::readInput()
 {
     string input;
 
@@ -115,25 +107,31 @@ void CCalculator::readInput()
     getline(cin, input, '\n');
     removeWhiteSpaces(input);
 
-    cout << "Read input: " << input;
-
     //adding new variable
     if(input.find('=') != string::npos)
     {
-        char * p;
-        p = strtok((char*)input.c_str(), "=");
-        string name(p);
-        p = strtok(NULL, "=");
-        string val(p);
-        m_variables.emplace_back(CVariable(name, val));
+        makeNewVariable(input);
+        input = "";
     }
+
+    return input;
 }
 
 void CCalculator::removeWhiteSpaces(string &str)
 {
     for (auto it = str.begin(); it < str.end(); it++)
-        if (*it == ' ')
+        while (*it == ' ')
             str.erase(it);
+}
+
+void CCalculator::makeNewVariable(const string & input)
+{
+    char * token;
+    token = strtok((char*)input.c_str(), "=");
+    string name(token);
+    token = strtok(NULL, "=");
+    string val(token);
+    m_variables.emplace_back(CVariable(name, val));
 }
 
 void extractInt(const string & str);
