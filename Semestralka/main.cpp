@@ -144,6 +144,9 @@ string CCalculator::readInput()
     getline(cin, input, '\n');
     removeWhiteSpaces(input);
 
+    if(!input.empty())
+        m_history.push_back(input);
+
     //adding new variable
     if(input.find('=') != string::npos)
     {
