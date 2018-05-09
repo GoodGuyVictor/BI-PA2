@@ -166,6 +166,8 @@ private:
 
     void removeWhiteSpaces(string &);
     void makeNewVariable(const string&);
+    string calculate(const string&);
+    void display(const string&) const;
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator! Have fun! =)" << endl; }
@@ -175,19 +177,14 @@ public:
 
 void CCalculator::run()
 {
-    CParser parser;
     string input;
-    vector<string> parsedOutput;
+    string result;
 
     while(true)
     {
         input = readInput();
-        if(!input.empty())
-        {
-            parsedOutput.clear();
-            parsedOutput = parser.parse(input) ;
-            int x =0;
-        }
+        result = calculate(input);
+        display(result);
     }
 }
 
@@ -227,6 +224,23 @@ void CCalculator::makeNewVariable(const string & input)
     token = strtok(NULL, "=");
     string val(token);
     m_variables.emplace_back(CVariable(name, val));
+}
+
+string CCalculator::calculate(const string & input)
+{
+    CParser parser;
+    vector<string> parsedOutput;
+
+    if(!input.empty())
+    {
+        parsedOutput.clear();
+        parsedOutput = parser.parse(input) ;
+    }
+}
+
+void CCalculator::display(const string &) const
+{
+
 }
 
 void extractInt(const string & str);
