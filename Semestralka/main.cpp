@@ -165,7 +165,7 @@ private:
     vector<string> m_history;
 
     void removeWhiteSpaces(string &);
-    void makeNewVariable(const string&);
+    void createNewVariable(const string &);
     string calculate(const string&);
     void display(const string&) const;
 
@@ -202,7 +202,7 @@ string CCalculator::readInput()
     //adding new variable
     if(input.find('=') != string::npos)
     {
-        makeNewVariable(input);
+        createNewVariable(input);
         input = "";
     }
 
@@ -216,7 +216,7 @@ void CCalculator::removeWhiteSpaces(string &str)
             str.erase(it);
 }
 
-void CCalculator::makeNewVariable(const string & input)
+void CCalculator::createNewVariable(const string &input)
 {
     char * token;
     token = strtok((char*)input.c_str(), "=");
