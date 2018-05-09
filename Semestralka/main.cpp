@@ -68,14 +68,15 @@ private:
     unordered_map<char, int> m_opPrecedence = {
             {'+', 10},
             {'-', 10},
+            {'*', 20},
             {'/', 20},
             {'%', 20},
             {'(', 30},
     };
 
-    void shuntingYard(const string & input);
+    void shuntingYard(const string &);
     bool isOperator(const char) const;
-    void popOperatorFromStackToOutput(stack &);
+    void popOperatorFromStackToOutput(stack<char> &);
 public:
     CParser() = default;
     ~CParser() = default;
@@ -100,6 +101,11 @@ void CParser::shuntingYard(const string &input)
                 tmp_operand += *it;
             else
             {
+                if(!tmp_operand.empty()) {
+                    m_output.push_back(tmp_operand);
+                    tmp_operand = "";
+                }
+
                 if(*it == ')')
                 {
                     do
@@ -112,7 +118,8 @@ void CParser::shuntingYard(const string &input)
                 {
                     if(!operatorStack.empty())
                     {
-                        while(m_opPrecedence[operatorStack.top()] >= m_opPrecedence[*it])
+                        while(m_opPrecedence[operatorStack.top()] >= m_opPrecedence[*it]
+                              && operatorStack.top() != '(')
                         {
                             popOperatorFromStackToOutput(operatorStack);
                             if(operatorStack.empty())
@@ -121,14 +128,15 @@ void CParser::shuntingYard(const string &input)
                     }
 
                     operatorStack.push(*it);
-                    m_output.push_back(tmp_operand);
-                    tmp_operand = "";
                 }
             }
         }
         else
             throw InvalidInput();
     }
+
+    while(!operatorStack.empty())
+        popOperatorFromStackToOutput(operatorStack);
 }
 
 vector<string> CParser::parse(const string & input)
@@ -137,11 +145,12 @@ vector<string> CParser::parse(const string & input)
     return m_output;
 }
 
-bool CParser::isOperator(const char) const {
-    return false;
+bool CParser::isOperator(const char op) const
+{
+    return op == '+' || op == '-' || op == '*' || op == '/' || op == '%' || op == '(' || op == ')';
 }
 
-void CParser::popOperatorFromStackToOutput(stack &operatorStack)
+void CParser::popOperatorFromStackToOutput(stack<char> &operatorStack)
 {
     string tmp_operator;
     tmp_operator = operatorStack.top();
@@ -177,6 +186,7 @@ void CCalculator::run()
         {
             parsedOutput.clear();
             parsedOutput = parser.parse(input) ;
+            int x =0;
         }
     }
 }
