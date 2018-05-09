@@ -75,6 +75,7 @@ private:
 
     void shuntingYard(const string & input);
     bool isOperator(const char) const;
+    void popOperatorFromStackToOutput(stack &);
 public:
     CParser() = default;
     ~CParser() = default;
@@ -85,7 +86,6 @@ public:
 void CParser::shuntingYard(const string &input)
 {
     string tmp_operand;
-    string tmp_operator;
     stack<char> operatorStack;
 
     for (auto it = input.begin(); it < input.end(); it++)
@@ -104,9 +104,7 @@ void CParser::shuntingYard(const string &input)
                 {
                     do
                     {
-                        tmp_operator = operatorStack.top();
-                        m_output.push_back(tmp_operator);
-                        operatorStack.pop();
+                        popOperatorFromStackToOutput(operatorStack);
                     } while(operatorStack.top() != '(');
                     operatorStack.pop();
                 }
@@ -116,10 +114,7 @@ void CParser::shuntingYard(const string &input)
                     {
                         while(m_opPrecedence[operatorStack.top()] >= m_opPrecedence[*it])
                         {
-                            tmp_operator = operatorStack.top();
-                            operatorStack.pop();
-                            m_output.push_back(tmp_operator);
-                            tmp_operator = "";
+                            popOperatorFromStackToOutput(operatorStack);
                             if(operatorStack.empty())
                                 break;
                         }
@@ -128,7 +123,6 @@ void CParser::shuntingYard(const string &input)
                     operatorStack.push(*it);
                     m_output.push_back(tmp_operand);
                     tmp_operand = "";
-                    operatorStack.push(*it);
                 }
             }
         }
@@ -137,12 +131,22 @@ void CParser::shuntingYard(const string &input)
     }
 }
 
-vector<string> CParser::parse(const string &) {
-    return vector<string>();
+vector<string> CParser::parse(const string & input)
+{
+    shuntingYard(input);
+    return m_output;
 }
 
 bool CParser::isOperator(const char) const {
     return false;
+}
+
+void CParser::popOperatorFromStackToOutput(stack &operatorStack)
+{
+    string tmp_operator;
+    tmp_operator = operatorStack.top();
+    operatorStack.pop();
+    m_output.push_back(tmp_operator);
 }
 
 class CCalculator
