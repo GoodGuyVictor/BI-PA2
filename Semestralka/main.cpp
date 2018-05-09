@@ -18,41 +18,44 @@
 #include <unordered_map>
 using namespace std;
 
-
 class COperand
 {
 protected:
     string m_value;
+    string m_type;
 
 public:
     COperand() = default;
-    explicit COperand(const string & val) : m_value(val) {};
+    COperand(const string & val, string type) : m_value(val), m_type(type) {};
     virtual ~COperand() = default;
     COperand & operator+(const COperand & other);
+    virtual string getType() const = 0;
+
 };
 
 
 class CInteger : public COperand
 {
 public:
-    explicit CInteger(const string & val) : COperand(val) {}
+    explicit CInteger(const string & val) : COperand(val, "integer") {}
 };
 
 
 class CDecimal : public COperand
 {
 public:
-    explicit CDecimal(const string & val) : COperand(val) {}
+    explicit CDecimal(const string & val) : COperand(val, "decimal") {}
 
 };
 
 
-class CVariable : public COperand
+class CVariable
 {
 private:
+    string m_value;
     string m_name;
 public:
-    explicit CVariable(const string & name, const string & val) : COperand(val), m_name(name) {}
+    explicit CVariable(const string & name, const string & val) : m_name(name), m_value(val) {}
 };
 
 
