@@ -18,6 +18,8 @@
 #include <unordered_map>
 using namespace std;
 
+class InvalidInput{};
+
 class COperand
 {
 protected:
@@ -63,7 +65,7 @@ class CParser
 {
 private:
     vector<string> m_output;
-    unordered_map<char, int> m_operatorPrecedence = {
+    unordered_map<char, int> m_opPrecedence = {
             {'+', 10},
             {'-', 10},
             {'/', 20},
@@ -82,26 +84,56 @@ public:
 
 void CParser::shuntingYard(const string &input)
 {
-    string operand;
+    string tmp_operand;
+    string tmp_operator;
     stack<char> operatorStack;
 
     for (auto it = input.begin(); it < input.end(); it++)
     {
         if(isdigit(*it))
-            operand += *it;
+            tmp_operand += *it;
         else if(isOperator(*it))
         {
             if(*it == '-' && it == input.begin())
-                operand += *it;
+                tmp_operand += *it;
             else if(*it == '-' && *(it-1) == '(')
-                operand += *it;
+                tmp_operand += *it;
             else
             {
-                m_output.push_back(operand);
-                operand = "";
-                operatorStack.push(*it);
+                if(*it == ')')
+                {
+                    do
+                    {
+                        tmp_operator = operatorStack.top();
+                        m_output.push_back(tmp_operator);
+                        operatorStack.pop();
+                    } while(operatorStack.top() != '(');
+                    operatorStack.pop();
+                }
+                else
+                {
+                    if(!operatorStack.empty())
+                    {
+                        while(m_opPrecedence[operatorStack.top()] >= m_opPrecedence[*it])
+                        {
+                            tmp_operator = operatorStack.top();
+                            operatorStack.pop();
+                            m_output.push_back(tmp_operator);
+                            tmp_operator = "";
+                            if(operatorStack.empty())
+                                break;
+                        }
+                    }
+
+                    operatorStack.push(*it);
+                    m_output.push_back(tmp_operand);
+                    tmp_operand = "";
+                    operatorStack.push(*it);
+                }
             }
         }
+        else
+            throw InvalidInput();
     }
 }
 
