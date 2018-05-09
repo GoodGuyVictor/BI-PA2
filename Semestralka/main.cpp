@@ -165,9 +165,10 @@ private:
     vector<string> m_history;
 
     void removeWhiteSpaces(string &);
-    void createNewVariable(const string &);
+    void createNewVariable(const string&);
     string calculate(const string&);
     void display(const string&) const;
+    void saveHistory(const string&, const string&);
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator! Have fun! =)" << endl; }
@@ -183,8 +184,11 @@ void CCalculator::run()
     while(true)
     {
         input = readInput();
+        if(input == "variable")
+            continue;
         result = calculate(input);
         display(result);
+        saveHistory(input, result);
     }
 }
 
@@ -196,14 +200,12 @@ string CCalculator::readInput()
     getline(cin, input, '\n');
     removeWhiteSpaces(input);
 
-    if(!input.empty())
-        m_history.push_back(input);
-
     //adding new variable
     if(input.find('=') != string::npos)
     {
+        m_history.push_back(input);
         createNewVariable(input);
-        input = "";
+        return "variable";
     }
 
     return input;
@@ -241,6 +243,15 @@ string CCalculator::calculate(const string & input)
 void CCalculator::display(const string &) const
 {
 
+}
+
+void CCalculator::saveHistory(const string & input, const string & result)
+{
+    string tmp;
+    tmp += input;
+    tmp += "=";
+    tmp += result;
+    m_history.push_back(tmp);
 }
 
 void extractInt(const string & str);
