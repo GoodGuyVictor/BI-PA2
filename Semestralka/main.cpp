@@ -171,7 +171,8 @@ private:
     void saveHistory(const string&, const string&);
 
 public:
-    CCalculator() { cout << "Welcome to super high precision calculator! Have fun! =)" << endl; }
+    CCalculator() { cout << "Welcome to super high precision calculator!" << endl
+                         <<"You can quit anytime typing \"quit\"" << endl; }
     void run();
     string readInput();
 };
@@ -186,6 +187,8 @@ void CCalculator::run()
         input = readInput();
         if(input == "variable")
             continue;
+        if(input == "quit")
+            break;
         result = calculate(input);
         display(result);
         saveHistory(input, result);
