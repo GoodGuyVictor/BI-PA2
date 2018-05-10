@@ -41,7 +41,7 @@ public:
     virtual COperand * subtractInteger          (const COperand & other) = 0;
     virtual COperand * subtractLongInteger      (const COperand & other) = 0;
     virtual COperand * subtractDecimal          (const COperand & other) = 0;
-    
+
     virtual COperand * multiplyByInteger        (const COperand & other) = 0;
     virtual COperand * multiplyByLongInteger    (const COperand & other) = 0;
     virtual COperand * multiplyByDecimal        (const COperand & other) = 0;
@@ -52,11 +52,20 @@ public:
 };
 
 
+
 class CInteger : public COperand
 {
 public:
     explicit CInteger(const string & val) : COperand(val, "integer") {}
 };
+
+
+
+class CLongInteger : public CInteger
+{
+    CLongInteger() = default;
+};
+
 
 
 class CDecimal : public COperand
@@ -67,14 +76,16 @@ public:
 };
 
 
-class CVariable
+
+class CVariable : public COperand
 {
 private:
-    string m_value;
     string m_name;
 public:
-    explicit CVariable(const string & name, const string & val) : m_name(name), m_value(val) {}
+    explicit CVariable(const string & name, const string & val, const string & type)
+            : COperand(val, type), m_name(name) {}
 };
+
 
 
 class CParser
@@ -90,9 +101,9 @@ private:
             {'(', 30},
     };
 
-    void shuntingYard(const string &);
-    bool isOperator(const char) const;
-    void popOperatorFromStackToOutput(stack<char> &);
+    void shuntingYard                   (const string &);
+    bool isOperator                     (const char) const;
+    void popOperatorFromStackToOutput   (stack<char> &);
 public:
     CParser() = default;
     ~CParser() = default;
@@ -177,6 +188,8 @@ void CParser::popOperatorFromStackToOutput(stack<char> &operatorStack)
     operatorStack.pop();
     m_output.push_back(tmp_operator);
 }
+
+
 
 class CCalculator
 {
