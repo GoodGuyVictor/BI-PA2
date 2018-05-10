@@ -27,12 +27,28 @@ protected:
     string m_type;
 
 public:
-    COperand() = default;
-    COperand(const string & val, string type) : m_value(val), m_type(type) {};
-    virtual ~COperand() = default;
-    COperand & operator+(const COperand & other);
-    virtual string getType() const = 0;
+    COperand                                    () = default;
+    COperand                                    (const string & val, const string & type)
+            : m_value(val), m_type(type) {};
+    virtual ~COperand                           () = default;
 
+            COperand & operator+                (const COperand & other);
+
+    virtual COperand * addInteger               (const COperand & other) = 0;
+    virtual COperand * addLongInteger           (const COperand & other) = 0;
+    virtual COperand * addDecimal               (const COperand & other) = 0;
+
+    virtual COperand * subtractInteger          (const COperand & other) = 0;
+    virtual COperand * subtractLongInteger      (const COperand & other) = 0;
+    virtual COperand * subtractDecimal          (const COperand & other) = 0;
+    
+    virtual COperand * multiplyByInteger        (const COperand & other) = 0;
+    virtual COperand * multiplyByLongInteger    (const COperand & other) = 0;
+    virtual COperand * multiplyByDecimal        (const COperand & other) = 0;
+
+    virtual COperand * devideByInteger          (const COperand & other) = 0;
+    virtual COperand * devideByLongInteger      (const COperand & other) = 0;
+    virtual COperand * devideByDecimal          (const COperand & other) = 0;
 };
 
 
@@ -131,6 +147,10 @@ void CParser::shuntingYard(const string &input)
                 }
             }
         }
+//        else if(variable)
+//        {
+//
+//        }
         else
             throw InvalidInput();
     }
