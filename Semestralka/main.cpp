@@ -34,21 +34,21 @@ public:
 
             COperand & operator+                (const COperand & other);
 
-    virtual COperand * addInteger               (const COperand & other) = 0;
-    virtual COperand * addLongInteger           (const COperand & other) = 0;
-    virtual COperand * addDecimal               (const COperand & other) = 0;
-
-    virtual COperand * subtractInteger          (const COperand & other) = 0;
-    virtual COperand * subtractLongInteger      (const COperand & other) = 0;
-    virtual COperand * subtractDecimal          (const COperand & other) = 0;
-
-    virtual COperand * multiplyByInteger        (const COperand & other) = 0;
-    virtual COperand * multiplyByLongInteger    (const COperand & other) = 0;
-    virtual COperand * multiplyByDecimal        (const COperand & other) = 0;
-
-    virtual COperand * devideByInteger          (const COperand & other) = 0;
-    virtual COperand * devideByLongInteger      (const COperand & other) = 0;
-    virtual COperand * devideByDecimal          (const COperand & other) = 0;
+//    virtual COperand * addInteger               (const COperand & other) = 0;
+//    virtual COperand * addLongInteger           (const COperand & other) = 0;
+//    virtual COperand * addDecimal               (const COperand & other) = 0;
+//
+//    virtual COperand * subtractInteger          (const COperand & other) = 0;
+//    virtual COperand * subtractLongInteger      (const COperand & other) = 0;
+//    virtual COperand * subtractDecimal          (const COperand & other) = 0;
+//
+//    virtual COperand * multiplyByInteger        (const COperand & other) = 0;
+//    virtual COperand * multiplyByLongInteger    (const COperand & other) = 0;
+//    virtual COperand * multiplyByDecimal        (const COperand & other) = 0;
+//
+//    virtual COperand * devideByInteger          (const COperand & other) = 0;
+//    virtual COperand * devideByLongInteger      (const COperand & other) = 0;
+//    virtual COperand * devideByDecimal          (const COperand & other) = 0;
 };
 
 
@@ -158,10 +158,10 @@ void CParser::shuntingYard(const string &input)
                 }
             }
         }
-//        else if(variable)
-//        {
-//
-//        }
+        else if(isalpha(*it))
+        {
+
+        }
         else
             throw InvalidInput();
     }
@@ -202,11 +202,13 @@ private:
     string calculate(const string&);
     void display(const string&) const;
     void saveHistory(const string&, const string&);
-    string determineType(const string&);
+    string determineType(const string&) const;
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator!" << endl
-                         <<"You can quit anytime typing \"quit\"" << endl; }
+                         << "-To creat a variable type: <variable name> = <value>" << endl
+                         << " *Variable names can consist of letters and number having letter as the very first symbol" << endl
+                         << "-To quit type \"quit\"" << endl;}
     void run();
     string readInput();
 };
@@ -262,7 +264,7 @@ void CCalculator::createNewVariable(const string &input)
     string name(token);
     token = strtok(NULL, "=");
     string val(token);
-    m_variables.emplace_back(CVariable(name, val, ));
+    m_variables.emplace_back(CVariable(name, val, determineType(val)));
 }
 
 string CCalculator::calculate(const string & input)
@@ -292,15 +294,15 @@ void CCalculator::saveHistory(const string & input, const string & result)
     m_history.push_back(tmp);
 }
 
-string CCalculator::determineType(const string & number)
+string CCalculator::determineType(const string & number) const
 {
     if(number.find('.') != string::npos || number.find('e') != string::npos)
         return "dec";
 
     if(number.size() > 6)
-        return "int";
+        return "longInt";
 
-    return "longInt";
+    return "int";
 }
 
 
