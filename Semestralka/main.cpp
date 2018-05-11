@@ -111,13 +111,12 @@ COperand *COperand::operator/(const COperand &other)
 class CInteger : public COperand
 {
 public:
-    CInteger() = default;
     explicit CInteger(const string & val) : COperand(val, VAL_INT) {}
 };
 
 
 
-class CLongInteger : public CInteger
+class CLongInteger : public COperand
 {
 public:
     CLongInteger(const string & val) : COperand(val, VAL_LONGINT) {};
