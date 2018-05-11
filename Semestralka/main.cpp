@@ -81,9 +81,9 @@ COperand *COperand::operator*(const COperand &other)
 {
     switch(other.m_type)
     {
-        case VAL_INT:       return subtractInteger(other);
-        case VAL_LONGINT:   return subtractLongInteger(other);
-        case VAL_DEC:       return subtractDecimal(other);
+        case VAL_INT:       return multiplyByInteger(other);
+        case VAL_LONGINT:   return multiplyByLongInteger(other);
+        case VAL_DEC:       return multiplyByDecimal(other);
     }
 }
 
@@ -91,21 +91,21 @@ COperand *COperand::operator/(const COperand &other)
 {
     switch(other.m_type)
     {
-        case VAL_INT:       return subtractInteger(other);
-        case VAL_LONGINT:   return subtractLongInteger(other);
-        case VAL_DEC:       return subtractDecimal(other);
+        case VAL_INT:       return devideByInteger(other);
+        case VAL_LONGINT:   return devideByLongInteger(other);
+        case VAL_DEC:       return devideByDecimal(other);
     }
 }
 
-COperand *COperand::operator%(const COperand &other)
-{
-    switch(other.m_type)
-    {
-        case VAL_INT:       return subtractInteger(other);
-        case VAL_LONGINT:   return subtractLongInteger(other);
-        case VAL_DEC:       return subtractDecimal(other);
-    }
-}
+//COperand *COperand::operator%(const COperand &other)
+//{
+//    switch(other.m_type)
+//    {
+//        case VAL_INT:       return subtractInteger(other);
+//        case VAL_LONGINT:   return subtractLongInteger(other);
+//        case VAL_DEC:       return subtractDecimal(other);
+//    }
+//}
 
 
 class CInteger : public COperand
@@ -356,6 +356,9 @@ string CCalculator::calculate(const string & input)
 
                 COperand *result = performOperation(lVal, rVal, output);
                 operandStack.push(result);
+
+                delete rVal;
+                delete lVal;
             }
         }
     }
@@ -430,7 +433,6 @@ COperand *CCalculator::performOperation(COperand * lVal, COperand * rVal, const 
 
     if(op == "%")
         return *lVal % *rVal;
-
 }
 
 
