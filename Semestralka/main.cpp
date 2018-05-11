@@ -34,7 +34,11 @@ public:
             : m_value(val), m_type(type) {};
     virtual ~COperand                           () = default;
 
-            COperand * operator+                (const COperand & other);
+            COperand * operator +               (const COperand & other);
+            COperand * operator -               (const COperand & other);
+            COperand * operator *               (const COperand & other);
+            COperand * operator /               (const COperand & other);
+            COperand * operator %               (const COperand & other);
 
 //    virtual COperand * addInteger               (const COperand & other) = 0;
 //    virtual COperand * addLongInteger           (const COperand & other) = 0;
