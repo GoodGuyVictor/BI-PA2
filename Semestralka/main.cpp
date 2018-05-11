@@ -66,6 +66,7 @@ public:
 
 class CLongInteger : public CInteger
 {
+public:
     CLongInteger(const string & val) : COperand(val, VAL_LONGINT) {};
 };
 
@@ -211,6 +212,7 @@ private:
     void display(const string&) const;
     void saveHistory(const string&, const string&);
     EValType determineType(const string&) const;
+    bool isOperator(const string&) const;
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator!" << endl
@@ -289,6 +291,8 @@ string CCalculator::calculate(const string & input)
 
         for(const auto & output : parsedOutput)
         {
+            if(isOpeoutput)
+
             switch (determineType(output))
             {
                 case VAL_INT: { COperand *p = new CInteger(output); break; }
@@ -325,10 +329,10 @@ EValType CCalculator::determineType(const string & number) const
     return VAL_INT;
 }
 
-
-
-
-
+bool CCalculator::isOperator(const string & op) const
+{
+    return op == "+" || op == "-" || op == "*" || op == "/" || op == "%";
+}
 
 
 int main()
