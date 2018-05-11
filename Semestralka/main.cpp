@@ -58,6 +58,7 @@ public:
 class CInteger : public COperand
 {
 public:
+    CInteger() = default;
     explicit CInteger(const string & val) : COperand(val, VAL_INT) {}
 };
 
@@ -65,7 +66,7 @@ public:
 
 class CLongInteger : public CInteger
 {
-    CLongInteger() = default;
+    CLongInteger(const string & val) : COperand(val, VAL_LONGINT) {};
 };
 
 
@@ -291,8 +292,8 @@ string CCalculator::calculate(const string & input)
             switch (determineType(output))
             {
                 case VAL_INT: { COperand *p = new CInteger(output); break; }
-                case VAL_LONGINT: { COperand *p = new CInteger(output); break; }
-                case VAL_DEC: { COperand *p = new CInteger(output); break; }
+                case VAL_LONGINT: { COperand *p = new CLongInteger(output); break; }
+                case VAL_DEC: { COperand *p = new CDecimal(output); break; }
             }
         }
     }
