@@ -277,9 +277,10 @@ string CCalculator::calculate(const string & input)
     }
 }
 
-void CCalculator::display(const string &) const
+void CCalculator::display(const string & result) const
 {
-
+    cout << "----------" << endl;
+    cout << result << endl;
 }
 
 void CCalculator::saveHistory(const string & input, const string & result)
@@ -302,7 +303,11 @@ string CCalculator::determineType(const string & number)
     return "longInt";
 }
 
-void extractInt(const string & str);
+
+
+
+
+
 
 int main()
 {
