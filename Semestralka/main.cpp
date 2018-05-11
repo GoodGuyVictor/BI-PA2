@@ -160,7 +160,7 @@ void CParser::shuntingYard(const string &input)
         }
         else if(isalpha(*it))
         {
-
+            tmp_operand += *it;
         }
         else
             throw InvalidInput();
