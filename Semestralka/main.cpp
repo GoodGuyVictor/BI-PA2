@@ -20,15 +20,17 @@ using namespace std;
 
 class InvalidInput{};
 
+enum EValType { VAL_INT, VAL_LONGINT, VAL_DEC };
+
 class COperand
 {
 protected:
     string m_value;
-    string m_type;
+    EValType m_type;
 
 public:
     COperand                                    () = default;
-    COperand                                    (const string & val, const string & type)
+    COperand                                    (const string & val, EValType type)
             : m_value(val), m_type(type) {};
     virtual ~COperand                           () = default;
 
@@ -56,7 +58,7 @@ public:
 class CInteger : public COperand
 {
 public:
-    explicit CInteger(const string & val) : COperand(val, "integer") {}
+    explicit CInteger(const string & val) : COperand(val, VAL_INT) {}
 };
 
 
@@ -71,7 +73,7 @@ class CLongInteger : public CInteger
 class CDecimal : public COperand
 {
 public:
-    explicit CDecimal(const string & val) : COperand(val, "decimal") {}
+    explicit CDecimal(const string & val) : COperand(val, VAL_DEC) {}
 
 };
 
@@ -82,7 +84,7 @@ class CVariable : public COperand
 private:
     string m_name;
 public:
-    explicit CVariable(const string & name, const string & val, const string & type)
+    explicit CVariable(const string & name, const string & val, EValType type)
             : COperand(val, type), m_name(name) {}
 };
 
@@ -207,7 +209,7 @@ private:
     string calculate(const string&);
     void display(const string&) const;
     void saveHistory(const string&, const string&);
-    string determineType(const string&) const;
+    EValType determineType(const string&) const;
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator!" << endl
@@ -276,12 +278,23 @@ string CCalculator::calculate(const string & input)
 {
     CParser parser;
     vector<string> parsedOutput;
+    stack<COperand*> operandStack;
 
     if(!input.empty())
     {
         parsedOutput.clear();
         parsedOutput = parser.parse(input) ;
         int x = 0;
+
+        for(const auto & output : parsedOutput)
+        {
+            switch (determineType(output))
+            {
+                case VAL_INT: { COperand *p = new CInteger(output); break; }
+                case VAL_LONGINT: { COperand *p = new CInteger(output); break; }
+                case VAL_DEC: { COperand *p = new CInteger(output); break; }
+            }
+        }
     }
 }
 
@@ -300,15 +313,15 @@ void CCalculator::saveHistory(const string & input, const string & result)
     m_history.push_back(tmp);
 }
 
-string CCalculator::determineType(const string & number) const
+EValType CCalculator::determineType(const string & number) const
 {
     if(number.find('.') != string::npos || number.find('e') != string::npos)
-        return "dec";
+        return VAL_DEC;
 
     if(number.size() > 6)
-        return "longInt";
+        return VAL_LONGINT;
 
-    return "int";
+    return VAL_INT;
 }
 
 
