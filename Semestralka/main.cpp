@@ -29,7 +29,6 @@ protected:
     EValType m_type;
 
 public:
-    COperand                                    () = default;
     COperand                                    (const string & val, EValType type)
             : m_value(val), m_type(type) {};
     virtual ~COperand                           () = default;
@@ -111,7 +110,7 @@ COperand *COperand::operator/(const COperand &other)
 class CInteger : public COperand
 {
 public:
-    explicit CInteger(const string & val) : COperand(val, VAL_INT) {}
+    explicit CInteger(const string & val) : COperand(val, VAL_INT) {};
 
     COperand * addInteger               (const COperand & other) override;
     COperand * addLongInteger           (const COperand & other) override;
@@ -159,7 +158,7 @@ public:
 class CDecimal : public COperand
 {
 public:
-    explicit CDecimal(const string & val) : COperand(val, VAL_DEC) {}
+    explicit CDecimal(const string & val) : COperand(val, VAL_DEC) {};
 
     COperand * addInteger               (const COperand & other) override;
     COperand * addLongInteger           (const COperand & other) override;
@@ -186,7 +185,7 @@ private:
     string m_name;
 public:
     explicit CVariable(const string & name, const string & val, EValType type)
-            : COperand(val, type), m_name(name) {}
+            : COperand(val, type), m_name(name) {};
 
     COperand * addInteger               (const COperand & other) override;
     COperand * addLongInteger           (const COperand & other) override;
@@ -321,23 +320,23 @@ private:
     vector<CVariable> m_variables;
     vector<string> m_history;
 
-    void removeWhiteSpaces(string &);
-    void createNewVariable(const string&);
-    string calculate(const string&);
-    void display(const string&) const;
-    void saveHistory(const string&, const string&);
-    EValType determineType(const string&) const;
-    bool isOperator(const string&) const;
-    void pushToStack(const string &, stack<COperand*> &) const;
-    COperand * performOperation(COperand*, COperand*, const string&);
+    string      readInput           ();
+    void        removeWhiteSpaces   (string &);
+    void        createNewVariable   (const string&);
+    string      calculate           (const string&);
+    void        display             (const string&) const;
+    void        saveHistory         (const string&, const string&);
+    EValType    determineType       (const string&) const;
+    bool        isOperator          (const string&) const;
+    void        pushToStack         (const string &, stack<COperand*> &) const;
+    COperand *  performOperation    (COperand*, COperand*, const string&);
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator!" << endl
                          << "-To creat a variable type: <variable name> = <value>" << endl
-                         << " *Variable names can consist of letters and number having letter as the very first symbol" << endl
+                         << " *Variable names can only consist of letters and numbers having letter as the very first symbol" << endl
                          << "-To quit type \"quit\"" << endl;}
-    void run();
-    string readInput();
+    void    run();
 };
 
 void CCalculator::run()
@@ -435,8 +434,9 @@ void CCalculator::display(const string & result) const
 void CCalculator::saveHistory(const string & input, const string & result)
 {
     string tmp;
+
     tmp += input;
-    tmp += "=";
+    tmp += " = ";
     tmp += result;
     m_history.push_back(tmp);
 }
@@ -493,8 +493,8 @@ COperand *CCalculator::performOperation(COperand * lVal, COperand * rVal, const 
     if(op == "/")
         return *lVal / *rVal;
 
-    if(op == "%")
-        return *lVal % *rVal;
+//    if(op == "%")
+//        return *lVal % *rVal;
 }
 
 
