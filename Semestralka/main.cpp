@@ -166,6 +166,11 @@ void CParser::shuntingYard(const string &input)
             throw InvalidInput();
     }
 
+    if(!tmp_operand.empty()) {
+        m_output.push_back(tmp_operand);
+        tmp_operand = "";
+    }
+
     while(!operatorStack.empty())
         popOperatorFromStackToOutput(operatorStack);
 }
@@ -276,6 +281,7 @@ string CCalculator::calculate(const string & input)
     {
         parsedOutput.clear();
         parsedOutput = parser.parse(input) ;
+        int x = 0;
     }
 }
 
@@ -365,3 +371,7 @@ void extractInt(const string & str)
     for (auto &it : tmpCoords)
         cout << it << " ";
 }
+
+//todo list
+//input validation
+//((15 / (7 - (1 + 1))) * 3) - (2 + (1 + 1))
