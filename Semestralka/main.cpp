@@ -34,7 +34,7 @@ public:
             : m_value(val), m_type(type) {};
     virtual ~COperand                           () = default;
 
-            COperand & operator+                (const COperand & other);
+            COperand * operator+                (const COperand & other);
 
 //    virtual COperand * addInteger               (const COperand & other) = 0;
 //    virtual COperand * addLongInteger           (const COperand & other) = 0;
@@ -213,6 +213,8 @@ private:
     void saveHistory(const string&, const string&);
     EValType determineType(const string&) const;
     bool isOperator(const string&) const;
+    void pushToStack(const string &, stack<COperand*> &) const;
+    COperand * performOperation(COperand*, COperand*, const string&);
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator!" << endl
@@ -287,17 +289,20 @@ string CCalculator::calculate(const string & input)
     {
         parsedOutput.clear();
         parsedOutput = parser.parse(input) ;
-        int x = 0;
 
         for(const auto & output : parsedOutput)
         {
-            if(isOpeoutput)
-
-            switch (determineType(output))
+            if(!isOperator(output))
+                pushToStack(output, operandStack);
+            else
             {
-                case VAL_INT: { COperand *p = new CInteger(output); break; }
-                case VAL_LONGINT: { COperand *p = new CLongInteger(output); break; }
-                case VAL_DEC: { COperand *p = new CDecimal(output); break; }
+                COperand *rVal = operandStack.top();
+                operandStack.pop();
+                COperand *lVal = operandStack.top();
+                operandStack.pop();
+
+                COperand *result = performOperation(lVal, rVal, output);
+                operandStack.push(result);
             }
         }
     }
@@ -332,6 +337,47 @@ EValType CCalculator::determineType(const string & number) const
 bool CCalculator::isOperator(const string & op) const
 {
     return op == "+" || op == "-" || op == "*" || op == "/" || op == "%";
+}
+
+void CCalculator::pushToStack(const string &output, stack<COperand *> &stack) const
+{
+    switch (determineType(output))
+    {
+        case VAL_INT: {
+            COperand *p = new CInteger(output);
+            stack.push(p);
+            break;
+        }
+        case VAL_LONGINT: {
+            COperand *p = new CLongInteger(output);
+            stack.push(p);
+            break;
+        }
+        case VAL_DEC: {
+            COperand *p = new CDecimal(output);
+            stack.push(p);
+            break;
+        }
+    }
+}
+
+COperand *CCalculator::performOperation(COperand * lVal, COperand * rVal, const string & op)
+{
+    if(op == "+")
+        return *lVal + *rVal;
+
+    if(op == "-")
+        return *lVal - *rVal;
+
+    if(op == "*")
+        return*lVal * *rVal;
+
+    if(op == "/")
+        return *lVal / *rVal;
+
+    if(op == "%")
+        return *lVal % *rVal;
+
 }
 
 
