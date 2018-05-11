@@ -202,6 +202,7 @@ private:
     string calculate(const string&);
     void display(const string&) const;
     void saveHistory(const string&, const string&);
+    string determineType(const string&);
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator!" << endl
@@ -261,7 +262,7 @@ void CCalculator::createNewVariable(const string &input)
     string name(token);
     token = strtok(NULL, "=");
     string val(token);
-    m_variables.emplace_back(CVariable(name, val));
+    m_variables.emplace_back(CVariable(name, val, ));
 }
 
 string CCalculator::calculate(const string & input)
@@ -288,6 +289,17 @@ void CCalculator::saveHistory(const string & input, const string & result)
     tmp += "=";
     tmp += result;
     m_history.push_back(tmp);
+}
+
+string CCalculator::determineType(const string & number)
+{
+    if(number.find('.') != string::npos || number.find('e') != string::npos)
+        return "dec";
+
+    if(number.size() > 6)
+        return "int";
+
+    return "longInt";
 }
 
 void extractInt(const string & str);
