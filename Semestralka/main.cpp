@@ -457,22 +457,22 @@ bool CCalculator::isOperator(const string & op) const
     return op == "+" || op == "-" || op == "*" || op == "/" || op == "%";
 }
 
-void CCalculator::pushToStack(const string &output, stack<COperand *> &stack) const
+void CCalculator::pushToStack(const string &operand, stack<COperand *> &stack) const
 {
-    switch (determineType(output))
+    switch (determineType(operand))
     {
         case VAL_INT: {
-            COperand *p = new CInteger(output);
+            COperand *p = new CInteger(operand);
             stack.push(p);
             break;
         }
         case VAL_LONGINT: {
-            COperand *p = new CLongInteger(output);
+            COperand *p = new CLongInteger(operand);
             stack.push(p);
             break;
         }
         case VAL_DEC: {
-            COperand *p = new CDecimal(output);
+            COperand *p = new CDecimal(operand);
             stack.push(p);
             break;
         }
