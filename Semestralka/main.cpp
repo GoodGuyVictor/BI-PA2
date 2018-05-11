@@ -40,23 +40,72 @@ public:
             COperand * operator /               (const COperand & other);
             COperand * operator %               (const COperand & other);
 
-//    virtual COperand * addInteger               (const COperand & other) = 0;
-//    virtual COperand * addLongInteger           (const COperand & other) = 0;
-//    virtual COperand * addDecimal               (const COperand & other) = 0;
-//
-//    virtual COperand * subtractInteger          (const COperand & other) = 0;
-//    virtual COperand * subtractLongInteger      (const COperand & other) = 0;
-//    virtual COperand * subtractDecimal          (const COperand & other) = 0;
-//
-//    virtual COperand * multiplyByInteger        (const COperand & other) = 0;
-//    virtual COperand * multiplyByLongInteger    (const COperand & other) = 0;
-//    virtual COperand * multiplyByDecimal        (const COperand & other) = 0;
-//
-//    virtual COperand * devideByInteger          (const COperand & other) = 0;
-//    virtual COperand * devideByLongInteger      (const COperand & other) = 0;
-//    virtual COperand * devideByDecimal          (const COperand & other) = 0;
+    virtual COperand * addInteger               (const COperand & other) = 0;
+    virtual COperand * addLongInteger           (const COperand & other) = 0;
+    virtual COperand * addDecimal               (const COperand & other) = 0;
+
+    virtual COperand * subtractInteger          (const COperand & other) = 0;
+    virtual COperand * subtractLongInteger      (const COperand & other) = 0;
+    virtual COperand * subtractDecimal          (const COperand & other) = 0;
+
+    virtual COperand * multiplyByInteger        (const COperand & other) = 0;
+    virtual COperand * multiplyByLongInteger    (const COperand & other) = 0;
+    virtual COperand * multiplyByDecimal        (const COperand & other) = 0;
+
+    virtual COperand * devideByInteger          (const COperand & other) = 0;
+    virtual COperand * devideByLongInteger      (const COperand & other) = 0;
+    virtual COperand * devideByDecimal          (const COperand & other) = 0;
 };
 
+COperand *COperand::operator+(const COperand &other)
+{
+    switch(other.m_type)
+    {
+        case VAL_INT:       return addInteger(other);
+        case VAL_LONGINT:   return addLongInteger(other);
+        case VAL_DEC:       return addDecimal(other);
+    }
+}
+
+COperand *COperand::operator-(const COperand &other)
+{
+    switch(other.m_type)
+    {
+        case VAL_INT:       return subtractInteger(other);
+        case VAL_LONGINT:   return subtractLongInteger(other);
+        case VAL_DEC:       return subtractDecimal(other);
+    }
+}
+
+COperand *COperand::operator*(const COperand &other)
+{
+    switch(other.m_type)
+    {
+        case VAL_INT:       return subtractInteger(other);
+        case VAL_LONGINT:   return subtractLongInteger(other);
+        case VAL_DEC:       return subtractDecimal(other);
+    }
+}
+
+COperand *COperand::operator/(const COperand &other)
+{
+    switch(other.m_type)
+    {
+        case VAL_INT:       return subtractInteger(other);
+        case VAL_LONGINT:   return subtractLongInteger(other);
+        case VAL_DEC:       return subtractDecimal(other);
+    }
+}
+
+COperand *COperand::operator%(const COperand &other)
+{
+    switch(other.m_type)
+    {
+        case VAL_INT:       return subtractInteger(other);
+        case VAL_LONGINT:   return subtractLongInteger(other);
+        case VAL_DEC:       return subtractDecimal(other);
+    }
+}
 
 
 class CInteger : public COperand
