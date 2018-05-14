@@ -19,8 +19,14 @@ string
 -
 vector
 -
+algorithm
+-
+cstring
+-
+stack
+-
 typeinfo
 -
-algorithm
+unordered_map
 -
 

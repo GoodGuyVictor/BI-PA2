@@ -123,6 +123,114 @@ Semestralka/fast:
 	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/build
 .PHONY : Semestralka/fast
 
+CCalculator.o: CCalculator.cpp.o
+
+.PHONY : CCalculator.o
+
+# target to build an object file
+CCalculator.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CCalculator.cpp.o
+.PHONY : CCalculator.cpp.o
+
+CCalculator.i: CCalculator.cpp.i
+
+.PHONY : CCalculator.i
+
+# target to preprocess a source file
+CCalculator.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CCalculator.cpp.i
+.PHONY : CCalculator.cpp.i
+
+CCalculator.s: CCalculator.cpp.s
+
+.PHONY : CCalculator.s
+
+# target to generate assembly for a file
+CCalculator.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CCalculator.cpp.s
+.PHONY : CCalculator.cpp.s
+
+CInteger.o: CInteger.cpp.o
+
+.PHONY : CInteger.o
+
+# target to build an object file
+CInteger.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CInteger.cpp.o
+.PHONY : CInteger.cpp.o
+
+CInteger.i: CInteger.cpp.i
+
+.PHONY : CInteger.i
+
+# target to preprocess a source file
+CInteger.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CInteger.cpp.i
+.PHONY : CInteger.cpp.i
+
+CInteger.s: CInteger.cpp.s
+
+.PHONY : CInteger.s
+
+# target to generate assembly for a file
+CInteger.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CInteger.cpp.s
+.PHONY : CInteger.cpp.s
+
+COperand.o: COperand.cpp.o
+
+.PHONY : COperand.o
+
+# target to build an object file
+COperand.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/COperand.cpp.o
+.PHONY : COperand.cpp.o
+
+COperand.i: COperand.cpp.i
+
+.PHONY : COperand.i
+
+# target to preprocess a source file
+COperand.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/COperand.cpp.i
+.PHONY : COperand.cpp.i
+
+COperand.s: COperand.cpp.s
+
+.PHONY : COperand.s
+
+# target to generate assembly for a file
+COperand.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/COperand.cpp.s
+.PHONY : COperand.cpp.s
+
+CParser.o: CParser.cpp.o
+
+.PHONY : CParser.o
+
+# target to build an object file
+CParser.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CParser.cpp.o
+.PHONY : CParser.cpp.o
+
+CParser.i: CParser.cpp.i
+
+.PHONY : CParser.i
+
+# target to preprocess a source file
+CParser.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CParser.cpp.i
+.PHONY : CParser.cpp.i
+
+CParser.s: CParser.cpp.s
+
+.PHONY : CParser.s
+
+# target to generate assembly for a file
+CParser.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CParser.cpp.s
+.PHONY : CParser.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +267,18 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... Semestralka"
+	@echo "... CCalculator.o"
+	@echo "... CCalculator.i"
+	@echo "... CCalculator.s"
+	@echo "... CInteger.o"
+	@echo "... CInteger.i"
+	@echo "... CInteger.s"
+	@echo "... COperand.o"
+	@echo "... COperand.i"
+	@echo "... COperand.s"
+	@echo "... CParser.o"
+	@echo "... CParser.i"
+	@echo "... CParser.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

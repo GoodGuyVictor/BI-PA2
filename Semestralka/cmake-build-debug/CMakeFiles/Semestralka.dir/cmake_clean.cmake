@@ -1,5 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Semestralka.dir/main.cpp.o"
+  "CMakeFiles/Semestralka.dir/CCalculator.cpp.o"
+  "CMakeFiles/Semestralka.dir/CParser.cpp.o"
+  "CMakeFiles/Semestralka.dir/COperand.cpp.o"
+  "CMakeFiles/Semestralka.dir/CInteger.cpp.o"
   "Semestralka.pdb"
   "Semestralka"
 )
