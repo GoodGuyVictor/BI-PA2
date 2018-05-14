@@ -1,8 +1,1 @@
-//
-// Created by victor on 14.5.18.
-//
-
-#ifndef SEMESTRALKA_EXCEPTIONS_H
-#define SEMESTRALKA_EXCEPTIONS_H
-
-#endif //SEMESTRALKA_EXCEPTIONS_H
+class InvalidInput{};
