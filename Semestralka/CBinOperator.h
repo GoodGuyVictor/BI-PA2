@@ -11,6 +11,11 @@ class CBinOperator : public CExpression
 {
 public:
     CBinOperator(CExpression * l, CExpression * r) : m_lVal(l), m_rVal(r) {};
+    ~CBinOperator()
+    {
+        delete m_lVal;
+        delete m_rVal;
+    };
 
 protected:
     CExpression * m_lVal;
