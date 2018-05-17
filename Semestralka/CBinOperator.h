@@ -5,4 +5,16 @@
 #ifndef SEMESTRALKA_CBINOPERATOR_H
 #define SEMESTRALKA_CBINOPERATOR_H
 
+#include "CExpression.h"
+
+class CBinOperator : public CExpression
+{
+public:
+    CBinOperator(CExpression * l, CExpression * r) : m_lVal(l), m_rVal(r) {};
+
+protected:
+    CExpression * m_lVal;
+    CExpression * m_rVal;
+};
+
 #endif //SEMESTRALKA_CBINOPERATOR_H
