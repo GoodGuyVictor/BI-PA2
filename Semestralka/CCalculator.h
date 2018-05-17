@@ -2,6 +2,10 @@
 #include <iostream>
 #include <stack>
 #include "CVariable.h"
+#include "CExpression.h"
+#include "Enums.h"
+
+using namespace std;
 
 class CCalculator
 {
@@ -17,8 +21,8 @@ private:
     void        saveHistory         (const string&, const string&);
     EValType    determineType       (const string&) const;
     bool        isOperator          (const string&) const;
-    void        pushToStack         (const string &, stack<COperand*> &) const;
-    COperand *  performOperation    (COperand*, COperand*, const string&);
+    void        pushToStack         (const string &, stack<CExpression*> &) const;
+    CExpression *  performOperation    (CExpression*, CExpression*, const string&);
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator!" << endl
