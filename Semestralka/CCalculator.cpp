@@ -4,6 +4,10 @@
 #include "CInteger.h"
 #include "CLongInteger.h"
 #include "CDecimal.h"
+#include "CAddExp.h"
+#include "CSubtractExp.h"
+#include "CMultiplyExp.h"
+#include "CDevideExpr.h"
 
 void CCalculator::run()
 {
@@ -145,19 +149,19 @@ void CCalculator::pushToStack(const string &operand, stack<CExpression*> &stack)
     }
 }
 
-COperand *CCalculator::performOperation(COperand * lVal, COperand * rVal, const string & op)
+CExpression *CCalculator::performOperation(CExpression * lVal, CExpression * rVal, const string & op)
 {
     if(op == "+")
-        return *lVal + *rVal;
+        return new CAddExp(lVal, rVal);
 
     if(op == "-")
-        return *lVal - *rVal;
+        return new CSubtractExp(lVal, rVal);
 
     if(op == "*")
-        return*lVal * *rVal;
+        return new CMultiplyExp(lVal, rVal);
 
     if(op == "/")
-        return *lVal / *rVal;
+        return new CDevideExp(lVal, rVal);
 
 //    if(op == "%")
 //        return *lVal % *rVal;
