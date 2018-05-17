@@ -1,0 +1,8 @@
+//
+// Created by victor on 17.5.18.
+//
+
+#ifndef SEMESTRALKA_CLONGINTEGER_H
+#define SEMESTRALKA_CLONGINTEGER_H
+
+#endif //SEMESTRALKA_CLONGINTEGER_H

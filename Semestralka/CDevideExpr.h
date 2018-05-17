@@ -1,0 +1,8 @@
+//
+// Created by victor on 17.5.18.
+//
+
+#ifndef SEMESTRALKA_CDEVIDEEXPR_H
+#define SEMESTRALKA_CDEVIDEEXPR_H
+
+#endif //SEMESTRALKA_CDEVIDEEXPR_H

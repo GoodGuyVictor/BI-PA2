@@ -1,0 +1,8 @@
+//
+// Created by victor on 17.5.18.
+//
+
+#ifndef SEMESTRALKA_CEXPRESSION_H
+#define SEMESTRALKA_CEXPRESSION_H
+
+#endif //SEMESTRALKA_CEXPRESSION_H
