@@ -1,5 +1,4 @@
 #include <cstring>
-#include "COperand.h"
 #include "CCalculator.h"
 #include "CCparser.h"
 #include "CInteger.h"
@@ -57,14 +56,14 @@ void CCalculator::createNewVariable(const string &input)
     string name(token);
     token = strtok(NULL, "=");
     string val(token);
-    m_variables.emplace_back(CVariable(name, val, determineType(val)));
+    m_variables.emplace_back(CVariable(name, val));
 }
 
 string CCalculator::calculate(const string & input)
 {
     CParser parser;
     vector<string> parsedInput;
-    stack<COperand*> operandStack;
+    stack<CExpression*> exprStack;
 
     if(!input.empty())
     {
@@ -74,7 +73,7 @@ string CCalculator::calculate(const string & input)
         for(const auto & token : parsedInput)
         {
             if(!isOperator(token))
-                pushToStack(token, operandStack);
+                pushToStack(token, exprStack);
             else
             {
                 COperand *rVal = operandStack.top();
@@ -124,22 +123,22 @@ bool CCalculator::isOperator(const string & op) const
     return op == "+" || op == "-" || op == "*" || op == "/" || op == "%";
 }
 
-void CCalculator::pushToStack(const string &operand, stack<COperand *> &stack) const
+void CCalculator::pushToStack(const string &operand, stack<CExpression*> &stack) const
 {
     switch (determineType(operand))
     {
         case VAL_INT: {
-            COperand *p = new CInteger(operand);
+            CExpression *p = new CInteger(operand);
             stack.push(p);
             break;
         }
         case VAL_LONGINT: {
-            COperand *p = new CLongInteger(operand);
+            CExpression *p = new CLongInteger(operand);
             stack.push(p);
             break;
         }
         case VAL_DEC: {
-            COperand *p = new CDecimal(operand);
+            CExpression *p = new CDecimal(operand);
             stack.push(p);
             break;
         }
