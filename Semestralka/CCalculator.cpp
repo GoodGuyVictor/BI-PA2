@@ -87,6 +87,10 @@ string CCalculator::calculate(const string & input)
                 exprStack.push(result);
             }
         }
+
+        CBigNum inputResult = exprStack.top()->evaluate();
+        delete exprStack.top();
+        exprStack.pop();
     }
 }
 
