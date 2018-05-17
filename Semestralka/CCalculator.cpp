@@ -80,16 +80,11 @@ string CCalculator::calculate(const string & input)
                 pushToStack(token, exprStack);
             else
             {
-                COperand *rVal = operandStack.top();
-                operandStack.pop();
-                COperand *lVal = operandStack.top();
-                operandStack.pop();
+                CExpression *rVal = exprStack.top(); exprStack.pop();
+                CExpression *lVal = exprStack.top(); exprStack.pop();
 
-                COperand *result = performOperation(lVal, rVal, token);
-                operandStack.push(result);
-
-                delete rVal;
-                delete lVal;
+                CExpression *result = performOperation(lVal, rVal, token);
+                exprStack.push(result);
             }
         }
     }
