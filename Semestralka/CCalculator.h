@@ -10,19 +10,19 @@ using namespace std;
 class CCalculator
 {
 private:
-    vector<CVariable> m_variables;
-    vector<string> m_history;
+    vector<CVariable>   m_variables;
+    vector<string>      m_history;
 
-    string      readInput           ();
-    void        removeWhiteSpaces   (string &);
-    void        createNewVariable   (const string&);
-    string      calculate           (const string&);
-    void        display             (const string&) const;
-    void        saveHistory         (const string&, const string&);
-    EValType    determineType       (const string&) const;
-    bool        isOperator          (const string&) const;
-    void        pushToStack         (const string &, stack<CExpression*> &) const;
-    CExpression *  performOperation    (CExpression*, CExpression*, const string&);
+    string          readInput               ();
+    void            removeWhiteSpaces       (string &);
+    void            createNewVariable       (const string&);
+    string          calculate               (const string&);
+    void            display                 (const string&) const;
+    void            saveHistory             (const string&, const string&);
+    EValType        determineType           (const string&) const;
+    bool            isOperator              (const string&) const;
+    void            pushToStack             (const string &, stack<CExpression*> &) const;
+    CExpression *   performOperation        (CExpression*, CExpression*, const string&);
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator!" << endl

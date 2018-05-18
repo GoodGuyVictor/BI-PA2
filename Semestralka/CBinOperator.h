@@ -10,7 +10,8 @@
 class CBinOperator : public CExpression
 {
 public:
-    CBinOperator(CExpression * l, CExpression * r) : m_lVal(l), m_rVal(r) {};
+    CBinOperator(CExpression * l, CExpression * r)
+            : m_lVal(l), m_rVal(r) {};
     ~CBinOperator()
     {
         delete m_lVal;
