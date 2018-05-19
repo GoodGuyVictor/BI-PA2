@@ -8,10 +8,15 @@
 class CBigNum
 {
 public:
-    CBigNum() = default;
+    CBigNum(const int val)
+    {
+        m_sgn = val < 0;
+        m_value.push_back((uint32_t)val);
+    }
 
 private:
-
+    std::vector<uint32_t> m_value;
+    bool m_sgn;
 };
 
 #endif //SEMESTRALKA_CBIGNUM_H
