@@ -25,4 +25,9 @@ private:
     double m_value;
 };
 
+CBigNum CDecimal::evaluate() const
+{
+    return CBigNum(m_value);
+}
+
 #endif //SEMESTRALKA_CDECIMAL_H
