@@ -1,5 +1,5 @@
 #include "CCparser.h"
-#include "COperand.h"
+#include "Exceptions.h"
 
 void CParser::shuntingYard(const string &input)
 {
@@ -52,6 +52,8 @@ void CParser::shuntingYard(const string &input)
         {
             tmp_operand += *it;
         }
+        else if(*it == '.')
+            tmp_operand += *it;
         else
             throw InvalidInput();
     }
