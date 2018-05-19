@@ -24,10 +24,10 @@ private:
     bool m_sgn;
     std::vector<uint32_t> m_value;
 
-    std::vector<uint32_t> toBigInt(const std::string &);
+    std::vector<uint32_t> toBigInt(std::string &);
 };
 
-std::vector<uint32_t> CLongInteger::toBigInt(const std::string & text)
+std::vector<uint32_t> CLongInteger::toBigInt(std::string & text)
 {
     // convert string to BCD-like
     for (char &c : text) c -= '0';
