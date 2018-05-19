@@ -16,7 +16,7 @@ private:
     string          readInput               ();
     void            removeWhiteSpaces       (string &);
     void            createNewVariable       (const string&);
-    string          calculate               (const string&);
+    CBigNum         calculate               (const string&);
     void            display                 (const string&) const;
     void            saveHistory             (const string&, const string&);
     EValType        determineType           (const string&) const;

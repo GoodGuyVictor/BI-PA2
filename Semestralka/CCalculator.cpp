@@ -63,7 +63,7 @@ void CCalculator::createNewVariable(const string &input)
     m_variables.emplace_back(CVariable(name, val));
 }
 
-string CCalculator::calculate(const string & input)
+CBigNum CCalculator::calculate(const string & input)
 {
     CParser parser;
     vector<string> parsedInput;
@@ -91,6 +91,7 @@ string CCalculator::calculate(const string & input)
         CBigNum inputResult = exprStack.top()->evaluate();
         delete exprStack.top();
         exprStack.pop();
+        return inputResult;
     }
 }
 
