@@ -10,7 +10,7 @@
 class CLongInteger : public CExpression
 {
 public:
-    CLongInteger(std::string & val)
+    CLongInteger(std::string val)
     {
         if(val[0] == '-') {
             m_sgn = true;
