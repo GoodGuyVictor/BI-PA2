@@ -24,4 +24,9 @@ private:
     int m_value;
 };
 
+CBigNum CInteger::evaluate() const
+{
+    return CBigNum(m_value);
+}
+
 #endif //SEMESTRALKA_CINTEGER_H
