@@ -14,4 +14,9 @@ public:
     CBigNum evaluate() const override ;
 };
 
+CBigNum CAddExp::evaluate() const
+{
+    return m_lVal->evaluate() + m_rVal->evaluate();
+}
+
 #endif //SEMESTRALKA_CADDEXP_H
