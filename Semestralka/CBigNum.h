@@ -144,6 +144,19 @@ private:
             uint64_t tmp = (uint64_t)f1 + (uint64_t)f2;
             result = (uint32_t)tmp;
             carry = tmp >> 32;
+            cnt1 = cnt2;
+        }
+
+        int cnt3 = 0;
+        i = 10;
+        while(result / i) {
+            cnt3++;
+            i *= 10;
+        }
+
+        if(cnt3 > cnt1) {
+            carry = 1;
+            result %= i / 10;
         }
 
         return result;
