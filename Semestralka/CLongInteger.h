@@ -15,7 +15,8 @@ public:
         if(val[0] == '-') {
             m_sgn = true;
             val.erase(0);
-        }
+        } else
+            m_sgn = false;
         m_value = toBigInt(val);
     }
     CBigNum evaluate() const override ;
