@@ -45,7 +45,7 @@ public:
         ss << token;
         uint32_t fraction;
         ss >> fraction;
-        m_fraction.push_back(fraction);
+        m_fraction = fraction;
     }
 
     CBigNum(bool sgn, const std::vector<uint32_t > & val)
@@ -58,7 +58,7 @@ public:
     {
 
         if(m_sgn == true && other.m_sgn == false || m_sgn == false && other.m_sgn == true)
-            operator-(other);
+            return operator-(other);
 
         std::vector<uint32_t> exponent1 = m_exponent;
         std::vector<uint32_t> exponent2 = other.m_exponent;
@@ -102,7 +102,7 @@ public:
 
 private:
     std::vector<uint32_t> m_exponent;
-    std::vector<uint32_t> m_fraction;
+    uint32_t m_fraction;
     bool m_sgn;
 };
 
