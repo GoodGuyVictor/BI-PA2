@@ -63,6 +63,9 @@ public:
         std::vector<uint32_t> exponent1 = m_exponent;
         std::vector<uint32_t> exponent2 = other.m_exponent;
 
+        uint32_t fractoin1 = m_fraction;
+        uint32_t fractoin2 = other.m_fraction;
+
         //if lengths are different expand the shorter one with zeros
         size_t n;
         if(exponent1.size() == exponent2.size())
@@ -82,8 +85,11 @@ public:
         std::vector<uint32_t> result;
         uint64_t tmp;
         unsigned short carry = 0;
+
+        m_fraction = addFractions(fractoin1, fractoin2, carry);
+
         for(size_t i = 0; i < exponent1.size(); i++) {
-            tmp = (uint64_t)m_exponent[i] + (uint64_t)other.m_exponent[i] + carry;
+            tmp = (uint64_t)exponent1[i] + (uint64_t)exponent2[i] + carry;
             result.push_back((uint32_t)tmp);
             carry = tmp >> 32;
         }
@@ -104,6 +110,44 @@ private:
     std::vector<uint32_t> m_exponent;
     uint32_t m_fraction;
     bool m_sgn;
+
+    uint32_t addFractions(uint32_t f1, uint32_t f2, unsigned short & carry) const
+    {
+        int i = 10;
+        int cnt1 = 0, cnt2 = 0;
+
+        while(f1 / i) {
+            cnt1++;
+            i *= 10;
+        }
+
+        i = 10;
+        while(f2 / i) {
+            cnt2++;
+            i *= 10;
+        }
+
+        uint32_t result;
+        if(cnt1 == cnt2) {
+            uint64_t tmp = (uint64_t)f1 + (uint64_t)f2;
+            result = (uint32_t)tmp;
+            carry = tmp >> 32;
+        } else if(cnt1 > cnt2) {
+            for(int j = 0; j < abs(cnt1 - cnt2); j++)
+                f2 *= 10;
+            uint64_t tmp = (uint64_t)f1 + (uint64_t)f2;
+            result = (uint32_t)tmp;
+            carry = tmp >> 32;
+        } else {
+            for(int j = 0; j < abs(cnt1 - cnt2); j++)
+                f1 *= 10;
+            uint64_t tmp = (uint64_t)f1 + (uint64_t)f2;
+            result = (uint32_t)tmp;
+            carry = tmp >> 32;
+        }
+
+        return result;
+    }
 };
 
 #endif //SEMESTRALKA_CBIGNUM_H
