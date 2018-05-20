@@ -56,7 +56,48 @@ public:
 
     CBigNum & operator+ (const CBigNum & other)
     {
+
+        if(m_sgn == true && other.m_sgn == false || m_sgn == false && other.m_sgn == true)
+            operator-(other);
+
+        std::vector<uint32_t> exponent1 = m_exponent;
+        std::vector<uint32_t> exponent2 = other.m_exponent;
+
+        //if lengths are different expand the shorter one with zeros
+        size_t n;
+        if(exponent1.size() == exponent2.size())
+            n = exponent1.size();
+        else if(exponent1.size() > exponent2.size()) {
+            n = exponent2.size();
+            for(size_t i = n; i < exponent1.size(); i++)
+                exponent2.push_back(0);
+        }
+        else {
+            n = exponent1.size();
+            for(size_t i = n; i < exponent2.size(); i++)
+                exponent1.push_back(0);
+        }
+
+
+        std::vector<uint32_t> result;
+        uint64_t tmp;
+        unsigned short carry = 0;
+        for(size_t i = 0; i < exponent1.size(); i++) {
+            tmp = (uint64_t)m_exponent[i] + (uint64_t)other.m_exponent[i] + carry;
+            result.push_back((uint32_t)tmp);
+            carry = tmp >> 32;
+        }
+
+        if(carry)
+            result.push_back(carry);
+
+        m_exponent = result;
         return *this;
+    }
+
+    CBigNum &operator- (const CBigNum & other)
+    {
+
     }
 
 private:
