@@ -56,4 +56,9 @@ std::vector<uint32_t> CLongInteger::toBigInt(std::string & text)
     return value;
 }
 
+CBigNum CLongInteger::evaluate() const
+{
+    return CBigNum(m_value);
+}
+
 #endif //SEMESTRALKA_CLONGINTEGER_H
