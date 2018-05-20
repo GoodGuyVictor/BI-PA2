@@ -48,6 +48,12 @@ public:
         m_fraction.push_back(fraction);
     }
 
+    CBigNum(bool sgn, const std::vector<uint32_t > & val)
+    {
+        m_sgn = sgn;
+        m_exponent = val;
+    }
+
     CBigNum & operator+ (const CBigNum & other)
     {
         return *this;
@@ -57,7 +63,6 @@ private:
     std::vector<uint32_t> m_exponent;
     std::vector<uint32_t> m_fraction;
     bool m_sgn;
-    size_t m_fractionPos;
 };
 
 #endif //SEMESTRALKA_CBIGNUM_H
