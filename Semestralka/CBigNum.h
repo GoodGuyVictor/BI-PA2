@@ -20,6 +20,7 @@ public:
         } else
             m_sgn = false;
         m_exponent.push_back((uint32_t)val);
+        m_fraction = 0;
     }
 
     CBigNum(double val)
@@ -52,6 +53,7 @@ public:
     {
         m_sgn = sgn;
         m_exponent = val;
+        m_fraction = 0;
     }
 
     CBigNum & operator+ (const CBigNum & other)
