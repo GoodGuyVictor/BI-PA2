@@ -6,6 +6,7 @@
 #define SEMESTRALKA_CBIGNUM_H
 
 #include <sstream>
+#include <algorithm>
 
 class CBigNum
 {
@@ -54,6 +55,19 @@ public:
         m_sgn = sgn;
         m_exponent = val;
         m_fraction = 0;
+    }
+
+    void print() const
+    {
+        std::cout << "----------" << std::endl;
+
+        for(auto it = m_exponent.rbegin(); it < m_exponent.rend(); it++)
+            std::cout << *it;
+
+        if(m_fraction)
+            std::cout << "." << m_fraction;
+
+        std::cout << std::endl;
     }
 
     CBigNum & operator+ (const CBigNum & other)
