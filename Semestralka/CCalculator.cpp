@@ -12,7 +12,7 @@
 void CCalculator::run()
 {
     string input;
-    string result;
+    CBigNum result;
 
     while(true)
     {
@@ -22,8 +22,8 @@ void CCalculator::run()
         if(input == "quit")
             break;
         result = calculate(input);
-        display(result);
-        saveHistory(input, result);
+        result.print();
+//        saveHistory(input, result);
     }
 }
 
@@ -88,10 +88,10 @@ CBigNum CCalculator::calculate(const string & input)
             }
         }
 
-        CBigNum inputResult = exprStack.top()->evaluate();
+        CBigNum finalResult = exprStack.top()->evaluate();
         delete exprStack.top();
         exprStack.pop();
-        return inputResult;
+        return finalResult;
     }
 }
 
@@ -127,7 +127,7 @@ bool CCalculator::isOperator(const string & op) const
     return op == "+" || op == "-" || op == "*" || op == "/" || op == "%";
 }
 
-void CCalculator::pushToStack(const string &operand, stack<CExpression*> &stack) const
+void CCalculator::pushToStack(const string & operand, stack<CExpression*> &stack) const
 {
     switch (determineType(operand))
     {
