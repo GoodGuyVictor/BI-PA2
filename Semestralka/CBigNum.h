@@ -85,15 +85,16 @@ public:
 
 
         std::vector<uint32_t> result;
-        uint64_t tmp;
+        uint32_t tmp;
         unsigned short carry = 0;
 
         m_fraction = addFractions(fractoin1, fractoin2, carry);
 
         for(size_t i = 0; i < exponent1.size(); i++) {
-            tmp = (uint64_t)exponent1[i] + (uint64_t)exponent2[i] + carry;
-            result.push_back((uint32_t)tmp);
-            carry = tmp >> 32;
+            tmp = exponent1[i] + exponent2[i] + carry;
+            carry = getCarry(tmp);
+            tmp %= 1000000000;
+            result.push_back(tmp);
         }
 
         if(carry)
@@ -162,6 +163,14 @@ private:
         }
 
         return result;
+    }
+
+    unsigned short getCarry(const uint32_t sum) const
+    {
+        if(sum / 1000000000)
+            return 1;
+        else
+            return 0;
     }
 };
 
