@@ -61,6 +61,9 @@ public:
     {
         std::cout << "----------" << std::endl;
 
+        if(m_sgn)
+            std::cout << "-";
+
         for(auto it = m_exponent.rbegin(); it < m_exponent.rend(); it++)
             std::cout << *it;
 
@@ -82,21 +85,7 @@ public:
         uint32_t fractoin1 = m_fraction;
         uint32_t fractoin2 = other.m_fraction;
 
-        //if lengths are different expand the shorter one with zeros
-        size_t n;
-        if(exponent1.size() == exponent2.size())
-            n = exponent1.size();
-        else if(exponent1.size() > exponent2.size()) {
-            n = exponent2.size();
-            for(size_t i = n; i < exponent1.size(); i++)
-                exponent2.push_back(0);
-        }
-        else {
-            n = exponent1.size();
-            for(size_t i = n; i < exponent2.size(); i++)
-                exponent1.push_back(0);
-        }
-
+        expandFewerNumberWithZeros(exponent1, exponent2);
 
         std::vector<uint32_t> result;
         uint32_t tmp;
@@ -120,7 +109,71 @@ public:
 
     CBigNum &operator- (const CBigNum & other)
     {
+        if(m_sgn == false && other.m_sgn == true) {
+            CBigNum copy = other;
+            return operator+(copy.operator-());
+        }
+        else if (m_sgn == true && other.m_sgn == false) {
+            m_sgn = false;
+            CBigNum res = operator+(other);
+            return res.operator-();
+        }
 
+        std::vector<uint32_t> exponent1 = m_exponent;
+        std::vector<uint32_t> exponent2 = other.m_exponent;
+
+        uint32_t fractoin1 = m_fraction;
+        uint32_t fractoin2 = other.m_fraction;
+
+        expandFewerNumberWithZeros(exponent1, exponent2);
+
+        std::vector<uint32_t> result;
+        long int tmp;
+        unsigned short carry = 0;
+        for(size_t i = exponent1.size() - 1; i >= 0; i--) {
+            if(exponent1[i] > exponent2[i]) {
+                for(size_t j = 0; j < exponent1.size(); j++) {
+                    tmp = (long)exponent1[j] - (long)exponent2[j] - carry;
+                    if(tmp < 0) {
+                        carry = 1;
+                        tmp = UINT32_MAX + tmp; //modulo
+                    } else
+                        carry = 0;
+                    result.push_back((uint32_t)tmp);
+                }
+                m_exponent = result;
+                m_sgn = false;
+                return *this;
+            } else if(exponent1[i] < exponent2[i]) {
+                for(size_t j = 0; j < exponent1.size(); j++) {
+                    tmp = (long)exponent1[j] - (long)exponent2[j] + carry;
+                    if(tmp < 0) {
+                        tmp *= -1;
+                        carry = 0;
+                    }
+                    else {
+                        carry = 1;
+                        tmp = UINT32_MAX - tmp;
+                    }
+                    result.push_back((uint32_t)tmp);
+                }
+                m_exponent = result;
+                m_sgn = true;
+                return *this;
+            } else {
+                result.push_back(0);
+                m_exponent = result;
+                m_sgn = false;
+                return *this;
+            }
+        }
+
+    }
+
+    CBigNum &operator-()
+    {
+        m_sgn = !m_sgn;
+        return *this;
     }
 
 private:
@@ -185,6 +238,24 @@ private:
             return 1;
         else
             return 0;
+    }
+
+    void expandFewerNumberWithZeros(std::vector<uint32_t> & exponent1, std::vector<uint32_t> & exponent2)
+    {
+        //if lengths are different expand the shorter one with zeros
+        size_t n;
+        if(exponent1.size() == exponent2.size())
+            n = exponent1.size();
+        else if(exponent1.size() > exponent2.size()) {
+            n = exponent2.size();
+            for(size_t i = n; i < exponent1.size(); i++)
+                exponent2.push_back(0);
+        }
+        else {
+            n = exponent1.size();
+            for(size_t i = n; i < exponent2.size(); i++)
+                exponent1.push_back(0);
+        }
     }
 };
 
