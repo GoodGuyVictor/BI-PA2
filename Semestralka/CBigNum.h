@@ -76,8 +76,14 @@ public:
     CBigNum & operator+ (const CBigNum & other)
     {
 
-        if(m_sgn == true && other.m_sgn == false || m_sgn == false && other.m_sgn == true)
-            return operator-(other);
+        if(m_sgn == true && other.m_sgn == false) {
+            m_sgn = false;
+            CBigNum copy = other;
+            return copy.operator-(*this);
+        } else if(m_sgn == false && other.m_sgn == true) {
+            CBigNum copy = other;
+            return operator-(copy.operator-());
+        }
 
         std::vector<uint32_t> exponent1 = m_exponent;
         std::vector<uint32_t> exponent2 = other.m_exponent;
