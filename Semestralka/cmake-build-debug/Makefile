@@ -123,6 +123,60 @@ Semestralka/fast:
 	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/build
 .PHONY : Semestralka/fast
 
+CAddExp.o: CAddExp.cpp.o
+
+.PHONY : CAddExp.o
+
+# target to build an object file
+CAddExp.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CAddExp.cpp.o
+.PHONY : CAddExp.cpp.o
+
+CAddExp.i: CAddExp.cpp.i
+
+.PHONY : CAddExp.i
+
+# target to preprocess a source file
+CAddExp.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CAddExp.cpp.i
+.PHONY : CAddExp.cpp.i
+
+CAddExp.s: CAddExp.cpp.s
+
+.PHONY : CAddExp.s
+
+# target to generate assembly for a file
+CAddExp.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CAddExp.cpp.s
+.PHONY : CAddExp.cpp.s
+
+CBigNum.o: CBigNum.cpp.o
+
+.PHONY : CBigNum.o
+
+# target to build an object file
+CBigNum.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CBigNum.cpp.o
+.PHONY : CBigNum.cpp.o
+
+CBigNum.i: CBigNum.cpp.i
+
+.PHONY : CBigNum.i
+
+# target to preprocess a source file
+CBigNum.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CBigNum.cpp.i
+.PHONY : CBigNum.cpp.i
+
+CBigNum.s: CBigNum.cpp.s
+
+.PHONY : CBigNum.s
+
+# target to generate assembly for a file
+CBigNum.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CBigNum.cpp.s
+.PHONY : CBigNum.cpp.s
+
 CCalculator.o: CCalculator.cpp.o
 
 .PHONY : CCalculator.o
@@ -149,6 +203,87 @@ CCalculator.s: CCalculator.cpp.s
 CCalculator.cpp.s:
 	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CCalculator.cpp.s
 .PHONY : CCalculator.cpp.s
+
+CInteger.o: CInteger.cpp.o
+
+.PHONY : CInteger.o
+
+# target to build an object file
+CInteger.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CInteger.cpp.o
+.PHONY : CInteger.cpp.o
+
+CInteger.i: CInteger.cpp.i
+
+.PHONY : CInteger.i
+
+# target to preprocess a source file
+CInteger.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CInteger.cpp.i
+.PHONY : CInteger.cpp.i
+
+CInteger.s: CInteger.cpp.s
+
+.PHONY : CInteger.s
+
+# target to generate assembly for a file
+CInteger.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CInteger.cpp.s
+.PHONY : CInteger.cpp.s
+
+CLongInteger.o: CLongInteger.cpp.o
+
+.PHONY : CLongInteger.o
+
+# target to build an object file
+CLongInteger.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CLongInteger.cpp.o
+.PHONY : CLongInteger.cpp.o
+
+CLongInteger.i: CLongInteger.cpp.i
+
+.PHONY : CLongInteger.i
+
+# target to preprocess a source file
+CLongInteger.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CLongInteger.cpp.i
+.PHONY : CLongInteger.cpp.i
+
+CLongInteger.s: CLongInteger.cpp.s
+
+.PHONY : CLongInteger.s
+
+# target to generate assembly for a file
+CLongInteger.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CLongInteger.cpp.s
+.PHONY : CLongInteger.cpp.s
+
+CMultiplyExp.o: CMultiplyExp.cpp.o
+
+.PHONY : CMultiplyExp.o
+
+# target to build an object file
+CMultiplyExp.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o
+.PHONY : CMultiplyExp.cpp.o
+
+CMultiplyExp.i: CMultiplyExp.cpp.i
+
+.PHONY : CMultiplyExp.i
+
+# target to preprocess a source file
+CMultiplyExp.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.i
+.PHONY : CMultiplyExp.cpp.i
+
+CMultiplyExp.s: CMultiplyExp.cpp.s
+
+.PHONY : CMultiplyExp.s
+
+# target to generate assembly for a file
+CMultiplyExp.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.s
+.PHONY : CMultiplyExp.cpp.s
 
 CParser.o: CParser.cpp.o
 
@@ -213,9 +348,24 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... Semestralka"
+	@echo "... CAddExp.o"
+	@echo "... CAddExp.i"
+	@echo "... CAddExp.s"
+	@echo "... CBigNum.o"
+	@echo "... CBigNum.i"
+	@echo "... CBigNum.s"
 	@echo "... CCalculator.o"
 	@echo "... CCalculator.i"
 	@echo "... CCalculator.s"
+	@echo "... CInteger.o"
+	@echo "... CInteger.i"
+	@echo "... CInteger.s"
+	@echo "... CLongInteger.o"
+	@echo "... CLongInteger.i"
+	@echo "... CLongInteger.s"
+	@echo "... CMultiplyExp.o"
+	@echo "... CMultiplyExp.i"
+	@echo "... CMultiplyExp.s"
 	@echo "... CParser.o"
 	@echo "... CParser.i"
 	@echo "... CParser.s"

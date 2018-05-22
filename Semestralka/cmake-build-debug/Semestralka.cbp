@@ -84,6 +84,21 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CAddExp.cpp">
+			<Option target="Semestralka"/>
+		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CAddExp.h">
+			<Option target="Semestralka"/>
+		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CBigNum.cpp">
+			<Option target="Semestralka"/>
+		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CBigNum.h">
+			<Option target="Semestralka"/>
+		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CBinOperator.h">
+			<Option target="Semestralka"/>
+		</Unit>
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CCalculator.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
@@ -96,22 +111,34 @@
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CDecimal.h">
 			<Option target="Semestralka"/>
 		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CDevideExpr.h">
+			<Option target="Semestralka"/>
+		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CExpression.h">
+			<Option target="Semestralka"/>
+		</Unit>
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CInteger.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CInteger.h">
 			<Option target="Semestralka"/>
 		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CLongInteger.cpp">
+			<Option target="Semestralka"/>
+		</Unit>
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CLongInteger.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/COperand.cpp">
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CMultiplyExp.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/COperand.h">
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CMultiplyExp.h">
 			<Option target="Semestralka"/>
 		</Unit>
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CParser.cpp">
+			<Option target="Semestralka"/>
+		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CSubtractExp.h">
 			<Option target="Semestralka"/>
 		</Unit>
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CVariable.h">
