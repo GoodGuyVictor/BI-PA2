@@ -217,3 +217,134 @@ CBigNum CBigNum::operator* (const CBigNum & other)
         finalResult.operator-();
     return finalResult;
 }
+
+uint32_t CBigNum::addFractions(uint32_t f1, uint32_t f2, unsigned short &carry) const
+{
+    int i = 10;
+    int cnt1 = 0, cnt2 = 0;
+
+    while(f1 / i) {
+        cnt1++;
+        i *= 10;
+    }
+
+    i = 10;
+    while(f2 / i) {
+        cnt2++;
+        i *= 10;
+    }
+
+    uint32_t result;
+    if(cnt1 == cnt2) {
+        uint64_t tmp = (uint64_t)f1 + (uint64_t)f2;
+        result = (uint32_t)tmp;
+        carry = tmp >> 32;
+    } else if(cnt1 > cnt2) {
+        for(int j = 0; j < abs(cnt1 - cnt2); j++)
+            f2 *= 10;
+        uint64_t tmp = (uint64_t)f1 + (uint64_t)f2;
+        result = (uint32_t)tmp;
+        carry = tmp >> 32;
+    } else {
+        for(int j = 0; j < abs(cnt1 - cnt2); j++)
+            f1 *= 10;
+        uint64_t tmp = (uint64_t)f1 + (uint64_t)f2;
+        result = (uint32_t)tmp;
+        carry = tmp >> 32;
+        cnt1 = cnt2;
+    }
+
+    int cnt3 = 0;
+    i = 10;
+    while(result / i) {
+        cnt3++;
+        i *= 10;
+    }
+
+    if(cnt3 > cnt1) {
+        carry = 1;
+        result %= i / 10;
+    }
+
+    return result;
+}
+
+uint32_t CBigNum::subtractFractions(uint32_t f1, uint32_t f2, unsigned short &carry)
+{
+    long tmp = (long)f1 - (long)f2;
+    if(tmp < 0) {
+        carry = 1;
+        tmp = 1000000 + tmp;
+    }
+    return (uint32_t)tmp;
+}
+
+unsigned short CBigNum::getCarry(const uint32_t sum) const
+{
+    if(sum / 1000000000)
+        return 1;
+    else
+        return 0;
+}
+
+void CBigNum::expandFewerNumberWithZeros(std::vector<uint32_t> &exponent1, std::vector<uint32_t> &exponent2)
+{
+    //if lengths are different expand the shorter one with zeros
+    size_t n;
+    if(exponent1.size() == exponent2.size())
+        n = exponent1.size();
+    else if(exponent1.size() > exponent2.size()) {
+        n = exponent2.size();
+        for(size_t i = n; i < exponent1.size(); i++)
+            exponent2.push_back(0);
+    }
+    else {
+        n = exponent1.size();
+        for(size_t i = n; i < exponent2.size(); i++)
+            exponent1.push_back(0);
+    }
+}
+
+CBigNum::CBigNum(bool sgn, const std::vector<uint32_t> &val)
+{
+    m_sgn = sgn;
+    m_exponent = val;
+    m_fraction = 0;
+}
+
+CBigNum::CBigNum(double val)
+{
+    if(val < 0) {
+        m_sgn = true;
+        val *= -1;
+    } else
+        m_sgn = false;
+
+    std::string dStr = std::to_string(val);
+
+    char * token;
+    token = strtok((char*)dStr.c_str(), ".");
+    std::stringstream ss;
+    ss << token;
+    uint32_t exponent;
+    ss >> exponent;
+    m_exponent.push_back(exponent);
+    ss.clear();
+
+    token = strtok(NULL, ".");
+    ss << token;
+    uint32_t fraction;
+    ss >> fraction;
+    m_fraction = fraction;
+}
+
+CBigNum::CBigNum(int val)
+{
+    if(val < 0) {
+        m_sgn = true;
+        val *= -1;
+    } else
+        m_sgn = false;
+    m_exponent.push_back((uint32_t)val);
+    m_fraction = 0;
+}
