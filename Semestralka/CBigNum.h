@@ -65,7 +65,8 @@ public:
             std::cout << "-";
 
         for(auto it = m_exponent.rbegin(); it < m_exponent.rend(); it++)
-            std::cout << *it;
+            if(*it) //do not print leading zeros
+                std::cout << *it;
 
         if(m_fraction)
             std::cout << "." << m_fraction;
@@ -166,14 +167,12 @@ public:
                 m_exponent = result;
                 m_sgn = true;
                 return *this;
-            } else {
-                result.push_back(0);
-                m_exponent = result;
-                m_sgn = false;
-                return *this;
             }
         }
-
+        result.push_back(0);
+        m_exponent = result;
+        m_sgn = false;
+        return *this;
     }
 
     CBigNum &operator-()
