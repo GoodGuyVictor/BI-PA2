@@ -134,9 +134,11 @@ public:
 
         expandFewerNumberWithZeros(exponent1, exponent2);
 
+        unsigned short carry = 0;
+        m_fraction = subtractFractions(fractoin1, fractoin2, carry);
+
         std::vector<uint32_t> result;
         long int tmp;
-        unsigned short carry = 0;
         for(size_t i = exponent1.size() - 1; i >= 0; i--) {
             if(exponent1[i] > exponent2[i]) {
                 for(size_t j = 0; j < exponent1.size(); j++) {
@@ -235,6 +237,16 @@ private:
         }
 
         return result;
+    }
+
+    uint32_t subtractFractions(uint32_t f1, uint32_t f2, unsigned short & carry)
+    {
+        long tmp = (long)f1 - (long)f2;
+        if(tmp < 0) {
+            carry = 1;
+            tmp = 1000000 + tmp;
+        }
+        return (uint32_t)tmp;
     }
 
     unsigned short getCarry(const uint32_t sum) const
