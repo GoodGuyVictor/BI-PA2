@@ -1,6 +1,6 @@
 #include <cstring>
 #include "CCalculator.h"
-#include "CCparser.h"
+#include "CParser.h"
 #include "CInteger.h"
 #include "CLongInteger.h"
 #include "CDecimal.h"
