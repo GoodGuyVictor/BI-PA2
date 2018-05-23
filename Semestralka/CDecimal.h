@@ -12,22 +12,13 @@
 class CDecimal : public CExpression
 {
 public:
-    explicit CDecimal(const std::string & val)
-    {
-        std::stringstream ss;
-        ss << val;
-        ss >> m_value;
-    }
+    explicit    CDecimal    (const std::string & val);
 
-    CBigNum evaluate() const override ;
+    CBigNum     evaluate    () const override ;
 
 private:
     double m_value;
 };
 
-CBigNum CDecimal::evaluate() const
-{
-    return CBigNum(m_value);
-}
 
 #endif //SEMESTRALKA_CDECIMAL_H

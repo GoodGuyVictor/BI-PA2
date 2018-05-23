@@ -10,8 +10,10 @@
 class CAddExp : public CBinOperator
 {
 public:
-    CAddExp(CExpression * l, CExpression * r) : CBinOperator(l, r) {};
-    CBigNum evaluate() const override ;
+            CAddExp     (CExpression * l, CExpression * r)
+                    : CBinOperator(l, r) {};
+
+    CBigNum evaluate    () const override ;
 };
 
 #endif //SEMESTRALKA_CADDEXP_H

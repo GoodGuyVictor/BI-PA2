@@ -14,4 +14,8 @@ public:
     CBigNum evaluate() const override ;
 };
 
+CBigNum CDevideExp::evaluate() const {
+
+}
+
 #endif //SEMESTRALKA_CDEVIDEEXPR_H
