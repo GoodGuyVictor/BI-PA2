@@ -204,6 +204,60 @@ CCalculator.cpp.s:
 	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CCalculator.cpp.s
 .PHONY : CCalculator.cpp.s
 
+CDecimal.o: CDecimal.cpp.o
+
+.PHONY : CDecimal.o
+
+# target to build an object file
+CDecimal.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDecimal.cpp.o
+.PHONY : CDecimal.cpp.o
+
+CDecimal.i: CDecimal.cpp.i
+
+.PHONY : CDecimal.i
+
+# target to preprocess a source file
+CDecimal.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDecimal.cpp.i
+.PHONY : CDecimal.cpp.i
+
+CDecimal.s: CDecimal.cpp.s
+
+.PHONY : CDecimal.s
+
+# target to generate assembly for a file
+CDecimal.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDecimal.cpp.s
+.PHONY : CDecimal.cpp.s
+
+CDevideExpr.o: CDevideExpr.cpp.o
+
+.PHONY : CDevideExpr.o
+
+# target to build an object file
+CDevideExpr.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o
+.PHONY : CDevideExpr.cpp.o
+
+CDevideExpr.i: CDevideExpr.cpp.i
+
+.PHONY : CDevideExpr.i
+
+# target to preprocess a source file
+CDevideExpr.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDevideExpr.cpp.i
+.PHONY : CDevideExpr.cpp.i
+
+CDevideExpr.s: CDevideExpr.cpp.s
+
+.PHONY : CDevideExpr.s
+
+# target to generate assembly for a file
+CDevideExpr.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDevideExpr.cpp.s
+.PHONY : CDevideExpr.cpp.s
+
 CInteger.o: CInteger.cpp.o
 
 .PHONY : CInteger.o
@@ -312,6 +366,33 @@ CParser.cpp.s:
 	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CParser.cpp.s
 .PHONY : CParser.cpp.s
 
+CSubtract.o: CSubtract.cpp.o
+
+.PHONY : CSubtract.o
+
+# target to build an object file
+CSubtract.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CSubtract.cpp.o
+.PHONY : CSubtract.cpp.o
+
+CSubtract.i: CSubtract.cpp.i
+
+.PHONY : CSubtract.i
+
+# target to preprocess a source file
+CSubtract.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CSubtract.cpp.i
+.PHONY : CSubtract.cpp.i
+
+CSubtract.s: CSubtract.cpp.s
+
+.PHONY : CSubtract.s
+
+# target to generate assembly for a file
+CSubtract.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CSubtract.cpp.s
+.PHONY : CSubtract.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -357,6 +438,12 @@ help:
 	@echo "... CCalculator.o"
 	@echo "... CCalculator.i"
 	@echo "... CCalculator.s"
+	@echo "... CDecimal.o"
+	@echo "... CDecimal.i"
+	@echo "... CDecimal.s"
+	@echo "... CDevideExpr.o"
+	@echo "... CDevideExpr.i"
+	@echo "... CDevideExpr.s"
 	@echo "... CInteger.o"
 	@echo "... CInteger.i"
 	@echo "... CInteger.s"
@@ -369,6 +456,9 @@ help:
 	@echo "... CParser.o"
 	@echo "... CParser.i"
 	@echo "... CParser.s"
+	@echo "... CSubtract.o"
+	@echo "... CSubtract.i"
+	@echo "... CSubtract.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

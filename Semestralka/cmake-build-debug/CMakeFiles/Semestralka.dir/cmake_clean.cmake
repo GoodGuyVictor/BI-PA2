@@ -7,6 +7,9 @@ file(REMOVE_RECURSE
   "CMakeFiles/Semestralka.dir/CAddExp.cpp.o"
   "CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o"
   "CMakeFiles/Semestralka.dir/CInteger.cpp.o"
+  "CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o"
+  "CMakeFiles/Semestralka.dir/CDecimal.cpp.o"
+  "CMakeFiles/Semestralka.dir/CSubtract.cpp.o"
   "Semestralka.pdb"
   "Semestralka"
 )

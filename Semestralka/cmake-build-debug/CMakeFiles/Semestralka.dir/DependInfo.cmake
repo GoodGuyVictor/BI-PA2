@@ -7,10 +7,13 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/victor/githubRepos/BI-PA2/Semestralka/CAddExp.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CAddExp.cpp.o"
   "/home/victor/githubRepos/BI-PA2/Semestralka/CBigNum.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CBigNum.cpp.o"
   "/home/victor/githubRepos/BI-PA2/Semestralka/CCalculator.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CCalculator.cpp.o"
+  "/home/victor/githubRepos/BI-PA2/Semestralka/CDecimal.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CDecimal.cpp.o"
+  "/home/victor/githubRepos/BI-PA2/Semestralka/CDevideExpr.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o"
   "/home/victor/githubRepos/BI-PA2/Semestralka/CInteger.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CInteger.cpp.o"
   "/home/victor/githubRepos/BI-PA2/Semestralka/CLongInteger.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CLongInteger.cpp.o"
   "/home/victor/githubRepos/BI-PA2/Semestralka/CMultiplyExp.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o"
   "/home/victor/githubRepos/BI-PA2/Semestralka/CParser.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CParser.cpp.o"
+  "/home/victor/githubRepos/BI-PA2/Semestralka/CSubtract.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CSubtract.cpp.o"
   "/home/victor/githubRepos/BI-PA2/Semestralka/main.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

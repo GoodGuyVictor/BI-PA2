@@ -105,10 +105,13 @@
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CCalculator.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CCparser.h">
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CDecimal.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CDecimal.h">
+			<Option target="Semestralka"/>
+		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CDevideExpr.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CDevideExpr.h">
@@ -136,6 +139,12 @@
 			<Option target="Semestralka"/>
 		</Unit>
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CParser.cpp">
+			<Option target="Semestralka"/>
+		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CParser.h">
+			<Option target="Semestralka"/>
+		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CSubtract.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CSubtractExp.h">
