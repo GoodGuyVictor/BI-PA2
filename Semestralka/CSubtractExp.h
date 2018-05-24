@@ -10,8 +10,11 @@
 class CSubtractExp : public CBinOperator
 {
 public:
-    CSubtractExp(CExpression * l, CExpression * r) : CBinOperator(l, r) {};
-    CBigNum evaluate() const override ;
+            CSubtractExp    (CExpression * l, CExpression * r)
+                    : CBinOperator(l, r) {};
+
+    CBigNum evaluate        () const override ;
 };
+
 
 #endif //SEMESTRALKA_CSUBTRACTEXP_H

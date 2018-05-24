@@ -11,22 +11,14 @@
 class CInteger : public CExpression
 {
 public:
-    CInteger(const std::string & val)
-    {
-        std::stringstream ss;
-        ss << val;
-        ss >> m_value;
-    }
+    explicit    CInteger   (const std::string & val);
 
-    CBigNum evaluate() const override ;
+    CBigNum     evaluate   () const override ;
 
 private:
     int m_value;
 };
 
-CBigNum CInteger::evaluate() const
-{
-    return CBigNum(m_value);
-}
+
 
 #endif //SEMESTRALKA_CINTEGER_H

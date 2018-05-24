@@ -7,10 +7,14 @@
 #IncludeRegexTransform: 
 
 /home/victor/githubRepos/BI-PA2/HomeWork-5/main.cpp
+iomanip
+-
 iostream
 -
-unordered_map
+string
 -
-utility
+vector
+-
+algorithm
 -
 
