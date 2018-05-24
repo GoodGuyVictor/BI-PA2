@@ -26,9 +26,11 @@ std::vector<uint32_t> CLongInteger::toBigInt(std::string & text)
         ss.clear();
     }
 
-    ss << text;
-    ss >> tmp;
-    result.push_back(tmp);
+    if(!text.empty()) {
+        ss << text;
+        ss >> tmp;
+        result.push_back(tmp);
+    }
 
     return result;
 }
