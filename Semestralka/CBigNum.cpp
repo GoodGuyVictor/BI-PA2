@@ -510,37 +510,21 @@ CBigNum CBigNum::multiplicationAlgorithm(const std::vector<uint32_t> & factor1,
 {
     size_t len = factor1.size();//factor1.size() == factor2.size()
     uint32_t carry = 0;
-//    std::string resultString;
-//    std::stringstream buffer;
-//    std::stringstream ss;
     std::vector<std::string> intermediateResults;
     std::vector<std::string> intermediateProduct;
 
     for (size_t i = 0; i < len; i++) {
-//        std::string tmpString;
         if(factor2[i] == 0)
             continue;
         for (size_t j = 0; j < len; j++) {
             unsigned long long tmpProduct = (unsigned long long)factor2[i] * (unsigned long long)factor1[j] + carry;
             intermediateProduct.push_back( toString( (uint32_t)(tmpProduct % 1000000000) ) ); //10 ^ 9
             carry = tmpProduct / 1000000000;
-//            buffer << std::setw(9) << std::setfill('0') << (uint32_t)(tmpProduct % 1000000000);//10 ^ 9
-//            buffer >> tmpString;
-//            std::reverse(tmpString.begin(), tmpString.end());
-//            ss << tmpString;
-//            buffer.clear();
         }
         if(carry) {
-//            buffer << carry;
-//            buffer >> tmpString;
-//            std::reverse(tmpString.begin(), tmpString.end());
-//            ss << tmpString;
-//            buffer.clear();
             intermediateProduct.push_back( toString(carry) );
             carry = 0;
         }
-//        ss >> resultString;
-//        std::reverse(resultString.begin(), resultString.end());
         std::string intermediateProductString;
         for(auto it = intermediateProduct.rbegin(); it < intermediateProduct.rend(); it++) {
             intermediateProductString += *it;
@@ -551,8 +535,6 @@ CBigNum CBigNum::multiplicationAlgorithm(const std::vector<uint32_t> & factor1,
             intermediateProductString.erase(0,1);
         intermediateResults.push_back(intermediateProductString);
         intermediateProduct.clear();
-//        tmpString.clear();
-//        ss.clear();
     }
 
     std::stack<CExpression*> exprStack;
@@ -565,29 +547,6 @@ CBigNum CBigNum::multiplicationAlgorithm(const std::vector<uint32_t> & factor1,
             p = new CInteger(summand);
         exprStack.push(p);
     }
-
-//    if(exprStack.size() == 1) {
-//        CBigNum product = exprStack.top()->evaluate();
-//        if(m_sgn && !other.m_sgn || !m_sgn && other.m_sgn)
-//            product.operator-();
-//        return product;
-//    } else {
-//        CExpression * rVal;
-//        CExpression * lVal;
-//        do {
-//            rVal = exprStack.top(); exprStack.pop();
-//            lVal = exprStack.top(); exprStack.pop();
-//
-//            p = new CAddExp(lVal, rVal);
-//            exprStack.push(p);
-//
-//        } while(exprStack.size() != 1);
-//
-//        CBigNum product = exprStack.top()->evaluate();
-//        if(m_sgn && !other.m_sgn || !m_sgn && other.m_sgn)
-//            product.operator-();
-//        return product;
-//    }
 
     CExpression * rVal;
     CExpression * lVal;
