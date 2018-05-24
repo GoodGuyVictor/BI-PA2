@@ -31,6 +31,24 @@ int main()
     CCalculator calc;
     calc.run();
 
+//    unsigned x = 12;
+
+//    cout << log10(x) << endl;
+
+
+//    vector<uint32_t> v1 = {320498, 239874, 732985, 72389, 7283947};
+//    vector<uint32_t> v2 = {320498, 239874, 632985, 72389, 158283947};
+//
+//
+//    if(v1 == v2)
+//        cout << "v1 == v2" << endl;
+//    else if(v1 > v2)
+//        cout << "v1 > v2" << endl;
+//    else
+//        cout << "v1 < v2" << endl;
+
+//    cout << 733 % 991 << endl;
+
 //    cout << setw(9) << setfill('0') << 448598 << endl;
 
 

@@ -14,22 +14,34 @@ CMakeFiles/Semestralka.dir/CBigNum.cpp.o: ../CBinOperator.h
 CMakeFiles/Semestralka.dir/CBigNum.cpp.o: ../CExpression.h
 CMakeFiles/Semestralka.dir/CBigNum.cpp.o: ../CInteger.h
 CMakeFiles/Semestralka.dir/CBigNum.cpp.o: ../CLongInteger.h
+CMakeFiles/Semestralka.dir/CBigNum.cpp.o: ../CSubtractExp.h
 
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CAddExp.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CBigNum.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CBinOperator.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CCalculator.cpp
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CCalculator.h
-CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CCparser.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CDecimal.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CDevideExpr.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CExpression.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CInteger.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CLongInteger.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CMultiplyExp.h
+CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CParser.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CSubtractExp.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CVariable.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../Enums.h
+
+CMakeFiles/Semestralka.dir/CDecimal.cpp.o: ../CBigNum.h
+CMakeFiles/Semestralka.dir/CDecimal.cpp.o: ../CDecimal.cpp
+CMakeFiles/Semestralka.dir/CDecimal.cpp.o: ../CDecimal.h
+CMakeFiles/Semestralka.dir/CDecimal.cpp.o: ../CExpression.h
+
+CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o: ../CBigNum.h
+CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o: ../CBinOperator.h
+CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o: ../CDevideExpr.cpp
+CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o: ../CDevideExpr.h
+CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o: ../CExpression.h
 
 CMakeFiles/Semestralka.dir/CInteger.cpp.o: ../CBigNum.h
 CMakeFiles/Semestralka.dir/CInteger.cpp.o: ../CExpression.h
@@ -47,9 +59,15 @@ CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o: ../CExpression.h
 CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o: ../CMultiplyExp.cpp
 CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o: ../CMultiplyExp.h
 
-CMakeFiles/Semestralka.dir/CParser.cpp.o: ../CCparser.h
 CMakeFiles/Semestralka.dir/CParser.cpp.o: ../CParser.cpp
+CMakeFiles/Semestralka.dir/CParser.cpp.o: ../CParser.h
 CMakeFiles/Semestralka.dir/CParser.cpp.o: ../Exceptions.h
+
+CMakeFiles/Semestralka.dir/CSubtract.cpp.o: ../CBigNum.h
+CMakeFiles/Semestralka.dir/CSubtract.cpp.o: ../CBinOperator.h
+CMakeFiles/Semestralka.dir/CSubtract.cpp.o: ../CExpression.h
+CMakeFiles/Semestralka.dir/CSubtract.cpp.o: ../CSubtract.cpp
+CMakeFiles/Semestralka.dir/CSubtract.cpp.o: ../CSubtractExp.h
 
 CMakeFiles/Semestralka.dir/main.cpp.o: ../CBigNum.h
 CMakeFiles/Semestralka.dir/main.cpp.o: ../CCalculator.h

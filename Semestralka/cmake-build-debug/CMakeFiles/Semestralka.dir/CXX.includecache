@@ -29,6 +29,8 @@ CAddExp.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CAddExp.h
 CInteger.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CInteger.h
+CSubtractExp.h
+/home/victor/githubRepos/BI-PA2/Semestralka/CSubtractExp.h
 
 /home/victor/githubRepos/BI-PA2/Semestralka/CBigNum.h
 sstream
@@ -47,8 +49,8 @@ cstring
 -
 CCalculator.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CCalculator.h
-CCparser.h
-/home/victor/githubRepos/BI-PA2/Semestralka/CCparser.h
+CParser.h
+/home/victor/githubRepos/BI-PA2/Semestralka/CParser.h
 CInteger.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CInteger.h
 CLongInteger.h
@@ -78,15 +80,9 @@ CExpression.h
 Enums.h
 /home/victor/githubRepos/BI-PA2/Semestralka/Enums.h
 
-/home/victor/githubRepos/BI-PA2/Semestralka/CCparser.h
-string
--
-unordered_map
--
-vector
--
-stack
--
+/home/victor/githubRepos/BI-PA2/Semestralka/CDecimal.cpp
+CDecimal.h
+/home/victor/githubRepos/BI-PA2/Semestralka/CDecimal.h
 
 /home/victor/githubRepos/BI-PA2/Semestralka/CDecimal.h
 string
@@ -95,6 +91,10 @@ sstream
 -
 CExpression.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CExpression.h
+
+/home/victor/githubRepos/BI-PA2/Semestralka/CDevideExpr.cpp
+CDevideExpr.h
+/home/victor/githubRepos/BI-PA2/Semestralka/CDevideExpr.h
 
 /home/victor/githubRepos/BI-PA2/Semestralka/CDevideExpr.h
 CBinOperator.h
@@ -133,10 +133,24 @@ CBinOperator.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CBinOperator.h
 
 /home/victor/githubRepos/BI-PA2/Semestralka/CParser.cpp
-CCparser.h
-/home/victor/githubRepos/BI-PA2/Semestralka/CCparser.h
+CParser.h
+/home/victor/githubRepos/BI-PA2/Semestralka/CParser.h
 Exceptions.h
 /home/victor/githubRepos/BI-PA2/Semestralka/Exceptions.h
+
+/home/victor/githubRepos/BI-PA2/Semestralka/CParser.h
+string
+-
+unordered_map
+-
+vector
+-
+stack
+-
+
+/home/victor/githubRepos/BI-PA2/Semestralka/CSubtract.cpp
+CSubtractExp.h
+/home/victor/githubRepos/BI-PA2/Semestralka/CSubtractExp.h
 
 /home/victor/githubRepos/BI-PA2/Semestralka/CSubtractExp.h
 CBinOperator.h
