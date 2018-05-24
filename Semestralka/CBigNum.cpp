@@ -9,7 +9,6 @@
 #include "CLongInteger.h"
 #include "CAddExp.h"
 #include "CInteger.h"
-#include "CSubtractExp.h"
 
 void CBigNum::print() const
 {
@@ -319,9 +318,6 @@ CBigNum CBigNum::operator/(const CBigNum &other)
                 break;
     } else if(exponent1.size() < exponent2.size())
         return CBigNum(); //default constructor result is 0
-
-//    if(exponent1.size() != exponent2.size())
-//        expandFewerNumberWithZeros(exponent1, exponent2);
 
     std::string quotient;
     std::string remainder;
