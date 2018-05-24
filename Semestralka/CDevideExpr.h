@@ -10,12 +10,9 @@
 class CDevideExp : public CBinOperator
 {
 public:
-    CDevideExp(CExpression * l, CExpression * r) : CBinOperator(l, r) {};
-    CBigNum evaluate() const override ;
+            CDevideExp  (CExpression * l, CExpression * r)
+                    : CBinOperator(l, r) {};
+    CBigNum evaluate    () const override ;
 };
-
-CBigNum CDevideExp::evaluate() const {
-
-}
 
 #endif //SEMESTRALKA_CDEVIDEEXPR_H
