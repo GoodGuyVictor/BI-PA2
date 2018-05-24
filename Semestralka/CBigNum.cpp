@@ -99,7 +99,7 @@ CBigNum &CBigNum::operator-(const CBigNum &other)
                 tmp = (long)exponent1[j] - (long)exponent2[j] - carry;
                 if(tmp < 0) {
                     carry = 1;
-                    tmp = UINT32_MAX + tmp; //modulo
+                    tmp = 1000000000 + tmp; //modulo
                 } else
                     carry = 0;
                 result.push_back((uint32_t)tmp);
@@ -116,7 +116,7 @@ CBigNum &CBigNum::operator-(const CBigNum &other)
                 }
                 else {
                     carry = 1;
-                    tmp = UINT32_MAX - tmp;
+                    tmp = 1000000000 - tmp;
                 }
                 result.push_back((uint32_t)tmp);
             }
@@ -343,8 +343,18 @@ std::string CBigNum::toString(const std::vector<uint32_t> &value) const
 
 bool CBigNum::operator>=(const CBigNum & other)
 {
-    size_t len1 = m_exponent.size();
-    size_t len2 = other.m_exponent.size();
+
+    std::string value1 = toString(m_exponent);
+    std::string value2 = toString(other.m_exponent);
+
+    while(value1[0] == '0')
+        value1.erase(0,1);
+
+    while(value2[0] == '0')
+        value2.erase(0,1);
+
+    size_t len1 = value1.size();
+    size_t len2 = value2.size();
 
     if(len1 > len2)
         return true;
@@ -352,11 +362,12 @@ bool CBigNum::operator>=(const CBigNum & other)
         return false;
     else {
         size_t len = len1; //len1 == len2
-        for(size_t i = len - 1; i >= 0; i--)
-            if(m_exponent[i] > other.m_exponent[i])
+        for(size_t i = 0; i < len; i++)
+            if(value1[i] - '0' > value2[i] - '0')
                 return true;
-            else if(m_exponent[i] < other.m_exponent[i])
+            else if(value1[i] - '0' < value2[i] - '0')
                 return false;
+
         return true;
     }
 }
@@ -367,11 +378,17 @@ void CBigNum::divideAlgorithm(const std::vector<uint32_t> & val1,
 {
     std::string stringDividend = toString(val1);
     std::string stringDivisor = toString(val2);
-    size_t len1 = stringDividend.size();
-    size_t len2 = stringDivisor.size();
 //    std::string quotient;
 //    std::string remainder;
     std::stringstream ss;
+
+    while(stringDividend[0] == '0')
+        stringDividend.erase(0,1);
+
+    while(stringDivisor[0] == '0')
+        stringDivisor.erase(0,1);
+
+    size_t len2 = stringDivisor.size();
 
     std::string dividendChunkString = stringDividend.substr(0, len2);
     for(size_t i = 0; i < dividendChunkString.size(); i++)
