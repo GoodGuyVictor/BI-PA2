@@ -14,7 +14,6 @@ CMakeFiles/Semestralka.dir/CBigNum.cpp.o: ../CBinOperator.h
 CMakeFiles/Semestralka.dir/CBigNum.cpp.o: ../CExpression.h
 CMakeFiles/Semestralka.dir/CBigNum.cpp.o: ../CInteger.h
 CMakeFiles/Semestralka.dir/CBigNum.cpp.o: ../CLongInteger.h
-CMakeFiles/Semestralka.dir/CBigNum.cpp.o: ../CSubtractExp.h
 
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CAddExp.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CBigNum.h
