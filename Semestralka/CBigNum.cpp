@@ -20,7 +20,10 @@ void CBigNum::print() const
     std::string output = toString(m_exponent);
     while(output[0] == '0')
         output.erase(0,1);
-    std::cout << output;
+    if(output.empty())
+        std::cout << "0";
+    else
+        std::cout << output;
 
     if(m_fraction)
         std::cout << "." << m_fraction;
