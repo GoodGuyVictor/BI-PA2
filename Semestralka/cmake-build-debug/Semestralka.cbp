@@ -132,6 +132,12 @@
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CLongInteger.h">
 			<Option target="Semestralka"/>
 		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CMod.cpp">
+			<Option target="Semestralka"/>
+		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CMod.h">
+			<Option target="Semestralka"/>
+		</Unit>
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CMultiplyExp.cpp">
 			<Option target="Semestralka"/>
 		</Unit>

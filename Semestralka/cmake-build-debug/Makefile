@@ -312,6 +312,33 @@ CLongInteger.cpp.s:
 	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CLongInteger.cpp.s
 .PHONY : CLongInteger.cpp.s
 
+CMod.o: CMod.cpp.o
+
+.PHONY : CMod.o
+
+# target to build an object file
+CMod.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMod.cpp.o
+.PHONY : CMod.cpp.o
+
+CMod.i: CMod.cpp.i
+
+.PHONY : CMod.i
+
+# target to preprocess a source file
+CMod.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMod.cpp.i
+.PHONY : CMod.cpp.i
+
+CMod.s: CMod.cpp.s
+
+.PHONY : CMod.s
+
+# target to generate assembly for a file
+CMod.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMod.cpp.s
+.PHONY : CMod.cpp.s
+
 CMultiplyExp.o: CMultiplyExp.cpp.o
 
 .PHONY : CMultiplyExp.o
@@ -450,6 +477,9 @@ help:
 	@echo "... CLongInteger.o"
 	@echo "... CLongInteger.i"
 	@echo "... CLongInteger.s"
+	@echo "... CMod.o"
+	@echo "... CMod.i"
+	@echo "... CMod.s"
 	@echo "... CMultiplyExp.o"
 	@echo "... CMultiplyExp.i"
 	@echo "... CMultiplyExp.s"
