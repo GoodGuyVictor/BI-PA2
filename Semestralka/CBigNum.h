@@ -16,12 +16,12 @@ public:
                         : m_sgn(false), m_fraction(0) {};
     explicit    CBigNum     (int val);
     explicit    CBigNum     (double val);
-                CBigNum     (bool sgn, const std::vector<uint32_t > & val);
+                CBigNum     (bool sgn, const std::vector<uint32_t > &, const uint32_t = 0);
 
     void            print           () const;
     CBigNum &       operator+       (const CBigNum &);
-    CBigNum &       operator-       (const CBigNum &);
-    CBigNum &       operator-       ();
+    CBigNum         operator-       (const CBigNum &);
+    CBigNum         operator-       ();
     CBigNum         operator*       (const CBigNum &);
     CBigNum         operator/       (const CBigNum &);
     CBigNum         operator%       (const CBigNum &);
