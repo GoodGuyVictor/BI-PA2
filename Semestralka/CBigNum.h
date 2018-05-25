@@ -19,13 +19,13 @@ public:
                 CBigNum     (bool sgn, const std::vector<uint32_t > &, const uint32_t = 0);
 
     void            print           () const;
-    CBigNum &       operator+       (const CBigNum &);
-    CBigNum         operator-       (const CBigNum &);
-    CBigNum         operator-       ();
-    CBigNum         operator*       (const CBigNum &);
-    CBigNum         operator/       (const CBigNum &);
-    CBigNum         operator%       (const CBigNum &);
-    bool            operator>=      (const CBigNum &);
+    CBigNum         operator+       (const CBigNum &) const;
+    CBigNum         operator-       (const CBigNum &) const;
+    CBigNum         operator-       () const;
+    CBigNum         operator*       (const CBigNum &) const;
+    CBigNum         operator/       (const CBigNum &) const;
+    CBigNum         operator%       (const CBigNum &) const;
+    bool            operator>=      (const CBigNum &) const;
 
 private:
     std::vector<uint32_t>   m_exponent;
@@ -33,9 +33,9 @@ private:
     bool                    m_sgn;
 
     uint32_t        addFractions                (uint32_t, uint32_t, unsigned short &) const;
-    uint32_t        subtractFractions           (uint32_t, uint32_t, unsigned short &);
+    uint32_t        subtractFractions           (uint32_t, uint32_t, unsigned short &) const;
     unsigned short  getCarry                    (const uint32_t) const;
-    void            expandFewerNumberWithZeros  (std::vector<uint32_t> &, std::vector<uint32_t> &);
+    void            expandFewerNumberWithZeros  (std::vector<uint32_t> &, std::vector<uint32_t> &) const;
     std::string     toString                    (const std::vector<uint32_t> &) const;
     std::string     toString                    (const CBigNum &) const;
     std::string     toString                    (uint32_t) const;
