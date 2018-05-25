@@ -24,6 +24,7 @@ public:
     CBigNum &       operator-       ();
     CBigNum         operator*       (const CBigNum &);
     CBigNum         operator/       (const CBigNum &);
+    CBigNum         operator%       (const CBigNum &);
     bool            operator>=      (const CBigNum &);
 
 private:
