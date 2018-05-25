@@ -63,6 +63,8 @@ CMultiplyExp.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CMultiplyExp.h
 CDevideExpr.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CDevideExpr.h
+CMod.h
+/home/victor/githubRepos/BI-PA2/Semestralka/CMod.h
 
 /home/victor/githubRepos/BI-PA2/Semestralka/CCalculator.h
 vector
@@ -122,6 +124,14 @@ algorithm
 CExpression.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CExpression.h
 
+/home/victor/githubRepos/BI-PA2/Semestralka/CMod.cpp
+CMod.h
+/home/victor/githubRepos/BI-PA2/Semestralka/CMod.h
+
+/home/victor/githubRepos/BI-PA2/Semestralka/CMod.h
+CBinOperator.h
+/home/victor/githubRepos/BI-PA2/Semestralka/CBinOperator.h
+
 /home/victor/githubRepos/BI-PA2/Semestralka/CMultiplyExp.cpp
 CMultiplyExp.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CMultiplyExp.h
@@ -163,28 +173,6 @@ string
 /home/victor/githubRepos/BI-PA2/Semestralka/Exceptions.h
 
 /home/victor/githubRepos/BI-PA2/Semestralka/main.cpp
-iostream
--
-iomanip
--
-sstream
--
-list
--
-string
--
-vector
--
-algorithm
--
-cstring
--
-stack
--
-typeinfo
--
-unordered_map
--
 CCalculator.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CCalculator.h
 

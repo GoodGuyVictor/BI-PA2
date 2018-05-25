@@ -26,6 +26,7 @@ CMakeFiles/Semestralka.dir/CCalculator.cpp.o
  /home/victor/githubRepos/BI-PA2/Semestralka/CExpression.h
  /home/victor/githubRepos/BI-PA2/Semestralka/CInteger.h
  /home/victor/githubRepos/BI-PA2/Semestralka/CLongInteger.h
+ /home/victor/githubRepos/BI-PA2/Semestralka/CMod.h
  /home/victor/githubRepos/BI-PA2/Semestralka/CMultiplyExp.h
  /home/victor/githubRepos/BI-PA2/Semestralka/CParser.h
  /home/victor/githubRepos/BI-PA2/Semestralka/CSubtractExp.h
@@ -52,6 +53,12 @@ CMakeFiles/Semestralka.dir/CLongInteger.cpp.o
  /home/victor/githubRepos/BI-PA2/Semestralka/CExpression.h
  /home/victor/githubRepos/BI-PA2/Semestralka/CLongInteger.cpp
  /home/victor/githubRepos/BI-PA2/Semestralka/CLongInteger.h
+CMakeFiles/Semestralka.dir/CMod.cpp.o
+ /home/victor/githubRepos/BI-PA2/Semestralka/CBigNum.h
+ /home/victor/githubRepos/BI-PA2/Semestralka/CBinOperator.h
+ /home/victor/githubRepos/BI-PA2/Semestralka/CExpression.h
+ /home/victor/githubRepos/BI-PA2/Semestralka/CMod.cpp
+ /home/victor/githubRepos/BI-PA2/Semestralka/CMod.h
 CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o
  /home/victor/githubRepos/BI-PA2/Semestralka/CBigNum.h
  /home/victor/githubRepos/BI-PA2/Semestralka/CBinOperator.h
