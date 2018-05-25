@@ -432,9 +432,9 @@ void CBigNum::divideAlgorithm(const std::vector<uint32_t> & val1,
 std::string CBigNum::toString(const CBigNum & number) const
 {
     std::string result;
-    if(m_sgn)
+    if(number.m_sgn)
         result += "-";
-    result += toString(m_exponent);
+    result += toString(number.m_exponent);
     return result;
 }
 
@@ -568,4 +568,33 @@ std::string CBigNum::toString(uint32_t num) const
     std::stringstream ss;
     ss << std::setw(9) << std::setfill('0') << num;
     return ss.str();
+}
+
+CBigNum CBigNum::operator%(const CBigNum & other)
+{
+    std::vector<uint32_t> exponent1 = m_exponent;
+    std::vector<uint32_t> exponent2 = other.m_exponent;
+
+    //if dividend is equal to divisor than remainder is 0
+    if(exponent1 == exponent2)
+        return CBigNum(0);
+
+    if(exponent1.size() == exponent2.size()) {
+        int len = (int)exponent1.size();
+
+        for(int i = len - 1; i >= 0; i--)
+            //if dividend is less than divisor than remainder is dividend
+            if(exponent1[i] < exponent2[i])
+                return CBigNum(false, exponent1);
+            else if(exponent1[i] > exponent2[i])
+                break;
+    } else if(exponent1.size() < exponent2.size())
+        return CBigNum(false, exponent1);
+
+    std::string quotient;
+    std::string remainder;
+
+    divideAlgorithm(exponent1, exponent2, quotient, remainder);
+
+    return CLongInteger(remainder).evaluate();
 }
