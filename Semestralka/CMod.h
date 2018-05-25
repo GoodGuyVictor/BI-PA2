@@ -10,6 +10,7 @@
 
 class CMod : public CBinOperator
 {
+public:
             CMod        (CExpression * lVal, CExpression * rVal)
             : CBinOperator(lVal, rVal) {}
 
