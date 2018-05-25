@@ -4,6 +4,7 @@
 
 #include "CMod.h"
 
-CBigNum CMod::evaluate() const {
+CBigNum CMod::evaluate() const
+{
     return m_lVal->evaluate() % m_rVal->evaluate();
 }
