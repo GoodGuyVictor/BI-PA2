@@ -163,6 +163,6 @@ CExpression *CCalculator::performOperation(CExpression * lVal, CExpression * rVa
     if(op == "/")
         return new CDevideExp(lVal, rVal);
 
-//    if(op == "%")
-//        return *lVal % *rVal;
+    if(op == "%")
+        return *lVal % *rVal;
 }
