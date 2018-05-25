@@ -8,6 +8,7 @@
 #include "CSubtractExp.h"
 #include "CMultiplyExp.h"
 #include "CDevideExpr.h"
+#include "CMod.h"
 
 void CCalculator::run()
 {
@@ -164,5 +165,5 @@ CExpression *CCalculator::performOperation(CExpression * lVal, CExpression * rVa
         return new CDevideExp(lVal, rVal);
 
     if(op == "%")
-        return *lVal % *rVal;
+        return new CMod(lVal, rVal);
 }
