@@ -70,16 +70,16 @@ CBigNum & CBigNum::operator+(const CBigNum &other)
     return *this;
 }
 
-CBigNum &CBigNum::operator-(const CBigNum &other)
+CBigNum CBigNum::operator-(const CBigNum &other)
 {
     if(m_sgn == false && other.m_sgn == true) {
         CBigNum copy = other;
         return operator+(copy.operator-());
     }
     else if (m_sgn == true && other.m_sgn == false) {
-        m_sgn = false;
-        CBigNum res = operator+(other);
-        return res.operator-();
+        CBigNum copy(!m_sgn, m_exponent, m_fraction);
+        CBigNum result = copy.operator+(other);
+        return result.operator-();
     }
 
     std::vector<uint32_t> exponent1 = m_exponent;
@@ -93,7 +93,7 @@ CBigNum &CBigNum::operator-(const CBigNum &other)
     unsigned short carry = 0;
     m_fraction = subtractFractions(fractoin1, fractoin2, carry);
 
-    std::vector<uint32_t> result;
+    std::vector<uint32_t> difference;
     long int tmp;
     for(size_t i = exponent1.size() - 1; i >= 0; i--) {
         if(exponent1[i] > exponent2[i]) {
@@ -104,11 +104,9 @@ CBigNum &CBigNum::operator-(const CBigNum &other)
                     tmp = 1000000000 + tmp; //modulo
                 } else
                     carry = 0;
-                result.push_back((uint32_t)tmp);
+                difference.push_back((uint32_t)tmp);
             }
-            m_exponent = result;
-            m_sgn = false;
-            return *this;
+            return CBigNum(false, difference);
         } else if(exponent1[i] < exponent2[i]) {
             for(size_t j = 0; j < exponent1.size(); j++) {
                 tmp = (long)exponent1[j] - (long)exponent2[j] + carry;
@@ -120,23 +118,19 @@ CBigNum &CBigNum::operator-(const CBigNum &other)
                     carry = 1;
                     tmp = 1000000000 - tmp;
                 }
-                result.push_back((uint32_t)tmp);
+                difference.push_back((uint32_t)tmp);
             }
-            m_exponent = result;
-            m_sgn = true;
-            return *this;
+            return CBigNum(true, difference);
         }
     }
-    result.push_back(0);
-    m_exponent = result;
-    m_sgn = false;
-    return *this;
+    difference.push_back(0);
+
+    return CBigNum(false, difference);
 }
 
-CBigNum &CBigNum::operator-()
+CBigNum CBigNum::operator-()
 {
-    m_sgn = !m_sgn;
-    return *this;
+    return CBigNum(!m_sgn, m_exponent, m_fraction);
 }
 
 CBigNum CBigNum::operator* (const CBigNum & other)
@@ -252,11 +246,11 @@ void CBigNum::expandFewerNumberWithZeros(std::vector<uint32_t> &exponent1, std::
     }
 }
 
-CBigNum::CBigNum(bool sgn, const std::vector<uint32_t> &val)
+CBigNum::CBigNum(bool sgn, const std::vector<uint32_t> &exponent, const uint32_t fraction)
 {
     m_sgn = sgn;
-    m_exponent = val;
-    m_fraction = 0;
+    m_exponent = exponent;
+    m_fraction = fraction;
 }
 
 CBigNum::CBigNum(double val)
