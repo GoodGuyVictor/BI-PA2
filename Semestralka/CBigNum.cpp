@@ -313,14 +313,6 @@ std::vector<uint32_t> CBigNum::subtractFractions(std::vector<uint32_t> & f1, std
 
 }
 
-unsigned short CBigNum::getCarry(const uint32_t sum) const
-{
-    if(sum / 1000000000)
-        return 1;
-    else
-        return 0;
-}
-
 void CBigNum::expandFewerNumberWithZeros(std::vector<uint32_t> &exponent1, std::vector<uint32_t> &exponent2) const
 {
     //if lengths are different expand the shorter one with zeros
