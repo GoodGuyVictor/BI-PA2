@@ -10,6 +10,24 @@
 #include "CAddExp.h"
 #include "CInteger.h"
 
+CBigNum::CBigNum(int val)
+{
+    if(val < 0) {
+        m_sgn = true;
+        val *= -1;
+    } else
+        m_sgn = false;
+    m_exponent.push_back((uint32_t)val);
+    m_fraction.push_back(0);
+}
+
+CBigNum::CBigNum(bool sgn, const std::vector<uint32_t> &exponent, const std::vector<uint32_t> fraction)
+{
+    m_sgn = sgn;
+    m_exponent = exponent;
+    m_fraction = fraction;
+}
+
 void CBigNum::print() const
 {
     std::cout << "----------" << std::endl;
@@ -250,50 +268,6 @@ void CBigNum::expandFewerNumberWithZeros(std::vector<uint32_t> &exponent1, std::
         for(size_t i = n; i < exponent2.size(); i++)
             exponent1.push_back(0);
     }
-}
-
-CBigNum::CBigNum(bool sgn, const std::vector<uint32_t> &exponent, const std::vector<uint32_t> fraction)
-{
-    m_sgn = sgn;
-    m_exponent = exponent;
-    m_fraction = fraction;
-}
-
-CBigNum::CBigNum(double val)
-{
-    if(val < 0) {
-        m_sgn = true;
-        val *= -1;
-    } else
-        m_sgn = false;
-
-    std::string dStr = std::to_string(val);
-
-    char * token;
-    token = strtok((char*)dStr.c_str(), ".");
-    std::stringstream ss;
-    ss << token;
-    uint32_t exponent;
-    ss >> exponent;
-    m_exponent.push_back(exponent);
-    ss.clear();
-
-    token = strtok(NULL, ".");
-    ss << token;
-    uint32_t fraction;
-    ss >> fraction;
-    m_fraction = fraction;
-}
-
-CBigNum::CBigNum(int val)
-{
-    if(val < 0) {
-        m_sgn = true;
-        val *= -1;
-    } else
-        m_sgn = false;
-    m_exponent.push_back((uint32_t)val);
-    m_fraction.push_back(0);
 }
 
 CBigNum CBigNum::operator/(const CBigNum &other) const
