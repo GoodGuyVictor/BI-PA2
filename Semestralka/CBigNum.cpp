@@ -277,7 +277,7 @@ bool CBigNum::operator>=(const CBigNum & other) const
     }
 }
 
-uint32_t CBigNum::addFractions(std::vector<uint32_t> & f1, std::vector<uint32_t> & f2, unsigned short &carry) const
+std::vector<uint32_t> CBigNum::addFractions(std::vector<uint32_t> & f1, std::vector<uint32_t> & f2, unsigned short &carry) const
 {
     int i = 10;
     int cnt1 = 0, cnt2 = 0;
@@ -328,7 +328,7 @@ uint32_t CBigNum::addFractions(std::vector<uint32_t> & f1, std::vector<uint32_t>
     return result;
 }
 
-uint32_t CBigNum::subtractFractions(uint32_t f1, uint32_t f2, unsigned short &carry) const
+std::vector<uint32_t> CBigNum::subtractFractions(std::vector<uint32_t> & f1, std::vector<uint32_t> & f2, unsigned short &carry) const
 {
     long tmp = (long)f1 - (long)f2;
     if(tmp < 0) {
