@@ -21,15 +21,11 @@ CDecimal::CDecimal(const std::string & val)
 
     m_exponent = toBigInt(exponent);
     m_fraction = toBigInt(fraction);
-
-    std::stringstream ss;
-    ss << value;
-    ss >> m_value;
 }
 
 CBigNum CDecimal::evaluate() const
 {
-    return CBigNum(m_value);
+    return CBigNum(m_sgn, m_exponent, m_fraction);
 }
 
 std::vector<uint32_t> CDecimal::toBigInt(std::string & text) const
