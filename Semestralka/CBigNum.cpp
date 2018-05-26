@@ -183,6 +183,69 @@ CBigNum CBigNum::operator* (const CBigNum & other) const
     return product;
 }
 
+CBigNum CBigNum::operator/(const CBigNum &other) const
+{
+    std::vector<uint32_t> exponent1 = m_exponent;
+    std::vector<uint32_t> exponent2 = other.m_exponent;
+
+    if(exponent1.size() == 1 && exponent2.size() == 1)
+        return CBigNum((int)(exponent1[0] / exponent2[0]));
+
+
+    //if dividend is equal to divisor that result is 1
+    if(exponent1 == exponent2)
+        return CBigNum(1);
+
+
+    if(exponent1.size() == exponent2.size()) {
+        int len = (int)exponent1.size();
+
+        for(int i = len - 1; i >= 0; i--)
+            //if dividend is less than divisor than quotient is 0
+            if(exponent1[i] < exponent2[i])
+                return CBigNum(); //default constructor result is 0
+            else if(exponent1[i] > exponent2[i])
+                break;
+    } else if(exponent1.size() < exponent2.size())
+        return CBigNum(); //default constructor result is 0
+
+    std::string quotient;
+    std::string remainder;
+
+    divideAlgorithm(exponent1, exponent2, quotient, remainder);
+
+    return CLongInteger(quotient).evaluate();
+}
+
+CBigNum CBigNum::operator%(const CBigNum & other) const
+{
+    std::vector<uint32_t> exponent1 = m_exponent;
+    std::vector<uint32_t> exponent2 = other.m_exponent;
+
+    //if dividend is equal to divisor than remainder is 0
+    if(exponent1 == exponent2)
+        return CBigNum(0);
+
+    if(exponent1.size() == exponent2.size()) {
+        int len = (int)exponent1.size();
+
+        for(int i = len - 1; i >= 0; i--)
+            //if dividend is less than divisor than remainder is dividend
+            if(exponent1[i] < exponent2[i])
+                return CBigNum(false, exponent1);
+            else if(exponent1[i] > exponent2[i])
+                break;
+    } else if(exponent1.size() < exponent2.size())
+        return CBigNum(false, exponent1);
+
+    std::string quotient;
+    std::string remainder;
+
+    divideAlgorithm(exponent1, exponent2, quotient, remainder);
+
+    return CLongInteger(remainder).evaluate();
+}
+
 uint32_t CBigNum::addFractions(std::vector<uint32_t> & f1, std::vector<uint32_t> & f2, unsigned short &carry) const
 {
     int i = 10;
@@ -268,40 +331,6 @@ void CBigNum::expandFewerNumberWithZeros(std::vector<uint32_t> &exponent1, std::
         for(size_t i = n; i < exponent2.size(); i++)
             exponent1.push_back(0);
     }
-}
-
-CBigNum CBigNum::operator/(const CBigNum &other) const
-{
-    std::vector<uint32_t> exponent1 = m_exponent;
-    std::vector<uint32_t> exponent2 = other.m_exponent;
-
-    if(exponent1.size() == 1 && exponent2.size() == 1)
-        return CBigNum((int)(exponent1[0] / exponent2[0]));
-
-
-    //if dividend is equal to divisor that result is 1
-    if(exponent1 == exponent2)
-        return CBigNum(1);
-
-
-    if(exponent1.size() == exponent2.size()) {
-        int len = (int)exponent1.size();
-
-        for(int i = len - 1; i >= 0; i--)
-            //if dividend is less than divisor than quotient is 0
-            if(exponent1[i] < exponent2[i])
-                return CBigNum(); //default constructor result is 0
-            else if(exponent1[i] > exponent2[i])
-                break;
-    } else if(exponent1.size() < exponent2.size())
-        return CBigNum(); //default constructor result is 0
-
-    std::string quotient;
-    std::string remainder;
-
-    divideAlgorithm(exponent1, exponent2, quotient, remainder);
-
-    return CLongInteger(quotient).evaluate();
 }
 
 std::string CBigNum::toString(const std::vector<uint32_t> &value) const
@@ -542,33 +571,4 @@ std::string CBigNum::toString(uint32_t num) const
     std::stringstream ss;
     ss << std::setw(9) << std::setfill('0') << num;
     return ss.str();
-}
-
-CBigNum CBigNum::operator%(const CBigNum & other) const
-{
-    std::vector<uint32_t> exponent1 = m_exponent;
-    std::vector<uint32_t> exponent2 = other.m_exponent;
-
-    //if dividend is equal to divisor than remainder is 0
-    if(exponent1 == exponent2)
-        return CBigNum(0);
-
-    if(exponent1.size() == exponent2.size()) {
-        int len = (int)exponent1.size();
-
-        for(int i = len - 1; i >= 0; i--)
-            //if dividend is less than divisor than remainder is dividend
-            if(exponent1[i] < exponent2[i])
-                return CBigNum(false, exponent1);
-            else if(exponent1[i] > exponent2[i])
-                break;
-    } else if(exponent1.size() < exponent2.size())
-        return CBigNum(false, exponent1);
-
-    std::string quotient;
-    std::string remainder;
-
-    divideAlgorithm(exponent1, exponent2, quotient, remainder);
-
-    return CLongInteger(remainder).evaluate();
 }
