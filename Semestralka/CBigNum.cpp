@@ -73,7 +73,7 @@ CBigNum CBigNum::operator+(const CBigNum &other) const
     uint32_t tmp;
     unsigned short carry = 0;
 
-    uint32_t fraction = addFractions(fractoin1, fractoin2, carry);
+    std::vector<uint32_t> fraction = addFractions(fractoin1, fractoin2, carry);
 
     for(size_t i = 0; i < exponent1.size(); i++) {
         tmp = exponent1[i] + exponent2[i] + carry;
@@ -109,13 +109,13 @@ CBigNum CBigNum::operator-(const CBigNum &other) const
     std::vector<uint32_t> exponent1 = m_exponent;
     std::vector<uint32_t> exponent2 = other.m_exponent;
 
-    uint32_t fractoin1 = m_fraction;
-    uint32_t fractoin2 = other.m_fraction;
+    std::vector<uint32_t> fractoin1 = m_fraction;
+    std::vector<uint32_t> fractoin2 = other.m_fraction;
 
     expandFewerNumberWithZeros(exponent1, exponent2);
 
     unsigned short carry = 0;
-    uint32_t fraction = subtractFractions(fractoin1, fractoin2, carry);
+    std::vector<uint32_t> fraction = subtractFractions(fractoin1, fractoin2, carry);
 
     std::vector<uint32_t> difference;
     long int tmp;
@@ -162,8 +162,8 @@ CBigNum CBigNum::operator* (const CBigNum & other) const
     std::vector<uint32_t> exponent1 = m_exponent;
     std::vector<uint32_t> exponent2 = other.m_exponent;
 
-    uint32_t fractoin1 = m_fraction;
-    uint32_t fractoin2 = other.m_fraction;
+    std::vector<uint32_t> fractoin1 = m_fraction;
+    std::vector<uint32_t> fractoin2 = other.m_fraction;
 
     int tens = 0;
     tens = eliminateEndingZeros(exponent1, exponent2);
