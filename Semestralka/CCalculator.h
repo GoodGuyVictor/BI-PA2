@@ -17,7 +17,6 @@ private:
     void            removeWhiteSpaces       (string &);
     void            createNewVariable       (const string&);
     CBigNum         calculate               (const string&);
-    void            display                 (const string&) const;
     void            saveHistory             (const string&, const string&);
     EValType        determineType           (const string&) const;
     bool            isOperator              (const string&) const;

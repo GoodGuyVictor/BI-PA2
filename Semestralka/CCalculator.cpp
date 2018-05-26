@@ -96,12 +96,6 @@ CBigNum CCalculator::calculate(const string & input)
     }
 }
 
-void CCalculator::display(const string & result) const
-{
-    cout << "----------" << endl;
-    cout << result << endl;
-}
-
 void CCalculator::saveHistory(const string & input, const string & result)
 {
     string tmp;
