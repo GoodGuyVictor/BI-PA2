@@ -46,8 +46,8 @@ CBigNum CBigNum::operator+(const CBigNum &other) const
     std::vector<uint32_t> exponent1 = m_exponent;
     std::vector<uint32_t> exponent2 = other.m_exponent;
 
-    uint32_t fractoin1 = m_fraction;
-    uint32_t fractoin2 = other.m_fraction;
+    std::vector<uint32_t> fractoin1 = m_fraction;
+    std::vector<uint32_t> fractoin2 = other.m_fraction;
 
     expandFewerNumberWithZeros(exponent1, exponent2);
 
@@ -165,7 +165,7 @@ CBigNum CBigNum::operator* (const CBigNum & other) const
     return product;
 }
 
-uint32_t CBigNum::addFractions(uint32_t f1, uint32_t f2, unsigned short &carry) const
+uint32_t CBigNum::addFractions(std::vector<uint32_t> & f1, std::vector<uint32_t> & f2, unsigned short &carry) const
 {
     int i = 10;
     int cnt1 = 0, cnt2 = 0;
@@ -293,7 +293,7 @@ CBigNum::CBigNum(int val)
     } else
         m_sgn = false;
     m_exponent.push_back((uint32_t)val);
-    m_fraction = 0;
+    m_fraction.push_back(0);
 }
 
 CBigNum CBigNum::operator/(const CBigNum &other) const
