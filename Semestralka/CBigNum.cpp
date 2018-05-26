@@ -252,7 +252,7 @@ void CBigNum::expandFewerNumberWithZeros(std::vector<uint32_t> &exponent1, std::
     }
 }
 
-CBigNum::CBigNum(bool sgn, const std::vector<uint32_t> &exponent, const uint32_t fraction)
+CBigNum::CBigNum(bool sgn, const std::vector<uint32_t> &exponent, const std::vector<uint32_t> fraction)
 {
     m_sgn = sgn;
     m_exponent = exponent;
