@@ -12,12 +12,16 @@
 class CDecimal : public CExpression
 {
 public:
-    explicit    CDecimal    (const std::string & val);
+    explicit    CDecimal    (const std::string & value);
 
     CBigNum     evaluate    () const override ;
 
 private:
-    double m_value;
+    bool m_sgn;
+    std::vector<uint32_t> m_exponent;
+    std::vector<uint32_t> m_fraction;
+
+    std::vector<uint32_t> toBigInt(std::string & text) const;
 };
 
 
