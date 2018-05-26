@@ -43,15 +43,13 @@ void CBigNum::print() const
         std::cout << "-";
 
     std::string output = toString(m_exponent);
-    while(output[0] == '0')
-        output.erase(0,1);
-    if(output.empty())
-        std::cout << "0";
-    else
-        std::cout << output;
 
-//    if(m_fraction)
-//        std::cout << "." << m_fraction;
+    if(!(m_fraction.size() == 1 && m_fraction[0] == 0)) {
+        output += ".";
+        output += toString(m_fraction);
+    }
+
+    std::cout << output;
 
     std::cout << std::endl;
 }
@@ -111,41 +109,12 @@ CBigNum CBigNum::operator-(const CBigNum &other) const
     expandFewerNumberWithZeros(exponent1, exponent2);
 
     unsigned short carry = 0;
-    std::vector<uint32_t> fraction = subtractFractions(fractoin1, fractoin2, carry);
+    bool sgn;
 
-    std::vector<uint32_t> difference;
-    long int tmp;
-    for(size_t i = exponent1.size() - 1; i >= 0; i--) {
-        if(exponent1[i] > exponent2[i]) {
-            for(size_t j = 0; j < exponent1.size(); j++) {
-                tmp = (long)exponent1[j] - (long)exponent2[j] - carry;
-                if(tmp < 0) {
-                    carry = 1;
-                    tmp = 1000000000 + tmp; //modulo
-                } else
-                    carry = 0;
-                difference.push_back((uint32_t)tmp);
-            }
-            return CBigNum(false, difference, fraction);
-        } else if(exponent1[i] < exponent2[i]) {
-            for(size_t j = 0; j < exponent1.size(); j++) {
-                tmp = (long)exponent1[j] - (long)exponent2[j] + carry;
-                if(tmp < 0) {
-                    tmp *= -1;
-                    carry = 0;
-                }
-                else {
-                    carry = 1;
-                    tmp = 1000000000 - tmp;
-                }
-                difference.push_back((uint32_t)tmp);
-            }
-            return CBigNum(true, difference, fraction);
-        }
-    }
-    difference.push_back(0);
+    std::vector<uint32_t> fractionDifference = subtractFractions(fractoin1, fractoin2, carry);
+    std::vector<uint32_t> exponentDifference = subtractionAlgorithm(exponent1, exponent2, carry, sgn);
 
-    return CBigNum(false, difference, fraction);
+    return CBigNum(sgn, exponentDifference, fractionDifference);
 }
 
 CBigNum CBigNum::operator-() const
@@ -310,7 +279,33 @@ std::vector<uint32_t> CBigNum::addFractions(std::vector<uint32_t> & f1, std::vec
 
 std::vector<uint32_t> CBigNum::subtractFractions(std::vector<uint32_t> & f1, std::vector<uint32_t> & f2, unsigned short &carry) const
 {
+    std::vector<uint32_t> difference;
+    if(f1.size() == 1 && f1[0] == 0 && f2.size() == 1 && f2[0] == 0) {
+        difference.push_back(0);
+        return difference;
+    }
 
+    std::string fract1String = toString(f1);
+    std::string fract2String = toString(f2);
+
+    while(fract1String.length() > fract2String.length())
+        fract2String.push_back('0');
+
+    while(fract1String.length() < fract2String.length())
+        fract1String.push_back('0');
+
+    std::vector<uint32_t> fract1 = toBigInt(fract1String);
+    std::vector<uint32_t> fract2 = toBigInt(fract2String);
+
+    bool sgn;
+    difference = subtractionAlgorithm(fract1, fract2, carry, sgn);
+
+    if(sgn) {
+        modulo(difference);
+        carry = 1;
+    }
+
+    return difference;
 }
 
 void CBigNum::expandFewerNumberWithZeros(std::vector<uint32_t> &exponent1, std::vector<uint32_t> &exponent2) const
@@ -536,10 +531,14 @@ CBigNum CBigNum::multiplicationAlgorithm(const std::vector<uint32_t> & factor1,
     return product;
 }
 
-std::string CBigNum::toString(uint32_t num) const
+std::string CBigNum::toString(uint32_t num, bool leadingZeros) const
 {
     std::stringstream ss;
-    ss << std::setw(9) << std::setfill('0') << num;
+    if(leadingZeros)
+        ss << std::setw(9) << std::setfill('0') << num;
+    else
+        ss << num;
+
     return ss.str();
 }
 
@@ -557,4 +556,64 @@ std::vector<uint32_t> CBigNum::additionAlgorithm(const std::vector<uint32_t> & n
     }
 
     return sum;
+}
+
+std::vector<uint32_t> CBigNum::subtractionAlgorithm(const std::vector<uint32_t> & num1,
+                                                    const std::vector<uint32_t> & num2,
+                                                    unsigned short & carry, bool & sgn) const
+{
+    std::vector<uint32_t> difference;
+    long int tmp;
+
+    if(num1 == num2) {
+        difference.push_back(0);
+        return difference;
+    }
+
+    for(int i = (int)num1.size() - 1; i >= 0; i--) {
+        if(num1[i] > num2[i]) {
+            for(size_t j = 0; j < num1.size(); j++) {
+                tmp = (long)num1[j] - (long)num2[j] - carry;
+                if(tmp < 0) {
+                    carry = 1;
+                    tmp = 1000000000 + tmp; //modulo
+                } else
+                    carry = 0;
+                difference.push_back((uint32_t)tmp);
+            }
+            sgn = false;
+            break;
+        } else if(num1[i] < num2[i]) {
+            for(size_t j = 0; j < num1.size(); j++) {
+                tmp = (long)num1[j] - (long)num2[j] + carry;
+                if(tmp < 0) {
+                    tmp *= -1;
+                    carry = 0;
+                }
+                else {
+                    carry = 1;
+                    tmp = 1000000000 - tmp;
+                }
+                difference.push_back((uint32_t)tmp);
+            }
+            sgn = true;
+            break;
+        }
+    }
+
+    return difference;
+}
+
+void CBigNum::modulo(std::vector<uint32_t> & num) const
+{
+    int carry = 0;
+    std::string tmp;
+    size_t len;
+
+    for(auto & it : num) {
+        tmp = toString(it, false);
+        len = tmp.size();
+        it = (uint32_t)pow(10, len) - it - carry;
+        carry = 1;
+    }
 }
