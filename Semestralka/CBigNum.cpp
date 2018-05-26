@@ -246,6 +246,37 @@ CBigNum CBigNum::operator%(const CBigNum & other) const
     return CLongInteger(remainder).evaluate();
 }
 
+bool CBigNum::operator>=(const CBigNum & other) const
+{
+
+    std::string value1 = toString(m_exponent);
+    std::string value2 = toString(other.m_exponent);
+
+    while(value1[0] == '0')
+        value1.erase(0,1);
+
+    while(value2[0] == '0')
+        value2.erase(0,1);
+
+    size_t len1 = value1.size();
+    size_t len2 = value2.size();
+
+    if(len1 > len2)
+        return true;
+    else if(len1 < len2)
+        return false;
+    else {
+        size_t len = len1; //len1 == len2
+        for(size_t i = 0; i < len; i++)
+            if(value1[i] - '0' > value2[i] - '0')
+                return true;
+            else if(value1[i] - '0' < value2[i] - '0')
+                return false;
+
+        return true;
+    }
+}
+
 uint32_t CBigNum::addFractions(std::vector<uint32_t> & f1, std::vector<uint32_t> & f2, unsigned short &carry) const
 {
     int i = 10;
@@ -341,37 +372,6 @@ std::string CBigNum::toString(const std::vector<uint32_t> &value) const
     std::string result;
     ss >> result;
     return result;
-}
-
-bool CBigNum::operator>=(const CBigNum & other) const
-{
-
-    std::string value1 = toString(m_exponent);
-    std::string value2 = toString(other.m_exponent);
-
-    while(value1[0] == '0')
-        value1.erase(0,1);
-
-    while(value2[0] == '0')
-        value2.erase(0,1);
-
-    size_t len1 = value1.size();
-    size_t len2 = value2.size();
-
-    if(len1 > len2)
-        return true;
-    else if(len1 < len2)
-        return false;
-    else {
-        size_t len = len1; //len1 == len2
-        for(size_t i = 0; i < len; i++)
-            if(value1[i] - '0' > value2[i] - '0')
-                return true;
-            else if(value1[i] - '0' < value2[i] - '0')
-                return false;
-
-        return true;
-    }
 }
 
 void CBigNum::divideAlgorithm(const std::vector<uint32_t> & val1,
