@@ -15,8 +15,8 @@ public:
                 CBigNum     ()
                         : m_sgn(false), m_fraction(0) {};
     explicit    CBigNum     (int val);
-    explicit    CBigNum     (double val);
-                CBigNum     (bool sgn, const std::vector<uint32_t > &, const uint32_t = 0);
+                CBigNum     (bool sgn, const std::vector<uint32_t > &);
+                CBigNum     (bool sgn, const std::vector<uint32_t > &, const std::vector<uint32_t>);
 
     void            print           () const;
     CBigNum         operator+       (const CBigNum &) const;
@@ -29,24 +29,24 @@ public:
 
 private:
     std::vector<uint32_t>   m_exponent;
-    uint32_t                m_fraction;
+    std::vector<uint32_t>   m_fraction;
     bool                    m_sgn;
 
-    uint32_t        addFractions                (uint32_t, uint32_t, unsigned short &) const;
-    uint32_t        subtractFractions           (uint32_t, uint32_t, unsigned short &) const;
-    unsigned short  getCarry                    (const uint32_t) const;
-    void            expandFewerNumberWithZeros  (std::vector<uint32_t> &, std::vector<uint32_t> &) const;
-    std::string     toString                    (const std::vector<uint32_t> &) const;
-    std::string     toString                    (const CBigNum &) const;
-    std::string     toString                    (uint32_t) const;
-    void            divideAlgorithm             (const std::vector<uint32_t> &,
-                                                 const std::vector<uint32_t> &,
-                                                 std::string &, std::string &) const;
-    void            multiplyByTen               ();
-    int            eliminateEndingZeros         (std::vector<uint32_t> &, std::vector<uint32_t> &) const;
-    std::vector<uint32_t> toBigInt              (std::string & text) const;
-    CBigNum         multiplicationAlgorithm     (const std::vector<uint32_t> &,
-                                                 const std::vector<uint32_t> &) const;
+    std::vector<uint32_t>       additionAlgorithm           (const std::vector<uint32_t> &, const std::vector<uint32_t> &, unsigned short &) const;
+    std::vector<uint32_t>       subtractionAlgorithm        (const std::vector<uint32_t> &, const std::vector<uint32_t> &, unsigned short &, bool &) const;
+    CBigNum                     multiplicationAlgorithm     (const std::vector<uint32_t> &, const std::vector<uint32_t> &) const;
+    void                        divisionAlgorithm           (const std::vector<uint32_t> &, const std::vector<uint32_t> &, std::string &, std::string &) const;
+    std::vector<uint32_t>       addFractions                (std::vector<uint32_t> &, std::vector<uint32_t> &, unsigned short &) const;
+    std::vector<uint32_t>       subtractFractions           (std::vector<uint32_t> &, std::vector<uint32_t> &, unsigned short &) const;
+
+    void                        expandFewerNumberWithZeros  (std::vector<uint32_t> &, std::vector<uint32_t> &) const;
+    std::string                 toString                    (const std::vector<uint32_t> &) const;
+    std::string                 toString                    (const CBigNum &) const;
+    std::string                 toString                    (uint32_t, bool = true) const;
+    void                        multiplyByTen               ();
+    int                         eliminateEndingZeros        (std::vector<uint32_t> &, std::vector<uint32_t> &) const;
+    std::vector<uint32_t>       toBigInt                    (std::string & text) const;
+    void                        modulo                      (std::vector<uint32_t> &) const;
 };
 
 #endif //SEMESTRALKA_CBIGNUM_H
