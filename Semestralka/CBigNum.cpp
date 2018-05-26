@@ -177,7 +177,7 @@ CBigNum CBigNum::operator/(const CBigNum &other) const
     std::string quotient;
     std::string remainder;
 
-    divideAlgorithm(exponent1, exponent2, quotient, remainder);
+    divisionAlgorithm(exponent1, exponent2, quotient, remainder);
 
     return CLongInteger(quotient).evaluate();
 }
@@ -206,7 +206,7 @@ CBigNum CBigNum::operator%(const CBigNum & other) const
     std::string quotient;
     std::string remainder;
 
-    divideAlgorithm(exponent1, exponent2, quotient, remainder);
+    divisionAlgorithm(exponent1, exponent2, quotient, remainder);
 
     return CLongInteger(remainder).evaluate();
 }
@@ -339,9 +339,9 @@ std::string CBigNum::toString(const std::vector<uint32_t> &value) const
     return result;
 }
 
-void CBigNum::divideAlgorithm(const std::vector<uint32_t> & val1,
-                              const std::vector<uint32_t> & val2,
-                              std::string & quotient, std::string & remainder) const
+void CBigNum::divisionAlgorithm(const std::vector<uint32_t> &val1,
+                                const std::vector<uint32_t> &val2,
+                                std::string &quotient, std::string &remainder) const
 {
     std::string stringDividend = toString(val1);
     std::string stringDivisor = toString(val2);
