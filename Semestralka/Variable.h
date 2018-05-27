@@ -6,9 +6,9 @@
 #define SEMESTRALKA_CVARIABLE_H
 
 #include <string>
-#include "CExpression.h"
+#include "Expression.h"
 
-class CVariable : public CExpression
+class CVariable : public Expression
 {
 public:
     CVariable (const std::string &name, const std::string & val);
@@ -16,7 +16,7 @@ public:
 
     CBigNum evaluate() const override;
     std::string getName() const;
-    CExpression * clone() const;
+    Expression * clone() const;
 
 private:
     std::string m_name;

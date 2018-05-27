@@ -6,9 +6,9 @@
 #define SEMESTRALKA_CINTEGER_H
 
 #include <sstream>
-#include "CExpression.h"
+#include "Expression.h"
 
-class CInteger : public CExpression
+class CInteger : public Expression
 {
 public:
     explicit    CInteger   (const std::string & val);

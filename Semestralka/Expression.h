@@ -5,13 +5,13 @@
 #ifndef SEMESTRALKA_CEXPRESSION_H
 #define SEMESTRALKA_CEXPRESSION_H
 
-#include "CBigNum.h"
+#include "BigNum.h"
 
-class CExpression
+class Expression
 {
 public:
-    CExpression() = default;
-    virtual ~CExpression() = default;
+    Expression() = default;
+    virtual ~Expression() = default;
 
     virtual CBigNum evaluate() const = 0;
 };

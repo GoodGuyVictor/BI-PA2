@@ -1,11 +1,11 @@
 
-#include "CCalculator.h"
+#include "Calculator.h"
 
 
 int main()
 {
 
-    CCalculator calc;
+    Calculator calc;
     calc.run();
 
 //    std::cout << 34658 % 839 << std::endl;

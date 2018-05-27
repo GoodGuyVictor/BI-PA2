@@ -2,7 +2,7 @@
 // Created by victor on 22.5.18.
 //
 
-#include "CInteger.h"
+#include "Integer.h"
 
 CInteger::CInteger(const std::string &val)
 {

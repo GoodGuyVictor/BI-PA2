@@ -6,13 +6,13 @@
 #define SEMESTRALKA_CMOD_H
 
 
-#include "CBinOperator.h"
+#include "BinOperator.h"
 
-class CMod : public CBinOperator
+class CMod : public BinOperator
 {
 public:
-            CMod        (CExpression * lVal, CExpression * rVal)
-            : CBinOperator(lVal, rVal) {}
+            CMod        (Expression * lVal, Expression * rVal)
+            : BinOperator(lVal, rVal) {}
 
     CBigNum evaluate    () const override;
 };

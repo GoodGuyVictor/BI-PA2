@@ -3,4 +3,4 @@ project(Semestralka)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(Semestralka main.cpp CCalculator.h CParser.h CCalculator.cpp CParser.cpp CExpression.h CBigNum.h CBinOperator.h CInteger.h CLongInteger.h CDecimal.h CVariable.h CAddExp.h CSubtractExp.h CMultiplyExp.h CDevideExpr.h CBigNum.cpp CLongInteger.cpp CAddExp.cpp CMultiplyExp.cpp CInteger.cpp CDevideExpr.cpp CDecimal.cpp CSubtract.cpp CMod.cpp CMod.h CVariable.cpp)
+add_executable(Semestralka main.cpp Calculator.h Parser.h Calculator.cpp Parser.cpp Expression.h BigNum.h BinOperator.h Integer.h LongInteger.h Decimal.h Variable.h AddExp.h SubtractExp.h MultiplyExp.h DevideExpr.h BigNum.cpp LongInteger.cpp AddExp.cpp MultiplyExp.cpp Integer.cpp DevideExpr.cpp Decimal.cpp Subtract.cpp Mod.cpp Mod.h Variable.cpp)

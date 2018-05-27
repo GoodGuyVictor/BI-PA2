@@ -6,9 +6,9 @@
 #include <stack>
 #include <iostream>
 #include <iomanip>
-#include "CLongInteger.h"
-#include "CAddExp.h"
-#include "CInteger.h"
+#include "LongInteger.h"
+#include "AddExp.h"
+#include "Integer.h"
 
 CBigNum::CBigNum(int val)
 {
@@ -540,10 +540,10 @@ CBigNum CBigNum::multiplicationAlgorithm(const std::vector<uint32_t> & factor1,
         intermediateProduct.clear();
     }
 
-    std::stack<CExpression*> exprStack;
+    std::stack<Expression*> exprStack;
 
     for(const auto & summand : intermediateResults) {
-        CExpression * p;
+        Expression * p;
         if(summand.size() > 6)
             p = new CLongInteger(summand);
         else
@@ -551,9 +551,9 @@ CBigNum CBigNum::multiplicationAlgorithm(const std::vector<uint32_t> & factor1,
         exprStack.push(p);
     }
 
-    CExpression * rVal;
-    CExpression * lVal;
-    CExpression * sum;
+    Expression * rVal;
+    Expression * lVal;
+    Expression * sum;
 
     while(exprStack.size() != 1) {
         rVal = exprStack.top(); exprStack.pop();

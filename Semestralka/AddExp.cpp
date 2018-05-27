@@ -2,7 +2,7 @@
 // Created by victor on 22.5.18.
 //
 
-#include "CAddExp.h"
+#include "AddExp.h"
 
 CBigNum CAddExp::evaluate() const
 {

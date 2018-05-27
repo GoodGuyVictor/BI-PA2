@@ -2,9 +2,9 @@
 // Created by victor on 23.5.18.
 //
 
-#include "CDecimal.h"
+#include "Decimal.h"
 
-CDecimal::CDecimal(const std::string & val)
+Decimal::Decimal(const std::string & val)
 {
     std::string value(val);
     if(value[0] == '-') {
@@ -23,12 +23,12 @@ CDecimal::CDecimal(const std::string & val)
     m_fraction = toBigInt(fraction);
 }
 
-CBigNum CDecimal::evaluate() const
+CBigNum Decimal::evaluate() const
 {
     return CBigNum(m_sgn, m_exponent, m_fraction);
 }
 
-std::vector<uint32_t> CDecimal::toBigInt(std::string & text) const
+std::vector<uint32_t> Decimal::toBigInt(std::string & text) const
 {
     std::vector<uint32_t> result;
     int len = text.size();

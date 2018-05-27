@@ -2,9 +2,9 @@
 // Created by victor on 23.5.18.
 //
 
-#include "CSubtractExp.h"
+#include "SubtractExp.h"
 
-CBigNum CSubtractExp::evaluate() const
+CBigNum SubtractExp::evaluate() const
 {
     return m_lVal->evaluate() - m_rVal->evaluate();
 }

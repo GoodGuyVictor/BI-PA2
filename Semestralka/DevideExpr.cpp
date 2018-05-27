@@ -2,7 +2,7 @@
 // Created by victor on 23.5.18.
 //
 
-#include "CDevideExpr.h"
+#include "DevideExpr.h"
 
 CBigNum CDevideExp::evaluate() const
 {

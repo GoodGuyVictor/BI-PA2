@@ -7,12 +7,12 @@
 
 #include <string>
 #include <sstream>
-#include "CExpression.h"
+#include "Expression.h"
 
-class CDecimal : public CExpression
+class Decimal : public Expression
 {
 public:
-    explicit    CDecimal    (const std::string & value);
+    explicit    Decimal    (const std::string & value);
 
     CBigNum     evaluate    () const override ;
 

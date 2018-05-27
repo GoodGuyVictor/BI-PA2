@@ -5,12 +5,12 @@
 #ifndef SEMESTRALKA_CMULTIPLYEXP_H
 #define SEMESTRALKA_CMULTIPLYEXP_H
 
-#include "CBinOperator.h"
+#include "BinOperator.h"
 
-class CMultiplyExp : public CBinOperator
+class CMultiplyExp : public BinOperator
 {
 public:
-    CMultiplyExp(CExpression * l, CExpression * r) : CBinOperator(l, r) {};
+    CMultiplyExp(Expression * l, Expression * r) : BinOperator(l, r) {};
     CBigNum evaluate() const override ;
 };
 

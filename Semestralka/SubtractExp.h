@@ -5,13 +5,13 @@
 #ifndef SEMESTRALKA_CSUBTRACTEXP_H
 #define SEMESTRALKA_CSUBTRACTEXP_H
 
-#include "CBinOperator.h"
+#include "BinOperator.h"
 
-class CSubtractExp : public CBinOperator
+class SubtractExp : public BinOperator
 {
 public:
-            CSubtractExp    (CExpression * l, CExpression * r)
-                    : CBinOperator(l, r) {};
+            SubtractExp    (Expression * l, Expression * r)
+                    : BinOperator(l, r) {};
 
     CBigNum evaluate        () const override ;
 };

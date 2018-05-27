@@ -2,7 +2,7 @@
 // Created by victor on 26.5.18.
 //
 
-#include "CVariable.h"
+#include "Variable.h"
 
 CVariable::CVariable(const std::string &name, const std::string &val)
         : m_name(name)
@@ -63,9 +63,9 @@ std::string CVariable::getName() const
     return m_name;
 }
 
-CExpression *CVariable::clone() const
+Expression *CVariable::clone() const
 {
-    CExpression *tmp = new CVariable(m_name, m_sgn, m_exponent, m_fraction);
+    Expression *tmp = new CVariable(m_name, m_sgn, m_exponent, m_fraction);
     return tmp;
 }
 

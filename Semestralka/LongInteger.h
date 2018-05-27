@@ -6,9 +6,9 @@
 #define SEMESTRALKA_CLONGINTEGER_H
 
 #include <algorithm>
-#include "CExpression.h"
+#include "Expression.h"
 
-class CLongInteger : public CExpression
+class CLongInteger : public Expression
 {
 public:
     explicit    CLongInteger    (std::string val);

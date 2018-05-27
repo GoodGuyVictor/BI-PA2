@@ -2,7 +2,7 @@
 // Created by victor on 22.5.18.
 //
 
-#include "CMultiplyExp.h"
+#include "MultiplyExp.h"
 
 CBigNum CMultiplyExp::evaluate() const
 {

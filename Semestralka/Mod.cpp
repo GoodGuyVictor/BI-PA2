@@ -2,7 +2,7 @@
 // Created by victor on 25.5.18.
 //
 
-#include "CMod.h"
+#include "Mod.h"
 
 CBigNum CMod::evaluate() const
 {

@@ -5,13 +5,13 @@
 #ifndef SEMESTRALKA_CADDEXP_H
 #define SEMESTRALKA_CADDEXP_H
 
-#include "CBinOperator.h"
+#include "BinOperator.h"
 
-class CAddExp : public CBinOperator
+class CAddExp : public BinOperator
 {
 public:
-            CAddExp     (CExpression * l, CExpression * r)
-                    : CBinOperator(l, r) {};
+            CAddExp     (Expression * l, Expression * r)
+                    : BinOperator(l, r) {};
 
     CBigNum evaluate    () const override ;
 };
