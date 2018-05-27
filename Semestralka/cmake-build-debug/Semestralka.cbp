@@ -8,38 +8,38 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug"/>
+				<Option working_dir="/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug"/>
+				<Option working_dir="/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug"/>
+				<Option working_dir="/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Semestralka">
-				<Option output="/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Semestralka" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug"/>
+				<Option output="/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Semestralka" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -54,15 +54,15 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 Semestralka"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 Semestralka"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Semestralka/fast">
-				<Option output="/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Semestralka" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug"/>
+				<Option output="/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Semestralka" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -77,95 +77,95 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 Semestralka/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 Semestralka/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CAddExp.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/AddExp.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CAddExp.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/AddExp.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CBigNum.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/BigNum.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CBigNum.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/BigNum.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CBinOperator.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/BinOperator.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CCalculator.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Calculator.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CCalculator.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Calculator.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CDecimal.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Decimal.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CDecimal.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Decimal.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CDevideExpr.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/DevideExpr.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CDevideExpr.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/DevideExpr.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CExpression.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Expression.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CInteger.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Integer.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CInteger.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Integer.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CLongInteger.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/LongInteger.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CLongInteger.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/LongInteger.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CMod.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Mod.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CMod.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Mod.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CMultiplyExp.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/MultiplyExp.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CMultiplyExp.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/MultiplyExp.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CParser.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Parser.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CParser.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Parser.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CSubtract.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Subtract.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CSubtractExp.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/SubtractExp.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CVariable.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Variable.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CVariable.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Variable.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/main.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/main.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CMakeLists.txt">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
