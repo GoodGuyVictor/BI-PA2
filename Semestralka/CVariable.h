@@ -17,14 +17,16 @@ public:
     CBigNum evaluate() const override;
     std::string getName() const;
     CExpression * clone() const;
-
+    std::string toString() const;
 private:
+
     std::string m_name;
     bool m_sgn;
     std::vector<uint32_t> m_exponent;
     std::vector<uint32_t> m_fraction;
 
     std::vector<uint32_t> toBigInt(std::string text) const;
+    std::string toString(const std::vector<uint32_t> &) const;
 };
 
 #endif //SEMESTRALKA_CVARIABLE_H
