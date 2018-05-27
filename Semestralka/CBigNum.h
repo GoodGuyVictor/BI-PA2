@@ -8,6 +8,8 @@
 #include <sstream>
 #include <algorithm>
 #include <cstring>
+#include <stdint.h>
+#include <stdint-gcc.h>
 
 class CBigNum
 {
