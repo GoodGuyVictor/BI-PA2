@@ -12,8 +12,7 @@
 class CBigNum
 {
 public:
-                CBigNum     ()
-                        : m_sgn(false), m_fraction(0) {};
+                CBigNum     ();
     explicit    CBigNum     (int val);
                 CBigNum     (bool sgn, const std::vector<uint32_t > &);
                 CBigNum     (bool sgn, const std::vector<uint32_t > &, const std::vector<uint32_t>);
@@ -45,7 +44,7 @@ private:
     std::string                 toString                    (uint32_t, bool = true) const;
     void                        multiplyByTen               ();
     int                         eliminateEndingZeros        (std::vector<uint32_t> &, std::vector<uint32_t> &) const;
-    std::vector<uint32_t>       toBigInt                    (std::string & text) const;
+    std::vector<uint32_t>       toBigInt                    (std::string text) const;
     void                        modulo                      (std::vector<uint32_t> &) const;
 };
 
