@@ -25,10 +25,6 @@ void CParser::shuntingYard(const string &input)
 
                 if(*it == ')')
                 {
-//                    do
-//                    {
-//                        popOperatorFromStackToOutput(operatorStack);
-//                    } while(operatorStack.top() != '(');
                     while(operatorStack.top() != '(')
                         popOperatorFromStackToOutput(operatorStack);
                     operatorStack.pop();
