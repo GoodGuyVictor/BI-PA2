@@ -2,6 +2,7 @@
 // Created by victor on 26.5.18.
 //
 
+#include <iomanip>
 #include "CVariable.h"
 
 CVariable::CVariable(const std::string &name, const std::string &val)
@@ -74,4 +75,34 @@ CVariable::CVariable(const std::string &name, bool sgn, const std::vector<uint32
 {
     m_exponent = exponent;
     m_fraction = fraction;
+}
+
+std::string CVariable::toString() const
+{
+    std::string result;
+
+    result = m_name;
+    result += " = ";
+    if(m_sgn)
+        result += "-";
+    result += toString(m_exponent);
+    std::string fraction = toString(m_fraction);
+    if(fraction != "0") {
+        result += ".";
+        result += fraction;
+    }
+    return result;
+}
+
+std::string CVariable::toString(const std::vector<uint32_t> & value) const
+{
+    std::stringstream ss;
+    for(auto it = value.rbegin(); it < value.rend(); it++)
+        if(it == value.rbegin())
+            ss << *it;
+        else
+            ss << std::setw(9) << std::setfill('0') << *it;
+    std::string result;
+    ss >> result;
+    return result;
 }
