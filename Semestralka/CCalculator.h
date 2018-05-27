@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class Calculator
+class CCalculator
 {
 private:
     vector<CVariable>   m_variables;
@@ -17,16 +17,17 @@ private:
     void            removeWhiteSpaces       (string &);
     void            createNewVariable       (const string&);
     CBigNum         calculate               (const string&);
-    void            saveHistory             (const string&, const string&);
+    void            saveHistory             (const string&, const CBigNum&);
     EValType        determineType           (const string&) const;
     bool            isOperator              (const string&) const;
     void            pushToStack             (const string &, stack<CExpression*> &) const;
     CExpression *   performOperation        (CExpression*, CExpression*, const string&);
 
 public:
-    Calculator() { cout << "Welcome to super high precision calculator!" << endl
+    CCalculator() { cout << "Welcome to super high precision calculator!" << endl
                          << "-To creat a variable type: <variable name> = <value>" << endl
                          << " *Variable names can only consist of letters and numbers having letter as the very first symbol" << endl
                          << "-To quit type \"quit\"" << endl;}
     void    run();
+    void    saveToFile() const;
 };
