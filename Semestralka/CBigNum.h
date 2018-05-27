@@ -8,7 +8,7 @@
 #include <sstream>
 #include <algorithm>
 #include <cstring>
-#include <stdint.h>
+#include <cstdint>
 #include <stdint-gcc.h>
 
 class CBigNum
@@ -27,6 +27,7 @@ public:
     CBigNum         operator/       (const CBigNum &) const;
     CBigNum         operator%       (const CBigNum &) const;
     bool            operator>=      (const CBigNum &) const;
+    std::string     toString        () const;
 
 private:
     std::vector<uint32_t>   m_exponent;
