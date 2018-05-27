@@ -9,6 +9,7 @@
 #include "CLongInteger.h"
 #include "CAddExp.h"
 #include "CInteger.h"
+#include <stdint-gcc.h>
 
 CBigNum::CBigNum(int val)
 {
@@ -127,10 +128,15 @@ CBigNum CBigNum::operator* (const CBigNum & other) const
     CBigNum product;
     std::vector<uint32_t> exponent1 = m_exponent;
     std::vector<uint32_t> exponent2 = other.m_exponent;
-    expandFewerNumberWithZeros(exponent1, exponent2);
 
     std::vector<uint32_t> fractoin1 = m_fraction;
     std::vector<uint32_t> fractoin2 = other.m_fraction;
+
+    if(exponent1.size() == 1 && exponent1[0] == 0 && fractoin1.size() == 1 && fractoin1[0] == 0
+       || exponent2.size() == 1 && exponent2[0] == 0 && fractoin2.size() == 1 && fractoin2[0] == 0)
+        return CBigNum(0);
+
+    expandFewerNumberWithZeros(exponent1, exponent2);
 
     //if fraction1 == fraction2 == 0
     if(fractoin1.size() == 1 && fractoin1[0] == 0 && fractoin2.size() == 1 && fractoin2[0] == 0){
