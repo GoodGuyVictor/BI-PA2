@@ -124,26 +124,56 @@ CBigNum CBigNum::operator-() const
 
 CBigNum CBigNum::operator* (const CBigNum & other) const
 {
+    CBigNum product;
     std::vector<uint32_t> exponent1 = m_exponent;
     std::vector<uint32_t> exponent2 = other.m_exponent;
+    expandFewerNumberWithZeros(exponent1, exponent2);
 
     std::vector<uint32_t> fractoin1 = m_fraction;
     std::vector<uint32_t> fractoin2 = other.m_fraction;
 
-    int tens = 0;
-    tens = eliminateEndingZeros(exponent1, exponent2);
+    //if fraction1 == fraction2 == 0
+    if(fractoin1.size() == 1 && fractoin1[0] == 0 && fractoin2.size() == 1 && fractoin2[0] == 0){
+        int tens = 0;
+        tens = eliminateEndingZeros(exponent1, exponent2);
 
-    expandFewerNumberWithZeros(exponent1, exponent2);
+        product = multiplicationAlgorithm(exponent1, exponent2);
 
-    CBigNum product = multiplicationAlgorithm(exponent1, exponent2);
+        while(tens) {
+            product.multiplyByTen();
+            tens--;
+        }
+    }else {
+        std::string exponent1String = toString(exponent1);
+        std::string exponent2String = toString(exponent2);
 
-    while(tens) {
-        product.multiplyByTen();
-        tens--;
+        std::string fraction1String = toString(fractoin1);
+        std::string fraction2String = toString(fractoin2);
+
+        size_t fraction1Len = fraction1String.size();
+        size_t fraction2Len = fraction2String.size();
+        size_t productFractionLen = fraction1Len + fraction2Len;
+
+        std::string noPoint1 = exponent1String + fraction1String;
+        std::string noPoint2 = exponent2String + fraction2String;
+
+        std::vector<uint32_t> num1 = toBigInt(noPoint1);
+        std::vector<uint32_t> num2 = toBigInt(noPoint2);
+
+        product = multiplicationAlgorithm(num1, num2);
+
+        std::string productString = toString(product);
+        std::string productFractionString = productString.substr(productString.size() - productFractionLen);
+        productString.erase(productString.size() - productFractionLen);
+
+        std::vector<uint32_t> productExponent = toBigInt(productString);
+        std::vector<uint32_t> productFraction = toBigInt(productFractionString);
+
+        product = CBigNum(false, productExponent, productFraction);
     }
 
     if(m_sgn && !other.m_sgn || !m_sgn && other.m_sgn)
-        product.operator-();
+        return product.operator-();
 
     return product;
 }
