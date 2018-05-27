@@ -23,8 +23,6 @@ iostream
 -
 iomanip
 -
-stdint-gcc.h
--
 CLongInteger.h
 /home/victor/githubRepos/PA2/Semestralka/CLongInteger.h
 CAddExp.h
@@ -38,6 +36,10 @@ sstream
 algorithm
 -
 cstring
+-
+cstdint
+-
+stdint-gcc.h
 -
 
 /home/victor/githubRepos/PA2/Semestralka/CBinOperator.h
@@ -70,6 +72,8 @@ CMod.h
 Exceptions.h
 /home/victor/githubRepos/PA2/Semestralka/Exceptions.h
 regex
+-
+fstream
 -
 
 /home/victor/githubRepos/PA2/Semestralka/CCalculator.h
@@ -171,6 +175,8 @@ CBinOperator.h
 /home/victor/githubRepos/PA2/Semestralka/CBinOperator.h
 
 /home/victor/githubRepos/PA2/Semestralka/CVariable.cpp
+iomanip
+-
 CVariable.h
 /home/victor/githubRepos/PA2/Semestralka/CVariable.h
 

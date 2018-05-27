@@ -5,8 +5,9 @@
 int main()
 {
 
-    Calculator calc;
+    CCalculator calc;
     calc.run();
+    calc.saveToFile();
 
 //    std::cout << 34658 % 839 << std::endl;
 

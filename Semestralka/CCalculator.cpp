@@ -11,8 +11,9 @@
 #include "CMod.h"
 #include "Exceptions.h"
 #include <regex>
+#include <fstream>
 
-void Calculator::run()
+void CCalculator::run()
 {
     string input;
     CBigNum result;
@@ -26,11 +27,11 @@ void Calculator::run()
             break;
         result = calculate(input);
         result.print();
-//        saveHistory(input, result);
+        saveHistory(input, result);
     }
 }
 
-string Calculator::readInput()
+string CCalculator::readInput()
 {
     string input;
 
@@ -49,14 +50,14 @@ string Calculator::readInput()
     return input;
 }
 
-void Calculator::removeWhiteSpaces(string &str)
+void CCalculator::removeWhiteSpaces(string &str)
 {
     for (auto it = str.begin(); it < str.end(); it++)
         while (*it == ' ')
             str.erase(it);
 }
 
-void Calculator::createNewVariable(const string &input)
+void CCalculator::createNewVariable(const string &input)
 {
     char * token;
     token = strtok((char*)input.c_str(), "=");
@@ -66,7 +67,7 @@ void Calculator::createNewVariable(const string &input)
     m_variables.emplace_back(CVariable(name, val));
 }
 
-CBigNum Calculator::calculate(const string & input)
+CBigNum CCalculator::calculate(const string & input)
 {
     CParser parser;
     vector<string> parsedInput;
@@ -98,17 +99,17 @@ CBigNum Calculator::calculate(const string & input)
     }
 }
 
-void Calculator::saveHistory(const string & input, const string & result)
+void CCalculator::saveHistory(const string & input, const CBigNum & result)
 {
     string tmp;
 
     tmp += input;
     tmp += " = ";
-    tmp += result;
+    tmp += result.toString();
     m_history.push_back(tmp);
 }
 
-EValType Calculator::determineType(const string & number) const
+EValType CCalculator::determineType(const string & number) const
 {
     if(number.find('.') != string::npos)
         return VAL_DEC;
@@ -122,12 +123,12 @@ EValType Calculator::determineType(const string & number) const
     return VAL_INT;
 }
 
-bool Calculator::isOperator(const string & op) const
+bool CCalculator::isOperator(const string & op) const
 {
     return op == "+" || op == "-" || op == "*" || op == "/" || op == "%";
 }
 
-void Calculator::pushToStack(const string & operand, stack<CExpression*> &stack) const
+void CCalculator::pushToStack(const string & operand, stack<CExpression*> &stack) const
 {
     switch (determineType(operand))
     {
@@ -162,7 +163,7 @@ void Calculator::pushToStack(const string & operand, stack<CExpression*> &stack)
     }
 }
 
-CExpression *Calculator::performOperation(CExpression * lVal, CExpression * rVal, const string & op)
+CExpression *CCalculator::performOperation(CExpression * lVal, CExpression * rVal, const string & op)
 {
     if(op == "+")
         return new CAddExp(lVal, rVal);
@@ -178,4 +179,24 @@ CExpression *Calculator::performOperation(CExpression * lVal, CExpression * rVal
 
     if(op == "%")
         return new CMod(lVal, rVal);
+}
+
+void CCalculator::saveToFile() const
+{
+    ofstream myfile;
+//    myfile.open("/home/victor/gitHubRepos/PA2/Semestralka/output/calculator.txt");
+    myfile.open("calculator.txt");
+
+    if(myfile.is_open()) {
+        myfile << "VARIABLES" << std::endl;
+        for(const auto & it : m_variables)
+                myfile << it.toString() << std::endl;
+
+        myfile << "HISTORY" << std::endl;
+        for(const auto & it : m_history)
+            myfile << it << std::endl;
+    }
+
+
+    myfile.close();
 }
