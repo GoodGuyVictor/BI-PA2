@@ -32,6 +32,7 @@ CMakeFiles/Semestralka.dir/CCalculator.cpp.o
  /home/victor/githubRepos/BI-PA2/Semestralka/CSubtractExp.h
  /home/victor/githubRepos/BI-PA2/Semestralka/CVariable.h
  /home/victor/githubRepos/BI-PA2/Semestralka/Enums.h
+ /home/victor/githubRepos/BI-PA2/Semestralka/Exceptions.h
 CMakeFiles/Semestralka.dir/CDecimal.cpp.o
  /home/victor/githubRepos/BI-PA2/Semestralka/CBigNum.h
  /home/victor/githubRepos/BI-PA2/Semestralka/CDecimal.cpp
@@ -75,6 +76,11 @@ CMakeFiles/Semestralka.dir/CSubtract.cpp.o
  /home/victor/githubRepos/BI-PA2/Semestralka/CExpression.h
  /home/victor/githubRepos/BI-PA2/Semestralka/CSubtract.cpp
  /home/victor/githubRepos/BI-PA2/Semestralka/CSubtractExp.h
+CMakeFiles/Semestralka.dir/CVariable.cpp.o
+ /home/victor/githubRepos/BI-PA2/Semestralka/CBigNum.h
+ /home/victor/githubRepos/BI-PA2/Semestralka/CExpression.h
+ /home/victor/githubRepos/BI-PA2/Semestralka/CVariable.cpp
+ /home/victor/githubRepos/BI-PA2/Semestralka/CVariable.h
 CMakeFiles/Semestralka.dir/main.cpp.o
  /home/victor/githubRepos/BI-PA2/Semestralka/CBigNum.h
  /home/victor/githubRepos/BI-PA2/Semestralka/CCalculator.h

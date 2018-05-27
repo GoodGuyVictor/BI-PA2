@@ -9,6 +9,8 @@
 #include "CMultiplyExp.h"
 #include "CDevideExpr.h"
 #include "CMod.h"
+#include "Exceptions.h"
+#include <regex>
 
 void CCalculator::run()
 {
@@ -108,11 +110,14 @@ void CCalculator::saveHistory(const string & input, const string & result)
 
 EValType CCalculator::determineType(const string & number) const
 {
-    if(number.find('.') != string::npos || number.find('e') != string::npos)
+    if(number.find('.') != string::npos)
         return VAL_DEC;
 
     if(number.size() > 6)
         return VAL_LONGINT;
+
+    if(isalpha(number[0]))
+        return VAL_VAR;
 
     return VAL_INT;
 }
@@ -139,6 +144,19 @@ void CCalculator::pushToStack(const string & operand, stack<CExpression*> &stack
         case VAL_DEC: {
             CExpression *p = new CDecimal(operand);
             stack.push(p);
+            break;
+        }
+        case VAL_VAR: {
+            CExpression *p = NULL;
+            for(const auto & it : m_variables)
+                if(it.getName() == operand)
+                    p = it.clone();
+
+            if(p == NULL)
+                throw InvalidVariableName();
+            else
+                stack.push(p);
+
             break;
         }
     }

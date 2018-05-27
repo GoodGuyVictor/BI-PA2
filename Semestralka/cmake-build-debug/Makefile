@@ -420,6 +420,33 @@ CSubtract.cpp.s:
 	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CSubtract.cpp.s
 .PHONY : CSubtract.cpp.s
 
+CVariable.o: CVariable.cpp.o
+
+.PHONY : CVariable.o
+
+# target to build an object file
+CVariable.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CVariable.cpp.o
+.PHONY : CVariable.cpp.o
+
+CVariable.i: CVariable.cpp.i
+
+.PHONY : CVariable.i
+
+# target to preprocess a source file
+CVariable.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CVariable.cpp.i
+.PHONY : CVariable.cpp.i
+
+CVariable.s: CVariable.cpp.s
+
+.PHONY : CVariable.s
+
+# target to generate assembly for a file
+CVariable.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CVariable.cpp.s
+.PHONY : CVariable.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -489,6 +516,9 @@ help:
 	@echo "... CSubtract.o"
 	@echo "... CSubtract.i"
 	@echo "... CSubtract.s"
+	@echo "... CVariable.o"
+	@echo "... CVariable.i"
+	@echo "... CVariable.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

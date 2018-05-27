@@ -65,6 +65,10 @@ CDevideExpr.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CDevideExpr.h
 CMod.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CMod.h
+Exceptions.h
+/home/victor/githubRepos/BI-PA2/Semestralka/Exceptions.h
+regex
+-
 
 /home/victor/githubRepos/BI-PA2/Semestralka/CCalculator.h
 vector
@@ -164,9 +168,15 @@ CSubtractExp.h
 CBinOperator.h
 /home/victor/githubRepos/BI-PA2/Semestralka/CBinOperator.h
 
+/home/victor/githubRepos/BI-PA2/Semestralka/CVariable.cpp
+CVariable.h
+/home/victor/githubRepos/BI-PA2/Semestralka/CVariable.h
+
 /home/victor/githubRepos/BI-PA2/Semestralka/CVariable.h
 string
 -
+CExpression.h
+/home/victor/githubRepos/BI-PA2/Semestralka/CExpression.h
 
 /home/victor/githubRepos/BI-PA2/Semestralka/Enums.h
 

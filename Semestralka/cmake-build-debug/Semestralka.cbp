@@ -156,6 +156,9 @@
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CSubtractExp.h">
 			<Option target="Semestralka"/>
 		</Unit>
+		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CVariable.cpp">
+			<Option target="Semestralka"/>
+		</Unit>
 		<Unit filename="/home/victor/githubRepos/BI-PA2/Semestralka/CVariable.h">
 			<Option target="Semestralka"/>
 		</Unit>

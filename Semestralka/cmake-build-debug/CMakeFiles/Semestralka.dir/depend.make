@@ -31,6 +31,7 @@ CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CParser.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CSubtractExp.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CVariable.h
 CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../Enums.h
+CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../Exceptions.h
 
 CMakeFiles/Semestralka.dir/CDecimal.cpp.o: ../CBigNum.h
 CMakeFiles/Semestralka.dir/CDecimal.cpp.o: ../CDecimal.cpp
@@ -74,6 +75,11 @@ CMakeFiles/Semestralka.dir/CSubtract.cpp.o: ../CBinOperator.h
 CMakeFiles/Semestralka.dir/CSubtract.cpp.o: ../CExpression.h
 CMakeFiles/Semestralka.dir/CSubtract.cpp.o: ../CSubtract.cpp
 CMakeFiles/Semestralka.dir/CSubtract.cpp.o: ../CSubtractExp.h
+
+CMakeFiles/Semestralka.dir/CVariable.cpp.o: ../CBigNum.h
+CMakeFiles/Semestralka.dir/CVariable.cpp.o: ../CExpression.h
+CMakeFiles/Semestralka.dir/CVariable.cpp.o: ../CVariable.cpp
+CMakeFiles/Semestralka.dir/CVariable.cpp.o: ../CVariable.h
 
 CMakeFiles/Semestralka.dir/main.cpp.o: ../CBigNum.h
 CMakeFiles/Semestralka.dir/main.cpp.o: ../CCalculator.h

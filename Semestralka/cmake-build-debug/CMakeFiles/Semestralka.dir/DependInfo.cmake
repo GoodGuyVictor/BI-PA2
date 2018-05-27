@@ -15,6 +15,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/victor/githubRepos/BI-PA2/Semestralka/CMultiplyExp.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o"
   "/home/victor/githubRepos/BI-PA2/Semestralka/CParser.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CParser.cpp.o"
   "/home/victor/githubRepos/BI-PA2/Semestralka/CSubtract.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CSubtract.cpp.o"
+  "/home/victor/githubRepos/BI-PA2/Semestralka/CVariable.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CVariable.cpp.o"
   "/home/victor/githubRepos/BI-PA2/Semestralka/main.cpp" "/home/victor/githubRepos/BI-PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
