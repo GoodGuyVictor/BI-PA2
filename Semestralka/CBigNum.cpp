@@ -150,6 +150,12 @@ CBigNum CBigNum::operator* (const CBigNum & other) const
         std::string fraction1String = toString(fractoin1);
         std::string fraction2String = toString(fractoin2);
 
+        if(fraction1String == "0")
+            fraction1String.clear();
+
+        if(fraction2String == "0")
+            fraction2String.clear();
+
         size_t fraction1Len = fraction1String.size();
         size_t fraction2Len = fraction2String.size();
         size_t productFractionLen = fraction1Len + fraction2Len;
