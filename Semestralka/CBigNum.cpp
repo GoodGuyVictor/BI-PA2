@@ -447,7 +447,7 @@ int CBigNum::eliminateEndingZeros(std::vector<uint32_t> & exponent1, std::vector
     return zerosCnt;
 }
 
-std::vector<uint32_t> CBigNum::toBigInt(std::string &text) const
+std::vector<uint32_t> CBigNum::toBigInt(std::string text) const
 {
     std::vector<uint32_t> result;
     int len = text.size();
@@ -616,4 +616,11 @@ void CBigNum::modulo(std::vector<uint32_t> & num) const
         it = (uint32_t)pow(10, len) - it - carry;
         carry = 1;
     }
+}
+
+CBigNum::CBigNum()
+    : m_sgn(false)
+{
+    m_exponent.push_back(0);
+    m_fraction.push_back(0);
 }
