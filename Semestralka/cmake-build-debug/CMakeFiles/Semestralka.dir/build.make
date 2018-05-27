@@ -81,326 +81,326 @@ CMakeFiles/Semestralka.dir/main.cpp.o.provides: CMakeFiles/Semestralka.dir/main.
 CMakeFiles/Semestralka.dir/main.cpp.o.provides.build: CMakeFiles/Semestralka.dir/main.cpp.o
 
 
-CMakeFiles/Semestralka.dir/Calculator.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/Calculator.cpp.o: ../Calculator.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Semestralka.dir/Calculator.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/Calculator.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/Calculator.cpp
+CMakeFiles/Semestralka.dir/CCalculator.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CCalculator.cpp.o: ../CCalculator.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Semestralka.dir/CCalculator.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CCalculator.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CCalculator.cpp
 
-CMakeFiles/Semestralka.dir/Calculator.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/Calculator.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/Calculator.cpp > CMakeFiles/Semestralka.dir/Calculator.cpp.i
+CMakeFiles/Semestralka.dir/CCalculator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CCalculator.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CCalculator.cpp > CMakeFiles/Semestralka.dir/CCalculator.cpp.i
 
-CMakeFiles/Semestralka.dir/Calculator.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/Calculator.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/Calculator.cpp -o CMakeFiles/Semestralka.dir/Calculator.cpp.s
+CMakeFiles/Semestralka.dir/CCalculator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CCalculator.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CCalculator.cpp -o CMakeFiles/Semestralka.dir/CCalculator.cpp.s
 
-CMakeFiles/Semestralka.dir/Calculator.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CCalculator.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/Calculator.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CCalculator.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/Calculator.cpp.o.provides: CMakeFiles/Semestralka.dir/Calculator.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Calculator.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/Calculator.cpp.o.provides
+CMakeFiles/Semestralka.dir/CCalculator.cpp.o.provides: CMakeFiles/Semestralka.dir/CCalculator.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CCalculator.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CCalculator.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/Calculator.cpp.o.provides.build: CMakeFiles/Semestralka.dir/Calculator.cpp.o
+CMakeFiles/Semestralka.dir/CCalculator.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CCalculator.cpp.o
 
 
-CMakeFiles/Semestralka.dir/Parser.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/Parser.cpp.o: ../Parser.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Semestralka.dir/Parser.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/Parser.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/Parser.cpp
+CMakeFiles/Semestralka.dir/CParser.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CParser.cpp.o: ../CParser.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Semestralka.dir/CParser.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CParser.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CParser.cpp
 
-CMakeFiles/Semestralka.dir/Parser.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/Parser.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/Parser.cpp > CMakeFiles/Semestralka.dir/Parser.cpp.i
+CMakeFiles/Semestralka.dir/CParser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CParser.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CParser.cpp > CMakeFiles/Semestralka.dir/CParser.cpp.i
 
-CMakeFiles/Semestralka.dir/Parser.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/Parser.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/Parser.cpp -o CMakeFiles/Semestralka.dir/Parser.cpp.s
+CMakeFiles/Semestralka.dir/CParser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CParser.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CParser.cpp -o CMakeFiles/Semestralka.dir/CParser.cpp.s
 
-CMakeFiles/Semestralka.dir/Parser.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CParser.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/Parser.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CParser.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/Parser.cpp.o.provides: CMakeFiles/Semestralka.dir/Parser.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Parser.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/Parser.cpp.o.provides
+CMakeFiles/Semestralka.dir/CParser.cpp.o.provides: CMakeFiles/Semestralka.dir/CParser.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CParser.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CParser.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/Parser.cpp.o.provides.build: CMakeFiles/Semestralka.dir/Parser.cpp.o
+CMakeFiles/Semestralka.dir/CParser.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CParser.cpp.o
 
 
-CMakeFiles/Semestralka.dir/BigNum.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/BigNum.cpp.o: ../BigNum.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Semestralka.dir/BigNum.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/BigNum.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/BigNum.cpp
+CMakeFiles/Semestralka.dir/CBigNum.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CBigNum.cpp.o: ../CBigNum.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Semestralka.dir/CBigNum.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CBigNum.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CBigNum.cpp
 
-CMakeFiles/Semestralka.dir/BigNum.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/BigNum.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/BigNum.cpp > CMakeFiles/Semestralka.dir/BigNum.cpp.i
+CMakeFiles/Semestralka.dir/CBigNum.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CBigNum.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CBigNum.cpp > CMakeFiles/Semestralka.dir/CBigNum.cpp.i
 
-CMakeFiles/Semestralka.dir/BigNum.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/BigNum.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/BigNum.cpp -o CMakeFiles/Semestralka.dir/BigNum.cpp.s
+CMakeFiles/Semestralka.dir/CBigNum.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CBigNum.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CBigNum.cpp -o CMakeFiles/Semestralka.dir/CBigNum.cpp.s
 
-CMakeFiles/Semestralka.dir/BigNum.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CBigNum.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/BigNum.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CBigNum.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/BigNum.cpp.o.provides: CMakeFiles/Semestralka.dir/BigNum.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/BigNum.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/BigNum.cpp.o.provides
+CMakeFiles/Semestralka.dir/CBigNum.cpp.o.provides: CMakeFiles/Semestralka.dir/CBigNum.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CBigNum.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CBigNum.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/BigNum.cpp.o.provides.build: CMakeFiles/Semestralka.dir/BigNum.cpp.o
+CMakeFiles/Semestralka.dir/CBigNum.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CBigNum.cpp.o
 
 
-CMakeFiles/Semestralka.dir/LongInteger.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/LongInteger.cpp.o: ../LongInteger.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Semestralka.dir/LongInteger.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/LongInteger.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/LongInteger.cpp
+CMakeFiles/Semestralka.dir/CLongInteger.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CLongInteger.cpp.o: ../CLongInteger.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Semestralka.dir/CLongInteger.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CLongInteger.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CLongInteger.cpp
 
-CMakeFiles/Semestralka.dir/LongInteger.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/LongInteger.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/LongInteger.cpp > CMakeFiles/Semestralka.dir/LongInteger.cpp.i
+CMakeFiles/Semestralka.dir/CLongInteger.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CLongInteger.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CLongInteger.cpp > CMakeFiles/Semestralka.dir/CLongInteger.cpp.i
 
-CMakeFiles/Semestralka.dir/LongInteger.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/LongInteger.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/LongInteger.cpp -o CMakeFiles/Semestralka.dir/LongInteger.cpp.s
+CMakeFiles/Semestralka.dir/CLongInteger.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CLongInteger.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CLongInteger.cpp -o CMakeFiles/Semestralka.dir/CLongInteger.cpp.s
 
-CMakeFiles/Semestralka.dir/LongInteger.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CLongInteger.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/LongInteger.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CLongInteger.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/LongInteger.cpp.o.provides: CMakeFiles/Semestralka.dir/LongInteger.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/LongInteger.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/LongInteger.cpp.o.provides
+CMakeFiles/Semestralka.dir/CLongInteger.cpp.o.provides: CMakeFiles/Semestralka.dir/CLongInteger.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CLongInteger.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CLongInteger.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/LongInteger.cpp.o.provides.build: CMakeFiles/Semestralka.dir/LongInteger.cpp.o
+CMakeFiles/Semestralka.dir/CLongInteger.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CLongInteger.cpp.o
 
 
-CMakeFiles/Semestralka.dir/AddExp.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/AddExp.cpp.o: ../AddExp.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Semestralka.dir/AddExp.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/AddExp.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/AddExp.cpp
+CMakeFiles/Semestralka.dir/CAddExp.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CAddExp.cpp.o: ../CAddExp.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Semestralka.dir/CAddExp.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CAddExp.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CAddExp.cpp
 
-CMakeFiles/Semestralka.dir/AddExp.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/AddExp.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/AddExp.cpp > CMakeFiles/Semestralka.dir/AddExp.cpp.i
+CMakeFiles/Semestralka.dir/CAddExp.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CAddExp.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CAddExp.cpp > CMakeFiles/Semestralka.dir/CAddExp.cpp.i
 
-CMakeFiles/Semestralka.dir/AddExp.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/AddExp.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/AddExp.cpp -o CMakeFiles/Semestralka.dir/AddExp.cpp.s
+CMakeFiles/Semestralka.dir/CAddExp.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CAddExp.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CAddExp.cpp -o CMakeFiles/Semestralka.dir/CAddExp.cpp.s
 
-CMakeFiles/Semestralka.dir/AddExp.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CAddExp.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/AddExp.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CAddExp.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/AddExp.cpp.o.provides: CMakeFiles/Semestralka.dir/AddExp.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/AddExp.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/AddExp.cpp.o.provides
+CMakeFiles/Semestralka.dir/CAddExp.cpp.o.provides: CMakeFiles/Semestralka.dir/CAddExp.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CAddExp.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CAddExp.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/AddExp.cpp.o.provides.build: CMakeFiles/Semestralka.dir/AddExp.cpp.o
+CMakeFiles/Semestralka.dir/CAddExp.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CAddExp.cpp.o
 
 
-CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o: ../MultiplyExp.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/MultiplyExp.cpp
+CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o: ../CMultiplyExp.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CMultiplyExp.cpp
 
-CMakeFiles/Semestralka.dir/MultiplyExp.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/MultiplyExp.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/MultiplyExp.cpp > CMakeFiles/Semestralka.dir/MultiplyExp.cpp.i
+CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CMultiplyExp.cpp > CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.i
 
-CMakeFiles/Semestralka.dir/MultiplyExp.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/MultiplyExp.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/MultiplyExp.cpp -o CMakeFiles/Semestralka.dir/MultiplyExp.cpp.s
+CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CMultiplyExp.cpp -o CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.s
 
-CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o.provides: CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o.provides
+CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o.provides: CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o.provides.build: CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o
+CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o
 
 
-CMakeFiles/Semestralka.dir/Integer.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/Integer.cpp.o: ../Integer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Semestralka.dir/Integer.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/Integer.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/Integer.cpp
+CMakeFiles/Semestralka.dir/CInteger.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CInteger.cpp.o: ../CInteger.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Semestralka.dir/CInteger.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CInteger.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CInteger.cpp
 
-CMakeFiles/Semestralka.dir/Integer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/Integer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/Integer.cpp > CMakeFiles/Semestralka.dir/Integer.cpp.i
+CMakeFiles/Semestralka.dir/CInteger.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CInteger.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CInteger.cpp > CMakeFiles/Semestralka.dir/CInteger.cpp.i
 
-CMakeFiles/Semestralka.dir/Integer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/Integer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/Integer.cpp -o CMakeFiles/Semestralka.dir/Integer.cpp.s
+CMakeFiles/Semestralka.dir/CInteger.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CInteger.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CInteger.cpp -o CMakeFiles/Semestralka.dir/CInteger.cpp.s
 
-CMakeFiles/Semestralka.dir/Integer.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CInteger.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/Integer.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CInteger.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/Integer.cpp.o.provides: CMakeFiles/Semestralka.dir/Integer.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Integer.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/Integer.cpp.o.provides
+CMakeFiles/Semestralka.dir/CInteger.cpp.o.provides: CMakeFiles/Semestralka.dir/CInteger.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CInteger.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CInteger.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/Integer.cpp.o.provides.build: CMakeFiles/Semestralka.dir/Integer.cpp.o
+CMakeFiles/Semestralka.dir/CInteger.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CInteger.cpp.o
 
 
-CMakeFiles/Semestralka.dir/DevideExpr.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/DevideExpr.cpp.o: ../DevideExpr.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Semestralka.dir/DevideExpr.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/DevideExpr.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/DevideExpr.cpp
+CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o: ../CDevideExpr.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CDevideExpr.cpp
 
-CMakeFiles/Semestralka.dir/DevideExpr.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/DevideExpr.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/DevideExpr.cpp > CMakeFiles/Semestralka.dir/DevideExpr.cpp.i
+CMakeFiles/Semestralka.dir/CDevideExpr.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CDevideExpr.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CDevideExpr.cpp > CMakeFiles/Semestralka.dir/CDevideExpr.cpp.i
 
-CMakeFiles/Semestralka.dir/DevideExpr.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/DevideExpr.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/DevideExpr.cpp -o CMakeFiles/Semestralka.dir/DevideExpr.cpp.s
+CMakeFiles/Semestralka.dir/CDevideExpr.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CDevideExpr.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CDevideExpr.cpp -o CMakeFiles/Semestralka.dir/CDevideExpr.cpp.s
 
-CMakeFiles/Semestralka.dir/DevideExpr.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/DevideExpr.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/DevideExpr.cpp.o.provides: CMakeFiles/Semestralka.dir/DevideExpr.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/DevideExpr.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/DevideExpr.cpp.o.provides
+CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o.provides: CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/DevideExpr.cpp.o.provides.build: CMakeFiles/Semestralka.dir/DevideExpr.cpp.o
+CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o
 
 
-CMakeFiles/Semestralka.dir/Decimal.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/Decimal.cpp.o: ../Decimal.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Semestralka.dir/Decimal.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/Decimal.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/Decimal.cpp
+CMakeFiles/Semestralka.dir/CDecimal.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CDecimal.cpp.o: ../CDecimal.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Semestralka.dir/CDecimal.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CDecimal.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CDecimal.cpp
 
-CMakeFiles/Semestralka.dir/Decimal.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/Decimal.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/Decimal.cpp > CMakeFiles/Semestralka.dir/Decimal.cpp.i
+CMakeFiles/Semestralka.dir/CDecimal.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CDecimal.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CDecimal.cpp > CMakeFiles/Semestralka.dir/CDecimal.cpp.i
 
-CMakeFiles/Semestralka.dir/Decimal.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/Decimal.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/Decimal.cpp -o CMakeFiles/Semestralka.dir/Decimal.cpp.s
+CMakeFiles/Semestralka.dir/CDecimal.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CDecimal.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CDecimal.cpp -o CMakeFiles/Semestralka.dir/CDecimal.cpp.s
 
-CMakeFiles/Semestralka.dir/Decimal.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CDecimal.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/Decimal.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CDecimal.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/Decimal.cpp.o.provides: CMakeFiles/Semestralka.dir/Decimal.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Decimal.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/Decimal.cpp.o.provides
+CMakeFiles/Semestralka.dir/CDecimal.cpp.o.provides: CMakeFiles/Semestralka.dir/CDecimal.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDecimal.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CDecimal.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/Decimal.cpp.o.provides.build: CMakeFiles/Semestralka.dir/Decimal.cpp.o
+CMakeFiles/Semestralka.dir/CDecimal.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CDecimal.cpp.o
 
 
-CMakeFiles/Semestralka.dir/Subtract.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/Subtract.cpp.o: ../Subtract.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/Semestralka.dir/Subtract.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/Subtract.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/Subtract.cpp
+CMakeFiles/Semestralka.dir/CSubtract.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CSubtract.cpp.o: ../CSubtract.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/Semestralka.dir/CSubtract.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CSubtract.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CSubtract.cpp
 
-CMakeFiles/Semestralka.dir/Subtract.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/Subtract.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/Subtract.cpp > CMakeFiles/Semestralka.dir/Subtract.cpp.i
+CMakeFiles/Semestralka.dir/CSubtract.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CSubtract.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CSubtract.cpp > CMakeFiles/Semestralka.dir/CSubtract.cpp.i
 
-CMakeFiles/Semestralka.dir/Subtract.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/Subtract.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/Subtract.cpp -o CMakeFiles/Semestralka.dir/Subtract.cpp.s
+CMakeFiles/Semestralka.dir/CSubtract.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CSubtract.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CSubtract.cpp -o CMakeFiles/Semestralka.dir/CSubtract.cpp.s
 
-CMakeFiles/Semestralka.dir/Subtract.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CSubtract.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/Subtract.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CSubtract.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/Subtract.cpp.o.provides: CMakeFiles/Semestralka.dir/Subtract.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Subtract.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/Subtract.cpp.o.provides
+CMakeFiles/Semestralka.dir/CSubtract.cpp.o.provides: CMakeFiles/Semestralka.dir/CSubtract.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CSubtract.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CSubtract.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/Subtract.cpp.o.provides.build: CMakeFiles/Semestralka.dir/Subtract.cpp.o
+CMakeFiles/Semestralka.dir/CSubtract.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CSubtract.cpp.o
 
 
-CMakeFiles/Semestralka.dir/Mod.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/Mod.cpp.o: ../Mod.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/Semestralka.dir/Mod.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/Mod.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/Mod.cpp
+CMakeFiles/Semestralka.dir/CMod.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CMod.cpp.o: ../CMod.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/Semestralka.dir/CMod.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CMod.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CMod.cpp
 
-CMakeFiles/Semestralka.dir/Mod.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/Mod.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/Mod.cpp > CMakeFiles/Semestralka.dir/Mod.cpp.i
+CMakeFiles/Semestralka.dir/CMod.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CMod.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CMod.cpp > CMakeFiles/Semestralka.dir/CMod.cpp.i
 
-CMakeFiles/Semestralka.dir/Mod.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/Mod.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/Mod.cpp -o CMakeFiles/Semestralka.dir/Mod.cpp.s
+CMakeFiles/Semestralka.dir/CMod.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CMod.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CMod.cpp -o CMakeFiles/Semestralka.dir/CMod.cpp.s
 
-CMakeFiles/Semestralka.dir/Mod.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CMod.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/Mod.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CMod.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/Mod.cpp.o.provides: CMakeFiles/Semestralka.dir/Mod.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Mod.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/Mod.cpp.o.provides
+CMakeFiles/Semestralka.dir/CMod.cpp.o.provides: CMakeFiles/Semestralka.dir/CMod.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMod.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CMod.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/Mod.cpp.o.provides.build: CMakeFiles/Semestralka.dir/Mod.cpp.o
+CMakeFiles/Semestralka.dir/CMod.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CMod.cpp.o
 
 
-CMakeFiles/Semestralka.dir/Variable.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/Variable.cpp.o: ../Variable.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/Semestralka.dir/Variable.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/Variable.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/Variable.cpp
+CMakeFiles/Semestralka.dir/CVariable.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CVariable.cpp.o: ../CVariable.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/Semestralka.dir/CVariable.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CVariable.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CVariable.cpp
 
-CMakeFiles/Semestralka.dir/Variable.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/Variable.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/Variable.cpp > CMakeFiles/Semestralka.dir/Variable.cpp.i
+CMakeFiles/Semestralka.dir/CVariable.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CVariable.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CVariable.cpp > CMakeFiles/Semestralka.dir/CVariable.cpp.i
 
-CMakeFiles/Semestralka.dir/Variable.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/Variable.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/Variable.cpp -o CMakeFiles/Semestralka.dir/Variable.cpp.s
+CMakeFiles/Semestralka.dir/CVariable.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CVariable.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CVariable.cpp -o CMakeFiles/Semestralka.dir/CVariable.cpp.s
 
-CMakeFiles/Semestralka.dir/Variable.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CVariable.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/Variable.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CVariable.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/Variable.cpp.o.provides: CMakeFiles/Semestralka.dir/Variable.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Variable.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/Variable.cpp.o.provides
+CMakeFiles/Semestralka.dir/CVariable.cpp.o.provides: CMakeFiles/Semestralka.dir/CVariable.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CVariable.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CVariable.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/Variable.cpp.o.provides.build: CMakeFiles/Semestralka.dir/Variable.cpp.o
+CMakeFiles/Semestralka.dir/CVariable.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CVariable.cpp.o
 
 
 # Object files for target Semestralka
 Semestralka_OBJECTS = \
 "CMakeFiles/Semestralka.dir/main.cpp.o" \
-"CMakeFiles/Semestralka.dir/Calculator.cpp.o" \
-"CMakeFiles/Semestralka.dir/Parser.cpp.o" \
-"CMakeFiles/Semestralka.dir/BigNum.cpp.o" \
-"CMakeFiles/Semestralka.dir/LongInteger.cpp.o" \
-"CMakeFiles/Semestralka.dir/AddExp.cpp.o" \
-"CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o" \
-"CMakeFiles/Semestralka.dir/Integer.cpp.o" \
-"CMakeFiles/Semestralka.dir/DevideExpr.cpp.o" \
-"CMakeFiles/Semestralka.dir/Decimal.cpp.o" \
-"CMakeFiles/Semestralka.dir/Subtract.cpp.o" \
-"CMakeFiles/Semestralka.dir/Mod.cpp.o" \
-"CMakeFiles/Semestralka.dir/Variable.cpp.o"
+"CMakeFiles/Semestralka.dir/CCalculator.cpp.o" \
+"CMakeFiles/Semestralka.dir/CParser.cpp.o" \
+"CMakeFiles/Semestralka.dir/CBigNum.cpp.o" \
+"CMakeFiles/Semestralka.dir/CLongInteger.cpp.o" \
+"CMakeFiles/Semestralka.dir/CAddExp.cpp.o" \
+"CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o" \
+"CMakeFiles/Semestralka.dir/CInteger.cpp.o" \
+"CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o" \
+"CMakeFiles/Semestralka.dir/CDecimal.cpp.o" \
+"CMakeFiles/Semestralka.dir/CSubtract.cpp.o" \
+"CMakeFiles/Semestralka.dir/CMod.cpp.o" \
+"CMakeFiles/Semestralka.dir/CVariable.cpp.o"
 
 # External object files for target Semestralka
 Semestralka_EXTERNAL_OBJECTS =
 
 Semestralka: CMakeFiles/Semestralka.dir/main.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/Calculator.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/Parser.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/BigNum.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/LongInteger.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/AddExp.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/Integer.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/DevideExpr.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/Decimal.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/Subtract.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/Mod.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/Variable.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CCalculator.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CParser.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CBigNum.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CLongInteger.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CAddExp.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CInteger.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CDecimal.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CSubtract.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CMod.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CVariable.cpp.o
 Semestralka: CMakeFiles/Semestralka.dir/build.make
 Semestralka: CMakeFiles/Semestralka.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable Semestralka"
@@ -412,18 +412,18 @@ CMakeFiles/Semestralka.dir/build: Semestralka
 .PHONY : CMakeFiles/Semestralka.dir/build
 
 CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/main.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/Calculator.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/Parser.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/BigNum.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/LongInteger.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/AddExp.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/Integer.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/DevideExpr.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/Decimal.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/Subtract.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/Mod.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/Variable.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CCalculator.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CParser.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CBigNum.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CLongInteger.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CAddExp.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CInteger.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CDecimal.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CSubtract.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CMod.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CVariable.cpp.o.requires
 
 .PHONY : CMakeFiles/Semestralka.dir/requires
 

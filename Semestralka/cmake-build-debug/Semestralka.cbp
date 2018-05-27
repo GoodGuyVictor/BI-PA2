@@ -84,82 +84,82 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/AddExp.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CAddExp.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/AddExp.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CAddExp.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/BigNum.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CBigNum.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/BigNum.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CBigNum.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/BinOperator.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CBinOperator.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Calculator.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CCalculator.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Calculator.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CCalculator.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Decimal.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CDecimal.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Decimal.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CDecimal.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/DevideExpr.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CDevideExpr.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/DevideExpr.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CDevideExpr.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Expression.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CExpression.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Integer.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CInteger.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Integer.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CInteger.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/LongInteger.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CLongInteger.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/LongInteger.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CLongInteger.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Mod.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CMod.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Mod.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CMod.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/MultiplyExp.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CMultiplyExp.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/MultiplyExp.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CMultiplyExp.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Parser.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CParser.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Parser.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CParser.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Subtract.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CSubtract.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/SubtractExp.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CSubtractExp.h">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Variable.cpp">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CVariable.cpp">
 			<Option target="Semestralka"/>
 		</Unit>
-		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/Variable.h">
+		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/CVariable.h">
 			<Option target="Semestralka"/>
 		</Unit>
 		<Unit filename="/home/victor/githubRepos/PA2/Semestralka/main.cpp">

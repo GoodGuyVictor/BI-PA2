@@ -4,18 +4,18 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/victor/githubRepos/PA2/Semestralka/AddExp.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/AddExp.cpp.o"
-  "/home/victor/githubRepos/PA2/Semestralka/BigNum.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/BigNum.cpp.o"
-  "/home/victor/githubRepos/PA2/Semestralka/Calculator.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/Calculator.cpp.o"
-  "/home/victor/githubRepos/PA2/Semestralka/Decimal.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/Decimal.cpp.o"
-  "/home/victor/githubRepos/PA2/Semestralka/DevideExpr.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/DevideExpr.cpp.o"
-  "/home/victor/githubRepos/PA2/Semestralka/Integer.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/Integer.cpp.o"
-  "/home/victor/githubRepos/PA2/Semestralka/LongInteger.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/LongInteger.cpp.o"
-  "/home/victor/githubRepos/PA2/Semestralka/Mod.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/Mod.cpp.o"
-  "/home/victor/githubRepos/PA2/Semestralka/MultiplyExp.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o"
-  "/home/victor/githubRepos/PA2/Semestralka/Parser.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/Parser.cpp.o"
-  "/home/victor/githubRepos/PA2/Semestralka/Subtract.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/Subtract.cpp.o"
-  "/home/victor/githubRepos/PA2/Semestralka/Variable.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/Variable.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CAddExp.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CAddExp.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CBigNum.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CBigNum.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CCalculator.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CCalculator.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CDecimal.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CDecimal.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CDevideExpr.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CInteger.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CInteger.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CLongInteger.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CLongInteger.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CMod.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CMod.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CMultiplyExp.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CParser.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CParser.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CSubtract.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CSubtract.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CVariable.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CVariable.cpp.o"
   "/home/victor/githubRepos/PA2/Semestralka/main.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

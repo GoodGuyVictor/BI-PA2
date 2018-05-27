@@ -6,15 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/victor/githubRepos/PA2/Semestralka/AddExp.cpp
-AddExp.h
-/home/victor/githubRepos/PA2/Semestralka/AddExp.h
+/home/victor/githubRepos/PA2/Semestralka/CAddExp.cpp
+CAddExp.h
+/home/victor/githubRepos/PA2/Semestralka/CAddExp.h
 
-/home/victor/githubRepos/PA2/Semestralka/AddExp.h
-BinOperator.h
-/home/victor/githubRepos/PA2/Semestralka/BinOperator.h
+/home/victor/githubRepos/PA2/Semestralka/CAddExp.h
+CBinOperator.h
+/home/victor/githubRepos/PA2/Semestralka/CBinOperator.h
 
-/home/victor/githubRepos/PA2/Semestralka/BigNum.cpp
+/home/victor/githubRepos/PA2/Semestralka/CBigNum.cpp
 algorithm
 -
 stack
@@ -23,14 +23,16 @@ iostream
 -
 iomanip
 -
-LongInteger.h
-/home/victor/githubRepos/PA2/Semestralka/LongInteger.h
-AddExp.h
-/home/victor/githubRepos/PA2/Semestralka/AddExp.h
-Integer.h
-/home/victor/githubRepos/PA2/Semestralka/Integer.h
+stdint-gcc.h
+-
+CLongInteger.h
+/home/victor/githubRepos/PA2/Semestralka/CLongInteger.h
+CAddExp.h
+/home/victor/githubRepos/PA2/Semestralka/CAddExp.h
+CInteger.h
+/home/victor/githubRepos/PA2/Semestralka/CInteger.h
 
-/home/victor/githubRepos/PA2/Semestralka/BigNum.h
+/home/victor/githubRepos/PA2/Semestralka/CBigNum.h
 sstream
 -
 algorithm
@@ -38,123 +40,119 @@ algorithm
 cstring
 -
 
-/home/victor/githubRepos/PA2/Semestralka/BinOperator.h
-Expression.h
-/home/victor/githubRepos/PA2/Semestralka/Expression.h
+/home/victor/githubRepos/PA2/Semestralka/CBinOperator.h
+CExpression.h
+/home/victor/githubRepos/PA2/Semestralka/CExpression.h
 
-/home/victor/githubRepos/PA2/Semestralka/Calculator.cpp
+/home/victor/githubRepos/PA2/Semestralka/CCalculator.cpp
 cstring
 -
-Calculator.h
-/home/victor/githubRepos/PA2/Semestralka/Calculator.h
-Parser.h
-/home/victor/githubRepos/PA2/Semestralka/Parser.h
-Integer.h
-/home/victor/githubRepos/PA2/Semestralka/Integer.h
-LongInteger.h
-/home/victor/githubRepos/PA2/Semestralka/LongInteger.h
-Decimal.h
-/home/victor/githubRepos/PA2/Semestralka/Decimal.h
-AddExp.h
-/home/victor/githubRepos/PA2/Semestralka/AddExp.h
-SubtractExp.h
-/home/victor/githubRepos/PA2/Semestralka/SubtractExp.h
-MultiplyExp.h
-/home/victor/githubRepos/PA2/Semestralka/MultiplyExp.h
-DevideExpr.h
-/home/victor/githubRepos/PA2/Semestralka/DevideExpr.h
-Mod.h
-/home/victor/githubRepos/PA2/Semestralka/Mod.h
+CCalculator.h
+/home/victor/githubRepos/PA2/Semestralka/CCalculator.h
+CParser.h
+/home/victor/githubRepos/PA2/Semestralka/CParser.h
+CInteger.h
+/home/victor/githubRepos/PA2/Semestralka/CInteger.h
+CLongInteger.h
+/home/victor/githubRepos/PA2/Semestralka/CLongInteger.h
+CDecimal.h
+/home/victor/githubRepos/PA2/Semestralka/CDecimal.h
+CAddExp.h
+/home/victor/githubRepos/PA2/Semestralka/CAddExp.h
+CSubtractExp.h
+/home/victor/githubRepos/PA2/Semestralka/CSubtractExp.h
+CMultiplyExp.h
+/home/victor/githubRepos/PA2/Semestralka/CMultiplyExp.h
+CDevideExpr.h
+/home/victor/githubRepos/PA2/Semestralka/CDevideExpr.h
+CMod.h
+/home/victor/githubRepos/PA2/Semestralka/CMod.h
 Exceptions.h
 /home/victor/githubRepos/PA2/Semestralka/Exceptions.h
 regex
 -
 
-/home/victor/githubRepos/PA2/Semestralka/Calculator.h
+/home/victor/githubRepos/PA2/Semestralka/CCalculator.h
 vector
 -
 iostream
 -
 stack
 -
-Variable.h
-/home/victor/githubRepos/PA2/Semestralka/Variable.h
-Expression.h
-/home/victor/githubRepos/PA2/Semestralka/Expression.h
+CVariable.h
+/home/victor/githubRepos/PA2/Semestralka/CVariable.h
+CExpression.h
+/home/victor/githubRepos/PA2/Semestralka/CExpression.h
 Enums.h
 /home/victor/githubRepos/PA2/Semestralka/Enums.h
 
-/home/victor/githubRepos/PA2/Semestralka/Decimal.cpp
-Decimal.h
-/home/victor/githubRepos/PA2/Semestralka/Decimal.h
+/home/victor/githubRepos/PA2/Semestralka/CDecimal.cpp
+CDecimal.h
+/home/victor/githubRepos/PA2/Semestralka/CDecimal.h
 
-/home/victor/githubRepos/PA2/Semestralka/Decimal.h
+/home/victor/githubRepos/PA2/Semestralka/CDecimal.h
 string
 -
 sstream
 -
-Expression.h
-/home/victor/githubRepos/PA2/Semestralka/Expression.h
+CExpression.h
+/home/victor/githubRepos/PA2/Semestralka/CExpression.h
 
-/home/victor/githubRepos/PA2/Semestralka/DevideExpr.cpp
-DevideExpr.h
-/home/victor/githubRepos/PA2/Semestralka/DevideExpr.h
+/home/victor/githubRepos/PA2/Semestralka/CDevideExpr.cpp
+CDevideExpr.h
+/home/victor/githubRepos/PA2/Semestralka/CDevideExpr.h
 
-/home/victor/githubRepos/PA2/Semestralka/DevideExpr.h
-BinOperator.h
-/home/victor/githubRepos/PA2/Semestralka/BinOperator.h
+/home/victor/githubRepos/PA2/Semestralka/CDevideExpr.h
+CBinOperator.h
+/home/victor/githubRepos/PA2/Semestralka/CBinOperator.h
 
-/home/victor/githubRepos/PA2/Semestralka/Enums.h
+/home/victor/githubRepos/PA2/Semestralka/CExpression.h
+CBigNum.h
+/home/victor/githubRepos/PA2/Semestralka/CBigNum.h
 
-/home/victor/githubRepos/PA2/Semestralka/Exceptions.h
+/home/victor/githubRepos/PA2/Semestralka/CInteger.cpp
+CInteger.h
+/home/victor/githubRepos/PA2/Semestralka/CInteger.h
 
-/home/victor/githubRepos/PA2/Semestralka/Expression.h
-BigNum.h
-/home/victor/githubRepos/PA2/Semestralka/BigNum.h
-
-/home/victor/githubRepos/PA2/Semestralka/Integer.cpp
-Integer.h
-/home/victor/githubRepos/PA2/Semestralka/Integer.h
-
-/home/victor/githubRepos/PA2/Semestralka/Integer.h
+/home/victor/githubRepos/PA2/Semestralka/CInteger.h
 sstream
 -
-Expression.h
-/home/victor/githubRepos/PA2/Semestralka/Expression.h
+CExpression.h
+/home/victor/githubRepos/PA2/Semestralka/CExpression.h
 
-/home/victor/githubRepos/PA2/Semestralka/LongInteger.cpp
-LongInteger.h
-/home/victor/githubRepos/PA2/Semestralka/LongInteger.h
+/home/victor/githubRepos/PA2/Semestralka/CLongInteger.cpp
+CLongInteger.h
+/home/victor/githubRepos/PA2/Semestralka/CLongInteger.h
 
-/home/victor/githubRepos/PA2/Semestralka/LongInteger.h
+/home/victor/githubRepos/PA2/Semestralka/CLongInteger.h
 algorithm
 -
-Expression.h
-/home/victor/githubRepos/PA2/Semestralka/Expression.h
+CExpression.h
+/home/victor/githubRepos/PA2/Semestralka/CExpression.h
 
-/home/victor/githubRepos/PA2/Semestralka/Mod.cpp
-Mod.h
-/home/victor/githubRepos/PA2/Semestralka/Mod.h
+/home/victor/githubRepos/PA2/Semestralka/CMod.cpp
+CMod.h
+/home/victor/githubRepos/PA2/Semestralka/CMod.h
 
-/home/victor/githubRepos/PA2/Semestralka/Mod.h
-BinOperator.h
-/home/victor/githubRepos/PA2/Semestralka/BinOperator.h
+/home/victor/githubRepos/PA2/Semestralka/CMod.h
+CBinOperator.h
+/home/victor/githubRepos/PA2/Semestralka/CBinOperator.h
 
-/home/victor/githubRepos/PA2/Semestralka/MultiplyExp.cpp
-MultiplyExp.h
-/home/victor/githubRepos/PA2/Semestralka/MultiplyExp.h
+/home/victor/githubRepos/PA2/Semestralka/CMultiplyExp.cpp
+CMultiplyExp.h
+/home/victor/githubRepos/PA2/Semestralka/CMultiplyExp.h
 
-/home/victor/githubRepos/PA2/Semestralka/MultiplyExp.h
-BinOperator.h
-/home/victor/githubRepos/PA2/Semestralka/BinOperator.h
+/home/victor/githubRepos/PA2/Semestralka/CMultiplyExp.h
+CBinOperator.h
+/home/victor/githubRepos/PA2/Semestralka/CBinOperator.h
 
-/home/victor/githubRepos/PA2/Semestralka/Parser.cpp
-Parser.h
-/home/victor/githubRepos/PA2/Semestralka/Parser.h
+/home/victor/githubRepos/PA2/Semestralka/CParser.cpp
+CParser.h
+/home/victor/githubRepos/PA2/Semestralka/CParser.h
 Exceptions.h
 /home/victor/githubRepos/PA2/Semestralka/Exceptions.h
 
-/home/victor/githubRepos/PA2/Semestralka/Parser.h
+/home/victor/githubRepos/PA2/Semestralka/CParser.h
 string
 -
 unordered_map
@@ -164,25 +162,29 @@ vector
 stack
 -
 
-/home/victor/githubRepos/PA2/Semestralka/Subtract.cpp
-SubtractExp.h
-/home/victor/githubRepos/PA2/Semestralka/SubtractExp.h
+/home/victor/githubRepos/PA2/Semestralka/CSubtract.cpp
+CSubtractExp.h
+/home/victor/githubRepos/PA2/Semestralka/CSubtractExp.h
 
-/home/victor/githubRepos/PA2/Semestralka/SubtractExp.h
-BinOperator.h
-/home/victor/githubRepos/PA2/Semestralka/BinOperator.h
+/home/victor/githubRepos/PA2/Semestralka/CSubtractExp.h
+CBinOperator.h
+/home/victor/githubRepos/PA2/Semestralka/CBinOperator.h
 
-/home/victor/githubRepos/PA2/Semestralka/Variable.cpp
-Variable.h
-/home/victor/githubRepos/PA2/Semestralka/Variable.h
+/home/victor/githubRepos/PA2/Semestralka/CVariable.cpp
+CVariable.h
+/home/victor/githubRepos/PA2/Semestralka/CVariable.h
 
-/home/victor/githubRepos/PA2/Semestralka/Variable.h
+/home/victor/githubRepos/PA2/Semestralka/CVariable.h
 string
 -
-Expression.h
-/home/victor/githubRepos/PA2/Semestralka/Expression.h
+CExpression.h
+/home/victor/githubRepos/PA2/Semestralka/CExpression.h
+
+/home/victor/githubRepos/PA2/Semestralka/Enums.h
+
+/home/victor/githubRepos/PA2/Semestralka/Exceptions.h
 
 /home/victor/githubRepos/PA2/Semestralka/main.cpp
-Calculator.h
-/home/victor/githubRepos/PA2/Semestralka/Calculator.h
+CCalculator.h
+/home/victor/githubRepos/PA2/Semestralka/CCalculator.h
 

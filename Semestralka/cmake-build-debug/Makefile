@@ -123,329 +123,329 @@ Semestralka/fast:
 	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/build
 .PHONY : Semestralka/fast
 
-AddExp.o: AddExp.cpp.o
+CAddExp.o: CAddExp.cpp.o
 
-.PHONY : AddExp.o
-
-# target to build an object file
-AddExp.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/AddExp.cpp.o
-.PHONY : AddExp.cpp.o
-
-AddExp.i: AddExp.cpp.i
-
-.PHONY : AddExp.i
-
-# target to preprocess a source file
-AddExp.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/AddExp.cpp.i
-.PHONY : AddExp.cpp.i
-
-AddExp.s: AddExp.cpp.s
-
-.PHONY : AddExp.s
-
-# target to generate assembly for a file
-AddExp.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/AddExp.cpp.s
-.PHONY : AddExp.cpp.s
-
-BigNum.o: BigNum.cpp.o
-
-.PHONY : BigNum.o
+.PHONY : CAddExp.o
 
 # target to build an object file
-BigNum.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/BigNum.cpp.o
-.PHONY : BigNum.cpp.o
+CAddExp.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CAddExp.cpp.o
+.PHONY : CAddExp.cpp.o
 
-BigNum.i: BigNum.cpp.i
+CAddExp.i: CAddExp.cpp.i
 
-.PHONY : BigNum.i
+.PHONY : CAddExp.i
 
 # target to preprocess a source file
-BigNum.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/BigNum.cpp.i
-.PHONY : BigNum.cpp.i
+CAddExp.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CAddExp.cpp.i
+.PHONY : CAddExp.cpp.i
 
-BigNum.s: BigNum.cpp.s
+CAddExp.s: CAddExp.cpp.s
 
-.PHONY : BigNum.s
+.PHONY : CAddExp.s
 
 # target to generate assembly for a file
-BigNum.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/BigNum.cpp.s
-.PHONY : BigNum.cpp.s
+CAddExp.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CAddExp.cpp.s
+.PHONY : CAddExp.cpp.s
 
-Calculator.o: Calculator.cpp.o
+CBigNum.o: CBigNum.cpp.o
 
-.PHONY : Calculator.o
+.PHONY : CBigNum.o
 
 # target to build an object file
-Calculator.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Calculator.cpp.o
-.PHONY : Calculator.cpp.o
+CBigNum.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CBigNum.cpp.o
+.PHONY : CBigNum.cpp.o
 
-Calculator.i: Calculator.cpp.i
+CBigNum.i: CBigNum.cpp.i
 
-.PHONY : Calculator.i
+.PHONY : CBigNum.i
 
 # target to preprocess a source file
-Calculator.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Calculator.cpp.i
-.PHONY : Calculator.cpp.i
+CBigNum.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CBigNum.cpp.i
+.PHONY : CBigNum.cpp.i
 
-Calculator.s: Calculator.cpp.s
+CBigNum.s: CBigNum.cpp.s
 
-.PHONY : Calculator.s
+.PHONY : CBigNum.s
 
 # target to generate assembly for a file
-Calculator.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Calculator.cpp.s
-.PHONY : Calculator.cpp.s
+CBigNum.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CBigNum.cpp.s
+.PHONY : CBigNum.cpp.s
 
-Decimal.o: Decimal.cpp.o
+CCalculator.o: CCalculator.cpp.o
 
-.PHONY : Decimal.o
+.PHONY : CCalculator.o
 
 # target to build an object file
-Decimal.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Decimal.cpp.o
-.PHONY : Decimal.cpp.o
+CCalculator.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CCalculator.cpp.o
+.PHONY : CCalculator.cpp.o
 
-Decimal.i: Decimal.cpp.i
+CCalculator.i: CCalculator.cpp.i
 
-.PHONY : Decimal.i
+.PHONY : CCalculator.i
 
 # target to preprocess a source file
-Decimal.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Decimal.cpp.i
-.PHONY : Decimal.cpp.i
+CCalculator.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CCalculator.cpp.i
+.PHONY : CCalculator.cpp.i
 
-Decimal.s: Decimal.cpp.s
+CCalculator.s: CCalculator.cpp.s
 
-.PHONY : Decimal.s
+.PHONY : CCalculator.s
 
 # target to generate assembly for a file
-Decimal.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Decimal.cpp.s
-.PHONY : Decimal.cpp.s
+CCalculator.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CCalculator.cpp.s
+.PHONY : CCalculator.cpp.s
 
-DevideExpr.o: DevideExpr.cpp.o
+CDecimal.o: CDecimal.cpp.o
 
-.PHONY : DevideExpr.o
+.PHONY : CDecimal.o
 
 # target to build an object file
-DevideExpr.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/DevideExpr.cpp.o
-.PHONY : DevideExpr.cpp.o
+CDecimal.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDecimal.cpp.o
+.PHONY : CDecimal.cpp.o
 
-DevideExpr.i: DevideExpr.cpp.i
+CDecimal.i: CDecimal.cpp.i
 
-.PHONY : DevideExpr.i
+.PHONY : CDecimal.i
 
 # target to preprocess a source file
-DevideExpr.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/DevideExpr.cpp.i
-.PHONY : DevideExpr.cpp.i
+CDecimal.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDecimal.cpp.i
+.PHONY : CDecimal.cpp.i
 
-DevideExpr.s: DevideExpr.cpp.s
+CDecimal.s: CDecimal.cpp.s
 
-.PHONY : DevideExpr.s
+.PHONY : CDecimal.s
 
 # target to generate assembly for a file
-DevideExpr.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/DevideExpr.cpp.s
-.PHONY : DevideExpr.cpp.s
+CDecimal.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDecimal.cpp.s
+.PHONY : CDecimal.cpp.s
 
-Integer.o: Integer.cpp.o
+CDevideExpr.o: CDevideExpr.cpp.o
 
-.PHONY : Integer.o
+.PHONY : CDevideExpr.o
 
 # target to build an object file
-Integer.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Integer.cpp.o
-.PHONY : Integer.cpp.o
+CDevideExpr.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o
+.PHONY : CDevideExpr.cpp.o
 
-Integer.i: Integer.cpp.i
+CDevideExpr.i: CDevideExpr.cpp.i
 
-.PHONY : Integer.i
+.PHONY : CDevideExpr.i
 
 # target to preprocess a source file
-Integer.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Integer.cpp.i
-.PHONY : Integer.cpp.i
+CDevideExpr.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDevideExpr.cpp.i
+.PHONY : CDevideExpr.cpp.i
 
-Integer.s: Integer.cpp.s
+CDevideExpr.s: CDevideExpr.cpp.s
 
-.PHONY : Integer.s
+.PHONY : CDevideExpr.s
 
 # target to generate assembly for a file
-Integer.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Integer.cpp.s
-.PHONY : Integer.cpp.s
+CDevideExpr.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CDevideExpr.cpp.s
+.PHONY : CDevideExpr.cpp.s
 
-LongInteger.o: LongInteger.cpp.o
+CInteger.o: CInteger.cpp.o
 
-.PHONY : LongInteger.o
+.PHONY : CInteger.o
 
 # target to build an object file
-LongInteger.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/LongInteger.cpp.o
-.PHONY : LongInteger.cpp.o
+CInteger.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CInteger.cpp.o
+.PHONY : CInteger.cpp.o
 
-LongInteger.i: LongInteger.cpp.i
+CInteger.i: CInteger.cpp.i
 
-.PHONY : LongInteger.i
+.PHONY : CInteger.i
 
 # target to preprocess a source file
-LongInteger.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/LongInteger.cpp.i
-.PHONY : LongInteger.cpp.i
+CInteger.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CInteger.cpp.i
+.PHONY : CInteger.cpp.i
 
-LongInteger.s: LongInteger.cpp.s
+CInteger.s: CInteger.cpp.s
 
-.PHONY : LongInteger.s
+.PHONY : CInteger.s
 
 # target to generate assembly for a file
-LongInteger.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/LongInteger.cpp.s
-.PHONY : LongInteger.cpp.s
+CInteger.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CInteger.cpp.s
+.PHONY : CInteger.cpp.s
 
-Mod.o: Mod.cpp.o
+CLongInteger.o: CLongInteger.cpp.o
 
-.PHONY : Mod.o
+.PHONY : CLongInteger.o
 
 # target to build an object file
-Mod.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Mod.cpp.o
-.PHONY : Mod.cpp.o
+CLongInteger.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CLongInteger.cpp.o
+.PHONY : CLongInteger.cpp.o
 
-Mod.i: Mod.cpp.i
+CLongInteger.i: CLongInteger.cpp.i
 
-.PHONY : Mod.i
+.PHONY : CLongInteger.i
 
 # target to preprocess a source file
-Mod.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Mod.cpp.i
-.PHONY : Mod.cpp.i
+CLongInteger.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CLongInteger.cpp.i
+.PHONY : CLongInteger.cpp.i
 
-Mod.s: Mod.cpp.s
+CLongInteger.s: CLongInteger.cpp.s
 
-.PHONY : Mod.s
+.PHONY : CLongInteger.s
 
 # target to generate assembly for a file
-Mod.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Mod.cpp.s
-.PHONY : Mod.cpp.s
+CLongInteger.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CLongInteger.cpp.s
+.PHONY : CLongInteger.cpp.s
 
-MultiplyExp.o: MultiplyExp.cpp.o
+CMod.o: CMod.cpp.o
 
-.PHONY : MultiplyExp.o
+.PHONY : CMod.o
 
 # target to build an object file
-MultiplyExp.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o
-.PHONY : MultiplyExp.cpp.o
+CMod.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMod.cpp.o
+.PHONY : CMod.cpp.o
 
-MultiplyExp.i: MultiplyExp.cpp.i
+CMod.i: CMod.cpp.i
 
-.PHONY : MultiplyExp.i
+.PHONY : CMod.i
 
 # target to preprocess a source file
-MultiplyExp.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/MultiplyExp.cpp.i
-.PHONY : MultiplyExp.cpp.i
+CMod.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMod.cpp.i
+.PHONY : CMod.cpp.i
 
-MultiplyExp.s: MultiplyExp.cpp.s
+CMod.s: CMod.cpp.s
 
-.PHONY : MultiplyExp.s
+.PHONY : CMod.s
 
 # target to generate assembly for a file
-MultiplyExp.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/MultiplyExp.cpp.s
-.PHONY : MultiplyExp.cpp.s
+CMod.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMod.cpp.s
+.PHONY : CMod.cpp.s
 
-Parser.o: Parser.cpp.o
+CMultiplyExp.o: CMultiplyExp.cpp.o
 
-.PHONY : Parser.o
+.PHONY : CMultiplyExp.o
 
 # target to build an object file
-Parser.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Parser.cpp.o
-.PHONY : Parser.cpp.o
+CMultiplyExp.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o
+.PHONY : CMultiplyExp.cpp.o
 
-Parser.i: Parser.cpp.i
+CMultiplyExp.i: CMultiplyExp.cpp.i
 
-.PHONY : Parser.i
+.PHONY : CMultiplyExp.i
 
 # target to preprocess a source file
-Parser.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Parser.cpp.i
-.PHONY : Parser.cpp.i
+CMultiplyExp.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.i
+.PHONY : CMultiplyExp.cpp.i
 
-Parser.s: Parser.cpp.s
+CMultiplyExp.s: CMultiplyExp.cpp.s
 
-.PHONY : Parser.s
+.PHONY : CMultiplyExp.s
 
 # target to generate assembly for a file
-Parser.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Parser.cpp.s
-.PHONY : Parser.cpp.s
+CMultiplyExp.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.s
+.PHONY : CMultiplyExp.cpp.s
 
-Subtract.o: Subtract.cpp.o
+CParser.o: CParser.cpp.o
 
-.PHONY : Subtract.o
+.PHONY : CParser.o
 
 # target to build an object file
-Subtract.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Subtract.cpp.o
-.PHONY : Subtract.cpp.o
+CParser.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CParser.cpp.o
+.PHONY : CParser.cpp.o
 
-Subtract.i: Subtract.cpp.i
+CParser.i: CParser.cpp.i
 
-.PHONY : Subtract.i
+.PHONY : CParser.i
 
 # target to preprocess a source file
-Subtract.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Subtract.cpp.i
-.PHONY : Subtract.cpp.i
+CParser.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CParser.cpp.i
+.PHONY : CParser.cpp.i
 
-Subtract.s: Subtract.cpp.s
+CParser.s: CParser.cpp.s
 
-.PHONY : Subtract.s
+.PHONY : CParser.s
 
 # target to generate assembly for a file
-Subtract.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Subtract.cpp.s
-.PHONY : Subtract.cpp.s
+CParser.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CParser.cpp.s
+.PHONY : CParser.cpp.s
 
-Variable.o: Variable.cpp.o
+CSubtract.o: CSubtract.cpp.o
 
-.PHONY : Variable.o
+.PHONY : CSubtract.o
 
 # target to build an object file
-Variable.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Variable.cpp.o
-.PHONY : Variable.cpp.o
+CSubtract.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CSubtract.cpp.o
+.PHONY : CSubtract.cpp.o
 
-Variable.i: Variable.cpp.i
+CSubtract.i: CSubtract.cpp.i
 
-.PHONY : Variable.i
+.PHONY : CSubtract.i
 
 # target to preprocess a source file
-Variable.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Variable.cpp.i
-.PHONY : Variable.cpp.i
+CSubtract.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CSubtract.cpp.i
+.PHONY : CSubtract.cpp.i
 
-Variable.s: Variable.cpp.s
+CSubtract.s: CSubtract.cpp.s
 
-.PHONY : Variable.s
+.PHONY : CSubtract.s
 
 # target to generate assembly for a file
-Variable.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/Variable.cpp.s
-.PHONY : Variable.cpp.s
+CSubtract.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CSubtract.cpp.s
+.PHONY : CSubtract.cpp.s
+
+CVariable.o: CVariable.cpp.o
+
+.PHONY : CVariable.o
+
+# target to build an object file
+CVariable.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CVariable.cpp.o
+.PHONY : CVariable.cpp.o
+
+CVariable.i: CVariable.cpp.i
+
+.PHONY : CVariable.i
+
+# target to preprocess a source file
+CVariable.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CVariable.cpp.i
+.PHONY : CVariable.cpp.i
+
+CVariable.s: CVariable.cpp.s
+
+.PHONY : CVariable.s
+
+# target to generate assembly for a file
+CVariable.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CVariable.cpp.s
+.PHONY : CVariable.cpp.s
 
 main.o: main.cpp.o
 
@@ -483,42 +483,42 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... Semestralka"
-	@echo "... AddExp.o"
-	@echo "... AddExp.i"
-	@echo "... AddExp.s"
-	@echo "... BigNum.o"
-	@echo "... BigNum.i"
-	@echo "... BigNum.s"
-	@echo "... Calculator.o"
-	@echo "... Calculator.i"
-	@echo "... Calculator.s"
-	@echo "... Decimal.o"
-	@echo "... Decimal.i"
-	@echo "... Decimal.s"
-	@echo "... DevideExpr.o"
-	@echo "... DevideExpr.i"
-	@echo "... DevideExpr.s"
-	@echo "... Integer.o"
-	@echo "... Integer.i"
-	@echo "... Integer.s"
-	@echo "... LongInteger.o"
-	@echo "... LongInteger.i"
-	@echo "... LongInteger.s"
-	@echo "... Mod.o"
-	@echo "... Mod.i"
-	@echo "... Mod.s"
-	@echo "... MultiplyExp.o"
-	@echo "... MultiplyExp.i"
-	@echo "... MultiplyExp.s"
-	@echo "... Parser.o"
-	@echo "... Parser.i"
-	@echo "... Parser.s"
-	@echo "... Subtract.o"
-	@echo "... Subtract.i"
-	@echo "... Subtract.s"
-	@echo "... Variable.o"
-	@echo "... Variable.i"
-	@echo "... Variable.s"
+	@echo "... CAddExp.o"
+	@echo "... CAddExp.i"
+	@echo "... CAddExp.s"
+	@echo "... CBigNum.o"
+	@echo "... CBigNum.i"
+	@echo "... CBigNum.s"
+	@echo "... CCalculator.o"
+	@echo "... CCalculator.i"
+	@echo "... CCalculator.s"
+	@echo "... CDecimal.o"
+	@echo "... CDecimal.i"
+	@echo "... CDecimal.s"
+	@echo "... CDevideExpr.o"
+	@echo "... CDevideExpr.i"
+	@echo "... CDevideExpr.s"
+	@echo "... CInteger.o"
+	@echo "... CInteger.i"
+	@echo "... CInteger.s"
+	@echo "... CLongInteger.o"
+	@echo "... CLongInteger.i"
+	@echo "... CLongInteger.s"
+	@echo "... CMod.o"
+	@echo "... CMod.i"
+	@echo "... CMod.s"
+	@echo "... CMultiplyExp.o"
+	@echo "... CMultiplyExp.i"
+	@echo "... CMultiplyExp.s"
+	@echo "... CParser.o"
+	@echo "... CParser.i"
+	@echo "... CParser.s"
+	@echo "... CSubtract.o"
+	@echo "... CSubtract.i"
+	@echo "... CSubtract.s"
+	@echo "... CVariable.o"
+	@echo "... CVariable.i"
+	@echo "... CVariable.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

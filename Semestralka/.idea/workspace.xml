@@ -12,67 +12,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bb725c6-c6d8-4cef-9297-9447ae02a61c" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/AddExp.cpp" afterPath="$PROJECT_DIR$/CAddExp.cpp" />
-      <change beforePath="$PROJECT_DIR$/AddExp.h" afterPath="$PROJECT_DIR$/CAddExp.h" />
-      <change beforePath="$PROJECT_DIR$/BigNum.cpp" afterPath="$PROJECT_DIR$/CBigNum.cpp" />
-      <change beforePath="$PROJECT_DIR$/BigNum.h" afterPath="$PROJECT_DIR$/CBigNum.h" />
-      <change beforePath="$PROJECT_DIR$/BinOperator.h" afterPath="$PROJECT_DIR$/CBinOperator.h" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
-      <change beforePath="$PROJECT_DIR$/Calculator.cpp" afterPath="$PROJECT_DIR$/CCalculator.cpp" />
-      <change beforePath="$PROJECT_DIR$/Calculator.h" afterPath="$PROJECT_DIR$/CCalculator.h" />
-      <change beforePath="$PROJECT_DIR$/Decimal.cpp" afterPath="$PROJECT_DIR$/CDecimal.cpp" />
-      <change beforePath="$PROJECT_DIR$/Decimal.h" afterPath="$PROJECT_DIR$/CDecimal.h" />
-      <change beforePath="$PROJECT_DIR$/DevideExpr.cpp" afterPath="$PROJECT_DIR$/CDevideExpr.cpp" />
-      <change beforePath="$PROJECT_DIR$/DevideExpr.h" afterPath="$PROJECT_DIR$/CDevideExpr.h" />
-      <change beforePath="$PROJECT_DIR$/Expression.h" afterPath="$PROJECT_DIR$/CExpression.h" />
-      <change beforePath="$PROJECT_DIR$/Integer.cpp" afterPath="$PROJECT_DIR$/CInteger.cpp" />
-      <change beforePath="$PROJECT_DIR$/Integer.h" afterPath="$PROJECT_DIR$/CInteger.h" />
-      <change beforePath="$PROJECT_DIR$/LongInteger.cpp" afterPath="$PROJECT_DIR$/CLongInteger.cpp" />
-      <change beforePath="$PROJECT_DIR$/LongInteger.h" afterPath="$PROJECT_DIR$/CLongInteger.h" />
-      <change beforePath="$PROJECT_DIR$/Mod.cpp" afterPath="$PROJECT_DIR$/CMod.cpp" />
-      <change beforePath="$PROJECT_DIR$/Mod.h" afterPath="$PROJECT_DIR$/CMod.h" />
-      <change beforePath="$PROJECT_DIR$/MultiplyExp.cpp" afterPath="$PROJECT_DIR$/CMultiplyExp.cpp" />
-      <change beforePath="$PROJECT_DIR$/MultiplyExp.h" afterPath="$PROJECT_DIR$/CMultiplyExp.h" />
-      <change beforePath="$PROJECT_DIR$/Parser.cpp" afterPath="$PROJECT_DIR$/CParser.cpp" />
-      <change beforePath="$PROJECT_DIR$/Parser.h" afterPath="$PROJECT_DIR$/CParser.h" />
-      <change beforePath="$PROJECT_DIR$/Subtract.cpp" afterPath="$PROJECT_DIR$/CSubtract.cpp" />
-      <change beforePath="$PROJECT_DIR$/SubtractExp.h" afterPath="$PROJECT_DIR$/CSubtractExp.h" />
-      <change beforePath="$PROJECT_DIR$/Variable.cpp" afterPath="$PROJECT_DIR$/CVariable.cpp" />
-      <change beforePath="$PROJECT_DIR$/Variable.h" afterPath="$PROJECT_DIR$/CVariable.h" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.9.6/CMakeSystem.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.9.6/CMakeSystem.cmake" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CAddExp.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CBigNum.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CCalculator.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CDecimal.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CInteger.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CLongInteger.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CMod.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/COperand.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CParser.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CSubtract.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CVariable.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CXX.includecache" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/CXX.includecache" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/DependInfo.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/DependInfo.cmake" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/build.make" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/build.make" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/cmake_clean.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/cmake_clean.cmake" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/depend.internal" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/depend.internal" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/depend.make" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/depend.make" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/link.txt" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/link.txt" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/main.cpp.o" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/main.cpp.o" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Semestralka" afterPath="$PROJECT_DIR$/cmake-build-debug/Semestralka" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Semestralka.cbp" afterPath="$PROJECT_DIR$/cmake-build-debug/Semestralka.cbp" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
+      <change beforePath="$PROJECT_DIR$/CBigNum.cpp" afterPath="$PROJECT_DIR$/CBigNum.cpp" />
+      <change beforePath="$PROJECT_DIR$/CBigNum.h" afterPath="$PROJECT_DIR$/CBigNum.h" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/AddExp.cpp.o" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/BigNum.cpp.o" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/Calculator.cpp.o" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/Decimal.cpp.o" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/DevideExpr.cpp.o" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/Integer.cpp.o" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/LongInteger.cpp.o" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/Mod.cpp.o" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/MultiplyExp.cpp.o" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/Parser.cpp.o" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/Subtract.cpp.o" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Semestralka.dir/Variable.cpp.o" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -98,8 +51,8 @@
       <file leaf-file-name="CCalculator.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CCalculator.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-467">
-              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <state relative-caret-position="-869">
+              <caret line="16" column="17" lean-forward="true" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -110,9 +63,11 @@
       <file leaf-file-name="CBigNum.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CBigNum.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-522">
-              <caret line="19" column="28" lean-forward="true" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
-              <folding />
+            <state relative-caret-position="432">
+              <caret line="24" column="13" lean-forward="true" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+              <folding>
+                <element signature="e#40#60#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -120,9 +75,11 @@
       <file leaf-file-name="CBigNum.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CBigNum.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="792">
-              <caret line="46" column="72" lean-forward="false" selection-start-line="46" selection-start-column="72" selection-end-line="46" selection-end-column="72" />
-              <folding />
+            <state relative-caret-position="354">
+              <caret line="23" column="60" lean-forward="true" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
+              <folding>
+                <element signature="e#101#119#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -174,11 +131,11 @@
         <option value="$PROJECT_DIR$/CVariable.h" />
         <option value="$PROJECT_DIR$/Exceptions.h" />
         <option value="$PROJECT_DIR$/CVariable.cpp" />
-        <option value="$PROJECT_DIR$/CBigNum.h" />
         <option value="$PROJECT_DIR$/CCalculator.cpp" />
         <option value="$PROJECT_DIR$/Calculator.cpp" />
         <option value="$PROJECT_DIR$/BigNum.cpp" />
         <option value="$PROJECT_DIR$/CBigNum.cpp" />
+        <option value="$PROJECT_DIR$/CBigNum.h" />
       </list>
     </option>
   </component>
@@ -295,12 +252,12 @@
       <workItem from="1527274045445" duration="3857000" />
       <workItem from="1527318560638" duration="17558000" />
       <workItem from="1527412069063" duration="1924000" />
-      <workItem from="1527420359459" duration="630000" />
+      <workItem from="1527420359459" duration="2270000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176431000" />
+    <option name="totallyTimeSpent" value="178071000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="50" y="-11" width="1317" height="780" extended-state="6" />
@@ -383,7 +340,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>188</line>
+          <line>194</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -393,7 +350,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>513</line>
+          <line>519</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -403,32 +360,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>567</line>
+          <line>573</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>127</line>
+          <line>128</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>407</line>
+          <line>413</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>215</line>
+          <line>221</line>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>222</line>
+          <line>228</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>430</line>
+          <line>436</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -438,42 +395,42 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>183</line>
+          <line>189</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>91</line>
+          <line>92</line>
           <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>116</line>
+          <line>117</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>282</line>
+          <line>288</line>
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>582</line>
+          <line>588</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>58</line>
+          <line>59</line>
           <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>113</line>
+          <line>114</line>
           <option name="timeStamp" value="60" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/CBigNum.cpp</url>
-          <line>339</line>
+          <line>345</line>
           <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -818,29 +775,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CBigNum.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="46" column="72" lean-forward="false" selection-start-line="46" selection-start-column="72" selection-end-line="46" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CCalculator.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-467">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state relative-caret-position="-869">
+          <caret line="16" column="17" lean-forward="true" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/CBigNum.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="23" column="60" lean-forward="true" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
+          <folding>
+            <element signature="e#101#119#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CBigNum.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-522">
-          <caret line="19" column="28" lean-forward="true" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
-          <folding />
+        <state relative-caret-position="432">
+          <caret line="24" column="13" lean-forward="true" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding>
+            <element signature="e#40#60#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
