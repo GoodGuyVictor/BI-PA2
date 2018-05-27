@@ -9,7 +9,6 @@
 #include "CLongInteger.h"
 #include "CAddExp.h"
 #include "CInteger.h"
-#include <stdint-gcc.h>
 
 CBigNum::CBigNum(int val)
 {
@@ -665,4 +664,19 @@ CBigNum::CBigNum()
 {
     m_exponent.push_back(0);
     m_fraction.push_back(0);
+}
+
+std::string CBigNum::toString() const
+{
+    std::string result;
+    if(m_sgn)
+        result += "-";
+    result += toString(m_exponent);
+    std::string fraction;
+    fraction = toString(m_fraction);
+    if(fraction != "0") {
+        result += ".";
+        result += fraction;
+    }
+    return result;
 }
