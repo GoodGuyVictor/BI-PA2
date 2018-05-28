@@ -5,33 +5,15 @@
 #include <iomanip>
 #include "CVariable.h"
 
-CVariable::CVariable(const std::string &name, const std::string &val)
-        : m_name(name)
+CVariable::CVariable(const std::string &name, const CBigNum &val)
 {
-    std::string value(val);
-    if(value[0] == '-') {
-        m_sgn = true;
-        value.erase(0,1);
-    } else
-        m_sgn = false;
-
-    if(val.find('.') != std::string::npos) {
-        char * token;
-        token = strtok((char*)value.c_str(), ".");
-        std::string exponent(token);
-        token = strtok(NULL, ".");
-        std::string fraction(token);
-        m_exponent = toBigInt(exponent);
-        m_fraction = toBigInt(fraction);
-    } else {
-        m_exponent = toBigInt(val);
-        m_fraction.push_back(0);
-    }
+    m_name = name;
+    m_value = val;
 }
 
 CBigNum CVariable::evaluate() const
 {
-    return CBigNum(m_sgn, m_exponent, m_fraction);
+    return m_value;
 }
 
 std::vector<uint32_t> CVariable::toBigInt(std::string text) const
@@ -66,15 +48,8 @@ std::string CVariable::getName() const
 
 CExpression *CVariable::clone() const
 {
-    CExpression *tmp = new CVariable(m_name, m_sgn, m_exponent, m_fraction);
+    CExpression *tmp = new CVariable(m_name, m_value);
     return tmp;
-}
-
-CVariable::CVariable(const std::string &name, bool sgn, const std::vector<uint32_t> & exponent, const std::vector<uint32_t> & fraction)
-: m_name(name), m_sgn(sgn)
-{
-    m_exponent = exponent;
-    m_fraction = fraction;
 }
 
 std::string CVariable::toString() const
@@ -83,14 +58,8 @@ std::string CVariable::toString() const
 
     result = m_name;
     result += " = ";
-    if(m_sgn)
-        result += "-";
-    result += toString(m_exponent);
-    std::string fraction = toString(m_fraction);
-    if(fraction != "0") {
-        result += ".";
-        result += fraction;
-    }
+    result += m_value.toString();
+
     return result;
 }
 
@@ -105,4 +74,9 @@ std::string CVariable::toString(const std::vector<uint32_t> & value) const
     std::string result;
     ss >> result;
     return result;
+}
+
+void CVariable::setValue(const CBigNum & value)
+{
+    m_value = value;
 }

@@ -15,14 +15,15 @@ private:
 
     string          readInput               ();
     void            removeWhiteSpaces       (string &);
-    void            createNewVariable       (const string&);
     CBigNum         calculate               (const string&);
     void            saveHistory             (const string&, const CBigNum&);
     EValType        determineType           (const string&) const;
     bool            isOperator              (const string&) const;
     void            pushToStack             (const string &, stack<CExpression*> &) const;
     CExpression *   performOperation        (CExpression*, CExpression*, const string&);
-    bool            containIllegalChar       (const string &) const;
+    bool            containIllegalChar      (const string &) const;
+    void            addVariable             (const std::string &);
+    void            validateVariableName    (const std::string &) const;
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator!" << endl
