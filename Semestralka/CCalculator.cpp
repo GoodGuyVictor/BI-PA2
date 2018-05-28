@@ -20,14 +20,18 @@ void CCalculator::run()
 
     while(true)
     {
-        input = readInput();
-        if(input == "variable")
-            continue;
-        if(input == "quit")
-            break;
-        result = calculate(input);
-        result.print();
-        saveHistory(input, result);
+        try {
+            input = readInput();
+            if(input == "variable")
+                continue;
+            if(input == "quit")
+                break;
+            result = calculate(input);
+            result.print();
+            saveHistory(input, result);
+        } catch (std::exception & e) {
+            std::cout << "Input error: " << e.what() << std::endl;
+        }
     }
 }
 
