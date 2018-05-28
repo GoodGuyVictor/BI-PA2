@@ -26,7 +26,7 @@ private:
     void            validateVariableName    (const std::string &) const;
 
 public:
-    CCalculator() { cout << "Welcome to super high precision calculator!" << endl
+    CCalculator() { cout << "Welcome to arbitrary precision calculator!" << endl
                          << "-To creat a variable type: <variable name> = <value>" << endl
                          << " *Variable names can only consist of letters and numbers having letter as the very first symbol" << endl
                          << "-To quit type \"quit\"" << endl;}
