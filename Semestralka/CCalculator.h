@@ -22,6 +22,7 @@ private:
     bool            isOperator              (const string&) const;
     void            pushToStack             (const string &, stack<CExpression*> &) const;
     CExpression *   performOperation        (CExpression*, CExpression*, const string&);
+    bool            containIllegalChar       (const string &) const;
 
 public:
     CCalculator() { cout << "Welcome to super high precision calculator!" << endl
