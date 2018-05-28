@@ -43,11 +43,9 @@ string CCalculator::readInput()
     getline(cin, input, '\n');
     removeWhiteSpaces(input);
 
-    //adding new variable
     if(input.find('=') != string::npos)
     {
-        m_history.push_back(input);
-        createNewVariable(input);
+        addVariable(input);
         return "variable";
     }
 
@@ -61,26 +59,6 @@ void CCalculator::removeWhiteSpaces(string &str)
             str.erase(it);
 }
 
-void CCalculator::createNewVariable(const string &input)
-{
-    char * token;
-    token = strtok((char*)input.c_str(), "=");
-    string name(token);
-
-    if(!isalpha(name[0]))
-        throw InvalidVariableName();
-
-    if(containIllegalChar(name))
-        throw InvalidVariableName();
-
-    token = strtok(NULL, "=");
-    string val(token);
-    CBigNum result = calculate(val);
-    val = result.toString();
-
-    m_variables.emplace_back(CVariable(name, val));
-}
-
 CBigNum CCalculator::calculate(const string & input)
 {
     CParser parser;
@@ -89,7 +67,6 @@ CBigNum CCalculator::calculate(const string & input)
 
     if(!input.empty())
     {
-//        parsedInput.clear();
         parsedInput = parser.parse(input) ;
 
         for(const auto & token : parsedInput)
@@ -225,4 +202,36 @@ bool CCalculator::containIllegalChar(const string & varName) const
                 return true;
 
     return false;
+}
+
+void CCalculator::addVariable(const std::string & input)
+{
+    char * token;
+    token = strtok((char*)input.c_str(), "=");
+    string name(token);
+    validateVariableName(name);
+
+    token = strtok(NULL, "=");
+    string val(token);
+    CBigNum value = calculate(val);
+
+    m_history.push_back(input);
+
+    //if variable exists reset its value
+    for(auto & it : m_variables)
+        if(it.getName() == name) {
+            it.setValue(value);
+            return;
+        }
+    //else creating new one
+    m_variables.emplace_back(CVariable(name, value));
+}
+
+void CCalculator::validateVariableName(const std::string & name) const
+{
+    if(!isalpha(name[0]))
+        throw InvalidVariableName();
+
+    if(containIllegalChar(name))
+        throw InvalidVariableName();
 }
