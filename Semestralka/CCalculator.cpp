@@ -30,7 +30,7 @@ void CCalculator::run()
             result.print();
             saveHistory(input, result);
         } catch (std::exception & e) {
-            std::cout << "Input error: " << e.what() << std::endl;
+            std::cout << "ERROR: " << e.what() << std::endl;
         }
     }
 }
