@@ -11,19 +11,17 @@
 class CVariable : public CExpression
 {
 public:
-    CVariable (const std::string &name, const std::string & val);
-    CVariable (const std::string &name, bool, const std::vector<uint32_t> &, const std::vector<uint32_t> &);
+    CVariable (const std::string &name, const CBigNum &val);
 
     CBigNum evaluate() const override;
     std::string getName() const;
     CExpression * clone() const;
     std::string toString() const;
+    void setValue(const CBigNum &);
 private:
 
     std::string m_name;
-    bool m_sgn;
-    std::vector<uint32_t> m_exponent;
-    std::vector<uint32_t> m_fraction;
+    CBigNum m_value;
 
     std::vector<uint32_t> toBigInt(std::string text) const;
     std::string toString(const std::vector<uint32_t> &) const;
