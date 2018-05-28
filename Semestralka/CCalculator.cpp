@@ -62,8 +62,18 @@ void CCalculator::createNewVariable(const string &input)
     char * token;
     token = strtok((char*)input.c_str(), "=");
     string name(token);
+
+    if(!isalpha(name[0]))
+        throw InvalidVariableName();
+
+    if(containIllegalChar(name))
+        throw InvalidVariableName();
+
     token = strtok(NULL, "=");
     string val(token);
+    CBigNum result = calculate(val);
+    val = result.toString();
+
     m_variables.emplace_back(CVariable(name, val));
 }
 
@@ -75,7 +85,7 @@ CBigNum CCalculator::calculate(const string & input)
 
     if(!input.empty())
     {
-        parsedInput.clear();
+//        parsedInput.clear();
         parsedInput = parser.parse(input) ;
 
         for(const auto & token : parsedInput)
@@ -197,6 +207,18 @@ void CCalculator::saveToFile() const
             myfile << it << std::endl;
     }
 
-
     myfile.close();
+}
+
+bool CCalculator::containIllegalChar(const string & varName) const
+{
+    vector<char> illegals = {'!', '@', '#', '$', '%', '^', ':', ';', '*', '(', ')', '-',
+                             '_', '"', '\\', '\'', ',', '.', '/', '+', '?', '>', '<', '`', '~'};
+
+    for(const auto & it : varName)
+        for(const auto & illegal : illegals)
+            if(it == illegal)
+                return true;
+
+    return false;
 }
