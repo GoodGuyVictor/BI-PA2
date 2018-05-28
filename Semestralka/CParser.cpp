@@ -25,8 +25,11 @@ void CParser::shuntingYard(const string &input)
 
                 if(*it == ')')
                 {
-                    while(operatorStack.top() != '(')
+                    while(operatorStack.top() != '(') {
                         popOperatorFromStackToOutput(operatorStack);
+                        if(operatorStack.empty())
+                            throw MissingParanthesis();
+                    }
                     operatorStack.pop();
                 }
                 else
@@ -64,8 +67,11 @@ void CParser::shuntingYard(const string &input)
         tmp_operand = "";
     }
 
-    while(!operatorStack.empty())
+    while(!operatorStack.empty()) {
+        if(operatorStack.top() == '(')
+            throw MissingParanthesis();
         popOperatorFromStackToOutput(operatorStack);
+    }
 }
 
 vector<string> CParser::parse(const string & input)
