@@ -9,6 +9,7 @@
 #include "CLongInteger.h"
 #include "CAddExp.h"
 #include "CInteger.h"
+#include "Exceptions.h"
 
 CBigNum::CBigNum(int val)
 {
@@ -194,6 +195,12 @@ CBigNum CBigNum::operator/(const CBigNum &other) const
     std::vector<uint32_t> exponent1 = m_exponent;
     std::vector<uint32_t> exponent2 = other.m_exponent;
 
+    std::vector<uint32_t> fraction1 = m_fraction;
+    std::vector<uint32_t> fraction2 = other.m_fraction;
+
+    if(fraction1.size() > 1 || fraction2.size() > 1 || fraction1[0] != 0 || fraction2[0] != 0)
+        throw DecimalDivision();
+
     if(exponent1.size() == 1 && exponent2.size() == 1)
         return CBigNum((int)(exponent1[0] / exponent2[0]));
 
@@ -227,6 +234,12 @@ CBigNum CBigNum::operator%(const CBigNum & other) const
 {
     std::vector<uint32_t> exponent1 = m_exponent;
     std::vector<uint32_t> exponent2 = other.m_exponent;
+
+    std::vector<uint32_t> fraction1 = m_fraction;
+    std::vector<uint32_t> fraction2 = other.m_fraction;
+
+    if(fraction1.size() > 1 || fraction2.size() > 1 || fraction1[0] != 0 || fraction2[0] != 0)
+        throw DecimalDivision();
 
     //if dividend is equal to divisor than remainder is 0
     if(exponent1 == exponent2)
