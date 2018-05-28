@@ -48,7 +48,10 @@ void CParser::shuntingYard(const string &input)
         }
         else if(isalpha(*it))
         {
-            tmp_operand += *it;
+            if(!tmp_operand.empty() && isdigit(tmp_operand[0]))
+                throw InvalidValue();
+            else
+                tmp_operand += *it;
         }
         else if(*it == '.')
             tmp_operand += *it;
