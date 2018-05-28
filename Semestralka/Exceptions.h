@@ -27,3 +27,11 @@ class MissingParanthesis : public std::exception
         return "Missing paranthesis";
     }
 };
+
+class DecimalDivision : public std::exception
+{
+    const char * what() const throw() override
+    {
+        return "Decimal division is not legit";
+    }
+};
