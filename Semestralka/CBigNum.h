@@ -11,13 +11,35 @@
 #include <cstdint>
 #include <stdint-gcc.h>
 
+/*! @class CBigNum
+ *  @brief The class represents highly accurate number of any size
+ *
+ */
 class CBigNum
 {
 public:
+    /**
+     * @brief Default constructor creates number with zero value
+     */
                 CBigNum     ();
+    /**
+     * @brief Constructor translates usual int value into CBigNum
+     * @param val integer number
+     */
     explicit    CBigNum     (int val);
-                CBigNum     (bool sgn, const std::vector<uint32_t > &);
-                CBigNum     (bool sgn, const std::vector<uint32_t > &, const std::vector<uint32_t>);
+    /**
+     * @brief Constructor creates one big number out of array of values, fractional part is set to zero
+     * @param sgn Presence of minus before the value
+     * @param integer vector of uint32_t values integer part of the number
+     */
+                CBigNum     (bool sgn, const std::vector<uint32_t > & integer);
+    /**
+     * @brief Constructor creates one big number out of arrays of values with fractional part included
+     * @param sgn Presence of minus before the value
+     * @param integer vector of uint32_t values integer part of the number
+     * @param fraction vector of uint32_t values fractional part of the number
+     */
+                CBigNum     (bool sgn, const std::vector<uint32_t > & integer, const std::vector<uint32_t> & fraction);
 
     void            print           () const;
     CBigNum         operator+       (const CBigNum &) const;
