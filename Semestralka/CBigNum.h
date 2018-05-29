@@ -93,8 +93,11 @@ public:
     std::string     toString        () const;
 
 private:
+    /** integer part of the number */
     std::vector<uint32_t>   m_integer;
+    /** fractional part of the number */
     std::vector<uint32_t>   m_fraction;
+    /** presence of minus */
     bool                    m_sgn;
 
     std::vector<uint32_t>       additionAlgorithm           (const std::vector<uint32_t> &, const std::vector<uint32_t> &, unsigned short &) const;
