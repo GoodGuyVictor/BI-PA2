@@ -6,36 +6,37 @@ void CParser::shuntingYard(const string &input)
     string tmp_operand;
     stack<char> operatorStack;
 
-    for (auto it = input.begin(); it < input.end(); it++)
-    {
+    for (auto it = input.begin(); it < input.end(); it++) {
         if(isdigit(*it))
             tmp_operand += *it;
-        else if(isOperator(*it))
-        {
+        else if(isalpha(*it)) {
+            if(!tmp_operand.empty() && isdigit(tmp_operand[0]))
+                throw InvalidValue();
+            else
+                tmp_operand += *it;
+        }
+        else if(*it == '.')
+            tmp_operand += *it;
+        else if(isOperator(*it)) {
             if(*it == '-' && it == input.begin())
                 tmp_operand += *it;
             else if(*it == '-' && *(it-1) == '(')
                 tmp_operand += *it;
-            else
-            {
+            else {
                 if(!tmp_operand.empty()) {
                     m_output.push_back(tmp_operand);
                     tmp_operand = "";
                 }
 
-                if(*it == ')')
-                {
+                if(*it == ')') {
                     while(operatorStack.top() != '(') {
                         popOperatorFromStackToOutput(operatorStack);
                         if(operatorStack.empty())
                             throw MissingParanthesis();
                     }
                     operatorStack.pop();
-                }
-                else
-                {
-                    if(!operatorStack.empty())
-                    {
+                } else {
+                    if(!operatorStack.empty()) {
                         while(m_opPrecedence[operatorStack.top()] >= m_opPrecedence[*it]
                               && operatorStack.top() != '(')
                         {
@@ -49,15 +50,6 @@ void CParser::shuntingYard(const string &input)
                 }
             }
         }
-        else if(isalpha(*it))
-        {
-            if(!tmp_operand.empty() && isdigit(tmp_operand[0]))
-                throw InvalidValue();
-            else
-                tmp_operand += *it;
-        }
-        else if(*it == '.')
-            tmp_operand += *it;
         else
             throw InvalidInput();
     }
