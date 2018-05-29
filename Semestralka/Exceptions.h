@@ -35,3 +35,27 @@ class DecimalDivision : public std::exception
         return "Decimal division is not legit";
     }
 };
+
+class InvalidFileFormat : public std::exception
+{
+    const char * what() const throw() override
+    {
+        return "Invalid file format";
+    }
+};
+
+class InvalidFileName : public std::exception
+{
+    const char * what() const throw() override
+    {
+        return "Invalid file name";
+    }
+};
+
+class DivisionByZero : public std::exception
+{
+    const char * what() const throw() override
+    {
+        return "Division by zero is undefined";
+    }
+};
