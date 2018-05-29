@@ -57,7 +57,7 @@ std::string CVariable::toString() const
     std::string result;
 
     result = m_name;
-    result += " = ";
+    result += "=";
     result += m_value.toString();
 
     return result;
