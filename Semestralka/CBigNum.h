@@ -41,14 +41,15 @@ private:
     std::vector<uint32_t>       addFractions                (std::vector<uint32_t> &, std::vector<uint32_t> &, unsigned short &) const;
     std::vector<uint32_t>       subtractFractions           (std::vector<uint32_t> &, std::vector<uint32_t> &, unsigned short &) const;
 
+    void                        multiplyByTen               ();
     void                        expandFewerNumberWithZeros  (std::vector<uint32_t> &, std::vector<uint32_t> &) const;
     std::string                 toString                    (const std::vector<uint32_t> &) const;
     std::string                 toString                    (const CBigNum &) const;
     std::string                 toString                    (uint32_t, bool = true) const;
-    void                        multiplyByTen               ();
     int                         eliminateEndingZeros        (std::vector<uint32_t> &, std::vector<uint32_t> &) const;
     std::vector<uint32_t>       toBigInt                    (std::string text) const;
     void                        modulo                      (std::vector<uint32_t> &) const;
+    bool                        isZero                      (const std::vector<uint32_t> &) const;
 };
 
 #endif //SEMESTRALKA_CBIGNUM_H
