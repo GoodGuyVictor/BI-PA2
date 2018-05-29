@@ -26,6 +26,16 @@ void CCalculator::run()
                 continue;
             if(input == "quit")
                 break;
+            if(input == "save") {
+                saveToFile();
+                continue;
+            }
+            if(input == "read") {
+                readFromFile();
+                continue;
+            }
+            if(input.empty())
+                continue;
             result = calculate(input);
             result.print();
             saveHistory(input, result);
@@ -46,8 +56,15 @@ string CCalculator::readInput()
     if(input.find('=') != string::npos)
     {
         addVariable(input);
+        m_history.push_back(input);
         return "variable";
     }
+
+    if(input == "save")
+        return "save";
+
+    if(input == "read")
+        return "read";
 
     return input;
 }
@@ -69,12 +86,10 @@ CBigNum CCalculator::calculate(const string & input)
     {
         parsedInput = parser.parse(input) ;
 
-        for(const auto & token : parsedInput)
-        {
+        for(const auto & token : parsedInput) {
             if(!isOperator(token))
                 pushToStack(token, exprStack);
-            else
-            {
+            else {
                 CExpression *rVal = exprStack.top(); exprStack.pop();
                 CExpression *lVal = exprStack.top(); exprStack.pop();
 
@@ -95,7 +110,7 @@ void CCalculator::saveHistory(const string & input, const CBigNum & result)
     string tmp;
 
     tmp += input;
-    tmp += " = ";
+    tmp += "=";
     tmp += result.toString();
     m_history.push_back(tmp);
 }
@@ -176,7 +191,7 @@ void CCalculator::saveToFile() const
 {
     ofstream myfile;
 //    myfile.open("/home/victor/gitHubRepos/PA2/Semestralka/output/calculator.txt");
-    myfile.open("calculator.txt");
+    myfile.open("data.txt");
 
     if(myfile.is_open()) {
         myfile << "VARIABLES" << std::endl;
@@ -204,7 +219,7 @@ bool CCalculator::containIllegalChar(const string & varName) const
     return false;
 }
 
-void CCalculator::addVariable(const std::string & input)
+void CCalculator::addVariable(std::string input)
 {
     char * token;
     token = strtok((char*)input.c_str(), "=");
@@ -214,8 +229,6 @@ void CCalculator::addVariable(const std::string & input)
     token = strtok(NULL, "=");
     string val(token);
     CBigNum value = calculate(val);
-
-    m_history.push_back(input);
 
     //if variable exists reset its value
     for(auto & it : m_variables)
@@ -234,4 +247,36 @@ void CCalculator::validateVariableName(const std::string & name) const
 
     if(containIllegalChar(name))
         throw InvalidVariableName();
+}
+
+void CCalculator::readFromFile(std::string filename)
+{
+    ifstream myfile;
+    myfile.open(filename);
+
+    if(myfile.is_open()) {
+        std::string input;
+        myfile >> input;
+        if(input == "VARIABLES") {
+            myfile >> input;//discard VARIABLES label
+            while(input != "HISTORY") {
+                addVariable(input);
+                myfile >> input;
+            }
+
+            myfile >> input;//discard HISTORY label
+            while(!myfile.eof()) {
+                m_history.push_back(input);
+                myfile >> input;
+            }
+        } else {
+            myfile.close();
+            throw InvalidFileFormat();
+        }
+    } else {
+        myfile.close();
+        throw InvalidFileName();
+    }
+
+    myfile.close();
 }
