@@ -22,7 +22,7 @@ private:
     void            pushToStack             (const string &, stack<CExpression*> &) const;
     CExpression *   performOperation        (CExpression*, CExpression*, const string&);
     bool            containIllegalChar      (const string &) const;
-    void            addVariable             (const std::string &);
+    void            addVariable             (std::string);
     void            validateVariableName    (const std::string &) const;
 
 public:
@@ -32,4 +32,6 @@ public:
                          << "-To quit type \"quit\"" << endl;}
     void    run();
     void    saveToFile() const;
+    void            readFromFile            (std::string = "data.txt");
+
 };
