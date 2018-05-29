@@ -663,24 +663,24 @@ int CBigNum::eliminateEndingZeros(std::vector<uint32_t> & integer1, std::vector<
     return zerosCnt;
 }
 
-std::vector<uint32_t> CBigNum::toBigInt(std::string text) const
+std::vector<uint32_t> CBigNum::toBigInt(std::string number) const
 {
     std::vector<uint32_t> result;
-    int len = text.size();
+    int len = number.size();
     int portions = len / 9;
     std::stringstream ss;
     uint32_t tmp;
 
     for(int i = 0; i < portions; i++) {
-        ss << text.substr(text.size() - 9, 9);
+        ss << number.substr(number.size() - 9, 9);
         ss >> tmp;
         result.push_back(tmp);
-        text.erase(text.size() - 9, 9);
+        number.erase(number.size() - 9, 9);
         ss.clear();
     }
 
-    if(!text.empty()) {
-        ss << text;
+    if(!number.empty()) {
+        ss << number;
         ss >> tmp;
         result.push_back(tmp);
     }
