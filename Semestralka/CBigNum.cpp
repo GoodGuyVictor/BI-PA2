@@ -11,6 +11,13 @@
 #include "CInteger.h"
 #include "Exceptions.h"
 
+CBigNum::CBigNum()
+        : m_sgn(false)
+{
+    m_exponent.push_back(0);
+    m_fraction.push_back(0);
+}
+
 CBigNum::CBigNum(int val)
 {
     if(val < 0) {
@@ -136,12 +143,12 @@ CBigNum CBigNum::operator* (const CBigNum & other) const
        || exponent2.size() == 1 && exponent2[0] == 0 && fractoin2.size() == 1 && fractoin2[0] == 0)
         return CBigNum(0);
 
-    expandFewerNumberWithZeros(exponent1, exponent2);
 
     //if fraction1 == fraction2 == 0
     if(fractoin1.size() == 1 && fractoin1[0] == 0 && fractoin2.size() == 1 && fractoin2[0] == 0){
         int tens = 0;
         tens = eliminateEndingZeros(exponent1, exponent2);
+        expandFewerNumberWithZeros(exponent1, exponent2);
 
         product = multiplicationAlgorithm(exponent1, exponent2);
 
@@ -150,6 +157,8 @@ CBigNum CBigNum::operator* (const CBigNum & other) const
             tens--;
         }
     }else {
+        expandFewerNumberWithZeros(exponent1, exponent2);
+
         std::string exponent1String = toString(exponent1);
         std::string exponent2String = toString(exponent2);
 
@@ -198,7 +207,10 @@ CBigNum CBigNum::operator/(const CBigNum &other) const
     std::vector<uint32_t> fraction1 = m_fraction;
     std::vector<uint32_t> fraction2 = other.m_fraction;
 
-    if(fraction1.size() > 1 || fraction2.size() > 1 || fraction1[0] != 0 || fraction2[0] != 0)
+    if(isZero(exponent2) && isZero(fraction2))
+        throw DivisionByZero();
+
+    if(!isZero(fraction1) || !isZero(fraction2))
         throw DecimalDivision();
 
     if(exponent1.size() == 1 && exponent2.size() == 1)
@@ -238,7 +250,10 @@ CBigNum CBigNum::operator%(const CBigNum & other) const
     std::vector<uint32_t> fraction1 = m_fraction;
     std::vector<uint32_t> fraction2 = other.m_fraction;
 
-    if(fraction1.size() > 1 || fraction2.size() > 1 || fraction1[0] != 0 || fraction2[0] != 0)
+    if(isZero(exponent2) && isZero(fraction2))
+        throw DivisionByZero();
+
+    if(!isZero(fraction1) || !isZero(fraction2))
         throw DecimalDivision();
 
     //if dividend is equal to divisor than remainder is 0
@@ -294,6 +309,200 @@ bool CBigNum::operator>=(const CBigNum & other) const
 
         return true;
     }
+}
+
+std::string CBigNum::toString() const
+{
+    std::string result;
+    if(m_sgn)
+        result += "-";
+    result += toString(m_exponent);
+    std::string fraction;
+    fraction = toString(m_fraction);
+    if(fraction != "0") {
+        result += ".";
+        result += fraction;
+    }
+    return result;
+}
+
+std::vector<uint32_t> CBigNum::additionAlgorithm(const std::vector<uint32_t> & num1, const std::vector<uint32_t> & num2, unsigned short & carry) const
+{
+    uint32_t tmp;
+    size_t len = num1.size(); //num1.size() == num2.size()
+    std::vector<uint32_t> sum;
+
+    for(size_t i = 0; i < len; i++) {
+        tmp = num1[i] + num2[i] + carry;
+        carry = tmp / 1000000000;//10^9
+        tmp %= 1000000000;//10^9
+        sum.push_back(tmp);
+    }
+
+    return sum;
+}
+
+std::vector<uint32_t> CBigNum::subtractionAlgorithm(const std::vector<uint32_t> & num1,
+                                                    const std::vector<uint32_t> & num2,
+                                                    unsigned short & carry, bool & sgn) const
+{
+    std::vector<uint32_t> difference;
+    long int tmp;
+
+    if(num1 == num2) {
+        difference.push_back(0);
+        return difference;
+    }
+
+    for(int i = (int)num1.size() - 1; i >= 0; i--) {
+        if(num1[i] > num2[i]) {
+            for(size_t j = 0; j < num1.size(); j++) {
+                tmp = (long)num1[j] - (long)num2[j] - carry;
+                if(tmp < 0) {
+                    carry = 1;
+                    tmp = 1000000000 + tmp; //modulo
+                } else
+                    carry = 0;
+                difference.push_back((uint32_t)tmp);
+            }
+            sgn = false;
+            break;
+        } else if(num1[i] < num2[i]) {
+            for(size_t j = 0; j < num1.size(); j++) {
+                tmp = (long)num1[j] - (long)num2[j] + carry;
+                if(tmp < 0) {
+                    tmp *= -1;
+                    carry = 0;
+                }
+                else {
+                    carry = 1;
+                    tmp = 1000000000 - tmp;
+                }
+                difference.push_back((uint32_t)tmp);
+            }
+            sgn = true;
+            break;
+        }
+    }
+
+    return difference;
+}
+
+CBigNum CBigNum::multiplicationAlgorithm(const std::vector<uint32_t> & factor1,
+                                         const std::vector<uint32_t> & factor2) const
+{
+    size_t len = factor1.size();//factor1.size() == factor2.size()
+    uint32_t carry = 0;
+    std::vector<std::string> intermediateResults;
+    std::vector<std::string> intermediateProduct;
+
+    for (size_t i = 0; i < len; i++) {
+        if(factor2[i] == 0)
+            continue;
+        for (size_t j = 0; j < len; j++) {
+            unsigned long long tmpProduct = (unsigned long long)factor2[i] * (unsigned long long)factor1[j] + carry;
+            intermediateProduct.push_back( toString( (uint32_t)(tmpProduct % 1000000000) ) ); //10 ^ 9
+            carry = tmpProduct / 1000000000;
+        }
+        if(carry) {
+            intermediateProduct.push_back( toString(carry) );
+            carry = 0;
+        }
+        std::string intermediateProductString;
+        for(auto it = intermediateProduct.rbegin(); it < intermediateProduct.rend(); it++) {
+            intermediateProductString += *it;
+        }
+        for(int k = 0; k < 9 * i; k++)
+            intermediateProductString.push_back('0');
+        while(intermediateProductString.front() == '0')
+            intermediateProductString.erase(0,1);
+        intermediateResults.push_back(intermediateProductString);
+        intermediateProduct.clear();
+    }
+
+    std::stack<CExpression*> exprStack;
+
+    for(const auto & summand : intermediateResults) {
+        CExpression * p;
+        if(summand.size() > 6)
+            p = new CLongInteger(summand);
+        else
+            p = new CInteger(summand);
+        exprStack.push(p);
+    }
+
+    CExpression * rVal;
+    CExpression * lVal;
+    CExpression * sum;
+
+    while(exprStack.size() != 1) {
+        rVal = exprStack.top(); exprStack.pop();
+        lVal = exprStack.top(); exprStack.pop();
+
+        sum = new CAddExp(lVal, rVal);
+        exprStack.push(sum);
+    }
+
+    CBigNum product = exprStack.top()->evaluate();
+    return product;
+}
+
+void CBigNum::divisionAlgorithm(const std::vector<uint32_t> &val1,
+                                const std::vector<uint32_t> &val2,
+                                std::string &quotient, std::string &remainder) const
+{
+    std::string stringDividend = toString(val1);
+    std::string stringDivisor = toString(val2);
+//    std::string quotient;
+//    std::string remainder;
+    std::stringstream ss;
+
+    while(stringDividend[0] == '0')
+        stringDividend.erase(0,1);
+
+    while(stringDivisor[0] == '0')
+        stringDivisor.erase(0,1);
+
+    size_t len2 = stringDivisor.size();
+
+    std::string dividendChunkString = stringDividend.substr(0, len2);
+    for(size_t i = 0; i < dividendChunkString.size(); i++)
+        if(dividendChunkString[i] - '0' < stringDivisor[i] - '0') {
+            dividendChunkString = stringDividend.substr(0, len2 + 1);
+            stringDividend.erase(0, len2 + 1);
+            break;
+        } else if(dividendChunkString[i] - '0' > stringDivisor[i] - '0') {
+            stringDividend.erase(0, len2);
+            break;
+        }
+
+    CBigNum dividendChunk = CLongInteger(dividendChunkString).evaluate();
+    CBigNum divisor = CLongInteger(stringDivisor).evaluate();
+
+    size_t wholePart;
+
+    while(true) {
+        wholePart = 0;
+        while(dividendChunk >= divisor) {
+            wholePart++;
+            dividendChunk = dividendChunk - divisor;
+        }
+        ss << wholePart;
+        std::string tmpQuotient;
+        ss >> tmpQuotient;
+        quotient += tmpQuotient;
+        ss.clear();
+
+        if(!stringDividend.empty()) {
+            dividendChunk.multiplyByTen();
+            dividendChunk = dividendChunk + CBigNum(stringDividend[0] - '0');
+            stringDividend.erase(0,1);
+        } else
+            break;
+    }
+    remainder = toString(dividendChunk);
+    if(remainder.empty())
+        remainder = "0";
 }
 
 std::vector<uint32_t> CBigNum::addFractions(std::vector<uint32_t> & f1, std::vector<uint32_t> & f2, unsigned short &carry) const
@@ -393,64 +602,6 @@ std::string CBigNum::toString(const std::vector<uint32_t> &value) const
     return result;
 }
 
-void CBigNum::divisionAlgorithm(const std::vector<uint32_t> &val1,
-                                const std::vector<uint32_t> &val2,
-                                std::string &quotient, std::string &remainder) const
-{
-    std::string stringDividend = toString(val1);
-    std::string stringDivisor = toString(val2);
-//    std::string quotient;
-//    std::string remainder;
-    std::stringstream ss;
-
-    while(stringDividend[0] == '0')
-        stringDividend.erase(0,1);
-
-    while(stringDivisor[0] == '0')
-        stringDivisor.erase(0,1);
-
-    size_t len2 = stringDivisor.size();
-
-    std::string dividendChunkString = stringDividend.substr(0, len2);
-    for(size_t i = 0; i < dividendChunkString.size(); i++)
-        if(dividendChunkString[i] - '0' < stringDivisor[i] - '0') {
-            dividendChunkString = stringDividend.substr(0, len2 + 1);
-            stringDividend.erase(0, len2 + 1);
-            break;
-        } else if(dividendChunkString[i] - '0' > stringDivisor[i] - '0') {
-            stringDividend.erase(0, len2);
-            break;
-        }
-
-    CBigNum dividendChunk = CLongInteger(dividendChunkString).evaluate();
-    CBigNum divisor = CLongInteger(stringDivisor).evaluate();
-
-    size_t wholePart;
-
-    while(true) {
-        wholePart = 0;
-        while(dividendChunk >= divisor) {
-            wholePart++;
-            dividendChunk = dividendChunk - divisor;
-        }
-        ss << wholePart;
-        std::string tmpQuotient;
-        ss >> tmpQuotient;
-        quotient += tmpQuotient;
-        ss.clear();
-
-        if(!stringDividend.empty()) {
-            dividendChunk.multiplyByTen();
-            dividendChunk = dividendChunk + CBigNum(stringDividend[0] - '0');
-            stringDividend.erase(0,1);
-        } else
-            break;
-    }
-    remainder = toString(dividendChunk);
-    if(remainder.empty())
-        remainder = "0";
-}
-
 std::string CBigNum::toString(const CBigNum & number) const
 {
     std::string result;
@@ -458,6 +609,17 @@ std::string CBigNum::toString(const CBigNum & number) const
         result += "-";
     result += toString(number.m_exponent);
     return result;
+}
+
+std::string CBigNum::toString(uint32_t num, bool leadingZeros) const
+{
+    std::stringstream ss;
+    if(leadingZeros)
+        ss << std::setw(9) << std::setfill('0') << num;
+    else
+        ss << num;
+
+    return ss.str();
 }
 
 void CBigNum::multiplyByTen()
@@ -526,138 +688,6 @@ std::vector<uint32_t> CBigNum::toBigInt(std::string text) const
     return result;
 }
 
-CBigNum CBigNum::multiplicationAlgorithm(const std::vector<uint32_t> & factor1,
-                                         const std::vector<uint32_t> & factor2) const
-{
-    size_t len = factor1.size();//factor1.size() == factor2.size()
-    uint32_t carry = 0;
-    std::vector<std::string> intermediateResults;
-    std::vector<std::string> intermediateProduct;
-
-    for (size_t i = 0; i < len; i++) {
-        if(factor2[i] == 0)
-            continue;
-        for (size_t j = 0; j < len; j++) {
-            unsigned long long tmpProduct = (unsigned long long)factor2[i] * (unsigned long long)factor1[j] + carry;
-            intermediateProduct.push_back( toString( (uint32_t)(tmpProduct % 1000000000) ) ); //10 ^ 9
-            carry = tmpProduct / 1000000000;
-        }
-        if(carry) {
-            intermediateProduct.push_back( toString(carry) );
-            carry = 0;
-        }
-        std::string intermediateProductString;
-        for(auto it = intermediateProduct.rbegin(); it < intermediateProduct.rend(); it++) {
-            intermediateProductString += *it;
-        }
-        for(int k = 0; k < 9 * i; k++)
-            intermediateProductString.push_back('0');
-        while(intermediateProductString.front() == '0')
-            intermediateProductString.erase(0,1);
-        intermediateResults.push_back(intermediateProductString);
-        intermediateProduct.clear();
-    }
-
-    std::stack<CExpression*> exprStack;
-
-    for(const auto & summand : intermediateResults) {
-        CExpression * p;
-        if(summand.size() > 6)
-            p = new CLongInteger(summand);
-        else
-            p = new CInteger(summand);
-        exprStack.push(p);
-    }
-
-    CExpression * rVal;
-    CExpression * lVal;
-    CExpression * sum;
-
-    while(exprStack.size() != 1) {
-        rVal = exprStack.top(); exprStack.pop();
-        lVal = exprStack.top(); exprStack.pop();
-
-        sum = new CAddExp(lVal, rVal);
-        exprStack.push(sum);
-    }
-
-    CBigNum product = exprStack.top()->evaluate();
-    return product;
-}
-
-std::string CBigNum::toString(uint32_t num, bool leadingZeros) const
-{
-    std::stringstream ss;
-    if(leadingZeros)
-        ss << std::setw(9) << std::setfill('0') << num;
-    else
-        ss << num;
-
-    return ss.str();
-}
-
-std::vector<uint32_t> CBigNum::additionAlgorithm(const std::vector<uint32_t> & num1, const std::vector<uint32_t> & num2, unsigned short & carry) const
-{
-    uint32_t tmp;
-    size_t len = num1.size(); //num1.size() == num2.size()
-    std::vector<uint32_t> sum;
-
-    for(size_t i = 0; i < len; i++) {
-        tmp = num1[i] + num2[i] + carry;
-        carry = tmp / 1000000000;//10^9
-        tmp %= 1000000000;//10^9
-        sum.push_back(tmp);
-    }
-
-    return sum;
-}
-
-std::vector<uint32_t> CBigNum::subtractionAlgorithm(const std::vector<uint32_t> & num1,
-                                                    const std::vector<uint32_t> & num2,
-                                                    unsigned short & carry, bool & sgn) const
-{
-    std::vector<uint32_t> difference;
-    long int tmp;
-
-    if(num1 == num2) {
-        difference.push_back(0);
-        return difference;
-    }
-
-    for(int i = (int)num1.size() - 1; i >= 0; i--) {
-        if(num1[i] > num2[i]) {
-            for(size_t j = 0; j < num1.size(); j++) {
-                tmp = (long)num1[j] - (long)num2[j] - carry;
-                if(tmp < 0) {
-                    carry = 1;
-                    tmp = 1000000000 + tmp; //modulo
-                } else
-                    carry = 0;
-                difference.push_back((uint32_t)tmp);
-            }
-            sgn = false;
-            break;
-        } else if(num1[i] < num2[i]) {
-            for(size_t j = 0; j < num1.size(); j++) {
-                tmp = (long)num1[j] - (long)num2[j] + carry;
-                if(tmp < 0) {
-                    tmp *= -1;
-                    carry = 0;
-                }
-                else {
-                    carry = 1;
-                    tmp = 1000000000 - tmp;
-                }
-                difference.push_back((uint32_t)tmp);
-            }
-            sgn = true;
-            break;
-        }
-    }
-
-    return difference;
-}
-
 void CBigNum::modulo(std::vector<uint32_t> & num) const
 {
     int carry = 0;
@@ -672,24 +702,13 @@ void CBigNum::modulo(std::vector<uint32_t> & num) const
     }
 }
 
-CBigNum::CBigNum()
-    : m_sgn(false)
+bool CBigNum::isZero(const std::vector<uint32_t> & val) const
 {
-    m_exponent.push_back(0);
-    m_fraction.push_back(0);
-}
-
-std::string CBigNum::toString() const
-{
-    std::string result;
-    if(m_sgn)
-        result += "-";
-    result += toString(m_exponent);
-    std::string fraction;
-    fraction = toString(m_fraction);
-    if(fraction != "0") {
-        result += ".";
-        result += fraction;
+    std::string value = toString(val);
+    while(value[0] == '0') {
+        value.erase(0,1);
+        if(value.empty())
+            return true;
     }
-    return result;
+    return false;
 }
