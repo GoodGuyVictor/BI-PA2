@@ -41,18 +41,59 @@ public:
      */
                 CBigNum     (bool sgn, const std::vector<uint32_t > & integer, const std::vector<uint32_t> & fraction);
 
+    /**
+     * @brief Print out the number on the screen
+     */
     void            print           () const;
-    CBigNum         operator+       (const CBigNum &) const;
-    CBigNum         operator-       (const CBigNum &) const;
+    /**
+     * @brief Adding up two highly accurate numbers
+     * @param other Second summand
+     * @return Sum of two highly accurate numbers
+     */
+    CBigNum         operator+       (const CBigNum & other) const;
+    /**
+     * Subtracting two highly accurate numbers
+     * @param other The subtrahend
+     * @return Difference of two highly accurate numbers
+     */
+    CBigNum         operator-       (const CBigNum & other) const;
+    /**
+     * Unary minus
+     * @return Copy of negotiated this object
+     */
     CBigNum         operator-       () const;
-    CBigNum         operator*       (const CBigNum &) const;
-    CBigNum         operator/       (const CBigNum &) const;
-    CBigNum         operator%       (const CBigNum &) const;
-    bool            operator>=      (const CBigNum &) const;
+    /**
+     * Multiplying two highly accurate numbers
+     * @param other factor
+     * @return Product of two highly accurate numbers
+     */
+    CBigNum         operator*       (const CBigNum & other) const;
+    /**
+     * Divide two highly accurate numbers
+     * @param other Divisor
+     * @return Quotient of division of two highly accurate numbers
+     */
+    CBigNum         operator/       (const CBigNum & other) const;
+    /**
+     * Divide two highly accurate numbers
+     * @param other Dibisor
+     * @return Remainder of division of two highly accurate numbers
+     */
+    CBigNum         operator%       (const CBigNum & other) const;
+    /**
+     * Comparison operator greater than or equal, compares two highly accurate numbers
+     * @param other The number to compare with
+     * @return true/false regarding the comparison
+     */
+    bool            operator>=      (const CBigNum & other) const;
+    /**
+     * Converts highly accurate number into string
+     * @return string representation of CBighNum
+     */
     std::string     toString        () const;
 
 private:
-    std::vector<uint32_t>   m_exponent;
+    std::vector<uint32_t>   m_integer;
     std::vector<uint32_t>   m_fraction;
     bool                    m_sgn;
 
