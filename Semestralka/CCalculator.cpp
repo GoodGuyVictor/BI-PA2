@@ -8,7 +8,7 @@
 #include "CSubtractExp.h"
 #include "CMultiplyExp.h"
 #include "CDevideExpr.h"
-#include "CMod.h"
+#include "CModExp.h"
 #include "Exceptions.h"
 #include <regex>
 #include <fstream>
@@ -184,7 +184,7 @@ CExpression *CCalculator::performOperation(CExpression * lVal, CExpression * rVa
         return new CDevideExp(lVal, rVal);
 
     if(op == "%")
-        return new CMod(lVal, rVal);
+        return new CModExp(lVal, rVal);
 }
 
 void CCalculator::saveToFile() const
