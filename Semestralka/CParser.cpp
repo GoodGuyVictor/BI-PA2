@@ -72,9 +72,9 @@ vector<string> CParser::parse(const string & input)
     return m_output;
 }
 
-bool CParser::isOperator(const char op) const
+bool CParser::isOperator(const char token) const
 {
-    return op == '+' || op == '-' || op == '*' || op == '/' || op == '%' || op == '(' || op == ')';
+    return token == '+' || token == '-' || token == '*' || token == '/' || token == '%' || token == '(' || token == ')';
 }
 
 void CParser::popOperatorFromStackToOutput(stack<char> &operatorStack)
