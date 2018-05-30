@@ -115,23 +115,23 @@ void CCalculator::saveHistory(const string & input, const CBigNum & result)
     m_history.push_back(tmp);
 }
 
-EValType CCalculator::determineType(const string & number) const
+EValType CCalculator::determineType(const string & operand) const
 {
-    if(number.find('.') != string::npos)
+    if(operand.find('.') != string::npos)
         return VAL_DEC;
 
-    if(number.size() > 6)
+    if(operand.size() > 6)
         return VAL_LONGINT;
 
-    if(isalpha(number[0]))
+    if(isalpha(operand[0]))
         return VAL_VAR;
 
     return VAL_INT;
 }
 
-bool CCalculator::isOperator(const string & op) const
+bool CCalculator::isOperator(const string & token) const
 {
-    return op == "+" || op == "-" || op == "*" || op == "/" || op == "%";
+    return token == "+" || token == "-" || token == "*" || token == "/" || token == "%";
 }
 
 void CCalculator::pushToStack(const string & operand, stack<CExpression*> &stack) const
