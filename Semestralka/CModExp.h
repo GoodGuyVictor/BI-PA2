@@ -13,7 +13,7 @@
  *  quotient. Child class of CExpression.
  *
  */
-class CMod : public CBinOperator
+class CModExp : public CBinOperator
 {
 public:
     /**
@@ -21,7 +21,7 @@ public:
     * @param l Left hand operand
     * @param r Right hand operand
     */
-            CMod        (CExpression * lVal, CExpression * rVal)
+            CModExp        (CExpression * lVal, CExpression * rVal)
             : CBinOperator(lVal, rVal) {}
     /**
     * Evaluates the division operation
