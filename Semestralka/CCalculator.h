@@ -105,8 +105,10 @@ public:
      * Constructor typing instructions how to use the calculator
      */
     CCalculator() { cout << "Welcome to arbitrary precision calculator!" << endl
-                         << "-To creat a variable type: <variable name> = <value>" << endl
+                         << "-To creat a variable type: <variable name> = <expression>" << endl
                          << " *Variable names can only consist of letters and numbers having letter as the very first symbol" << endl
+                         << "-To save current calculator state into file type \"save\"" << endl
+                         << "-To read calculator state from file and set it up type \"read\"" << endl
                          << "-To quit type \"quit\"" << endl;}
     /**
      * Runs the calculator
