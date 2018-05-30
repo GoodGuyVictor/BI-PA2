@@ -8,12 +8,25 @@
 
 #include "CBinOperator.h"
 
+/*! @class CMod
+ *  @brief The class represents expression that performs division operation taking raminder only and discards
+ *  quotient. Child class of CExpression.
+ *
+ */
 class CMod : public CBinOperator
 {
 public:
+    /**
+    * Constructor creates division expression
+    * @param l Left hand operand
+    * @param r Right hand operand
+    */
             CMod        (CExpression * lVal, CExpression * rVal)
             : CBinOperator(lVal, rVal) {}
-
+    /**
+    * Evaluates the division operation
+    * @return Remainder of the division represented as CBigNum
+    */
     CBigNum evaluate    () const override;
 };
 
