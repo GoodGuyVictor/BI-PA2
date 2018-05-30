@@ -16,24 +16,24 @@ CBigNum CVariable::evaluate() const
     return m_value;
 }
 
-std::vector<uint32_t> CVariable::toBigInt(std::string text) const
+std::vector<uint32_t> CVariable::toBigInt(std::string value) const
 {
     std::vector<uint32_t> result;
-    int len = text.size();
+    int len = value.size();
     int portions = len / 9;
     std::stringstream ss;
     uint32_t tmp;
 
     for(int i = 0; i < portions; i++) {
-        ss << text.substr(text.size() - 9, 9);
+        ss << value.substr(value.size() - 9, 9);
         ss >> tmp;
         result.push_back(tmp);
-        text.erase(text.size() - 9, 9);
+        value.erase(value.size() - 9, 9);
         ss.clear();
     }
 
-    if(!text.empty()) {
-        ss << text;
+    if(!value.empty()) {
+        ss << value;
         ss >> tmp;
         result.push_back(tmp);
     }
