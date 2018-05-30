@@ -149,7 +149,7 @@ void CCalculator::pushToStack(const string & operand, stack<CExpression*> &stack
             break;
         }
         case VAL_DEC: {
-            CExpression *p = new Decimal(operand);
+            CExpression *p = new CDecimal(operand);
             stack.push(p);
             break;
         }
