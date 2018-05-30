@@ -1,33 +1,33 @@
 #include "CLongInteger.h"
 
-CLongInteger::CLongInteger(std::string val)
+CLongInteger::CLongInteger(std::string value)
 {
-    if(val[0] == '-') {
+    if(value[0] == '-') {
         m_sgn = true;
-        val.erase(0,1);
+        value.erase(0,1);
     } else
         m_sgn = false;
-    m_value = toBigInt(val);
+    m_value = toBigInt(value);
 }
 
-std::vector<uint32_t> CLongInteger::toBigInt(std::string & text)
+std::vector<uint32_t> CLongInteger::toBigInt(std::string & value)
 {
     std::vector<uint32_t> result;
-    int len = text.size();
+    int len = value.size();
     int portions = len / 9;
     std::stringstream ss;
     uint32_t tmp;
 
     for(int i = 0; i < portions; i++) {
-        ss << text.substr(text.size() - 9, 9);
+        ss << value.substr(value.size() - 9, 9);
         ss >> tmp;
         result.push_back(tmp);
-        text.erase(text.size() - 9, 9);
+        value.erase(value.size() - 9, 9);
         ss.clear();
     }
 
-    if(!text.empty()) {
-        ss << text;
+    if(!value.empty()) {
+        ss << value;
         ss >> tmp;
         result.push_back(tmp);
     }
