@@ -9,19 +9,36 @@
 #include <sstream>
 #include "CExpression.h"
 
-class Decimal : public CExpression
+/*! @class CDecimal
+ *  @brief The class represents decimal number. Child class of CExpression.
+ */
+class CDecimal : public CExpression
 {
 public:
-    explicit    Decimal    (const std::string & value);
-
+    /**
+     * Constructor creates decimal object
+     * @param value String value to be translated into CDecimal
+     */
+    explicit    CDecimal    (const std::string & value);
+    /**
+     * Converts CDecimal into CBigNum
+     * @return CBigNum object
+     */
     CBigNum     evaluate    () const override ;
 
 private:
+    /** Presence of minus */
     bool m_sgn;
-    std::vector<uint32_t> m_exponent;
+    /** Integer part of decimal number */
+    std::vector<uint32_t> m_integer;
+    /** Fractoin part of decimal number */
     std::vector<uint32_t> m_fraction;
-
-    std::vector<uint32_t> toBigInt(std::string & text) const;
+    /**
+     * Translates string value into vector of uint32_t's
+     * @param value String value to be translated
+     * @return Vector of uint32_t's
+     */
+    std::vector<uint32_t> toBigInt(std::string & value) const;
 };
 
 
