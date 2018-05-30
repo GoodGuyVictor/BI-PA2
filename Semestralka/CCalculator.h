@@ -90,14 +90,26 @@ private:
      * @param name The variable name to be validated
      */
     void            validateVariableName    (const std::string & name) const;
+    /**
+     * Saves current calculator state into file (variables list, history list)
+     */
+    void            saveToFile              () const;
+    /**
+     * Reads data form file and sets current calculator state according the read data
+     * @param filename Name of file to be read from
+     */
+    void            readFromFile            (std::string filename = "data.txt");
 
 public:
+    /**
+     * Constructor typing instructions how to use the calculator
+     */
     CCalculator() { cout << "Welcome to arbitrary precision calculator!" << endl
                          << "-To creat a variable type: <variable name> = <value>" << endl
                          << " *Variable names can only consist of letters and numbers having letter as the very first symbol" << endl
                          << "-To quit type \"quit\"" << endl;}
+    /**
+     * Runs the calculator
+     */
     void    run();
-    void    saveToFile() const;
-    void            readFromFile            (std::string = "data.txt");
-
 };
