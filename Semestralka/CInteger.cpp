@@ -4,10 +4,10 @@
 
 #include "CInteger.h"
 
-CInteger::CInteger(const std::string &val)
+CInteger::CInteger(const std::string &value)
 {
     std::stringstream ss;
-    ss << val;
+    ss << value;
     ss >> m_value;
 }
 
