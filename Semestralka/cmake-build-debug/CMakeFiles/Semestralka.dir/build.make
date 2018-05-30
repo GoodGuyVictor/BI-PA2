@@ -321,28 +321,28 @@ CMakeFiles/Semestralka.dir/CSubtract.cpp.o.provides: CMakeFiles/Semestralka.dir/
 CMakeFiles/Semestralka.dir/CSubtract.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CSubtract.cpp.o
 
 
-CMakeFiles/Semestralka.dir/CMod.cpp.o: CMakeFiles/Semestralka.dir/flags.make
-CMakeFiles/Semestralka.dir/CMod.cpp.o: ../CMod.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/Semestralka.dir/CMod.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CMod.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CMod.cpp
+CMakeFiles/Semestralka.dir/CModExp.cpp.o: CMakeFiles/Semestralka.dir/flags.make
+CMakeFiles/Semestralka.dir/CModExp.cpp.o: ../CModExp.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/Semestralka.dir/CModExp.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Semestralka.dir/CModExp.cpp.o -c /home/victor/githubRepos/PA2/Semestralka/CModExp.cpp
 
-CMakeFiles/Semestralka.dir/CMod.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CMod.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CMod.cpp > CMakeFiles/Semestralka.dir/CMod.cpp.i
+CMakeFiles/Semestralka.dir/CModExp.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Semestralka.dir/CModExp.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/victor/githubRepos/PA2/Semestralka/CModExp.cpp > CMakeFiles/Semestralka.dir/CModExp.cpp.i
 
-CMakeFiles/Semestralka.dir/CMod.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CMod.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CMod.cpp -o CMakeFiles/Semestralka.dir/CMod.cpp.s
+CMakeFiles/Semestralka.dir/CModExp.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Semestralka.dir/CModExp.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/victor/githubRepos/PA2/Semestralka/CModExp.cpp -o CMakeFiles/Semestralka.dir/CModExp.cpp.s
 
-CMakeFiles/Semestralka.dir/CMod.cpp.o.requires:
+CMakeFiles/Semestralka.dir/CModExp.cpp.o.requires:
 
-.PHONY : CMakeFiles/Semestralka.dir/CMod.cpp.o.requires
+.PHONY : CMakeFiles/Semestralka.dir/CModExp.cpp.o.requires
 
-CMakeFiles/Semestralka.dir/CMod.cpp.o.provides: CMakeFiles/Semestralka.dir/CMod.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMod.cpp.o.provides.build
-.PHONY : CMakeFiles/Semestralka.dir/CMod.cpp.o.provides
+CMakeFiles/Semestralka.dir/CModExp.cpp.o.provides: CMakeFiles/Semestralka.dir/CModExp.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CModExp.cpp.o.provides.build
+.PHONY : CMakeFiles/Semestralka.dir/CModExp.cpp.o.provides
 
-CMakeFiles/Semestralka.dir/CMod.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CMod.cpp.o
+CMakeFiles/Semestralka.dir/CModExp.cpp.o.provides.build: CMakeFiles/Semestralka.dir/CModExp.cpp.o
 
 
 CMakeFiles/Semestralka.dir/CVariable.cpp.o: CMakeFiles/Semestralka.dir/flags.make
@@ -382,7 +382,7 @@ Semestralka_OBJECTS = \
 "CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o" \
 "CMakeFiles/Semestralka.dir/CDecimal.cpp.o" \
 "CMakeFiles/Semestralka.dir/CSubtract.cpp.o" \
-"CMakeFiles/Semestralka.dir/CMod.cpp.o" \
+"CMakeFiles/Semestralka.dir/CModExp.cpp.o" \
 "CMakeFiles/Semestralka.dir/CVariable.cpp.o"
 
 # External object files for target Semestralka
@@ -399,7 +399,7 @@ Semestralka: CMakeFiles/Semestralka.dir/CInteger.cpp.o
 Semestralka: CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o
 Semestralka: CMakeFiles/Semestralka.dir/CDecimal.cpp.o
 Semestralka: CMakeFiles/Semestralka.dir/CSubtract.cpp.o
-Semestralka: CMakeFiles/Semestralka.dir/CMod.cpp.o
+Semestralka: CMakeFiles/Semestralka.dir/CModExp.cpp.o
 Semestralka: CMakeFiles/Semestralka.dir/CVariable.cpp.o
 Semestralka: CMakeFiles/Semestralka.dir/build.make
 Semestralka: CMakeFiles/Semestralka.dir/link.txt
@@ -422,7 +422,7 @@ CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CInteger.cpp.o.r
 CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o.requires
 CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CDecimal.cpp.o.requires
 CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CSubtract.cpp.o.requires
-CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CMod.cpp.o.requires
+CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CModExp.cpp.o.requires
 CMakeFiles/Semestralka.dir/requires: CMakeFiles/Semestralka.dir/CVariable.cpp.o.requires
 
 .PHONY : CMakeFiles/Semestralka.dir/requires

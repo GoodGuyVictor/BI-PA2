@@ -10,7 +10,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o"
   "CMakeFiles/Semestralka.dir/CDecimal.cpp.o"
   "CMakeFiles/Semestralka.dir/CSubtract.cpp.o"
-  "CMakeFiles/Semestralka.dir/CMod.cpp.o"
+  "CMakeFiles/Semestralka.dir/CModExp.cpp.o"
   "CMakeFiles/Semestralka.dir/CVariable.cpp.o"
   "Semestralka.pdb"
   "Semestralka"

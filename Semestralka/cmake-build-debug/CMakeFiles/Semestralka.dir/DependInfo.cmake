@@ -11,7 +11,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/victor/githubRepos/PA2/Semestralka/CDevideExpr.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CDevideExpr.cpp.o"
   "/home/victor/githubRepos/PA2/Semestralka/CInteger.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CInteger.cpp.o"
   "/home/victor/githubRepos/PA2/Semestralka/CLongInteger.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CLongInteger.cpp.o"
-  "/home/victor/githubRepos/PA2/Semestralka/CMod.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CMod.cpp.o"
+  "/home/victor/githubRepos/PA2/Semestralka/CModExp.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CModExp.cpp.o"
   "/home/victor/githubRepos/PA2/Semestralka/CMultiplyExp.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CMultiplyExp.cpp.o"
   "/home/victor/githubRepos/PA2/Semestralka/CParser.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CParser.cpp.o"
   "/home/victor/githubRepos/PA2/Semestralka/CSubtract.cpp" "/home/victor/githubRepos/PA2/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir/CSubtract.cpp.o"

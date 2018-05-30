@@ -312,32 +312,32 @@ CLongInteger.cpp.s:
 	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CLongInteger.cpp.s
 .PHONY : CLongInteger.cpp.s
 
-CMod.o: CMod.cpp.o
+CModExp.o: CModExp.cpp.o
 
-.PHONY : CMod.o
+.PHONY : CModExp.o
 
 # target to build an object file
-CMod.cpp.o:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMod.cpp.o
-.PHONY : CMod.cpp.o
+CModExp.cpp.o:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CModExp.cpp.o
+.PHONY : CModExp.cpp.o
 
-CMod.i: CMod.cpp.i
+CModExp.i: CModExp.cpp.i
 
-.PHONY : CMod.i
+.PHONY : CModExp.i
 
 # target to preprocess a source file
-CMod.cpp.i:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMod.cpp.i
-.PHONY : CMod.cpp.i
+CModExp.cpp.i:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CModExp.cpp.i
+.PHONY : CModExp.cpp.i
 
-CMod.s: CMod.cpp.s
+CModExp.s: CModExp.cpp.s
 
-.PHONY : CMod.s
+.PHONY : CModExp.s
 
 # target to generate assembly for a file
-CMod.cpp.s:
-	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CMod.cpp.s
-.PHONY : CMod.cpp.s
+CModExp.cpp.s:
+	$(MAKE) -f CMakeFiles/Semestralka.dir/build.make CMakeFiles/Semestralka.dir/CModExp.cpp.s
+.PHONY : CModExp.cpp.s
 
 CMultiplyExp.o: CMultiplyExp.cpp.o
 
@@ -504,9 +504,9 @@ help:
 	@echo "... CLongInteger.o"
 	@echo "... CLongInteger.i"
 	@echo "... CLongInteger.s"
-	@echo "... CMod.o"
-	@echo "... CMod.i"
-	@echo "... CMod.s"
+	@echo "... CModExp.o"
+	@echo "... CModExp.i"
+	@echo "... CModExp.s"
 	@echo "... CMultiplyExp.o"
 	@echo "... CMultiplyExp.i"
 	@echo "... CMultiplyExp.s"
