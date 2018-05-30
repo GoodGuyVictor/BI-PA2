@@ -8,7 +8,7 @@
 #include "CBinOperator.h"
 
 /*! @class CAddExp
- *  @brief The class adds up two expressions. Child class of CBinOperator.
+ *  @brief The class represents expression that performs addition operation. Child class of CExpression.
  */
 class CAddExp : public CBinOperator
 {
